@@ -1,0 +1,270 @@
+namespace sisyfox.request;
+
+union Payload { Info, AddScore, GetScore, GetScoreRange, SetLiveData,
+             GetLiveData, AddUser, GetUser, SetUser, GetCurrentUser,
+             GetUserRange, RemoveUser,UnsetUser, AddLocation, GetLocation,
+             SetSetting, GetSetting, GetSettings, Trigger, AddDmxDevice,
+             RemoveDmxDevice, AddDmxDeviceChannel, RemoveDmxDeviceChannel,
+             AddDmxChannelRule, RemoveDmxChannelRule, AddDmxDeviceSetting,
+             RemoveDmxDeviceSetting, AddDmxRuleRangeSetting,
+             AddDmxRuleBoolSetting, RemoveDmxRuleSetting,
+             ChangeDmxDeviceSettingValue, GetDmxDevice, GetDmxDeviceChannel,
+             GetDmxChannelRule, GetDmxDeviceSetting, GetDmxRuleSetting,
+             GetDmxDeviceRange, GetDmxDeviceChannelRange,
+             GetDmxChannelRuleRange, GetDmxDeviceSettingRange,
+             GetDmxRuleSettingRange, SetDmxDeviceMode }
+
+struct Version {
+  high:ubyte;
+  low:ubyte;
+}
+
+table Root {
+  version:Version;
+  messageId:ushort;
+  payload:Payload;
+}
+
+table Info {}
+
+enum EndReason:ubyte { WIN, MAP_BOARDER, COLLISION, INSTANT_LOSS_ANGLE,
+                       GROUND_DIST, TO_STEEP, FLASH, UNDERWATER }
+
+table AddScore {
+  height:int;
+  time:int;
+  reason:EndReason;
+}
+
+table GetScore {
+  id:uint;
+}
+
+table GetScoreRange {
+  range:ubyte;
+  startId:uint;
+}
+
+table AddLocation {
+  startId:uint;
+  name:string;
+}
+
+table GetLocation {
+  id:uint;
+}
+
+struct LiveData {
+  height:int;
+  time:int;
+  pitch:int;
+}
+
+table SetLiveData {
+  liveData:LiveData;
+}
+
+table GetLiveData {}
+
+table AddUser {
+  name:string;
+}
+
+table GetUser {
+  uId:uint;
+}
+
+table SetUser {
+  uId:uint;
+}
+
+table GetCurrentUser {}
+
+table GetUserRange {
+  startUid:uint;
+  range:ubyte;
+}
+
+table RemoveUser {
+  uid:uint;
+}
+
+table UnsetUser {}
+
+enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, SOUND_LEVEL,
+                        COMPETITION_MODE,
+                        WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
+                        MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
+                        GAME_ACTIVE = 128 }
+
+table SetSetting {
+  type:SettingType;
+  value:int;
+}
+
+table GetSetting {
+  type:SettingType;
+}
+
+table GetSettings {}
+
+enum TriggerType:byte { NEW_ROUND }
+
+table Trigger {
+    type:TriggerType;
+}
+
+table AddDmxDevice {
+    name:string;
+}
+
+table RemoveDmxDevice {
+    deviceId:uint;
+}
+
+table AddDmxDeviceChannel {
+    deviceId:uint;
+    channel:uint;
+    norm:ubyte;
+    test:ubyte;
+}
+
+table RemoveDmxDeviceChannel {
+    deviceId:uint;
+    channelId:uint;
+}
+
+enum DmxChannelRuleType:byte { HEIGHT, TIME, PITCH }
+
+table AddDmxChannelRule {
+    deviceId:uint;
+    channelId:uint;
+    ruleType:DmxChannelRuleType;
+    on:int;
+    off:int;
+    start:ubyte;
+    step:float;
+}
+
+table RemoveDmxChannelRule {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+}
+
+enum DmxDeviceSettingType:byte { RANGE, BOOL }
+
+table AddDmxDeviceSetting {
+    deviceId:uint;
+    settingType:DmxDeviceSettingType;
+    name:string;
+    norm:byte;
+}
+
+table RemoveDmxDeviceSetting {
+    deviceId:uint;
+    settingId:uint;
+}
+
+table AddDmxRuleRangeSetting {
+    deviceId:uint;
+    settingId:uint;
+    channelId:uint;
+    ruleId:uint;
+    on:float;
+    off:float;
+    start:float;
+    step:float;
+}
+
+table AddDmxRuleBoolSetting {
+    deviceId:uint;
+    settingId:uint;
+    channelId:uint;
+    ruleId:uint;
+    on:int;
+    off:int;
+    start:ubyte;
+    step:float;
+}
+
+table RemoveDmxRuleSetting {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+}
+
+table ChangeDmxDeviceSettingValue {
+    deviceId:uint;
+    settingId:uint;
+    value:byte;
+}
+
+enum DmxDeviceMode:byte { TEST, DISABLED }
+
+table SetDmxDeviceMode {
+    deviceId:uint;
+    mode:DmxDeviceMode;
+    value:bool;
+}
+
+table GetDmxDevice {
+    deviceId:uint;
+}
+
+table GetDmxDeviceRange {
+    deviceId:uint;
+    range:ubyte;
+}
+
+table GetDmxDeviceChannel {
+    deviceId:uint;
+    channelId:uint;
+}
+
+table GetDmxDeviceChannelRange {
+    deviceId:uint;
+    channelId:uint;
+    range:ubyte;
+}
+
+table GetDmxChannelRule {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+}
+
+table GetDmxChannelRuleRange {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+    range:ubyte;
+}
+
+table GetDmxDeviceSetting {
+    deviceId:uint;
+    settingId:uint;
+}
+
+table GetDmxDeviceSettingRange {
+    deviceId:uint;
+    settingId:uint;
+    range:ubyte;
+}
+
+table GetDmxRuleSetting {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+    type:DmxDeviceSettingType;
+}
+
+table GetDmxRuleSettingRange {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+    type:DmxDeviceSettingType;
+    range:ubyte;
+}
+
+root_type Root;
