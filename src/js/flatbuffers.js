@@ -1,0 +1,1 @@
+../../thirdParty/flatbuffers/js/flatbuffers.js
