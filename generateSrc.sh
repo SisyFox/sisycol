@@ -20,4 +20,8 @@ cd .. && mkdir -p js && cd js
 
 ../../thirdParty/cache_flatbuffers/flatc --js ../../sisycol.fbs
 
+cd .. && mkdir -p csharp && cd csharp
+
+../../thirdParty/cache_flatbuffers/flatc --csharp --gen-onefile ../../sisycol.fbs
+
 cd ../..
