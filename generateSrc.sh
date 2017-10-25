@@ -14,12 +14,10 @@ cmake ../flatbuffers && make flatc -j${CORE_COUNT}
 cd ../../src
 mkdir -p cpp && cd cpp
 
-../../thirdParty/cache_flatbuffers/flatc --cpp ../../sisycolReq.fbs
-../../thirdParty/cache_flatbuffers/flatc --cpp ../../sisycolResp.fbs
+../../thirdParty/cache_flatbuffers/flatc --cpp ../../sisycol.fbs
 
 cd .. && mkdir -p js && cd js
 
-../../thirdParty/cache_flatbuffers/flatc --js ../../sisycolReq.fbs
-../../thirdParty/cache_flatbuffers/flatc --js ../../sisycolResp.fbs
+../../thirdParty/cache_flatbuffers/flatc --js ../../sisycol.fbs
 
 cd ../..
