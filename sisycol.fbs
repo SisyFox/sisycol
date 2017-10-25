@@ -1,0 +1,615 @@
+
+////////////////////////////////////////////////////////////////////////////////
+// Sisycol API - SisyFox Protocol Scheme
+////////////////////////////////////////////////////////////////////////////////
+namespace sisyfox.sisycol;
+
+union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
+             GetLiveData, AddUser, GetUser, SetUser, GetCurrentUser,
+             GetUserRange, RemoveUser,UnsetUser, AddLocation, GetLocation,
+             SetSetting, GetSetting, GetSettings, Trigger, AddDmxDevice,
+             RemoveDmxDevice, AddDmxDeviceChannel, RemoveDmxDeviceChannel,
+             AddDmxChannelRule, RemoveDmxChannelRule, AddDmxDeviceSetting,
+             RemoveDmxDeviceSetting, AddDmxRuleRangeSetting,
+             AddDmxRuleBoolSetting, RemoveDmxRuleSetting,
+             ChangeDmxDeviceSettingValue, GetDmxDevice, GetDmxDeviceChannel,
+             GetDmxChannelRule, GetDmxDeviceSetting, GetDmxRuleSetting,
+             GetDmxDeviceRange, GetDmxDeviceChannelRange,
+             GetDmxChannelRuleRange, GetDmxDeviceSettingRange,
+             GetDmxRuleSettingRange, SetDmxDeviceMode }
+
+table Root {
+  messageId:ushort;
+  payload:Payload;
+}
+root_type Root;
+
+
+enum ErrorCode:ubyte   { BAD_TRANSMISSION, BAD_VERSION, BAD_PAYLOAD_TYPE,
+                         GENERAL_ERROR, NOT_AVAILABLE }
+
+enum EndReason:ubyte   { WIN, MAP_BORDER, COLLISION, INSTANT_LOSS_ANGLE,
+                         GROUND_DIST, TOO_STEEP, FLASH, UNDERWATER }
+
+enum TriggerType:ubyte { NEW_ROUND }
+
+enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, SOUND_LEVEL,
+                         COMPETITION_MODE,
+                         WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
+                         MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
+                         GAME_ACTIVE = 128 }
+
+enum Language:ubyte    { ENGLISH, GERMAN, CRUMMY_GERMAN = 0xff }
+
+enum GameMode:ubyte    { FREESTYLE, LEVEL_COLLECT }
+
+enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON }
+
+enum DmxChannelRuleType:byte   { HEIGHT, TIME, PITCH }
+
+enum DmxDeviceSettingType:byte { RANGE, BOOL }
+
+enum DmxDeviceMode:byte        { TEST, DISABLED }
+
+
+struct Version {
+  high:ubyte = 2;
+  low:ubyte  = 0;
+}
+
+struct LiveData {
+  height:int;
+  time:int;
+  pitch:int;
+}
+
+struct Score {
+    id:uint;
+    height:int;
+    time:int;
+    rank:uint;
+    timestamp:long;
+    level:ubyte;
+    world:ubyte;
+    gameMode:ubyte;
+    difficulty:ubyte;
+    score:int;
+    reason:EndReason;
+}
+
+struct GeneralSetting {
+    available:bool = false;
+    gameLanguage:Language;
+    interfaceLanguage:Language;
+    soundLevel:ubyte;
+    competitionMode:bool;
+    gameActive:bool;
+}
+
+struct UserSetting {
+    available:bool = false;
+    world:World;
+    level:ubyte;
+    difficulty:ubyte;
+    gameMode:ubyte;
+    gemScore:uint;
+    maxCollectWorld:ubyte;
+    maxCollectLevel:ubyte;
+}
+
+struct DmxDeviceChannel {
+    storageRef:int;
+    channel:uint;
+    test:ubyte;
+    norm:ubyte;
+    ruleCount:uint;
+}
+
+struct DmxChannelRule {
+    storageRef:int;
+    type:DmxChannelRuleType;
+    on:int;
+    calcOn:int;
+    off:int;
+    calcOff:int;
+    start:ubyte;
+    calcStart:ubyte;
+    step:float;
+    calcStep:float;
+}
+
+struct DmxRuleRangeSetting {
+    storageRef:int;
+    channel:uint;
+    ruleNo:uint;
+    on:float;
+    off:float;
+    start:float;
+    step:float;
+}
+
+struct DmxRuleBoolSetting {
+    storageRef:int;
+    channel:uint;
+    ruleNo:uint;
+    on:int;
+    off:int;
+    start:ubyte;
+    step:float;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Sisycol Request Tables
+////////////////////////////////////////////////////////////////////////////////
+namespace sisyfox.sisycol.request;
+
+table Info {}
+
+table AddScore {
+  height:int;
+  time:int;
+  reason:EndReason;
+}
+
+table GetScore {
+  id:uint;
+}
+
+table GetScoreRange {
+  range:ubyte;
+  startId:uint;
+}
+
+table AddLocation {
+  startId:uint;
+  name:string;
+}
+
+table GetLocation {
+  id:uint;
+}
+
+table SetLiveData {
+  liveData:LiveData;
+}
+
+table GetLiveData {}
+
+table AddUser {
+  name:string;
+}
+
+table GetUser {
+  uId:uint;
+}
+
+table SetUser {
+  uId:uint;
+}
+
+table GetCurrentUser {}
+
+table GetUserRange {
+  startUid:uint;
+  range:ubyte;
+}
+
+table RemoveUser {
+  uid:uint;
+}
+
+table UnsetUser {}
+
+table SetSetting {
+  type:SettingType;
+  value:int;
+}
+
+table GetSetting {
+  type:SettingType;
+}
+
+table GetSettings {}
+
+table Trigger {
+    type:TriggerType;
+}
+
+table AddDmxDevice {
+    name:string;
+}
+
+table RemoveDmxDevice {
+    deviceId:uint;
+}
+
+table AddDmxDeviceChannel {
+    deviceId:uint;
+    channel:uint;
+    norm:ubyte;
+    test:ubyte;
+}
+
+table RemoveDmxDeviceChannel {
+    deviceId:uint;
+    channelId:uint;
+}
+
+table AddDmxChannelRule {
+    deviceId:uint;
+    channelId:uint;
+    ruleType:DmxChannelRuleType;
+    on:int;
+    off:int;
+    start:ubyte;
+    step:float;
+}
+
+table RemoveDmxChannelRule {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+}
+
+table AddDmxDeviceSetting {
+    deviceId:uint;
+    settingType:DmxDeviceSettingType;
+    name:string;
+    norm:byte;
+}
+
+table RemoveDmxDeviceSetting {
+    deviceId:uint;
+    settingId:uint;
+}
+
+table AddDmxRuleRangeSetting {
+    deviceId:uint;
+    settingId:uint;
+    channelId:uint;
+    ruleId:uint;
+    on:float;
+    off:float;
+    start:float;
+    step:float;
+}
+
+table AddDmxRuleBoolSetting {
+    deviceId:uint;
+    settingId:uint;
+    channelId:uint;
+    ruleId:uint;
+    on:int;
+    off:int;
+    start:ubyte;
+    step:float;
+}
+
+table RemoveDmxRuleSetting {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+}
+
+table ChangeDmxDeviceSettingValue {
+    deviceId:uint;
+    settingId:uint;
+    value:byte;
+}
+
+table SetDmxDeviceMode {
+    deviceId:uint;
+    mode:DmxDeviceMode;
+    value:bool;
+}
+
+table GetDmxDevice {
+    deviceId:uint;
+}
+
+table GetDmxDeviceRange {
+    deviceId:uint;
+    range:ubyte;
+}
+
+table GetDmxDeviceChannel {
+    deviceId:uint;
+    channelId:uint;
+}
+
+table GetDmxDeviceChannelRange {
+    deviceId:uint;
+    channelId:uint;
+    range:ubyte;
+}
+
+table GetDmxChannelRule {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+}
+
+table GetDmxChannelRuleRange {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+    range:ubyte;
+}
+
+table GetDmxDeviceSetting {
+    deviceId:uint;
+    settingId:uint;
+}
+
+table GetDmxDeviceSettingRange {
+    deviceId:uint;
+    settingId:uint;
+    range:ubyte;
+}
+
+table GetDmxRuleSetting {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+    type:DmxDeviceSettingType;
+}
+
+table GetDmxRuleSettingRange {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+    type:DmxDeviceSettingType;
+    range:ubyte;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Sisycol Response Tables
+////////////////////////////////////////////////////////////////////////////////
+namespace sisyfox.sisycol.response;
+
+table Error {
+    errorCode:ErrorCode;
+}
+
+table Info {
+    version:Version;
+    serverVersion:uint = 0xffffffff;
+    scoreCount:uint = 0xffffffff;
+    userCount:uint = 0xffffffff;
+    dmxDeviceCount:uint = 0xffffffff;
+    registryEntryCount:uint = 0xffffffff;
+    userId:uint = 0xffffffff;
+}
+
+table AddScore {
+    data:Score;
+}
+
+table GetScore {
+    data:Score;
+}
+
+table GetScoreRange {
+    data:[Score];
+}
+
+table GetLocation {
+    name:string;
+}
+
+table GetLiveData {
+    liveData:LiveData;
+}
+
+table AddRule {
+    id:uint;
+}
+
+table AddUser {
+    uId:uint;
+}
+
+table User {
+    uId:uint;
+    timestamp:ulong;
+    name:string;
+}
+
+table GetUser {
+    data:User;
+}
+
+table SetUser {
+    uId:uint;
+}
+
+table UnsetUser {}
+
+table GetCurrentUser {
+    uId:uint;
+    timestamp:ulong;
+    name:string;
+}
+
+table GetUserRange {
+    user:[User];
+}
+
+table RemoveUser {
+    uId:uint;
+}
+
+table SetSetting {
+    type:SettingType;
+    value:int;
+}
+
+table GetSetting {
+    value:int;
+}
+
+table GetSettings {
+    generalSetting:GeneralSetting;
+    userSetting:UserSetting;
+}
+
+table Trigger {
+    type:TriggerType;
+}
+
+table AddDmxDevice {
+    deviceId:uint;
+}
+
+table RemoveDmxDevice {
+    deviceId:uint;
+}
+
+table AddDmxDeviceChannel {
+    deviceId:uint;
+    channelId:uint;
+}
+
+table RemoveDmxDeviceChannel {
+    deviceId:uint;
+    channelId:uint;
+}
+
+table AddDmxChannelRule {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+}
+
+table RemoveDmxChannelRule {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+}
+
+table AddDmxDeviceSetting {
+    deviceId:uint;
+    settingId:uint;
+}
+
+table RemoveDmxDeviceSetting {
+    deviceId:uint;
+    settingId:uint;
+}
+
+table AddDmxRuleSetting {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+}
+
+table RemoveDmxRuleSetting {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+}
+
+table ChangeDmxDeviceSettingValue {
+    deviceId:uint;
+    settingId:uint;
+    value:byte;
+}
+
+table SetDmxDeviceMode {
+    deviceId:uint;
+    mode:DmxDeviceMode;
+    value:bool;
+}
+
+table DmxDevice {
+    name:string;
+    disabled:bool;
+    testMode:bool;
+    channelCount:uint;
+    settingCount:uint;
+}
+
+table GetDmxDevice {
+    deviceId:uint;
+    device:DmxDevice;
+}
+
+table GetDmxDeviceRange {
+    deviceId:uint;
+    device:[DmxDevice];
+}
+
+table GetDmxDeviceChannel {
+    deviceId:uint;
+    channelId:uint;
+    channel:DmxDeviceChannel;
+}
+
+table GetDmxDeviceChannelRange {
+    deviceId:uint;
+    channelId:uint;
+    channel:[DmxDeviceChannel];
+}
+
+table GetDmxChannelRule {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+    rule:DmxChannelRule;
+}
+
+table GetDmxChannelRuleRange {
+    deviceId:uint;
+    channelId:uint;
+    ruleId:uint;
+    rule:[DmxChannelRule];
+}
+
+table DmxDeviceSetting {
+    name:string;
+    storageRef:int;
+    ruleSettingCount:uint;
+    norm:byte;
+    value:byte;
+    type:DmxDeviceSettingType;
+}
+
+table GetDmxDeviceSetting {
+    deviceId:uint;
+    settingId:uint;
+    setting:DmxDeviceSetting;
+}
+
+table GetDmxDeviceSettingRange {
+    deviceId:uint;
+    settingId:uint;
+    setting:[DmxDeviceSetting];
+}
+
+table GetDmxRuleRangeSetting {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+    ruleSetting:DmxRuleRangeSetting;
+}
+
+table GetDmxRuleRangeSettingRange {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+    ruleSetting:[DmxRuleRangeSetting];
+}
+
+table GetDmxRuleBoolSetting {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+    ruleSetting:DmxRuleBoolSetting;
+}
+
+table GetDmxRuleBoolSettingRange {
+    deviceId:uint;
+    settingId:uint;
+    ruleSettingId:uint;
+    ruleSetting:[DmxRuleBoolSetting];
+}
