@@ -1198,6 +1198,106 @@ sisyfox.sisycol.DmxRuleBoolSetting.createDmxRuleBoolSetting = function(builder, 
 /**
  * @constructor
  */
+sisyfox.sisycol.User = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.User}
+ */
+sisyfox.sisycol.User.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.User=} obj
+ * @returns {sisyfox.sisycol.User}
+ */
+sisyfox.sisycol.User.getRootAsUser = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.User).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.User.prototype.uId = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {flatbuffers.Long}
+ */
+sisyfox.sisycol.User.prototype.timestamp = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readUint64(this.bb_pos + offset) : this.bb.createLong(0, 0);
+};
+
+/**
+ * @param {flatbuffers.Encoding=} optionalEncoding
+ * @returns {string|Uint8Array|null}
+ */
+sisyfox.sisycol.User.prototype.name = function(optionalEncoding) {
+  var offset = this.bb.__offset(this.bb_pos, 8);
+  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.User.startUser = function(builder) {
+  builder.startObject(3);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} uId
+ */
+sisyfox.sisycol.User.addUId = function(builder, uId) {
+  builder.addFieldInt32(0, uId, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Long} timestamp
+ */
+sisyfox.sisycol.User.addTimestamp = function(builder, timestamp) {
+  builder.addFieldInt64(1, timestamp, builder.createLong(0, 0));
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} nameOffset
+ */
+sisyfox.sisycol.User.addName = function(builder, nameOffset) {
+  builder.addFieldOffset(2, nameOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.User.endUser = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.request.Info = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -5634,106 +5734,6 @@ sisyfox.sisycol.response.AddUser.endAddUser = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.response.User = function() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-};
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.response.User}
- */
-sisyfox.sisycol.response.User.prototype.__init = function(i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.response.User=} obj
- * @returns {sisyfox.sisycol.response.User}
- */
-sisyfox.sisycol.response.User.getRootAsUser = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.response.User).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.response.User.prototype.uId = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
-};
-
-/**
- * @returns {flatbuffers.Long}
- */
-sisyfox.sisycol.response.User.prototype.timestamp = function() {
-  var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.readUint64(this.bb_pos + offset) : this.bb.createLong(0, 0);
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-sisyfox.sisycol.response.User.prototype.name = function(optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 8);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- */
-sisyfox.sisycol.response.User.startUser = function(builder) {
-  builder.startObject(3);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} uId
- */
-sisyfox.sisycol.response.User.addUId = function(builder, uId) {
-  builder.addFieldInt32(0, uId, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Long} timestamp
- */
-sisyfox.sisycol.response.User.addTimestamp = function(builder, timestamp) {
-  builder.addFieldInt64(1, timestamp, builder.createLong(0, 0));
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} nameOffset
- */
-sisyfox.sisycol.response.User.addName = function(builder, nameOffset) {
-  builder.addFieldOffset(2, nameOffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @returns {flatbuffers.Offset}
- */
-sisyfox.sisycol.response.User.endUser = function(builder) {
-  var offset = builder.endObject();
-  return offset;
-};
-
-/**
- * @constructor
- */
 sisyfox.sisycol.response.GetUser = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -5767,12 +5767,12 @@ sisyfox.sisycol.response.GetUser.getRootAsGetUser = function(bb, obj) {
 };
 
 /**
- * @param {sisyfox.sisycol.response.User=} obj
- * @returns {sisyfox.sisycol.response.User|null}
+ * @param {sisyfox.sisycol.User=} obj
+ * @returns {sisyfox.sisycol.User|null}
  */
 sisyfox.sisycol.response.GetUser.prototype.data = function(obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.response.User).__init(this.bb.__indirect(this.bb_pos + offset), this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.User).__init(this.bb.__indirect(this.bb_pos + offset), this.bb) : null;
 };
 
 /**
@@ -6054,12 +6054,12 @@ sisyfox.sisycol.response.GetUserRange.getRootAsGetUserRange = function(bb, obj) 
 
 /**
  * @param {number} index
- * @param {sisyfox.sisycol.response.User=} obj
- * @returns {sisyfox.sisycol.response.User}
+ * @param {sisyfox.sisycol.User=} obj
+ * @returns {sisyfox.sisycol.User}
  */
 sisyfox.sisycol.response.GetUserRange.prototype.user = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.response.User).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.User).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
 };
 
 /**

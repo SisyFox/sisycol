@@ -10,10 +10,10 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              SetSetting, GetSetting, GetSettings, Trigger, AddDmxDevice,
              RemoveDmxDevice, AddDmxDeviceChannel, RemoveDmxDeviceChannel,
              AddDmxChannelRule, RemoveDmxChannelRule, AddDmxDeviceSetting,
-             AddDmxRuleSetting, RemoveDmxDeviceSetting, 
-             AddDmxRuleRangeSetting, AddDmxRuleBoolSetting, 
+             AddDmxRuleSetting, RemoveDmxDeviceSetting,
+             AddDmxRuleRangeSetting, AddDmxRuleBoolSetting,
              RemoveDmxRuleSetting, ChangeDmxDeviceSettingValue,
-             GetDmxDevice, GetDmxDeviceChannel, GetDmxChannelRule, 
+             GetDmxDevice, GetDmxDeviceChannel, GetDmxChannelRule,
              GetDmxDeviceSetting, GetDmxRuleSetting,
              GetDmxDeviceRange, GetDmxDeviceChannelRange,
              GetDmxChannelRuleRange, GetDmxDeviceSettingRange,
@@ -144,6 +144,12 @@ struct DmxRuleBoolSetting {
     off:int;
     start:ubyte;
     step:float;
+}
+
+table User {
+    uId:uint;
+    timestamp:ulong;
+    name:string;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -415,12 +421,6 @@ table AddRule {
 
 table AddUser {
     uId:uint;
-}
-
-table User {
-    uId:uint;
-    timestamp:ulong;
-    name:string;
 }
 
 table GetUser {

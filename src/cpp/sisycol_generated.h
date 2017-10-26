@@ -29,6 +29,8 @@ struct DmxRuleRangeSetting;
 
 struct DmxRuleBoolSetting;
 
+struct User;
+
 namespace request {
 
 struct Info;
@@ -136,8 +138,6 @@ struct GetLiveData;
 struct AddRule;
 
 struct AddUser;
-
-struct User;
 
 struct GetUser;
 
@@ -1780,6 +1780,79 @@ inline flatbuffers::Offset<Root> CreateRoot(
   builder_.add_messageId(messageId);
   builder_.add_payload_type(payload_type);
   return builder_.Finish();
+}
+
+struct User FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_UID = 4,
+    VT_TIMESTAMP = 6,
+    VT_NAME = 8
+  };
+  uint32_t uId() const {
+    return GetField<uint32_t>(VT_UID, 0);
+  }
+  uint64_t timestamp() const {
+    return GetField<uint64_t>(VT_TIMESTAMP, 0);
+  }
+  const flatbuffers::String *name() const {
+    return GetPointer<const flatbuffers::String *>(VT_NAME);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_UID) &&
+           VerifyField<uint64_t>(verifier, VT_TIMESTAMP) &&
+           VerifyOffset(verifier, VT_NAME) &&
+           verifier.Verify(name()) &&
+           verifier.EndTable();
+  }
+};
+
+struct UserBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_uId(uint32_t uId) {
+    fbb_.AddElement<uint32_t>(User::VT_UID, uId, 0);
+  }
+  void add_timestamp(uint64_t timestamp) {
+    fbb_.AddElement<uint64_t>(User::VT_TIMESTAMP, timestamp, 0);
+  }
+  void add_name(flatbuffers::Offset<flatbuffers::String> name) {
+    fbb_.AddOffset(User::VT_NAME, name);
+  }
+  explicit UserBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  UserBuilder &operator=(const UserBuilder &);
+  flatbuffers::Offset<User> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<User>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<User> CreateUser(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t uId = 0,
+    uint64_t timestamp = 0,
+    flatbuffers::Offset<flatbuffers::String> name = 0) {
+  UserBuilder builder_(_fbb);
+  builder_.add_timestamp(timestamp);
+  builder_.add_name(name);
+  builder_.add_uId(uId);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<User> CreateUserDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t uId = 0,
+    uint64_t timestamp = 0,
+    const char *name = nullptr) {
+  return sisyfox::sisycol::CreateUser(
+      _fbb,
+      uId,
+      timestamp,
+      name ? _fbb.CreateString(name) : 0);
 }
 
 namespace request {
@@ -4500,85 +4573,12 @@ inline flatbuffers::Offset<AddUser> CreateAddUser(
   return builder_.Finish();
 }
 
-struct User FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  enum {
-    VT_UID = 4,
-    VT_TIMESTAMP = 6,
-    VT_NAME = 8
-  };
-  uint32_t uId() const {
-    return GetField<uint32_t>(VT_UID, 0);
-  }
-  uint64_t timestamp() const {
-    return GetField<uint64_t>(VT_TIMESTAMP, 0);
-  }
-  const flatbuffers::String *name() const {
-    return GetPointer<const flatbuffers::String *>(VT_NAME);
-  }
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           VerifyField<uint32_t>(verifier, VT_UID) &&
-           VerifyField<uint64_t>(verifier, VT_TIMESTAMP) &&
-           VerifyOffset(verifier, VT_NAME) &&
-           verifier.Verify(name()) &&
-           verifier.EndTable();
-  }
-};
-
-struct UserBuilder {
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  void add_uId(uint32_t uId) {
-    fbb_.AddElement<uint32_t>(User::VT_UID, uId, 0);
-  }
-  void add_timestamp(uint64_t timestamp) {
-    fbb_.AddElement<uint64_t>(User::VT_TIMESTAMP, timestamp, 0);
-  }
-  void add_name(flatbuffers::Offset<flatbuffers::String> name) {
-    fbb_.AddOffset(User::VT_NAME, name);
-  }
-  explicit UserBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  UserBuilder &operator=(const UserBuilder &);
-  flatbuffers::Offset<User> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<User>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<User> CreateUser(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    uint32_t uId = 0,
-    uint64_t timestamp = 0,
-    flatbuffers::Offset<flatbuffers::String> name = 0) {
-  UserBuilder builder_(_fbb);
-  builder_.add_timestamp(timestamp);
-  builder_.add_name(name);
-  builder_.add_uId(uId);
-  return builder_.Finish();
-}
-
-inline flatbuffers::Offset<User> CreateUserDirect(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    uint32_t uId = 0,
-    uint64_t timestamp = 0,
-    const char *name = nullptr) {
-  return sisyfox::sisycol::response::CreateUser(
-      _fbb,
-      uId,
-      timestamp,
-      name ? _fbb.CreateString(name) : 0);
-}
-
 struct GetUser FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_DATA = 4
   };
-  const User *data() const {
-    return GetPointer<const User *>(VT_DATA);
+  const sisyfox::sisycol::User *data() const {
+    return GetPointer<const sisyfox::sisycol::User *>(VT_DATA);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -4591,7 +4591,7 @@ struct GetUser FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetUserBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_data(flatbuffers::Offset<User> data) {
+  void add_data(flatbuffers::Offset<sisyfox::sisycol::User> data) {
     fbb_.AddOffset(GetUser::VT_DATA, data);
   }
   explicit GetUserBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -4608,7 +4608,7 @@ struct GetUserBuilder {
 
 inline flatbuffers::Offset<GetUser> CreateGetUser(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<User> data = 0) {
+    flatbuffers::Offset<sisyfox::sisycol::User> data = 0) {
   GetUserBuilder builder_(_fbb);
   builder_.add_data(data);
   return builder_.Finish();
@@ -4759,8 +4759,8 @@ struct GetUserRange FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_USER = 4
   };
-  const flatbuffers::Vector<flatbuffers::Offset<User>> *user() const {
-    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<User>> *>(VT_USER);
+  const flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::User>> *user() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::User>> *>(VT_USER);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -4774,7 +4774,7 @@ struct GetUserRange FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetUserRangeBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_user(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<User>>> user) {
+  void add_user(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::User>>> user) {
     fbb_.AddOffset(GetUserRange::VT_USER, user);
   }
   explicit GetUserRangeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -4791,7 +4791,7 @@ struct GetUserRangeBuilder {
 
 inline flatbuffers::Offset<GetUserRange> CreateGetUserRange(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<User>>> user = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::User>>> user = 0) {
   GetUserRangeBuilder builder_(_fbb);
   builder_.add_user(user);
   return builder_.Finish();
@@ -4799,10 +4799,10 @@ inline flatbuffers::Offset<GetUserRange> CreateGetUserRange(
 
 inline flatbuffers::Offset<GetUserRange> CreateGetUserRangeDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<flatbuffers::Offset<User>> *user = nullptr) {
+    const std::vector<flatbuffers::Offset<sisyfox::sisycol::User>> *user = nullptr) {
   return sisyfox::sisycol::response::CreateGetUserRange(
       _fbb,
-      user ? _fbb.CreateVector<flatbuffers::Offset<User>>(*user) : 0);
+      user ? _fbb.CreateVector<flatbuffers::Offset<sisyfox::sisycol::User>>(*user) : 0);
 }
 
 struct RemoveUser FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {

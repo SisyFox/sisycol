@@ -17,7 +17,7 @@ public struct GetUserRange : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public GetUserRange __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public User? User(int j) { int o = __p.__offset(4); return o != 0 ? (User?)(new User()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
+  public sisyfox.sisycol.User? User(int j) { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.User?)(new sisyfox.sisycol.User()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
   public int UserLength { get { int o = __p.__offset(4); return o != 0 ? __p.__vector_len(o) : 0; } }
 
   public static Offset<GetUserRange> CreateGetUserRange(FlatBufferBuilder builder,
@@ -29,7 +29,7 @@ public struct GetUserRange : IFlatbufferObject
 
   public static void StartGetUserRange(FlatBufferBuilder builder) { builder.StartObject(1); }
   public static void AddUser(FlatBufferBuilder builder, VectorOffset userOffset) { builder.AddOffset(0, userOffset.Value, 0); }
-  public static VectorOffset CreateUserVector(FlatBufferBuilder builder, Offset<User>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
+  public static VectorOffset CreateUserVector(FlatBufferBuilder builder, Offset<sisyfox.sisycol.User>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
   public static void StartUserVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(4, numElems, 4); }
   public static Offset<GetUserRange> EndGetUserRange(FlatBufferBuilder builder) {
     int o = builder.EndObject();
