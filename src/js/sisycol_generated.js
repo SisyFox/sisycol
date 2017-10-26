@@ -74,7 +74,9 @@ sisyfox.sisycol.Payload = {
   GetDmxRuleSettingRange: 43,
   GetDmxRuleRangeSetting: 44,
   GetDmxRuleRangeSettingRange: 45,
-  SetDmxDeviceMode: 46
+  GetDmxRuleBoolSetting: 46,
+  GetDmxRuleBoolSettingRange: 47,
+  SetDmxDeviceMode: 48
 };
 
 /**

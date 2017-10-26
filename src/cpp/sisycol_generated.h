@@ -260,12 +260,14 @@ enum Payload {
   Payload_GetDmxRuleSettingRange = 43,
   Payload_GetDmxRuleRangeSetting = 44,
   Payload_GetDmxRuleRangeSettingRange = 45,
-  Payload_SetDmxDeviceMode = 46,
+  Payload_GetDmxRuleBoolSetting = 46,
+  Payload_GetDmxRuleBoolSettingRange = 47,
+  Payload_SetDmxDeviceMode = 48,
   Payload_MIN = Payload_NONE,
   Payload_MAX = Payload_SetDmxDeviceMode
 };
 
-inline Payload (&EnumValuesPayload())[47] {
+inline Payload (&EnumValuesPayload())[49] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -313,6 +315,8 @@ inline Payload (&EnumValuesPayload())[47] {
     Payload_GetDmxRuleSettingRange,
     Payload_GetDmxRuleRangeSetting,
     Payload_GetDmxRuleRangeSettingRange,
+    Payload_GetDmxRuleBoolSetting,
+    Payload_GetDmxRuleBoolSettingRange,
     Payload_SetDmxDeviceMode
   };
   return values;
@@ -366,6 +370,8 @@ inline const char **EnumNamesPayload() {
     "GetDmxRuleSettingRange",
     "GetDmxRuleRangeSetting",
     "GetDmxRuleRangeSettingRange",
+    "GetDmxRuleBoolSetting",
+    "GetDmxRuleBoolSettingRange",
     "SetDmxDeviceMode",
     nullptr
   };
@@ -559,6 +565,14 @@ template<> struct PayloadTraits<sisyfox::sisycol::response::GetDmxRuleRangeSetti
 
 template<> struct PayloadTraits<sisyfox::sisycol::response::GetDmxRuleRangeSettingRange> {
   static const Payload enum_value = Payload_GetDmxRuleRangeSettingRange;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::response::GetDmxRuleBoolSetting> {
+  static const Payload enum_value = Payload_GetDmxRuleBoolSetting;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::response::GetDmxRuleBoolSettingRange> {
+  static const Payload enum_value = Payload_GetDmxRuleBoolSettingRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::SetDmxDeviceMode> {
@@ -1515,6 +1529,12 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::response::GetDmxRuleRangeSettingRange *payload_as_GetDmxRuleRangeSettingRange() const {
     return payload_type() == Payload_GetDmxRuleRangeSettingRange ? static_cast<const sisyfox::sisycol::response::GetDmxRuleRangeSettingRange *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::response::GetDmxRuleBoolSetting *payload_as_GetDmxRuleBoolSetting() const {
+    return payload_type() == Payload_GetDmxRuleBoolSetting ? static_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSetting *>(payload()) : nullptr;
+  }
+  const sisyfox::sisycol::response::GetDmxRuleBoolSettingRange *payload_as_GetDmxRuleBoolSettingRange() const {
+    return payload_type() == Payload_GetDmxRuleBoolSettingRange ? static_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSettingRange *>(payload()) : nullptr;
+  }
   const sisyfox::sisycol::request::SetDmxDeviceMode *payload_as_SetDmxDeviceMode() const {
     return payload_type() == Payload_SetDmxDeviceMode ? static_cast<const sisyfox::sisycol::request::SetDmxDeviceMode *>(payload()) : nullptr;
   }
@@ -1707,6 +1727,14 @@ template<> inline const sisyfox::sisycol::response::GetDmxRuleRangeSetting *Root
 
 template<> inline const sisyfox::sisycol::response::GetDmxRuleRangeSettingRange *Root::payload_as<sisyfox::sisycol::response::GetDmxRuleRangeSettingRange>() const {
   return payload_as_GetDmxRuleRangeSettingRange();
+}
+
+template<> inline const sisyfox::sisycol::response::GetDmxRuleBoolSetting *Root::payload_as<sisyfox::sisycol::response::GetDmxRuleBoolSetting>() const {
+  return payload_as_GetDmxRuleBoolSetting();
+}
+
+template<> inline const sisyfox::sisycol::response::GetDmxRuleBoolSettingRange *Root::payload_as<sisyfox::sisycol::response::GetDmxRuleBoolSettingRange>() const {
+  return payload_as_GetDmxRuleBoolSettingRange();
 }
 
 template<> inline const sisyfox::sisycol::request::SetDmxDeviceMode *Root::payload_as<sisyfox::sisycol::request::SetDmxDeviceMode>() const {
@@ -6882,6 +6910,14 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_GetDmxRuleRangeSettingRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GetDmxRuleRangeSettingRange *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_GetDmxRuleBoolSetting: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSetting *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_GetDmxRuleBoolSettingRange: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSettingRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
     case Payload_SetDmxDeviceMode: {
