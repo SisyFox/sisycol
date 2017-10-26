@@ -159,7 +159,7 @@ sisyfox.sisycol.World = {
  * @enum
  */
 sisyfox.sisycol.DmxChannelRuleType = {
-  HEIGHT: 0,
+  GOAL: 0,
   TIME: 1,
   PITCH: 2
 };
@@ -387,7 +387,7 @@ sisyfox.sisycol.LiveData.prototype.__init = function(i, bb) {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.LiveData.prototype.height = function() {
+sisyfox.sisycol.LiveData.prototype.goal = function() {
   return this.bb.readInt32(this.bb_pos);
 };
 
@@ -407,16 +407,16 @@ sisyfox.sisycol.LiveData.prototype.pitch = function() {
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {number} height
+ * @param {number} goal
  * @param {number} time
  * @param {number} pitch
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.LiveData.createLiveData = function(builder, height, time, pitch) {
+sisyfox.sisycol.LiveData.createLiveData = function(builder, goal, time, pitch) {
   builder.prep(4, 12);
   builder.writeInt32(pitch);
   builder.writeInt32(time);
-  builder.writeInt32(height);
+  builder.writeInt32(goal);
   return builder.offset();
 };
 
@@ -456,14 +456,14 @@ sisyfox.sisycol.Score.prototype.id = function() {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.Score.prototype.height = function() {
+sisyfox.sisycol.Score.prototype.goal = function() {
   return this.bb.readInt32(this.bb_pos + 4);
 };
 
 /**
  * @returns {number}
  */
-sisyfox.sisycol.Score.prototype.maxHeight = function() {
+sisyfox.sisycol.Score.prototype.maxGoal = function() {
   return this.bb.readInt32(this.bb_pos + 8);
 };
 
@@ -554,8 +554,8 @@ sisyfox.sisycol.Score.prototype.rating = function() {
 /**
  * @param {flatbuffers.Builder} builder
  * @param {number} id
- * @param {number} height
- * @param {number} maxHeight
+ * @param {number} goal
+ * @param {number} maxGoal
  * @param {number} time
  * @param {number} rank
  * @param {flatbuffers.Long} timestamp
@@ -570,7 +570,7 @@ sisyfox.sisycol.Score.prototype.rating = function() {
  * @param {number} rating
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.Score.createScore = function(builder, id, height, maxHeight, time, rank, timestamp, level, world, gameMode, difficulty, reason, goalScore, timeScore, endScore, rating) {
+sisyfox.sisycol.Score.createScore = function(builder, id, goal, maxGoal, time, rank, timestamp, level, world, gameMode, difficulty, reason, goalScore, timeScore, endScore, rating) {
   builder.prep(8, 56);
   builder.writeInt32(rating);
   builder.writeInt32(endScore);
@@ -586,8 +586,8 @@ sisyfox.sisycol.Score.createScore = function(builder, id, height, maxHeight, tim
   builder.pad(4);
   builder.writeInt32(rank);
   builder.writeInt32(time);
-  builder.writeInt32(maxHeight);
-  builder.writeInt32(height);
+  builder.writeInt32(maxGoal);
+  builder.writeInt32(goal);
   builder.writeInt32(id);
   return builder.offset();
 };
@@ -1384,7 +1384,7 @@ sisyfox.sisycol.request.AddScore.getRootAsAddScore = function(bb, obj) {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.request.AddScore.prototype.height = function() {
+sisyfox.sisycol.request.AddScore.prototype.goal = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
 };
@@ -1392,7 +1392,7 @@ sisyfox.sisycol.request.AddScore.prototype.height = function() {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.request.AddScore.prototype.maxHeight = function() {
+sisyfox.sisycol.request.AddScore.prototype.maxGoal = function() {
   var offset = this.bb.__offset(this.bb_pos, 6);
   return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
 };
@@ -1422,18 +1422,18 @@ sisyfox.sisycol.request.AddScore.startAddScore = function(builder) {
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {number} height
+ * @param {number} goal
  */
-sisyfox.sisycol.request.AddScore.addHeight = function(builder, height) {
-  builder.addFieldInt32(0, height, 0);
+sisyfox.sisycol.request.AddScore.addGoal = function(builder, goal) {
+  builder.addFieldInt32(0, goal, 0);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {number} maxHeight
+ * @param {number} maxGoal
  */
-sisyfox.sisycol.request.AddScore.addMaxHeight = function(builder, maxHeight) {
-  builder.addFieldInt32(1, maxHeight, 0);
+sisyfox.sisycol.request.AddScore.addMaxGoal = function(builder, maxGoal) {
+  builder.addFieldInt32(1, maxGoal, 0);
 };
 
 /**
@@ -2992,7 +2992,7 @@ sisyfox.sisycol.request.AddDmxChannelRule.prototype.channelId = function() {
  */
 sisyfox.sisycol.request.AddDmxChannelRule.prototype.ruleType = function() {
   var offset = this.bb.__offset(this.bb_pos, 8);
-  return offset ? /** @type {sisyfox.sisycol.DmxChannelRuleType} */ (this.bb.readInt8(this.bb_pos + offset)) : sisyfox.sisycol.DmxChannelRuleType.HEIGHT;
+  return offset ? /** @type {sisyfox.sisycol.DmxChannelRuleType} */ (this.bb.readInt8(this.bb_pos + offset)) : sisyfox.sisycol.DmxChannelRuleType.GOAL;
 };
 
 /**
@@ -3055,7 +3055,7 @@ sisyfox.sisycol.request.AddDmxChannelRule.addChannelId = function(builder, chann
  * @param {sisyfox.sisycol.DmxChannelRuleType} ruleType
  */
 sisyfox.sisycol.request.AddDmxChannelRule.addRuleType = function(builder, ruleType) {
-  builder.addFieldInt8(2, ruleType, sisyfox.sisycol.DmxChannelRuleType.HEIGHT);
+  builder.addFieldInt8(2, ruleType, sisyfox.sisycol.DmxChannelRuleType.GOAL);
 };
 
 /**

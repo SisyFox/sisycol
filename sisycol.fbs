@@ -49,7 +49,7 @@ enum GameMode:ubyte    { FREESTYLE, LEVEL_COLLECT }
 
 enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON }
 
-enum DmxChannelRuleType:byte   { HEIGHT, TIME, PITCH }
+enum DmxChannelRuleType:byte   { GOAL, TIME, PITCH }
 
 enum DmxDeviceSettingType:byte { RANGE, BOOL }
 
@@ -62,15 +62,15 @@ struct Version {
 }
 
 struct LiveData {
-  height:int;
+  goal:int;
   time:int;
   pitch:int;
 }
 
 struct Score {
     id:uint;
-    height:int;
-    maxHeight:int;
+    goal:int;
+    maxGoal:int;
     time:int;
     rank:uint;
     timestamp:long;
@@ -160,8 +160,8 @@ namespace sisyfox.sisycol.request;
 table Info {}
 
 table AddScore {
-  height:int;
-  maxHeight:int;
+  goal:int;
+  maxGoal:int;
   time:int;
   reason:EndReason;
 }

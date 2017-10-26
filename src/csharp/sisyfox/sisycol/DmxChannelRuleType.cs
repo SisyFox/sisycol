@@ -7,7 +7,7 @@ namespace sisyfox.sisycol
 
 public enum DmxChannelRuleType : sbyte
 {
- HEIGHT = 0,
+ GOAL = 0,
  TIME = 1,
  PITCH = 2,
 };

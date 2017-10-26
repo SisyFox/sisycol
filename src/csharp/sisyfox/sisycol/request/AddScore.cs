@@ -17,27 +17,27 @@ public struct AddScore : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public AddScore __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public int Height { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
-  public int MaxHeight { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int Goal { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int MaxGoal { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public int Time { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public sisyfox.sisycol.EndReason Reason { get { int o = __p.__offset(10); return o != 0 ? (sisyfox.sisycol.EndReason)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.EndReason.WIN; } }
 
   public static Offset<AddScore> CreateAddScore(FlatBufferBuilder builder,
-      int height = 0,
-      int maxHeight = 0,
+      int goal = 0,
+      int maxGoal = 0,
       int time = 0,
       sisyfox.sisycol.EndReason reason = sisyfox.sisycol.EndReason.WIN) {
     builder.StartObject(4);
     AddScore.AddTime(builder, time);
-    AddScore.AddMaxHeight(builder, maxHeight);
-    AddScore.AddHeight(builder, height);
+    AddScore.AddMaxGoal(builder, maxGoal);
+    AddScore.AddGoal(builder, goal);
     AddScore.AddReason(builder, reason);
     return AddScore.EndAddScore(builder);
   }
 
   public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(4); }
-  public static void AddHeight(FlatBufferBuilder builder, int height) { builder.AddInt(0, height, 0); }
-  public static void AddMaxHeight(FlatBufferBuilder builder, int maxHeight) { builder.AddInt(1, maxHeight, 0); }
+  public static void AddGoal(FlatBufferBuilder builder, int goal) { builder.AddInt(0, goal, 0); }
+  public static void AddMaxGoal(FlatBufferBuilder builder, int maxGoal) { builder.AddInt(1, maxGoal, 0); }
   public static void AddTime(FlatBufferBuilder builder, int time) { builder.AddInt(2, time, 0); }
   public static void AddReason(FlatBufferBuilder builder, sisyfox.sisycol.EndReason reason) { builder.AddByte(3, (byte)reason, 0); }
   public static Offset<AddScore> EndAddScore(FlatBufferBuilder builder) {

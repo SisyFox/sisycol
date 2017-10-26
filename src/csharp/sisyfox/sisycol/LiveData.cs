@@ -15,15 +15,15 @@ public struct LiveData : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public LiveData __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public int Height { get { return __p.bb.GetInt(__p.bb_pos + 0); } }
+  public int Goal { get { return __p.bb.GetInt(__p.bb_pos + 0); } }
   public int Time { get { return __p.bb.GetInt(__p.bb_pos + 4); } }
   public int Pitch { get { return __p.bb.GetInt(__p.bb_pos + 8); } }
 
-  public static Offset<LiveData> CreateLiveData(FlatBufferBuilder builder, int Height, int Time, int Pitch) {
+  public static Offset<LiveData> CreateLiveData(FlatBufferBuilder builder, int Goal, int Time, int Pitch) {
     builder.Prep(4, 12);
     builder.PutInt(Pitch);
     builder.PutInt(Time);
-    builder.PutInt(Height);
+    builder.PutInt(Goal);
     return new Offset<LiveData>(builder.Offset);
   }
 };

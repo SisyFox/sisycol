@@ -807,16 +807,16 @@ inline const char *EnumNameWorld(World e) {
 }
 
 enum DmxChannelRuleType {
-  DmxChannelRuleType_HEIGHT = 0,
+  DmxChannelRuleType_GOAL = 0,
   DmxChannelRuleType_TIME = 1,
   DmxChannelRuleType_PITCH = 2,
-  DmxChannelRuleType_MIN = DmxChannelRuleType_HEIGHT,
+  DmxChannelRuleType_MIN = DmxChannelRuleType_GOAL,
   DmxChannelRuleType_MAX = DmxChannelRuleType_PITCH
 };
 
 inline DmxChannelRuleType (&EnumValuesDmxChannelRuleType())[3] {
   static DmxChannelRuleType values[] = {
-    DmxChannelRuleType_HEIGHT,
+    DmxChannelRuleType_GOAL,
     DmxChannelRuleType_TIME,
     DmxChannelRuleType_PITCH
   };
@@ -825,7 +825,7 @@ inline DmxChannelRuleType (&EnumValuesDmxChannelRuleType())[3] {
 
 inline const char **EnumNamesDmxChannelRuleType() {
   static const char *names[] = {
-    "HEIGHT",
+    "GOAL",
     "TIME",
     "PITCH",
     nullptr
@@ -923,7 +923,7 @@ STRUCT_END(Version, 2);
 
 MANUALLY_ALIGNED_STRUCT(4) LiveData FLATBUFFERS_FINAL_CLASS {
  private:
-  int32_t height_;
+  int32_t goal_;
   int32_t time_;
   int32_t pitch_;
 
@@ -934,13 +934,13 @@ MANUALLY_ALIGNED_STRUCT(4) LiveData FLATBUFFERS_FINAL_CLASS {
   LiveData(const LiveData &_o) {
     memcpy(this, &_o, sizeof(LiveData));
   }
-  LiveData(int32_t _height, int32_t _time, int32_t _pitch)
-      : height_(flatbuffers::EndianScalar(_height)),
+  LiveData(int32_t _goal, int32_t _time, int32_t _pitch)
+      : goal_(flatbuffers::EndianScalar(_goal)),
         time_(flatbuffers::EndianScalar(_time)),
         pitch_(flatbuffers::EndianScalar(_pitch)) {
   }
-  int32_t height() const {
-    return flatbuffers::EndianScalar(height_);
+  int32_t goal() const {
+    return flatbuffers::EndianScalar(goal_);
   }
   int32_t time() const {
     return flatbuffers::EndianScalar(time_);
@@ -954,8 +954,8 @@ STRUCT_END(LiveData, 12);
 MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
  private:
   uint32_t id_;
-  int32_t height_;
-  int32_t maxHeight_;
+  int32_t goal_;
+  int32_t maxGoal_;
   int32_t time_;
   uint32_t rank_;
   int32_t padding0__;
@@ -978,10 +978,10 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   Score(const Score &_o) {
     memcpy(this, &_o, sizeof(Score));
   }
-  Score(uint32_t _id, int32_t _height, int32_t _maxHeight, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, uint8_t _gameMode, uint8_t _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating)
+  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, uint8_t _gameMode, uint8_t _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating)
       : id_(flatbuffers::EndianScalar(_id)),
-        height_(flatbuffers::EndianScalar(_height)),
-        maxHeight_(flatbuffers::EndianScalar(_maxHeight)),
+        goal_(flatbuffers::EndianScalar(_goal)),
+        maxGoal_(flatbuffers::EndianScalar(_maxGoal)),
         time_(flatbuffers::EndianScalar(_time)),
         rank_(flatbuffers::EndianScalar(_rank)),
         padding0__(0),
@@ -1003,11 +1003,11 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   uint32_t id() const {
     return flatbuffers::EndianScalar(id_);
   }
-  int32_t height() const {
-    return flatbuffers::EndianScalar(height_);
+  int32_t goal() const {
+    return flatbuffers::EndianScalar(goal_);
   }
-  int32_t maxHeight() const {
-    return flatbuffers::EndianScalar(maxHeight_);
+  int32_t maxGoal() const {
+    return flatbuffers::EndianScalar(maxGoal_);
   }
   int32_t time() const {
     return flatbuffers::EndianScalar(time_);
@@ -1887,16 +1887,16 @@ inline flatbuffers::Offset<Info> CreateInfo(
 
 struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_HEIGHT = 4,
-    VT_MAXHEIGHT = 6,
+    VT_GOAL = 4,
+    VT_MAXGOAL = 6,
     VT_TIME = 8,
     VT_REASON = 10
   };
-  int32_t height() const {
-    return GetField<int32_t>(VT_HEIGHT, 0);
+  int32_t goal() const {
+    return GetField<int32_t>(VT_GOAL, 0);
   }
-  int32_t maxHeight() const {
-    return GetField<int32_t>(VT_MAXHEIGHT, 0);
+  int32_t maxGoal() const {
+    return GetField<int32_t>(VT_MAXGOAL, 0);
   }
   int32_t time() const {
     return GetField<int32_t>(VT_TIME, 0);
@@ -1906,8 +1906,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<int32_t>(verifier, VT_HEIGHT) &&
-           VerifyField<int32_t>(verifier, VT_MAXHEIGHT) &&
+           VerifyField<int32_t>(verifier, VT_GOAL) &&
+           VerifyField<int32_t>(verifier, VT_MAXGOAL) &&
            VerifyField<int32_t>(verifier, VT_TIME) &&
            VerifyField<uint8_t>(verifier, VT_REASON) &&
            verifier.EndTable();
@@ -1917,11 +1917,11 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct AddScoreBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_height(int32_t height) {
-    fbb_.AddElement<int32_t>(AddScore::VT_HEIGHT, height, 0);
+  void add_goal(int32_t goal) {
+    fbb_.AddElement<int32_t>(AddScore::VT_GOAL, goal, 0);
   }
-  void add_maxHeight(int32_t maxHeight) {
-    fbb_.AddElement<int32_t>(AddScore::VT_MAXHEIGHT, maxHeight, 0);
+  void add_maxGoal(int32_t maxGoal) {
+    fbb_.AddElement<int32_t>(AddScore::VT_MAXGOAL, maxGoal, 0);
   }
   void add_time(int32_t time) {
     fbb_.AddElement<int32_t>(AddScore::VT_TIME, time, 0);
@@ -1943,14 +1943,14 @@ struct AddScoreBuilder {
 
 inline flatbuffers::Offset<AddScore> CreateAddScore(
     flatbuffers::FlatBufferBuilder &_fbb,
-    int32_t height = 0,
-    int32_t maxHeight = 0,
+    int32_t goal = 0,
+    int32_t maxGoal = 0,
     int32_t time = 0,
     sisyfox::sisycol::EndReason reason = sisyfox::sisycol::EndReason_WIN) {
   AddScoreBuilder builder_(_fbb);
   builder_.add_time(time);
-  builder_.add_maxHeight(maxHeight);
-  builder_.add_height(height);
+  builder_.add_maxGoal(maxGoal);
+  builder_.add_goal(goal);
   builder_.add_reason(reason);
   return builder_.Finish();
 }
@@ -2940,7 +2940,7 @@ inline flatbuffers::Offset<AddDmxChannelRule> CreateAddDmxChannelRule(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint32_t deviceId = 0,
     uint32_t channelId = 0,
-    sisyfox::sisycol::DmxChannelRuleType ruleType = sisyfox::sisycol::DmxChannelRuleType_HEIGHT,
+    sisyfox::sisycol::DmxChannelRuleType ruleType = sisyfox::sisycol::DmxChannelRuleType_GOAL,
     int32_t on = 0,
     int32_t off = 0,
     uint8_t start = 0,

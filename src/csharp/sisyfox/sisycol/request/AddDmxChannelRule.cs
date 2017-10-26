@@ -19,7 +19,7 @@ public struct AddDmxChannelRule : IFlatbufferObject
 
   public uint DeviceId { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
   public uint ChannelId { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
-  public sisyfox.sisycol.DmxChannelRuleType RuleType { get { int o = __p.__offset(8); return o != 0 ? (sisyfox.sisycol.DmxChannelRuleType)__p.bb.GetSbyte(o + __p.bb_pos) : sisyfox.sisycol.DmxChannelRuleType.HEIGHT; } }
+  public sisyfox.sisycol.DmxChannelRuleType RuleType { get { int o = __p.__offset(8); return o != 0 ? (sisyfox.sisycol.DmxChannelRuleType)__p.bb.GetSbyte(o + __p.bb_pos) : sisyfox.sisycol.DmxChannelRuleType.GOAL; } }
   public int On { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public int Off { get { int o = __p.__offset(12); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public byte Start { get { int o = __p.__offset(14); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
@@ -28,7 +28,7 @@ public struct AddDmxChannelRule : IFlatbufferObject
   public static Offset<AddDmxChannelRule> CreateAddDmxChannelRule(FlatBufferBuilder builder,
       uint deviceId = 0,
       uint channelId = 0,
-      sisyfox.sisycol.DmxChannelRuleType ruleType = sisyfox.sisycol.DmxChannelRuleType.HEIGHT,
+      sisyfox.sisycol.DmxChannelRuleType ruleType = sisyfox.sisycol.DmxChannelRuleType.GOAL,
       int on = 0,
       int off = 0,
       byte start = 0,
