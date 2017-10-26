@@ -441,70 +441,99 @@ sisyfox.sisycol.Score.prototype.height = function() {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.Score.prototype.time = function() {
+sisyfox.sisycol.Score.prototype.maxHeight = function() {
   return this.bb.readInt32(this.bb_pos + 8);
 };
 
 /**
  * @returns {number}
  */
+sisyfox.sisycol.Score.prototype.time = function() {
+  return this.bb.readInt32(this.bb_pos + 12);
+};
+
+/**
+ * @returns {number}
+ */
 sisyfox.sisycol.Score.prototype.rank = function() {
-  return this.bb.readUint32(this.bb_pos + 12);
+  return this.bb.readUint32(this.bb_pos + 16);
 };
 
 /**
  * @returns {flatbuffers.Long}
  */
 sisyfox.sisycol.Score.prototype.timestamp = function() {
-  return this.bb.readInt64(this.bb_pos + 16);
+  return this.bb.readInt64(this.bb_pos + 24);
 };
 
 /**
  * @returns {number}
  */
 sisyfox.sisycol.Score.prototype.level = function() {
-  return this.bb.readUint8(this.bb_pos + 24);
+  return this.bb.readUint8(this.bb_pos + 32);
 };
 
 /**
  * @returns {number}
  */
 sisyfox.sisycol.Score.prototype.world = function() {
-  return this.bb.readUint8(this.bb_pos + 25);
+  return this.bb.readUint8(this.bb_pos + 33);
 };
 
 /**
  * @returns {number}
  */
 sisyfox.sisycol.Score.prototype.gameMode = function() {
-  return this.bb.readUint8(this.bb_pos + 26);
+  return this.bb.readUint8(this.bb_pos + 34);
 };
 
 /**
  * @returns {number}
  */
 sisyfox.sisycol.Score.prototype.difficulty = function() {
-  return this.bb.readUint8(this.bb_pos + 27);
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.Score.prototype.score = function() {
-  return this.bb.readInt32(this.bb_pos + 28);
+  return this.bb.readUint8(this.bb_pos + 35);
 };
 
 /**
  * @returns {sisyfox.sisycol.EndReason}
  */
 sisyfox.sisycol.Score.prototype.reason = function() {
-  return /** @type {sisyfox.sisycol.EndReason} */ (this.bb.readUint8(this.bb_pos + 32));
+  return /** @type {sisyfox.sisycol.EndReason} */ (this.bb.readUint8(this.bb_pos + 36));
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Score.prototype.goalScore = function() {
+  return this.bb.readInt32(this.bb_pos + 40);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Score.prototype.timeScore = function() {
+  return this.bb.readInt32(this.bb_pos + 44);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Score.prototype.score = function() {
+  return this.bb.readInt32(this.bb_pos + 48);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Score.prototype.rating = function() {
+  return this.bb.readInt32(this.bb_pos + 52);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  * @param {number} id
  * @param {number} height
+ * @param {number} maxHeight
  * @param {number} time
  * @param {number} rank
  * @param {flatbuffers.Long} timestamp
@@ -512,22 +541,30 @@ sisyfox.sisycol.Score.prototype.reason = function() {
  * @param {number} world
  * @param {number} gameMode
  * @param {number} difficulty
- * @param {number} score
  * @param {sisyfox.sisycol.EndReason} reason
+ * @param {number} goalScore
+ * @param {number} timeScore
+ * @param {number} score
+ * @param {number} rating
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.Score.createScore = function(builder, id, height, time, rank, timestamp, level, world, gameMode, difficulty, score, reason) {
-  builder.prep(8, 40);
-  builder.pad(7);
-  builder.writeInt8(reason);
+sisyfox.sisycol.Score.createScore = function(builder, id, height, maxHeight, time, rank, timestamp, level, world, gameMode, difficulty, reason, goalScore, timeScore, score, rating) {
+  builder.prep(8, 56);
+  builder.writeInt32(rating);
   builder.writeInt32(score);
+  builder.writeInt32(timeScore);
+  builder.writeInt32(goalScore);
+  builder.pad(3);
+  builder.writeInt8(reason);
   builder.writeInt8(difficulty);
   builder.writeInt8(gameMode);
   builder.writeInt8(world);
   builder.writeInt8(level);
   builder.writeInt64(timestamp);
+  builder.pad(4);
   builder.writeInt32(rank);
   builder.writeInt32(time);
+  builder.writeInt32(maxHeight);
   builder.writeInt32(height);
   builder.writeInt32(id);
   return builder.offset();
@@ -1233,8 +1270,16 @@ sisyfox.sisycol.request.AddScore.prototype.height = function() {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.request.AddScore.prototype.time = function() {
+sisyfox.sisycol.request.AddScore.prototype.maxHeight = function() {
   var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.AddScore.prototype.time = function() {
+  var offset = this.bb.__offset(this.bb_pos, 8);
   return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
 };
 
@@ -1242,7 +1287,7 @@ sisyfox.sisycol.request.AddScore.prototype.time = function() {
  * @returns {sisyfox.sisycol.EndReason}
  */
 sisyfox.sisycol.request.AddScore.prototype.reason = function() {
-  var offset = this.bb.__offset(this.bb_pos, 8);
+  var offset = this.bb.__offset(this.bb_pos, 10);
   return offset ? /** @type {sisyfox.sisycol.EndReason} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.EndReason.WIN;
 };
 
@@ -1250,7 +1295,7 @@ sisyfox.sisycol.request.AddScore.prototype.reason = function() {
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.AddScore.startAddScore = function(builder) {
-  builder.startObject(3);
+  builder.startObject(4);
 };
 
 /**
@@ -1263,10 +1308,18 @@ sisyfox.sisycol.request.AddScore.addHeight = function(builder, height) {
 
 /**
  * @param {flatbuffers.Builder} builder
+ * @param {number} maxHeight
+ */
+sisyfox.sisycol.request.AddScore.addMaxHeight = function(builder, maxHeight) {
+  builder.addFieldInt32(1, maxHeight, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
  * @param {number} time
  */
 sisyfox.sisycol.request.AddScore.addTime = function(builder, time) {
-  builder.addFieldInt32(1, time, 0);
+  builder.addFieldInt32(2, time, 0);
 };
 
 /**
@@ -1274,7 +1327,7 @@ sisyfox.sisycol.request.AddScore.addTime = function(builder, time) {
  * @param {sisyfox.sisycol.EndReason} reason
  */
 sisyfox.sisycol.request.AddScore.addReason = function(builder, reason) {
-  builder.addFieldInt8(2, reason, sisyfox.sisycol.EndReason.WIN);
+  builder.addFieldInt8(3, reason, sisyfox.sisycol.EndReason.WIN);
 };
 
 /**
@@ -5260,7 +5313,7 @@ sisyfox.sisycol.response.GetScoreRange.getRootAsGetScoreRange = function(bb, obj
  */
 sisyfox.sisycol.response.GetScoreRange.prototype.data = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.Score).__init(this.bb.__vector(this.bb_pos + offset) + index * 40, this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.Score).__init(this.bb.__vector(this.bb_pos + offset) + index * 56, this.bb) : null;
 };
 
 /**
@@ -5291,7 +5344,7 @@ sisyfox.sisycol.response.GetScoreRange.addData = function(builder, dataOffset) {
  * @param {number} numElems
  */
 sisyfox.sisycol.response.GetScoreRange.startDataVector = function(builder, numElems) {
-  builder.startVector(40, numElems, 8);
+  builder.startVector(56, numElems, 8);
 };
 
 /**

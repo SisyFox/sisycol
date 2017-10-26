@@ -920,16 +920,21 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
  private:
   uint32_t id_;
   int32_t height_;
+  int32_t maxHeight_;
   int32_t time_;
   uint32_t rank_;
+  int32_t padding0__;
   int64_t timestamp_;
   uint8_t level_;
   uint8_t world_;
   uint8_t gameMode_;
   uint8_t difficulty_;
-  int32_t score_;
   uint8_t reason_;
-  int8_t padding0__;  int16_t padding1__;  int32_t padding2__;
+  int8_t padding1__;  int16_t padding2__;
+  int32_t goalScore_;
+  int32_t timeScore_;
+  int32_t score_;
+  int32_t rating_;
 
  public:
   Score() {
@@ -938,28 +943,36 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   Score(const Score &_o) {
     memcpy(this, &_o, sizeof(Score));
   }
-  Score(uint32_t _id, int32_t _height, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, uint8_t _gameMode, uint8_t _difficulty, int32_t _score, EndReason _reason)
+  Score(uint32_t _id, int32_t _height, int32_t _maxHeight, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, uint8_t _gameMode, uint8_t _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _score, int32_t _rating)
       : id_(flatbuffers::EndianScalar(_id)),
         height_(flatbuffers::EndianScalar(_height)),
+        maxHeight_(flatbuffers::EndianScalar(_maxHeight)),
         time_(flatbuffers::EndianScalar(_time)),
         rank_(flatbuffers::EndianScalar(_rank)),
+        padding0__(0),
         timestamp_(flatbuffers::EndianScalar(_timestamp)),
         level_(flatbuffers::EndianScalar(_level)),
         world_(flatbuffers::EndianScalar(_world)),
         gameMode_(flatbuffers::EndianScalar(_gameMode)),
         difficulty_(flatbuffers::EndianScalar(_difficulty)),
-        score_(flatbuffers::EndianScalar(_score)),
         reason_(flatbuffers::EndianScalar(static_cast<uint8_t>(_reason))),
-        padding0__(0),
         padding1__(0),
-        padding2__(0) {
-    (void)padding0__;    (void)padding1__;    (void)padding2__;
+        padding2__(0),
+        goalScore_(flatbuffers::EndianScalar(_goalScore)),
+        timeScore_(flatbuffers::EndianScalar(_timeScore)),
+        score_(flatbuffers::EndianScalar(_score)),
+        rating_(flatbuffers::EndianScalar(_rating)) {
+    (void)padding0__;
+    (void)padding1__;    (void)padding2__;
   }
   uint32_t id() const {
     return flatbuffers::EndianScalar(id_);
   }
   int32_t height() const {
     return flatbuffers::EndianScalar(height_);
+  }
+  int32_t maxHeight() const {
+    return flatbuffers::EndianScalar(maxHeight_);
   }
   int32_t time() const {
     return flatbuffers::EndianScalar(time_);
@@ -982,14 +995,23 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   uint8_t difficulty() const {
     return flatbuffers::EndianScalar(difficulty_);
   }
-  int32_t score() const {
-    return flatbuffers::EndianScalar(score_);
-  }
   EndReason reason() const {
     return static_cast<EndReason>(flatbuffers::EndianScalar(reason_));
   }
+  int32_t goalScore() const {
+    return flatbuffers::EndianScalar(goalScore_);
+  }
+  int32_t timeScore() const {
+    return flatbuffers::EndianScalar(timeScore_);
+  }
+  int32_t score() const {
+    return flatbuffers::EndianScalar(score_);
+  }
+  int32_t rating() const {
+    return flatbuffers::EndianScalar(rating_);
+  }
 };
-STRUCT_END(Score, 40);
+STRUCT_END(Score, 56);
 
 MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
  private:
@@ -1713,11 +1735,15 @@ inline flatbuffers::Offset<Info> CreateInfo(
 struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_HEIGHT = 4,
-    VT_TIME = 6,
-    VT_REASON = 8
+    VT_MAXHEIGHT = 6,
+    VT_TIME = 8,
+    VT_REASON = 10
   };
   int32_t height() const {
     return GetField<int32_t>(VT_HEIGHT, 0);
+  }
+  int32_t maxHeight() const {
+    return GetField<int32_t>(VT_MAXHEIGHT, 0);
   }
   int32_t time() const {
     return GetField<int32_t>(VT_TIME, 0);
@@ -1728,6 +1754,7 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_HEIGHT) &&
+           VerifyField<int32_t>(verifier, VT_MAXHEIGHT) &&
            VerifyField<int32_t>(verifier, VT_TIME) &&
            VerifyField<uint8_t>(verifier, VT_REASON) &&
            verifier.EndTable();
@@ -1739,6 +1766,9 @@ struct AddScoreBuilder {
   flatbuffers::uoffset_t start_;
   void add_height(int32_t height) {
     fbb_.AddElement<int32_t>(AddScore::VT_HEIGHT, height, 0);
+  }
+  void add_maxHeight(int32_t maxHeight) {
+    fbb_.AddElement<int32_t>(AddScore::VT_MAXHEIGHT, maxHeight, 0);
   }
   void add_time(int32_t time) {
     fbb_.AddElement<int32_t>(AddScore::VT_TIME, time, 0);
@@ -1761,10 +1791,12 @@ struct AddScoreBuilder {
 inline flatbuffers::Offset<AddScore> CreateAddScore(
     flatbuffers::FlatBufferBuilder &_fbb,
     int32_t height = 0,
+    int32_t maxHeight = 0,
     int32_t time = 0,
     sisyfox::sisycol::EndReason reason = sisyfox::sisycol::EndReason_WIN) {
   AddScoreBuilder builder_(_fbb);
   builder_.add_time(time);
+  builder_.add_maxHeight(maxHeight);
   builder_.add_height(height);
   builder_.add_reason(reason);
   return builder_.Finish();

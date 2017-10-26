@@ -219,28 +219,37 @@ public struct Score : IFlatbufferObject
 
   public uint Id { get { return __p.bb.GetUint(__p.bb_pos + 0); } }
   public int Height { get { return __p.bb.GetInt(__p.bb_pos + 4); } }
-  public int Time { get { return __p.bb.GetInt(__p.bb_pos + 8); } }
-  public uint Rank { get { return __p.bb.GetUint(__p.bb_pos + 12); } }
-  public long Timestamp { get { return __p.bb.GetLong(__p.bb_pos + 16); } }
-  public byte Level { get { return __p.bb.Get(__p.bb_pos + 24); } }
-  public byte World { get { return __p.bb.Get(__p.bb_pos + 25); } }
-  public byte GameMode { get { return __p.bb.Get(__p.bb_pos + 26); } }
-  public byte Difficulty { get { return __p.bb.Get(__p.bb_pos + 27); } }
-  public int Score { get { return __p.bb.GetInt(__p.bb_pos + 28); } }
-  public sisyfox.sisycol.EndReason Reason { get { return (sisyfox.sisycol.EndReason)__p.bb.Get(__p.bb_pos + 32); } }
+  public int MaxHeight { get { return __p.bb.GetInt(__p.bb_pos + 8); } }
+  public int Time { get { return __p.bb.GetInt(__p.bb_pos + 12); } }
+  public uint Rank { get { return __p.bb.GetUint(__p.bb_pos + 16); } }
+  public long Timestamp { get { return __p.bb.GetLong(__p.bb_pos + 24); } }
+  public byte Level { get { return __p.bb.Get(__p.bb_pos + 32); } }
+  public byte World { get { return __p.bb.Get(__p.bb_pos + 33); } }
+  public byte GameMode { get { return __p.bb.Get(__p.bb_pos + 34); } }
+  public byte Difficulty { get { return __p.bb.Get(__p.bb_pos + 35); } }
+  public sisyfox.sisycol.EndReason Reason { get { return (sisyfox.sisycol.EndReason)__p.bb.Get(__p.bb_pos + 36); } }
+  public int GoalScore { get { return __p.bb.GetInt(__p.bb_pos + 40); } }
+  public int TimeScore { get { return __p.bb.GetInt(__p.bb_pos + 44); } }
+  public int Score { get { return __p.bb.GetInt(__p.bb_pos + 48); } }
+  public int Rating { get { return __p.bb.GetInt(__p.bb_pos + 52); } }
 
-  public static Offset<sisyfox.sisycol.Score> CreateScore(FlatBufferBuilder builder, uint Id, int Height, int Time, uint Rank, long Timestamp, byte Level, byte World, byte GameMode, byte Difficulty, int Score, sisyfox.sisycol.EndReason Reason) {
-    builder.Prep(8, 40);
-    builder.Pad(7);
-    builder.PutByte((byte)Reason);
+  public static Offset<sisyfox.sisycol.Score> CreateScore(FlatBufferBuilder builder, uint Id, int Height, int MaxHeight, int Time, uint Rank, long Timestamp, byte Level, byte World, byte GameMode, byte Difficulty, sisyfox.sisycol.EndReason Reason, int GoalScore, int TimeScore, int Score, int Rating) {
+    builder.Prep(8, 56);
+    builder.PutInt(Rating);
     builder.PutInt(Score);
+    builder.PutInt(TimeScore);
+    builder.PutInt(GoalScore);
+    builder.Pad(3);
+    builder.PutByte((byte)Reason);
     builder.PutByte(Difficulty);
     builder.PutByte(GameMode);
     builder.PutByte(World);
     builder.PutByte(Level);
     builder.PutLong(Timestamp);
+    builder.Pad(4);
     builder.PutUint(Rank);
     builder.PutInt(Time);
+    builder.PutInt(MaxHeight);
     builder.PutInt(Height);
     builder.PutUint(Id);
     return new Offset<sisyfox.sisycol.Score>(builder.Offset);
@@ -450,24 +459,28 @@ public struct AddScore : IFlatbufferObject
   public AddScore __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public int Height { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
-  public int Time { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
-  public sisyfox.sisycol.EndReason Reason { get { int o = __p.__offset(8); return o != 0 ? (sisyfox.sisycol.EndReason)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.EndReason.WIN; } }
+  public int MaxHeight { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int Time { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public sisyfox.sisycol.EndReason Reason { get { int o = __p.__offset(10); return o != 0 ? (sisyfox.sisycol.EndReason)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.EndReason.WIN; } }
 
   public static Offset<sisyfox.sisycol.request.AddScore> CreateAddScore(FlatBufferBuilder builder,
       int height = 0,
+      int maxHeight = 0,
       int time = 0,
       sisyfox.sisycol.EndReason reason = sisyfox.sisycol.EndReason.WIN) {
-    builder.StartObject(3);
+    builder.StartObject(4);
     AddScore.AddTime(builder, time);
+    AddScore.AddMaxHeight(builder, maxHeight);
     AddScore.AddHeight(builder, height);
     AddScore.AddReason(builder, reason);
     return AddScore.EndAddScore(builder);
   }
 
-  public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(3); }
+  public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(4); }
   public static void AddHeight(FlatBufferBuilder builder, int height) { builder.AddInt(0, height, 0); }
-  public static void AddTime(FlatBufferBuilder builder, int time) { builder.AddInt(1, time, 0); }
-  public static void AddReason(FlatBufferBuilder builder, sisyfox.sisycol.EndReason reason) { builder.AddByte(2, (byte)reason, 0); }
+  public static void AddMaxHeight(FlatBufferBuilder builder, int maxHeight) { builder.AddInt(1, maxHeight, 0); }
+  public static void AddTime(FlatBufferBuilder builder, int time) { builder.AddInt(2, time, 0); }
+  public static void AddReason(FlatBufferBuilder builder, sisyfox.sisycol.EndReason reason) { builder.AddByte(3, (byte)reason, 0); }
   public static Offset<sisyfox.sisycol.request.AddScore> EndAddScore(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<sisyfox.sisycol.request.AddScore>(o);
@@ -1815,7 +1828,7 @@ public struct GetScoreRange : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public GetScoreRange __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sisyfox.sisycol.Score? Data(int j) { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Score?)(new sisyfox.sisycol.Score()).__assign(__p.__vector(o) + j * 40, __p.bb) : null; }
+  public sisyfox.sisycol.Score? Data(int j) { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Score?)(new sisyfox.sisycol.Score()).__assign(__p.__vector(o) + j * 56, __p.bb) : null; }
   public int DataLength { get { int o = __p.__offset(4); return o != 0 ? __p.__vector_len(o) : 0; } }
 
   public static Offset<GetScoreRange> CreateGetScoreRange(FlatBufferBuilder builder,
@@ -1827,7 +1840,7 @@ public struct GetScoreRange : IFlatbufferObject
 
   public static void StartGetScoreRange(FlatBufferBuilder builder) { builder.StartObject(1); }
   public static void AddData(FlatBufferBuilder builder, VectorOffset dataOffset) { builder.AddOffset(0, dataOffset.Value, 0); }
-  public static void StartDataVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(40, numElems, 8); }
+  public static void StartDataVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(56, numElems, 8); }
   public static Offset<GetScoreRange> EndGetScoreRange(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetScoreRange>(o);

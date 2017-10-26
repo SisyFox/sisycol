@@ -66,6 +66,7 @@ struct LiveData {
 struct Score {
     id:uint;
     height:int;
+    maxHeight:int;
     time:int;
     rank:uint;
     timestamp:long;
@@ -73,8 +74,11 @@ struct Score {
     world:ubyte;
     gameMode:ubyte;
     difficulty:ubyte;
-    score:int;
     reason:EndReason;
+    goalScore:int;
+    timeScore:int;
+    score:int;
+    rating:int;
 }
 
 struct GeneralSetting {
@@ -147,6 +151,7 @@ table Info {}
 
 table AddScore {
   height:int;
+  maxHeight:int;
   time:int;
   reason:EndReason;
 }
