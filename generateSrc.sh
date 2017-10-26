@@ -22,6 +22,6 @@ cd .. && mkdir -p js && cd js
 
 cd .. && mkdir -p csharp && cd csharp
 
-../../thirdParty/cache_flatbuffers/flatc --csharp --gen-onefile ../../sisycol.fbs
+../../thirdParty/cache_flatbuffers/flatc --csharp ../../sisycol.fbs
 
 cd ../..
