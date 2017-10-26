@@ -17,25 +17,16 @@ public struct Root : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public Root __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public ushort MessageId { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUshort(o + __p.bb_pos) : (ushort)0; } }
-  public Payload PayloadType { get { int o = __p.__offset(6); return o != 0 ? (Payload)__p.bb.Get(o + __p.bb_pos) : Payload.NONE; } }
-  public TTable? Payload<TTable>() where TTable : struct, IFlatbufferObject { int o = __p.__offset(8); return o != 0 ? (TTable?)__p.__union<TTable>(o) : null; }
+  public Version? Version { get { int o = __p.__offset(4); return o != 0 ? (Version?)(new Version()).__assign(o + __p.bb_pos, __p.bb) : null; } }
+  public ushort MessageId { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUshort(o + __p.bb_pos) : (ushort)0; } }
+  public Payload PayloadType { get { int o = __p.__offset(8); return o != 0 ? (Payload)__p.bb.Get(o + __p.bb_pos) : Payload.NONE; } }
+  public TTable? Payload<TTable>() where TTable : struct, IFlatbufferObject { int o = __p.__offset(10); return o != 0 ? (TTable?)__p.__union<TTable>(o) : null; }
 
-  public static Offset<Root> CreateRoot(FlatBufferBuilder builder,
-      ushort messageId = 0,
-      Payload payload_type = Payload.NONE,
-      int payloadOffset = 0) {
-    builder.StartObject(3);
-    Root.AddPayload(builder, payloadOffset);
-    Root.AddMessageId(builder, messageId);
-    Root.AddPayloadType(builder, payload_type);
-    return Root.EndRoot(builder);
-  }
-
-  public static void StartRoot(FlatBufferBuilder builder) { builder.StartObject(3); }
-  public static void AddMessageId(FlatBufferBuilder builder, ushort messageId) { builder.AddUshort(0, messageId, 0); }
-  public static void AddPayloadType(FlatBufferBuilder builder, Payload payloadType) { builder.AddByte(1, (byte)payloadType, 0); }
-  public static void AddPayload(FlatBufferBuilder builder, int payloadOffset) { builder.AddOffset(2, payloadOffset, 0); }
+  public static void StartRoot(FlatBufferBuilder builder) { builder.StartObject(4); }
+  public static void AddVersion(FlatBufferBuilder builder, Offset<Version> versionOffset) { builder.AddStruct(0, versionOffset.Value, 0); }
+  public static void AddMessageId(FlatBufferBuilder builder, ushort messageId) { builder.AddUshort(1, messageId, 0); }
+  public static void AddPayloadType(FlatBufferBuilder builder, Payload payloadType) { builder.AddByte(2, (byte)payloadType, 0); }
+  public static void AddPayload(FlatBufferBuilder builder, int payloadOffset) { builder.AddOffset(3, payloadOffset, 0); }
   public static Offset<Root> EndRoot(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<Root>(o);

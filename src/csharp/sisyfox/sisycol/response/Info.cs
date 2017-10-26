@@ -17,22 +17,37 @@ public struct Info : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public Info __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sisyfox.sisycol.Version? Version { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Version?)(new sisyfox.sisycol.Version()).__assign(o + __p.bb_pos, __p.bb) : null; } }
-  public uint ServerVersion { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
-  public uint ScoreCount { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
-  public uint UserCount { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
-  public uint DmxDeviceCount { get { int o = __p.__offset(12); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
-  public uint RegistryEntryCount { get { int o = __p.__offset(14); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
-  public uint UserId { get { int o = __p.__offset(16); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
+  public uint ServerVersion { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
+  public uint ScoreCount { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
+  public uint UserCount { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
+  public uint DmxDeviceCount { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
+  public uint RegistryEntryCount { get { int o = __p.__offset(12); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
+  public uint UserId { get { int o = __p.__offset(14); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)4294967295; } }
 
-  public static void StartInfo(FlatBufferBuilder builder) { builder.StartObject(7); }
-  public static void AddVersion(FlatBufferBuilder builder, Offset<sisyfox.sisycol.Version> versionOffset) { builder.AddStruct(0, versionOffset.Value, 0); }
-  public static void AddServerVersion(FlatBufferBuilder builder, uint serverVersion) { builder.AddUint(1, serverVersion, 4294967295); }
-  public static void AddScoreCount(FlatBufferBuilder builder, uint scoreCount) { builder.AddUint(2, scoreCount, 4294967295); }
-  public static void AddUserCount(FlatBufferBuilder builder, uint userCount) { builder.AddUint(3, userCount, 4294967295); }
-  public static void AddDmxDeviceCount(FlatBufferBuilder builder, uint dmxDeviceCount) { builder.AddUint(4, dmxDeviceCount, 4294967295); }
-  public static void AddRegistryEntryCount(FlatBufferBuilder builder, uint registryEntryCount) { builder.AddUint(5, registryEntryCount, 4294967295); }
-  public static void AddUserId(FlatBufferBuilder builder, uint userId) { builder.AddUint(6, userId, 4294967295); }
+  public static Offset<Info> CreateInfo(FlatBufferBuilder builder,
+      uint serverVersion = 4294967295,
+      uint scoreCount = 4294967295,
+      uint userCount = 4294967295,
+      uint dmxDeviceCount = 4294967295,
+      uint registryEntryCount = 4294967295,
+      uint userId = 4294967295) {
+    builder.StartObject(6);
+    Info.AddUserId(builder, userId);
+    Info.AddRegistryEntryCount(builder, registryEntryCount);
+    Info.AddDmxDeviceCount(builder, dmxDeviceCount);
+    Info.AddUserCount(builder, userCount);
+    Info.AddScoreCount(builder, scoreCount);
+    Info.AddServerVersion(builder, serverVersion);
+    return Info.EndInfo(builder);
+  }
+
+  public static void StartInfo(FlatBufferBuilder builder) { builder.StartObject(6); }
+  public static void AddServerVersion(FlatBufferBuilder builder, uint serverVersion) { builder.AddUint(0, serverVersion, 4294967295); }
+  public static void AddScoreCount(FlatBufferBuilder builder, uint scoreCount) { builder.AddUint(1, scoreCount, 4294967295); }
+  public static void AddUserCount(FlatBufferBuilder builder, uint userCount) { builder.AddUint(2, userCount, 4294967295); }
+  public static void AddDmxDeviceCount(FlatBufferBuilder builder, uint dmxDeviceCount) { builder.AddUint(3, dmxDeviceCount, 4294967295); }
+  public static void AddRegistryEntryCount(FlatBufferBuilder builder, uint registryEntryCount) { builder.AddUint(4, registryEntryCount, 4294967295); }
+  public static void AddUserId(FlatBufferBuilder builder, uint userId) { builder.AddUint(5, userId, 4294967295); }
   public static Offset<Info> EndInfo(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<Info>(o);

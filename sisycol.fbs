@@ -19,6 +19,7 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxRuleSettingRange, SetDmxDeviceMode }
 
 table Root {
+  version:Version;
   messageId:ushort;
   payload:Payload;
 }
@@ -377,7 +378,6 @@ table Error {
 }
 
 table Info {
-    version:Version;
     serverVersion:uint = 0xffffffff;
     scoreCount:uint = 0xffffffff;
     userCount:uint = 0xffffffff;

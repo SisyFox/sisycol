@@ -211,10 +211,19 @@ sisyfox.sisycol.Root.getRootAsRoot = function(bb, obj) {
 };
 
 /**
+ * @param {sisyfox.sisycol.Version=} obj
+ * @returns {sisyfox.sisycol.Version|null}
+ */
+sisyfox.sisycol.Root.prototype.version = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? (obj || new sisyfox.sisycol.Version).__init(this.bb_pos + offset, this.bb) : null;
+};
+
+/**
  * @returns {number}
  */
 sisyfox.sisycol.Root.prototype.messageId = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
+  var offset = this.bb.__offset(this.bb_pos, 6);
   return offset ? this.bb.readUint16(this.bb_pos + offset) : 0;
 };
 
@@ -222,7 +231,7 @@ sisyfox.sisycol.Root.prototype.messageId = function() {
  * @returns {sisyfox.sisycol.Payload}
  */
 sisyfox.sisycol.Root.prototype.payloadType = function() {
-  var offset = this.bb.__offset(this.bb_pos, 6);
+  var offset = this.bb.__offset(this.bb_pos, 8);
   return offset ? /** @type {sisyfox.sisycol.Payload} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.Payload.NONE;
 };
 
@@ -231,7 +240,7 @@ sisyfox.sisycol.Root.prototype.payloadType = function() {
  * @returns {?flatbuffers.Table}
  */
 sisyfox.sisycol.Root.prototype.payload = function(obj) {
-  var offset = this.bb.__offset(this.bb_pos, 8);
+  var offset = this.bb.__offset(this.bb_pos, 10);
   return offset ? this.bb.__union(obj, this.bb_pos + offset) : null;
 };
 
@@ -239,7 +248,15 @@ sisyfox.sisycol.Root.prototype.payload = function(obj) {
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.Root.startRoot = function(builder) {
-  builder.startObject(3);
+  builder.startObject(4);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} versionOffset
+ */
+sisyfox.sisycol.Root.addVersion = function(builder, versionOffset) {
+  builder.addFieldStruct(0, versionOffset, 0);
 };
 
 /**
@@ -247,7 +264,7 @@ sisyfox.sisycol.Root.startRoot = function(builder) {
  * @param {number} messageId
  */
 sisyfox.sisycol.Root.addMessageId = function(builder, messageId) {
-  builder.addFieldInt16(0, messageId, 0);
+  builder.addFieldInt16(1, messageId, 0);
 };
 
 /**
@@ -255,7 +272,7 @@ sisyfox.sisycol.Root.addMessageId = function(builder, messageId) {
  * @param {sisyfox.sisycol.Payload} payloadType
  */
 sisyfox.sisycol.Root.addPayloadType = function(builder, payloadType) {
-  builder.addFieldInt8(1, payloadType, sisyfox.sisycol.Payload.NONE);
+  builder.addFieldInt8(2, payloadType, sisyfox.sisycol.Payload.NONE);
 };
 
 /**
@@ -263,7 +280,7 @@ sisyfox.sisycol.Root.addPayloadType = function(builder, payloadType) {
  * @param {flatbuffers.Offset} payloadOffset
  */
 sisyfox.sisycol.Root.addPayload = function(builder, payloadOffset) {
-  builder.addFieldOffset(2, payloadOffset, 0);
+  builder.addFieldOffset(3, payloadOffset, 0);
 };
 
 /**
@@ -5007,19 +5024,10 @@ sisyfox.sisycol.response.Info.getRootAsInfo = function(bb, obj) {
 };
 
 /**
- * @param {sisyfox.sisycol.Version=} obj
- * @returns {sisyfox.sisycol.Version|null}
- */
-sisyfox.sisycol.response.Info.prototype.version = function(obj) {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.Version).__init(this.bb_pos + offset, this.bb) : null;
-};
-
-/**
  * @returns {number}
  */
 sisyfox.sisycol.response.Info.prototype.serverVersion = function() {
-  var offset = this.bb.__offset(this.bb_pos, 6);
+  var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 4294967295;
 };
 
@@ -5027,7 +5035,7 @@ sisyfox.sisycol.response.Info.prototype.serverVersion = function() {
  * @returns {number}
  */
 sisyfox.sisycol.response.Info.prototype.scoreCount = function() {
-  var offset = this.bb.__offset(this.bb_pos, 8);
+  var offset = this.bb.__offset(this.bb_pos, 6);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 4294967295;
 };
 
@@ -5035,7 +5043,7 @@ sisyfox.sisycol.response.Info.prototype.scoreCount = function() {
  * @returns {number}
  */
 sisyfox.sisycol.response.Info.prototype.userCount = function() {
-  var offset = this.bb.__offset(this.bb_pos, 10);
+  var offset = this.bb.__offset(this.bb_pos, 8);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 4294967295;
 };
 
@@ -5043,7 +5051,7 @@ sisyfox.sisycol.response.Info.prototype.userCount = function() {
  * @returns {number}
  */
 sisyfox.sisycol.response.Info.prototype.dmxDeviceCount = function() {
-  var offset = this.bb.__offset(this.bb_pos, 12);
+  var offset = this.bb.__offset(this.bb_pos, 10);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 4294967295;
 };
 
@@ -5051,7 +5059,7 @@ sisyfox.sisycol.response.Info.prototype.dmxDeviceCount = function() {
  * @returns {number}
  */
 sisyfox.sisycol.response.Info.prototype.registryEntryCount = function() {
-  var offset = this.bb.__offset(this.bb_pos, 14);
+  var offset = this.bb.__offset(this.bb_pos, 12);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 4294967295;
 };
 
@@ -5059,7 +5067,7 @@ sisyfox.sisycol.response.Info.prototype.registryEntryCount = function() {
  * @returns {number}
  */
 sisyfox.sisycol.response.Info.prototype.userId = function() {
-  var offset = this.bb.__offset(this.bb_pos, 16);
+  var offset = this.bb.__offset(this.bb_pos, 14);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 4294967295;
 };
 
@@ -5067,15 +5075,7 @@ sisyfox.sisycol.response.Info.prototype.userId = function() {
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.response.Info.startInfo = function(builder) {
-  builder.startObject(7);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} versionOffset
- */
-sisyfox.sisycol.response.Info.addVersion = function(builder, versionOffset) {
-  builder.addFieldStruct(0, versionOffset, 0);
+  builder.startObject(6);
 };
 
 /**
@@ -5083,7 +5083,7 @@ sisyfox.sisycol.response.Info.addVersion = function(builder, versionOffset) {
  * @param {number} serverVersion
  */
 sisyfox.sisycol.response.Info.addServerVersion = function(builder, serverVersion) {
-  builder.addFieldInt32(1, serverVersion, 4294967295);
+  builder.addFieldInt32(0, serverVersion, 4294967295);
 };
 
 /**
@@ -5091,7 +5091,7 @@ sisyfox.sisycol.response.Info.addServerVersion = function(builder, serverVersion
  * @param {number} scoreCount
  */
 sisyfox.sisycol.response.Info.addScoreCount = function(builder, scoreCount) {
-  builder.addFieldInt32(2, scoreCount, 4294967295);
+  builder.addFieldInt32(1, scoreCount, 4294967295);
 };
 
 /**
@@ -5099,7 +5099,7 @@ sisyfox.sisycol.response.Info.addScoreCount = function(builder, scoreCount) {
  * @param {number} userCount
  */
 sisyfox.sisycol.response.Info.addUserCount = function(builder, userCount) {
-  builder.addFieldInt32(3, userCount, 4294967295);
+  builder.addFieldInt32(2, userCount, 4294967295);
 };
 
 /**
@@ -5107,7 +5107,7 @@ sisyfox.sisycol.response.Info.addUserCount = function(builder, userCount) {
  * @param {number} dmxDeviceCount
  */
 sisyfox.sisycol.response.Info.addDmxDeviceCount = function(builder, dmxDeviceCount) {
-  builder.addFieldInt32(4, dmxDeviceCount, 4294967295);
+  builder.addFieldInt32(3, dmxDeviceCount, 4294967295);
 };
 
 /**
@@ -5115,7 +5115,7 @@ sisyfox.sisycol.response.Info.addDmxDeviceCount = function(builder, dmxDeviceCou
  * @param {number} registryEntryCount
  */
 sisyfox.sisycol.response.Info.addRegistryEntryCount = function(builder, registryEntryCount) {
-  builder.addFieldInt32(5, registryEntryCount, 4294967295);
+  builder.addFieldInt32(4, registryEntryCount, 4294967295);
 };
 
 /**
@@ -5123,7 +5123,7 @@ sisyfox.sisycol.response.Info.addRegistryEntryCount = function(builder, registry
  * @param {number} userId
  */
 sisyfox.sisycol.response.Info.addUserId = function(builder, userId) {
-  builder.addFieldInt32(6, userId, 4294967295);
+  builder.addFieldInt32(5, userId, 4294967295);
 };
 
 /**

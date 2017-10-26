@@ -1341,10 +1341,14 @@ STRUCT_END(DmxRuleBoolSetting, 28);
 
 struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_MESSAGEID = 4,
-    VT_PAYLOAD_TYPE = 6,
-    VT_PAYLOAD = 8
+    VT_VERSION = 4,
+    VT_MESSAGEID = 6,
+    VT_PAYLOAD_TYPE = 8,
+    VT_PAYLOAD = 10
   };
+  const Version *version() const {
+    return GetStruct<const Version *>(VT_VERSION);
+  }
   uint16_t messageId() const {
     return GetField<uint16_t>(VT_MESSAGEID, 0);
   }
@@ -1486,6 +1490,7 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
+           VerifyField<Version>(verifier, VT_VERSION) &&
            VerifyField<uint16_t>(verifier, VT_MESSAGEID) &&
            VerifyField<uint8_t>(verifier, VT_PAYLOAD_TYPE) &&
            VerifyOffset(verifier, VT_PAYLOAD) &&
@@ -1669,6 +1674,9 @@ template<> inline const sisyfox::sisycol::request::SetDmxDeviceMode *Root::paylo
 struct RootBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
+  void add_version(const Version *version) {
+    fbb_.AddStruct(Root::VT_VERSION, version);
+  }
   void add_messageId(uint16_t messageId) {
     fbb_.AddElement<uint16_t>(Root::VT_MESSAGEID, messageId, 0);
   }
@@ -1692,11 +1700,13 @@ struct RootBuilder {
 
 inline flatbuffers::Offset<Root> CreateRoot(
     flatbuffers::FlatBufferBuilder &_fbb,
+    const Version *version = 0,
     uint16_t messageId = 0,
     Payload payload_type = Payload_NONE,
     flatbuffers::Offset<void> payload = 0) {
   RootBuilder builder_(_fbb);
   builder_.add_payload(payload);
+  builder_.add_version(version);
   builder_.add_messageId(messageId);
   builder_.add_payload_type(payload_type);
   return builder_.Finish();
@@ -4034,17 +4044,13 @@ inline flatbuffers::Offset<Error> CreateError(
 
 struct Info FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_VERSION = 4,
-    VT_SERVERVERSION = 6,
-    VT_SCORECOUNT = 8,
-    VT_USERCOUNT = 10,
-    VT_DMXDEVICECOUNT = 12,
-    VT_REGISTRYENTRYCOUNT = 14,
-    VT_USERID = 16
+    VT_SERVERVERSION = 4,
+    VT_SCORECOUNT = 6,
+    VT_USERCOUNT = 8,
+    VT_DMXDEVICECOUNT = 10,
+    VT_REGISTRYENTRYCOUNT = 12,
+    VT_USERID = 14
   };
-  const sisyfox::sisycol::Version *version() const {
-    return GetStruct<const sisyfox::sisycol::Version *>(VT_VERSION);
-  }
   uint32_t serverVersion() const {
     return GetField<uint32_t>(VT_SERVERVERSION, 4294967295);
   }
@@ -4065,7 +4071,6 @@ struct Info FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<sisyfox::sisycol::Version>(verifier, VT_VERSION) &&
            VerifyField<uint32_t>(verifier, VT_SERVERVERSION) &&
            VerifyField<uint32_t>(verifier, VT_SCORECOUNT) &&
            VerifyField<uint32_t>(verifier, VT_USERCOUNT) &&
@@ -4079,9 +4084,6 @@ struct Info FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct InfoBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_version(const sisyfox::sisycol::Version *version) {
-    fbb_.AddStruct(Info::VT_VERSION, version);
-  }
   void add_serverVersion(uint32_t serverVersion) {
     fbb_.AddElement<uint32_t>(Info::VT_SERVERVERSION, serverVersion, 4294967295);
   }
@@ -4114,7 +4116,6 @@ struct InfoBuilder {
 
 inline flatbuffers::Offset<Info> CreateInfo(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const sisyfox::sisycol::Version *version = 0,
     uint32_t serverVersion = 4294967295,
     uint32_t scoreCount = 4294967295,
     uint32_t userCount = 4294967295,
@@ -4128,7 +4129,6 @@ inline flatbuffers::Offset<Info> CreateInfo(
   builder_.add_userCount(userCount);
   builder_.add_scoreCount(scoreCount);
   builder_.add_serverVersion(serverVersion);
-  builder_.add_version(version);
   return builder_.Finish();
 }
 
