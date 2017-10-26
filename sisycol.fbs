@@ -17,7 +17,8 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxDeviceSetting, GetDmxRuleSetting,
              GetDmxDeviceRange, GetDmxDeviceChannelRange,
              GetDmxChannelRuleRange, GetDmxDeviceSettingRange,
-             GetDmxRuleSettingRange, SetDmxDeviceMode }
+             GetDmxRuleSettingRange, GetDmxRuleRangeSetting,
+             GetDmxRuleRangeSettingRange, SetDmxDeviceMode }
 
 table Root {
   version:Version;

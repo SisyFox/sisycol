@@ -51,7 +51,9 @@ public enum Payload : byte
  GetDmxChannelRuleRange = 41,
  GetDmxDeviceSettingRange = 42,
  GetDmxRuleSettingRange = 43,
- SetDmxDeviceMode = 44,
+ GetDmxRuleRangeSetting = 44,
+ GetDmxRuleRangeSettingRange = 45,
+ SetDmxDeviceMode = 46,
 };
 
 
