@@ -242,27 +242,28 @@ enum Payload {
   Payload_AddDmxChannelRule = 25,
   Payload_RemoveDmxChannelRule = 26,
   Payload_AddDmxDeviceSetting = 27,
-  Payload_RemoveDmxDeviceSetting = 28,
-  Payload_AddDmxRuleRangeSetting = 29,
-  Payload_AddDmxRuleBoolSetting = 30,
-  Payload_RemoveDmxRuleSetting = 31,
-  Payload_ChangeDmxDeviceSettingValue = 32,
-  Payload_GetDmxDevice = 33,
-  Payload_GetDmxDeviceChannel = 34,
-  Payload_GetDmxChannelRule = 35,
-  Payload_GetDmxDeviceSetting = 36,
-  Payload_GetDmxRuleSetting = 37,
-  Payload_GetDmxDeviceRange = 38,
-  Payload_GetDmxDeviceChannelRange = 39,
-  Payload_GetDmxChannelRuleRange = 40,
-  Payload_GetDmxDeviceSettingRange = 41,
-  Payload_GetDmxRuleSettingRange = 42,
-  Payload_SetDmxDeviceMode = 43,
+  Payload_AddDmxRuleSetting = 28,
+  Payload_RemoveDmxDeviceSetting = 29,
+  Payload_AddDmxRuleRangeSetting = 30,
+  Payload_AddDmxRuleBoolSetting = 31,
+  Payload_RemoveDmxRuleSetting = 32,
+  Payload_ChangeDmxDeviceSettingValue = 33,
+  Payload_GetDmxDevice = 34,
+  Payload_GetDmxDeviceChannel = 35,
+  Payload_GetDmxChannelRule = 36,
+  Payload_GetDmxDeviceSetting = 37,
+  Payload_GetDmxRuleSetting = 38,
+  Payload_GetDmxDeviceRange = 39,
+  Payload_GetDmxDeviceChannelRange = 40,
+  Payload_GetDmxChannelRuleRange = 41,
+  Payload_GetDmxDeviceSettingRange = 42,
+  Payload_GetDmxRuleSettingRange = 43,
+  Payload_SetDmxDeviceMode = 44,
   Payload_MIN = Payload_NONE,
   Payload_MAX = Payload_SetDmxDeviceMode
 };
 
-inline Payload (&EnumValuesPayload())[44] {
+inline Payload (&EnumValuesPayload())[45] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -292,6 +293,7 @@ inline Payload (&EnumValuesPayload())[44] {
     Payload_AddDmxChannelRule,
     Payload_RemoveDmxChannelRule,
     Payload_AddDmxDeviceSetting,
+    Payload_AddDmxRuleSetting,
     Payload_RemoveDmxDeviceSetting,
     Payload_AddDmxRuleRangeSetting,
     Payload_AddDmxRuleBoolSetting,
@@ -342,6 +344,7 @@ inline const char **EnumNamesPayload() {
     "AddDmxChannelRule",
     "RemoveDmxChannelRule",
     "AddDmxDeviceSetting",
+    "AddDmxRuleSetting",
     "RemoveDmxDeviceSetting",
     "AddDmxRuleRangeSetting",
     "AddDmxRuleBoolSetting",
@@ -478,6 +481,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::RemoveDmxChannelRule>
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddDmxDeviceSetting> {
   static const Payload enum_value = Payload_AddDmxDeviceSetting;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::response::AddDmxRuleSetting> {
+  static const Payload enum_value = Payload_AddDmxRuleSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::RemoveDmxDeviceSetting> {
@@ -1440,6 +1447,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::AddDmxDeviceSetting *payload_as_AddDmxDeviceSetting() const {
     return payload_type() == Payload_AddDmxDeviceSetting ? static_cast<const sisyfox::sisycol::request::AddDmxDeviceSetting *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::response::AddDmxRuleSetting *payload_as_AddDmxRuleSetting() const {
+    return payload_type() == Payload_AddDmxRuleSetting ? static_cast<const sisyfox::sisycol::response::AddDmxRuleSetting *>(payload()) : nullptr;
+  }
   const sisyfox::sisycol::request::RemoveDmxDeviceSetting *payload_as_RemoveDmxDeviceSetting() const {
     return payload_type() == Payload_RemoveDmxDeviceSetting ? static_cast<const sisyfox::sisycol::request::RemoveDmxDeviceSetting *>(payload()) : nullptr;
   }
@@ -1605,6 +1615,10 @@ template<> inline const sisyfox::sisycol::request::RemoveDmxChannelRule *Root::p
 
 template<> inline const sisyfox::sisycol::request::AddDmxDeviceSetting *Root::payload_as<sisyfox::sisycol::request::AddDmxDeviceSetting>() const {
   return payload_as_AddDmxDeviceSetting();
+}
+
+template<> inline const sisyfox::sisycol::response::AddDmxRuleSetting *Root::payload_as<sisyfox::sisycol::response::AddDmxRuleSetting>() const {
+  return payload_as_AddDmxRuleSetting();
 }
 
 template<> inline const sisyfox::sisycol::request::RemoveDmxDeviceSetting *Root::payload_as<sisyfox::sisycol::request::RemoveDmxDeviceSetting>() const {
@@ -6768,6 +6782,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_AddDmxDeviceSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddDmxDeviceSetting *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_AddDmxRuleSetting: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::response::AddDmxRuleSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
     case Payload_RemoveDmxDeviceSetting: {
