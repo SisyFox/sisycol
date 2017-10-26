@@ -518,7 +518,7 @@ sisyfox.sisycol.Score.prototype.timeScore = function() {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.Score.prototype.score = function() {
+sisyfox.sisycol.Score.prototype.endScore = function() {
   return this.bb.readInt32(this.bb_pos + 48);
 };
 
@@ -544,14 +544,14 @@ sisyfox.sisycol.Score.prototype.rating = function() {
  * @param {sisyfox.sisycol.EndReason} reason
  * @param {number} goalScore
  * @param {number} timeScore
- * @param {number} score
+ * @param {number} endScore
  * @param {number} rating
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.Score.createScore = function(builder, id, height, maxHeight, time, rank, timestamp, level, world, gameMode, difficulty, reason, goalScore, timeScore, score, rating) {
+sisyfox.sisycol.Score.createScore = function(builder, id, height, maxHeight, time, rank, timestamp, level, world, gameMode, difficulty, reason, goalScore, timeScore, endScore, rating) {
   builder.prep(8, 56);
   builder.writeInt32(rating);
-  builder.writeInt32(score);
+  builder.writeInt32(endScore);
   builder.writeInt32(timeScore);
   builder.writeInt32(goalScore);
   builder.pad(3);

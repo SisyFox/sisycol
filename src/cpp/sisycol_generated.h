@@ -933,7 +933,7 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   int8_t padding1__;  int16_t padding2__;
   int32_t goalScore_;
   int32_t timeScore_;
-  int32_t score_;
+  int32_t endScore_;
   int32_t rating_;
 
  public:
@@ -943,7 +943,7 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   Score(const Score &_o) {
     memcpy(this, &_o, sizeof(Score));
   }
-  Score(uint32_t _id, int32_t _height, int32_t _maxHeight, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, uint8_t _gameMode, uint8_t _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _score, int32_t _rating)
+  Score(uint32_t _id, int32_t _height, int32_t _maxHeight, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, uint8_t _gameMode, uint8_t _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating)
       : id_(flatbuffers::EndianScalar(_id)),
         height_(flatbuffers::EndianScalar(_height)),
         maxHeight_(flatbuffers::EndianScalar(_maxHeight)),
@@ -960,7 +960,7 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
         padding2__(0),
         goalScore_(flatbuffers::EndianScalar(_goalScore)),
         timeScore_(flatbuffers::EndianScalar(_timeScore)),
-        score_(flatbuffers::EndianScalar(_score)),
+        endScore_(flatbuffers::EndianScalar(_endScore)),
         rating_(flatbuffers::EndianScalar(_rating)) {
     (void)padding0__;
     (void)padding1__;    (void)padding2__;
@@ -1004,8 +1004,8 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   int32_t timeScore() const {
     return flatbuffers::EndianScalar(timeScore_);
   }
-  int32_t score() const {
-    return flatbuffers::EndianScalar(score_);
+  int32_t endScore() const {
+    return flatbuffers::EndianScalar(endScore_);
   }
   int32_t rating() const {
     return flatbuffers::EndianScalar(rating_);

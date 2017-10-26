@@ -77,7 +77,7 @@ struct Score {
     reason:EndReason;
     goalScore:int;
     timeScore:int;
-    score:int;
+    endScore:int;
     rating:int;
 }
 

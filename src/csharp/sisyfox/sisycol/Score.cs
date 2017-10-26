@@ -28,13 +28,13 @@ public struct Score : IFlatbufferObject
   public EndReason Reason { get { return (EndReason)__p.bb.Get(__p.bb_pos + 36); } }
   public int GoalScore { get { return __p.bb.GetInt(__p.bb_pos + 40); } }
   public int TimeScore { get { return __p.bb.GetInt(__p.bb_pos + 44); } }
-  public int Score { get { return __p.bb.GetInt(__p.bb_pos + 48); } }
+  public int EndScore { get { return __p.bb.GetInt(__p.bb_pos + 48); } }
   public int Rating { get { return __p.bb.GetInt(__p.bb_pos + 52); } }
 
-  public static Offset<Score> CreateScore(FlatBufferBuilder builder, uint Id, int Height, int MaxHeight, int Time, uint Rank, long Timestamp, byte Level, byte World, byte GameMode, byte Difficulty, EndReason Reason, int GoalScore, int TimeScore, int Score, int Rating) {
+  public static Offset<Score> CreateScore(FlatBufferBuilder builder, uint Id, int Height, int MaxHeight, int Time, uint Rank, long Timestamp, byte Level, byte World, byte GameMode, byte Difficulty, EndReason Reason, int GoalScore, int TimeScore, int EndScore, int Rating) {
     builder.Prep(8, 56);
     builder.PutInt(Rating);
-    builder.PutInt(Score);
+    builder.PutInt(EndScore);
     builder.PutInt(TimeScore);
     builder.PutInt(GoalScore);
     builder.Pad(3);
