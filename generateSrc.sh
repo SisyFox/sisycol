@@ -18,6 +18,7 @@ mkdir -p cpp && cd cpp
 
 cd .. && mkdir -p js && cd js
 
+cp -r ../../thirdParty/flatbuffers/js/flatbuffers.js .
 ../../thirdParty/cache_flatbuffers/flatc --js ../../sisycol.fbs
 
 cd .. && mkdir -p csharp && cd csharp
