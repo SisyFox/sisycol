@@ -38,7 +38,7 @@ enum EndReason:ubyte   { WIN, MAP_BORDER, COLLISION, INSTANT_LOSS_ANGLE,
 enum TriggerType:ubyte { NEW_ROUND }
 
 enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, SOUND_LEVEL,
-                         COMPETITION_MODE,
+                         COMPETITION_MODE, DEBUG_MODE,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
                          GAME_ACTIVE = 128 }

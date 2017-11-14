@@ -11,6 +11,7 @@ public enum SettingType : byte
  INTERFACE_LANGUAGE = 1,
  SOUND_LEVEL = 2,
  COMPETITION_MODE = 3,
+ DEBUG_MODE = 4,
  WORLD = 64,
  LEVEL = 65,
  DIFFICULTY = 66,
