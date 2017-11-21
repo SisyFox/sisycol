@@ -218,11 +218,13 @@ class Sisyfox {
         this.prepareSend(sisyfox.sisycol.Payload.Info, offset, builder);
     }
 
-    requestAddScore(height, time) {
+    requestAddScore(height, maxGoal, time, reason) {
         const builder = new flatbuffers.Builder();
         sisyfox.sisycol.request.AddScore.startAddScore(builder);
-        sisyfox.sisycol.request.AddScore.addHeight(builder, height);
+        sisyfox.sisycol.request.AddScore.addGoal(builder, height);
+        sisyfox.sisycol.request.AddScore.addMaxGoal(builder, maxGoal);
         sisyfox.sisycol.request.AddScore.addTime(builder, time);
+        sisyfox.sisycol.request.AddScore.addReason(builder, reason);
         const offset = sisyfox.sisycol.request.AddScore.endAddScore(builder);
         this.prepareSend(sisyfox.sisycol.Payload.AddScore, offset, builder);
     }

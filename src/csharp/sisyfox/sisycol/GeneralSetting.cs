@@ -21,9 +21,11 @@ public struct GeneralSetting : IFlatbufferObject
   public byte SoundLevel { get { return __p.bb.Get(__p.bb_pos + 3); } }
   public bool CompetitionMode { get { return 0!=__p.bb.Get(__p.bb_pos + 4); } }
   public bool GameActive { get { return 0!=__p.bb.Get(__p.bb_pos + 5); } }
+  public bool GameEnabled { get { return 0!=__p.bb.Get(__p.bb_pos + 6); } }
 
-  public static Offset<GeneralSetting> CreateGeneralSetting(FlatBufferBuilder builder, bool Available, Language GameLanguage, Language InterfaceLanguage, byte SoundLevel, bool CompetitionMode, bool GameActive) {
-    builder.Prep(1, 6);
+  public static Offset<GeneralSetting> CreateGeneralSetting(FlatBufferBuilder builder, bool Available, Language GameLanguage, Language InterfaceLanguage, byte SoundLevel, bool CompetitionMode, bool GameActive, bool GameEnabled) {
+    builder.Prep(1, 7);
+    builder.PutBool(GameEnabled);
     builder.PutBool(GameActive);
     builder.PutBool(CompetitionMode);
     builder.PutByte(SoundLevel);

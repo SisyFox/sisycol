@@ -127,7 +127,8 @@ sisyfox.sisycol.SettingType = {
   MAX_COLLECT_WORLD: 68,
   MAX_COLLECT_LEVEL: 69,
   GEM_SCORE: 70,
-  GAME_ACTIVE: 128
+  GAME_ACTIVE: 128,
+  GAME_ENABLED: 129
 };
 
 /**
@@ -673,6 +674,13 @@ sisyfox.sisycol.GeneralSetting.prototype.gameActive = function() {
 };
 
 /**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.GeneralSetting.prototype.gameEnabled = function() {
+  return !!this.bb.readInt8(this.bb_pos + 6);
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  * @param {boolean} available
  * @param {sisyfox.sisycol.Language} gameLanguage
@@ -680,10 +688,12 @@ sisyfox.sisycol.GeneralSetting.prototype.gameActive = function() {
  * @param {number} soundLevel
  * @param {boolean} competitionMode
  * @param {boolean} gameActive
+ * @param {boolean} gameEnabled
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.GeneralSetting.createGeneralSetting = function(builder, available, gameLanguage, interfaceLanguage, soundLevel, competitionMode, gameActive) {
-  builder.prep(1, 6);
+sisyfox.sisycol.GeneralSetting.createGeneralSetting = function(builder, available, gameLanguage, interfaceLanguage, soundLevel, competitionMode, gameActive, gameEnabled) {
+  builder.prep(1, 7);
+  builder.writeInt8(+gameEnabled);
   builder.writeInt8(+gameActive);
   builder.writeInt8(+competitionMode);
   builder.writeInt8(soundLevel);

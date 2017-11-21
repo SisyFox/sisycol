@@ -20,6 +20,7 @@ public enum SettingType : byte
  MAX_COLLECT_LEVEL = 69,
  GEM_SCORE = 70,
  GAME_ACTIVE = 128,
+ GAME_ENABLED = 129,
 };
 
 

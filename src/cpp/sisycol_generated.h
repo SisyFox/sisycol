@@ -707,11 +707,12 @@ enum SettingType {
   SettingType_MAX_COLLECT_LEVEL = 69,
   SettingType_GEM_SCORE = 70,
   SettingType_GAME_ACTIVE = 128,
+  SettingType_GAME_ENABLED = 129,
   SettingType_MIN = SettingType_GAME_LANGUAGE,
-  SettingType_MAX = SettingType_GAME_ACTIVE
+  SettingType_MAX = SettingType_GAME_ENABLED
 };
 
-inline SettingType (&EnumValuesSettingType())[13] {
+inline SettingType (&EnumValuesSettingType())[14] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -725,7 +726,8 @@ inline SettingType (&EnumValuesSettingType())[13] {
     SettingType_MAX_COLLECT_WORLD,
     SettingType_MAX_COLLECT_LEVEL,
     SettingType_GEM_SCORE,
-    SettingType_GAME_ACTIVE
+    SettingType_GAME_ACTIVE,
+    SettingType_GAME_ENABLED
   };
   return values;
 }
@@ -1096,6 +1098,7 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
   uint8_t soundLevel_;
   uint8_t competitionMode_;
   uint8_t gameActive_;
+  uint8_t gameEnabled_;
 
  public:
   GeneralSetting() {
@@ -1104,13 +1107,14 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
   GeneralSetting(const GeneralSetting &_o) {
     memcpy(this, &_o, sizeof(GeneralSetting));
   }
-  GeneralSetting(bool _available, Language _gameLanguage, Language _interfaceLanguage, uint8_t _soundLevel, bool _competitionMode, bool _gameActive)
+  GeneralSetting(bool _available, Language _gameLanguage, Language _interfaceLanguage, uint8_t _soundLevel, bool _competitionMode, bool _gameActive, bool _gameEnabled)
       : available_(flatbuffers::EndianScalar(static_cast<uint8_t>(_available))),
         gameLanguage_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameLanguage))),
         interfaceLanguage_(flatbuffers::EndianScalar(static_cast<uint8_t>(_interfaceLanguage))),
         soundLevel_(flatbuffers::EndianScalar(_soundLevel)),
         competitionMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_competitionMode))),
-        gameActive_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameActive))) {
+        gameActive_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameActive))),
+        gameEnabled_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameEnabled))) {
   }
   bool available() const {
     return flatbuffers::EndianScalar(available_) != 0;
@@ -1130,8 +1134,11 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
   bool gameActive() const {
     return flatbuffers::EndianScalar(gameActive_) != 0;
   }
+  bool gameEnabled() const {
+    return flatbuffers::EndianScalar(gameEnabled_) != 0;
+  }
 };
-STRUCT_END(GeneralSetting, 6);
+STRUCT_END(GeneralSetting, 7);
 
 MANUALLY_ALIGNED_STRUCT(4) UserSetting FLATBUFFERS_FINAL_CLASS {
  private:
