@@ -47,6 +47,8 @@ enum Language:ubyte    { ENGLISH, GERMAN, CRUMMY_GERMAN = 0xff }
 
 enum GameMode:ubyte    { FREESTYLE, LEVEL_COLLECT }
 
+enum Difficulty:ubyte  { VERY_EASY, EASY, NORMAL, HARD, VERY_HARD }
+
 enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON }
 
 enum DmxChannelRuleType:byte   { GOAL, TIME, PITCH }
@@ -76,8 +78,8 @@ struct Score {
     timestamp:long;
     level:ubyte;
     world:ubyte;
-    gameMode:ubyte;
-    difficulty:ubyte;
+    gameMode:GameMode;
+    difficulty:Difficulty;
     reason:EndReason;
     goalScore:int;
     timeScore:int;
@@ -98,8 +100,8 @@ struct UserSetting {
     available:bool = false;
     world:World;
     level:ubyte;
-    difficulty:ubyte;
-    gameMode:ubyte;
+    difficulty:Difficulty;
+    gameMode:GameMode;
     gemScore:uint;
     maxCollectWorld:ubyte;
     maxCollectLevel:ubyte;

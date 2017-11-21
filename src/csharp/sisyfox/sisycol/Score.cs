@@ -23,15 +23,15 @@ public struct Score : IFlatbufferObject
   public long Timestamp { get { return __p.bb.GetLong(__p.bb_pos + 24); } }
   public byte Level { get { return __p.bb.Get(__p.bb_pos + 32); } }
   public byte World { get { return __p.bb.Get(__p.bb_pos + 33); } }
-  public byte GameMode { get { return __p.bb.Get(__p.bb_pos + 34); } }
-  public byte Difficulty { get { return __p.bb.Get(__p.bb_pos + 35); } }
+  public GameMode GameMode { get { return (GameMode)__p.bb.Get(__p.bb_pos + 34); } }
+  public Difficulty Difficulty { get { return (Difficulty)__p.bb.Get(__p.bb_pos + 35); } }
   public EndReason Reason { get { return (EndReason)__p.bb.Get(__p.bb_pos + 36); } }
   public int GoalScore { get { return __p.bb.GetInt(__p.bb_pos + 40); } }
   public int TimeScore { get { return __p.bb.GetInt(__p.bb_pos + 44); } }
   public int EndScore { get { return __p.bb.GetInt(__p.bb_pos + 48); } }
   public int Rating { get { return __p.bb.GetInt(__p.bb_pos + 52); } }
 
-  public static Offset<Score> CreateScore(FlatBufferBuilder builder, uint Id, int Goal, int MaxGoal, int Time, uint Rank, long Timestamp, byte Level, byte World, byte GameMode, byte Difficulty, EndReason Reason, int GoalScore, int TimeScore, int EndScore, int Rating) {
+  public static Offset<Score> CreateScore(FlatBufferBuilder builder, uint Id, int Goal, int MaxGoal, int Time, uint Rank, long Timestamp, byte Level, byte World, GameMode GameMode, Difficulty Difficulty, EndReason Reason, int GoalScore, int TimeScore, int EndScore, int Rating) {
     builder.Prep(8, 56);
     builder.PutInt(Rating);
     builder.PutInt(EndScore);
@@ -39,8 +39,8 @@ public struct Score : IFlatbufferObject
     builder.PutInt(GoalScore);
     builder.Pad(3);
     builder.PutByte((byte)Reason);
-    builder.PutByte(Difficulty);
-    builder.PutByte(GameMode);
+    builder.PutByte((byte)Difficulty);
+    builder.PutByte((byte)GameMode);
     builder.PutByte(World);
     builder.PutByte(Level);
     builder.PutLong(Timestamp);

@@ -18,21 +18,21 @@ public struct UserSetting : IFlatbufferObject
   public bool Available { get { return 0!=__p.bb.Get(__p.bb_pos + 0); } }
   public World World { get { return (World)__p.bb.Get(__p.bb_pos + 1); } }
   public byte Level { get { return __p.bb.Get(__p.bb_pos + 2); } }
-  public byte Difficulty { get { return __p.bb.Get(__p.bb_pos + 3); } }
-  public byte GameMode { get { return __p.bb.Get(__p.bb_pos + 4); } }
+  public Difficulty Difficulty { get { return (Difficulty)__p.bb.Get(__p.bb_pos + 3); } }
+  public GameMode GameMode { get { return (GameMode)__p.bb.Get(__p.bb_pos + 4); } }
   public uint GemScore { get { return __p.bb.GetUint(__p.bb_pos + 8); } }
   public byte MaxCollectWorld { get { return __p.bb.Get(__p.bb_pos + 12); } }
   public byte MaxCollectLevel { get { return __p.bb.Get(__p.bb_pos + 13); } }
 
-  public static Offset<UserSetting> CreateUserSetting(FlatBufferBuilder builder, bool Available, World World, byte Level, byte Difficulty, byte GameMode, uint GemScore, byte MaxCollectWorld, byte MaxCollectLevel) {
+  public static Offset<UserSetting> CreateUserSetting(FlatBufferBuilder builder, bool Available, World World, byte Level, Difficulty Difficulty, GameMode GameMode, uint GemScore, byte MaxCollectWorld, byte MaxCollectLevel) {
     builder.Prep(4, 16);
     builder.Pad(2);
     builder.PutByte(MaxCollectLevel);
     builder.PutByte(MaxCollectWorld);
     builder.PutUint(GemScore);
     builder.Pad(3);
-    builder.PutByte(GameMode);
-    builder.PutByte(Difficulty);
+    builder.PutByte((byte)GameMode);
+    builder.PutByte((byte)Difficulty);
     builder.PutByte(Level);
     builder.PutByte((byte)World);
     builder.PutBool(Available);

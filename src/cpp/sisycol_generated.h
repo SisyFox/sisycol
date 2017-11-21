@@ -776,6 +776,44 @@ inline const char *EnumNameGameMode(GameMode e) {
   return EnumNamesGameMode()[index];
 }
 
+enum Difficulty {
+  Difficulty_VERY_EASY = 0,
+  Difficulty_EASY = 1,
+  Difficulty_NORMAL = 2,
+  Difficulty_HARD = 3,
+  Difficulty_VERY_HARD = 4,
+  Difficulty_MIN = Difficulty_VERY_EASY,
+  Difficulty_MAX = Difficulty_VERY_HARD
+};
+
+inline Difficulty (&EnumValuesDifficulty())[5] {
+  static Difficulty values[] = {
+    Difficulty_VERY_EASY,
+    Difficulty_EASY,
+    Difficulty_NORMAL,
+    Difficulty_HARD,
+    Difficulty_VERY_HARD
+  };
+  return values;
+}
+
+inline const char **EnumNamesDifficulty() {
+  static const char *names[] = {
+    "VERY_EASY",
+    "EASY",
+    "NORMAL",
+    "HARD",
+    "VERY_HARD",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameDifficulty(Difficulty e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesDifficulty()[index];
+}
+
 enum World {
   World_ORIGIN_MOUNTAIN = 0,
   World_BLOCKSBERG = 1,
@@ -980,7 +1018,7 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   Score(const Score &_o) {
     memcpy(this, &_o, sizeof(Score));
   }
-  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, uint8_t _gameMode, uint8_t _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating)
+  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, GameMode _gameMode, Difficulty _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating)
       : id_(flatbuffers::EndianScalar(_id)),
         goal_(flatbuffers::EndianScalar(_goal)),
         maxGoal_(flatbuffers::EndianScalar(_maxGoal)),
@@ -990,8 +1028,8 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
         timestamp_(flatbuffers::EndianScalar(_timestamp)),
         level_(flatbuffers::EndianScalar(_level)),
         world_(flatbuffers::EndianScalar(_world)),
-        gameMode_(flatbuffers::EndianScalar(_gameMode)),
-        difficulty_(flatbuffers::EndianScalar(_difficulty)),
+        gameMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameMode))),
+        difficulty_(flatbuffers::EndianScalar(static_cast<uint8_t>(_difficulty))),
         reason_(flatbuffers::EndianScalar(static_cast<uint8_t>(_reason))),
         padding1__(0),
         padding2__(0),
@@ -1026,11 +1064,11 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   uint8_t world() const {
     return flatbuffers::EndianScalar(world_);
   }
-  uint8_t gameMode() const {
-    return flatbuffers::EndianScalar(gameMode_);
+  GameMode gameMode() const {
+    return static_cast<GameMode>(flatbuffers::EndianScalar(gameMode_));
   }
-  uint8_t difficulty() const {
-    return flatbuffers::EndianScalar(difficulty_);
+  Difficulty difficulty() const {
+    return static_cast<Difficulty>(flatbuffers::EndianScalar(difficulty_));
   }
   EndReason reason() const {
     return static_cast<EndReason>(flatbuffers::EndianScalar(reason_));
@@ -1115,12 +1153,12 @@ MANUALLY_ALIGNED_STRUCT(4) UserSetting FLATBUFFERS_FINAL_CLASS {
   UserSetting(const UserSetting &_o) {
     memcpy(this, &_o, sizeof(UserSetting));
   }
-  UserSetting(bool _available, World _world, uint8_t _level, uint8_t _difficulty, uint8_t _gameMode, uint32_t _gemScore, uint8_t _maxCollectWorld, uint8_t _maxCollectLevel)
+  UserSetting(bool _available, World _world, uint8_t _level, Difficulty _difficulty, GameMode _gameMode, uint32_t _gemScore, uint8_t _maxCollectWorld, uint8_t _maxCollectLevel)
       : available_(flatbuffers::EndianScalar(static_cast<uint8_t>(_available))),
         world_(flatbuffers::EndianScalar(static_cast<uint8_t>(_world))),
         level_(flatbuffers::EndianScalar(_level)),
-        difficulty_(flatbuffers::EndianScalar(_difficulty)),
-        gameMode_(flatbuffers::EndianScalar(_gameMode)),
+        difficulty_(flatbuffers::EndianScalar(static_cast<uint8_t>(_difficulty))),
+        gameMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameMode))),
         padding0__(0),
         padding1__(0),
         gemScore_(flatbuffers::EndianScalar(_gemScore)),
@@ -1139,11 +1177,11 @@ MANUALLY_ALIGNED_STRUCT(4) UserSetting FLATBUFFERS_FINAL_CLASS {
   uint8_t level() const {
     return flatbuffers::EndianScalar(level_);
   }
-  uint8_t difficulty() const {
-    return flatbuffers::EndianScalar(difficulty_);
+  Difficulty difficulty() const {
+    return static_cast<Difficulty>(flatbuffers::EndianScalar(difficulty_));
   }
-  uint8_t gameMode() const {
-    return flatbuffers::EndianScalar(gameMode_);
+  GameMode gameMode() const {
+    return static_cast<GameMode>(flatbuffers::EndianScalar(gameMode_));
   }
   uint32_t gemScore() const {
     return flatbuffers::EndianScalar(gemScore_);

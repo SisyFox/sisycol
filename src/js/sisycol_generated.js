@@ -150,6 +150,17 @@ sisyfox.sisycol.GameMode = {
 /**
  * @enum
  */
+sisyfox.sisycol.Difficulty = {
+  VERY_EASY: 0,
+  EASY: 1,
+  NORMAL: 2,
+  HARD: 3,
+  VERY_HARD: 4
+};
+
+/**
+ * @enum
+ */
 sisyfox.sisycol.World = {
   ORIGIN_MOUNTAIN: 0,
   BLOCKSBERG: 1,
@@ -504,17 +515,17 @@ sisyfox.sisycol.Score.prototype.world = function() {
 };
 
 /**
- * @returns {number}
+ * @returns {sisyfox.sisycol.GameMode}
  */
 sisyfox.sisycol.Score.prototype.gameMode = function() {
-  return this.bb.readUint8(this.bb_pos + 34);
+  return /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + 34));
 };
 
 /**
- * @returns {number}
+ * @returns {sisyfox.sisycol.Difficulty}
  */
 sisyfox.sisycol.Score.prototype.difficulty = function() {
-  return this.bb.readUint8(this.bb_pos + 35);
+  return /** @type {sisyfox.sisycol.Difficulty} */ (this.bb.readUint8(this.bb_pos + 35));
 };
 
 /**
@@ -562,8 +573,8 @@ sisyfox.sisycol.Score.prototype.rating = function() {
  * @param {flatbuffers.Long} timestamp
  * @param {number} level
  * @param {number} world
- * @param {number} gameMode
- * @param {number} difficulty
+ * @param {sisyfox.sisycol.GameMode} gameMode
+ * @param {sisyfox.sisycol.Difficulty} difficulty
  * @param {sisyfox.sisycol.EndReason} reason
  * @param {number} goalScore
  * @param {number} timeScore
@@ -730,17 +741,17 @@ sisyfox.sisycol.UserSetting.prototype.level = function() {
 };
 
 /**
- * @returns {number}
+ * @returns {sisyfox.sisycol.Difficulty}
  */
 sisyfox.sisycol.UserSetting.prototype.difficulty = function() {
-  return this.bb.readUint8(this.bb_pos + 3);
+  return /** @type {sisyfox.sisycol.Difficulty} */ (this.bb.readUint8(this.bb_pos + 3));
 };
 
 /**
- * @returns {number}
+ * @returns {sisyfox.sisycol.GameMode}
  */
 sisyfox.sisycol.UserSetting.prototype.gameMode = function() {
-  return this.bb.readUint8(this.bb_pos + 4);
+  return /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + 4));
 };
 
 /**
@@ -769,8 +780,8 @@ sisyfox.sisycol.UserSetting.prototype.maxCollectLevel = function() {
  * @param {boolean} available
  * @param {sisyfox.sisycol.World} world
  * @param {number} level
- * @param {number} difficulty
- * @param {number} gameMode
+ * @param {sisyfox.sisycol.Difficulty} difficulty
+ * @param {sisyfox.sisycol.GameMode} gameMode
  * @param {number} gemScore
  * @param {number} maxCollectWorld
  * @param {number} maxCollectLevel
