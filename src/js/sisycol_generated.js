@@ -669,15 +669,29 @@ sisyfox.sisycol.GeneralSetting.prototype.competitionMode = function() {
 /**
  * @returns {boolean}
  */
-sisyfox.sisycol.GeneralSetting.prototype.gameActive = function() {
+sisyfox.sisycol.GeneralSetting.prototype.debugMode = function() {
   return !!this.bb.readInt8(this.bb_pos + 5);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.GeneralSetting.prototype.timeFrame = function() {
+  return this.bb.readUint8(this.bb_pos + 6);
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.GeneralSetting.prototype.gameActive = function() {
+  return !!this.bb.readInt8(this.bb_pos + 7);
 };
 
 /**
  * @returns {boolean}
  */
 sisyfox.sisycol.GeneralSetting.prototype.gameEnabled = function() {
-  return !!this.bb.readInt8(this.bb_pos + 6);
+  return !!this.bb.readInt8(this.bb_pos + 8);
 };
 
 /**
@@ -687,14 +701,18 @@ sisyfox.sisycol.GeneralSetting.prototype.gameEnabled = function() {
  * @param {sisyfox.sisycol.Language} interfaceLanguage
  * @param {number} soundLevel
  * @param {boolean} competitionMode
+ * @param {boolean} debugMode
+ * @param {number} timeFrame
  * @param {boolean} gameActive
  * @param {boolean} gameEnabled
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.GeneralSetting.createGeneralSetting = function(builder, available, gameLanguage, interfaceLanguage, soundLevel, competitionMode, gameActive, gameEnabled) {
-  builder.prep(1, 7);
+sisyfox.sisycol.GeneralSetting.createGeneralSetting = function(builder, available, gameLanguage, interfaceLanguage, soundLevel, competitionMode, debugMode, timeFrame, gameActive, gameEnabled) {
+  builder.prep(1, 9);
   builder.writeInt8(+gameEnabled);
   builder.writeInt8(+gameActive);
+  builder.writeInt8(timeFrame);
+  builder.writeInt8(+debugMode);
   builder.writeInt8(+competitionMode);
   builder.writeInt8(soundLevel);
   builder.writeInt8(interfaceLanguage);

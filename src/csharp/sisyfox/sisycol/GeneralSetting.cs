@@ -20,13 +20,17 @@ public struct GeneralSetting : IFlatbufferObject
   public Language InterfaceLanguage { get { return (Language)__p.bb.Get(__p.bb_pos + 2); } }
   public byte SoundLevel { get { return __p.bb.Get(__p.bb_pos + 3); } }
   public bool CompetitionMode { get { return 0!=__p.bb.Get(__p.bb_pos + 4); } }
-  public bool GameActive { get { return 0!=__p.bb.Get(__p.bb_pos + 5); } }
-  public bool GameEnabled { get { return 0!=__p.bb.Get(__p.bb_pos + 6); } }
+  public bool DebugMode { get { return 0!=__p.bb.Get(__p.bb_pos + 5); } }
+  public byte TimeFrame { get { return __p.bb.Get(__p.bb_pos + 6); } }
+  public bool GameActive { get { return 0!=__p.bb.Get(__p.bb_pos + 7); } }
+  public bool GameEnabled { get { return 0!=__p.bb.Get(__p.bb_pos + 8); } }
 
-  public static Offset<GeneralSetting> CreateGeneralSetting(FlatBufferBuilder builder, bool Available, Language GameLanguage, Language InterfaceLanguage, byte SoundLevel, bool CompetitionMode, bool GameActive, bool GameEnabled) {
-    builder.Prep(1, 7);
+  public static Offset<GeneralSetting> CreateGeneralSetting(FlatBufferBuilder builder, bool Available, Language GameLanguage, Language InterfaceLanguage, byte SoundLevel, bool CompetitionMode, bool DebugMode, byte TimeFrame, bool GameActive, bool GameEnabled) {
+    builder.Prep(1, 9);
     builder.PutBool(GameEnabled);
     builder.PutBool(GameActive);
+    builder.PutByte(TimeFrame);
+    builder.PutBool(DebugMode);
     builder.PutBool(CompetitionMode);
     builder.PutByte(SoundLevel);
     builder.PutByte((byte)InterfaceLanguage);

@@ -1097,6 +1097,8 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
   uint8_t interfaceLanguage_;
   uint8_t soundLevel_;
   uint8_t competitionMode_;
+  uint8_t debugMode_;
+  uint8_t timeFrame_;
   uint8_t gameActive_;
   uint8_t gameEnabled_;
 
@@ -1107,12 +1109,14 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
   GeneralSetting(const GeneralSetting &_o) {
     memcpy(this, &_o, sizeof(GeneralSetting));
   }
-  GeneralSetting(bool _available, Language _gameLanguage, Language _interfaceLanguage, uint8_t _soundLevel, bool _competitionMode, bool _gameActive, bool _gameEnabled)
+  GeneralSetting(bool _available, Language _gameLanguage, Language _interfaceLanguage, uint8_t _soundLevel, bool _competitionMode, bool _debugMode, uint8_t _timeFrame, bool _gameActive, bool _gameEnabled)
       : available_(flatbuffers::EndianScalar(static_cast<uint8_t>(_available))),
         gameLanguage_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameLanguage))),
         interfaceLanguage_(flatbuffers::EndianScalar(static_cast<uint8_t>(_interfaceLanguage))),
         soundLevel_(flatbuffers::EndianScalar(_soundLevel)),
         competitionMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_competitionMode))),
+        debugMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_debugMode))),
+        timeFrame_(flatbuffers::EndianScalar(_timeFrame)),
         gameActive_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameActive))),
         gameEnabled_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameEnabled))) {
   }
@@ -1131,6 +1135,12 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
   bool competitionMode() const {
     return flatbuffers::EndianScalar(competitionMode_) != 0;
   }
+  bool debugMode() const {
+    return flatbuffers::EndianScalar(debugMode_) != 0;
+  }
+  uint8_t timeFrame() const {
+    return flatbuffers::EndianScalar(timeFrame_);
+  }
   bool gameActive() const {
     return flatbuffers::EndianScalar(gameActive_) != 0;
   }
@@ -1138,7 +1148,7 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
     return flatbuffers::EndianScalar(gameEnabled_) != 0;
   }
 };
-STRUCT_END(GeneralSetting, 7);
+STRUCT_END(GeneralSetting, 9);
 
 MANUALLY_ALIGNED_STRUCT(4) UserSetting FLATBUFFERS_FINAL_CLASS {
  private:

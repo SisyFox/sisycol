@@ -60,7 +60,7 @@ enum DmxDeviceMode:byte        { TEST, DISABLED }
 
 struct Version {
   high:ubyte = 2;
-  low:ubyte  = 0;
+  low:ubyte  = 1;
 }
 
 struct LiveData {
@@ -89,23 +89,25 @@ struct Score {
 
 struct GeneralSetting {
     available:bool = false;
-    gameLanguage:Language;
-    interfaceLanguage:Language;
-    soundLevel:ubyte;
-    competitionMode:bool;
-    gameActive:bool;
-    gameEnabled:bool;
+    gameLanguage:Language = GERMAN;
+    interfaceLanguage:Language = GERMAN;
+    soundLevel:ubyte = 191;
+    competitionMode:bool = true;
+    debugMode:bool = false;
+    timeFrame:ubyte = 0;
+    gameActive:bool = true;
+    gameEnabled:bool = false;
 }
 
 struct UserSetting {
     available:bool = false;
-    world:World;
-    level:ubyte;
-    difficulty:Difficulty;
-    gameMode:GameMode;
-    gemScore:uint;
-    maxCollectWorld:ubyte;
-    maxCollectLevel:ubyte;
+    world:World = 0x80;
+    level:ubyte = 0x80;
+    difficulty:Difficulty = NORMAL;
+    gameMode:GameMode = 0x80;
+    gemScore:uint = 0;
+    maxCollectWorld:ubyte = 0;
+    maxCollectLevel:ubyte = 0;
 }
 
 struct DmxDeviceChannel {
