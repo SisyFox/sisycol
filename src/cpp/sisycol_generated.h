@@ -699,6 +699,7 @@ enum SettingType {
   SettingType_SOUND_LEVEL = 2,
   SettingType_COMPETITION_MODE = 3,
   SettingType_DEBUG_MODE = 4,
+  SettingType_TIMEFRAME = 5,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
   SettingType_DIFFICULTY = 66,
@@ -712,13 +713,14 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED
 };
 
-inline SettingType (&EnumValuesSettingType())[14] {
+inline SettingType (&EnumValuesSettingType())[15] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
     SettingType_SOUND_LEVEL,
     SettingType_COMPETITION_MODE,
     SettingType_DEBUG_MODE,
+    SettingType_TIMEFRAME,
     SettingType_WORLD,
     SettingType_LEVEL,
     SettingType_DIFFICULTY,

@@ -12,6 +12,7 @@ public enum SettingType : byte
  SOUND_LEVEL = 2,
  COMPETITION_MODE = 3,
  DEBUG_MODE = 4,
+ TIMEFRAME = 5,
  WORLD = 64,
  LEVEL = 65,
  DIFFICULTY = 66,
