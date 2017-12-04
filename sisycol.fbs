@@ -169,6 +169,10 @@ table AddScore {
   maxGoal:int;
   time:int;
   reason:EndReason;
+  level:ubyte;
+  world:ubyte;
+  gameMode:GameMode;
+  difficulty:Difficulty; 
 }
 
 table GetScore {

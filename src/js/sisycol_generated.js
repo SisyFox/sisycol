@@ -1455,10 +1455,42 @@ sisyfox.sisycol.request.AddScore.prototype.reason = function() {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.AddScore.prototype.level = function() {
+  var offset = this.bb.__offset(this.bb_pos, 12);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.AddScore.prototype.world = function() {
+  var offset = this.bb.__offset(this.bb_pos, 14);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {sisyfox.sisycol.GameMode}
+ */
+sisyfox.sisycol.request.AddScore.prototype.gameMode = function() {
+  var offset = this.bb.__offset(this.bb_pos, 16);
+  return offset ? /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.GameMode.FREESTYLE;
+};
+
+/**
+ * @returns {sisyfox.sisycol.Difficulty}
+ */
+sisyfox.sisycol.request.AddScore.prototype.difficulty = function() {
+  var offset = this.bb.__offset(this.bb_pos, 18);
+  return offset ? /** @type {sisyfox.sisycol.Difficulty} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.Difficulty.VERY_EASY;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.AddScore.startAddScore = function(builder) {
-  builder.startObject(4);
+  builder.startObject(8);
 };
 
 /**
@@ -1491,6 +1523,38 @@ sisyfox.sisycol.request.AddScore.addTime = function(builder, time) {
  */
 sisyfox.sisycol.request.AddScore.addReason = function(builder, reason) {
   builder.addFieldInt8(3, reason, sisyfox.sisycol.EndReason.WIN);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} level
+ */
+sisyfox.sisycol.request.AddScore.addLevel = function(builder, level) {
+  builder.addFieldInt8(4, level, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} world
+ */
+sisyfox.sisycol.request.AddScore.addWorld = function(builder, world) {
+  builder.addFieldInt8(5, world, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.GameMode} gameMode
+ */
+sisyfox.sisycol.request.AddScore.addGameMode = function(builder, gameMode) {
+  builder.addFieldInt8(6, gameMode, sisyfox.sisycol.GameMode.FREESTYLE);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.Difficulty} difficulty
+ */
+sisyfox.sisycol.request.AddScore.addDifficulty = function(builder, difficulty) {
+  builder.addFieldInt8(7, difficulty, sisyfox.sisycol.Difficulty.VERY_EASY);
 };
 
 /**

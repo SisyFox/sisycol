@@ -1949,7 +1949,11 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_GOAL = 4,
     VT_MAXGOAL = 6,
     VT_TIME = 8,
-    VT_REASON = 10
+    VT_REASON = 10,
+    VT_LEVEL = 12,
+    VT_WORLD = 14,
+    VT_GAMEMODE = 16,
+    VT_DIFFICULTY = 18
   };
   int32_t goal() const {
     return GetField<int32_t>(VT_GOAL, 0);
@@ -1963,12 +1967,28 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   sisyfox::sisycol::EndReason reason() const {
     return static_cast<sisyfox::sisycol::EndReason>(GetField<uint8_t>(VT_REASON, 0));
   }
+  uint8_t level() const {
+    return GetField<uint8_t>(VT_LEVEL, 0);
+  }
+  uint8_t world() const {
+    return GetField<uint8_t>(VT_WORLD, 0);
+  }
+  sisyfox::sisycol::GameMode gameMode() const {
+    return static_cast<sisyfox::sisycol::GameMode>(GetField<uint8_t>(VT_GAMEMODE, 0));
+  }
+  sisyfox::sisycol::Difficulty difficulty() const {
+    return static_cast<sisyfox::sisycol::Difficulty>(GetField<uint8_t>(VT_DIFFICULTY, 0));
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_GOAL) &&
            VerifyField<int32_t>(verifier, VT_MAXGOAL) &&
            VerifyField<int32_t>(verifier, VT_TIME) &&
            VerifyField<uint8_t>(verifier, VT_REASON) &&
+           VerifyField<uint8_t>(verifier, VT_LEVEL) &&
+           VerifyField<uint8_t>(verifier, VT_WORLD) &&
+           VerifyField<uint8_t>(verifier, VT_GAMEMODE) &&
+           VerifyField<uint8_t>(verifier, VT_DIFFICULTY) &&
            verifier.EndTable();
   }
 };
@@ -1988,6 +2008,18 @@ struct AddScoreBuilder {
   void add_reason(sisyfox::sisycol::EndReason reason) {
     fbb_.AddElement<uint8_t>(AddScore::VT_REASON, static_cast<uint8_t>(reason), 0);
   }
+  void add_level(uint8_t level) {
+    fbb_.AddElement<uint8_t>(AddScore::VT_LEVEL, level, 0);
+  }
+  void add_world(uint8_t world) {
+    fbb_.AddElement<uint8_t>(AddScore::VT_WORLD, world, 0);
+  }
+  void add_gameMode(sisyfox::sisycol::GameMode gameMode) {
+    fbb_.AddElement<uint8_t>(AddScore::VT_GAMEMODE, static_cast<uint8_t>(gameMode), 0);
+  }
+  void add_difficulty(sisyfox::sisycol::Difficulty difficulty) {
+    fbb_.AddElement<uint8_t>(AddScore::VT_DIFFICULTY, static_cast<uint8_t>(difficulty), 0);
+  }
   explicit AddScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2005,11 +2037,19 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     int32_t goal = 0,
     int32_t maxGoal = 0,
     int32_t time = 0,
-    sisyfox::sisycol::EndReason reason = sisyfox::sisycol::EndReason_WIN) {
+    sisyfox::sisycol::EndReason reason = sisyfox::sisycol::EndReason_WIN,
+    uint8_t level = 0,
+    uint8_t world = 0,
+    sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::GameMode_FREESTYLE,
+    sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::Difficulty_VERY_EASY) {
   AddScoreBuilder builder_(_fbb);
   builder_.add_time(time);
   builder_.add_maxGoal(maxGoal);
   builder_.add_goal(goal);
+  builder_.add_difficulty(difficulty);
+  builder_.add_gameMode(gameMode);
+  builder_.add_world(world);
+  builder_.add_level(level);
   builder_.add_reason(reason);
   return builder_.Finish();
 }

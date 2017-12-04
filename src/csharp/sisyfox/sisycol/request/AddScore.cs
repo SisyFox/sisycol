@@ -21,25 +21,41 @@ public struct AddScore : IFlatbufferObject
   public int MaxGoal { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public int Time { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public sisyfox.sisycol.EndReason Reason { get { int o = __p.__offset(10); return o != 0 ? (sisyfox.sisycol.EndReason)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.EndReason.WIN; } }
+  public byte Level { get { int o = __p.__offset(12); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public byte World { get { int o = __p.__offset(14); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public sisyfox.sisycol.GameMode GameMode { get { int o = __p.__offset(16); return o != 0 ? (sisyfox.sisycol.GameMode)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.GameMode.FREESTYLE; } }
+  public sisyfox.sisycol.Difficulty Difficulty { get { int o = __p.__offset(18); return o != 0 ? (sisyfox.sisycol.Difficulty)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.Difficulty.VERY_EASY; } }
 
   public static Offset<AddScore> CreateAddScore(FlatBufferBuilder builder,
       int goal = 0,
       int maxGoal = 0,
       int time = 0,
-      sisyfox.sisycol.EndReason reason = sisyfox.sisycol.EndReason.WIN) {
-    builder.StartObject(4);
+      sisyfox.sisycol.EndReason reason = sisyfox.sisycol.EndReason.WIN,
+      byte level = 0,
+      byte world = 0,
+      sisyfox.sisycol.GameMode gameMode = sisyfox.sisycol.GameMode.FREESTYLE,
+      sisyfox.sisycol.Difficulty difficulty = sisyfox.sisycol.Difficulty.VERY_EASY) {
+    builder.StartObject(8);
     AddScore.AddTime(builder, time);
     AddScore.AddMaxGoal(builder, maxGoal);
     AddScore.AddGoal(builder, goal);
+    AddScore.AddDifficulty(builder, difficulty);
+    AddScore.AddGameMode(builder, gameMode);
+    AddScore.AddWorld(builder, world);
+    AddScore.AddLevel(builder, level);
     AddScore.AddReason(builder, reason);
     return AddScore.EndAddScore(builder);
   }
 
-  public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(4); }
+  public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(8); }
   public static void AddGoal(FlatBufferBuilder builder, int goal) { builder.AddInt(0, goal, 0); }
   public static void AddMaxGoal(FlatBufferBuilder builder, int maxGoal) { builder.AddInt(1, maxGoal, 0); }
   public static void AddTime(FlatBufferBuilder builder, int time) { builder.AddInt(2, time, 0); }
   public static void AddReason(FlatBufferBuilder builder, sisyfox.sisycol.EndReason reason) { builder.AddByte(3, (byte)reason, 0); }
+  public static void AddLevel(FlatBufferBuilder builder, byte level) { builder.AddByte(4, level, 0); }
+  public static void AddWorld(FlatBufferBuilder builder, byte world) { builder.AddByte(5, world, 0); }
+  public static void AddGameMode(FlatBufferBuilder builder, sisyfox.sisycol.GameMode gameMode) { builder.AddByte(6, (byte)gameMode, 0); }
+  public static void AddDifficulty(FlatBufferBuilder builder, sisyfox.sisycol.Difficulty difficulty) { builder.AddByte(7, (byte)difficulty, 0); }
   public static Offset<AddScore> EndAddScore(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<AddScore>(o);
