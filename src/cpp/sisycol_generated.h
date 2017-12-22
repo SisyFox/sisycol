@@ -696,10 +696,14 @@ inline const char *EnumNameTriggerType(TriggerType e) {
 enum SettingType {
   SettingType_GAME_LANGUAGE = 0,
   SettingType_INTERFACE_LANGUAGE = 1,
-  SettingType_SOUND_LEVEL = 2,
+  SettingType_MASTER_VOLUME = 2,
   SettingType_COMPETITION_MODE = 3,
   SettingType_DEBUG_MODE = 4,
   SettingType_TIMEFRAME = 5,
+  SettingType_MUSIC_VOLUME = 6,
+  SettingType_SFX_VOLUME = 7,
+  SettingType_VOICES = 8,
+  SettingType_IDLE_TIME = 9,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
   SettingType_DIFFICULTY = 66,
@@ -713,14 +717,18 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED
 };
 
-inline SettingType (&EnumValuesSettingType())[15] {
+inline SettingType (&EnumValuesSettingType())[19] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
-    SettingType_SOUND_LEVEL,
+    SettingType_MASTER_VOLUME,
     SettingType_COMPETITION_MODE,
     SettingType_DEBUG_MODE,
     SettingType_TIMEFRAME,
+    SettingType_MUSIC_VOLUME,
+    SettingType_SFX_VOLUME,
+    SettingType_VOICES,
+    SettingType_IDLE_TIME,
     SettingType_WORLD,
     SettingType_LEVEL,
     SettingType_DIFFICULTY,
@@ -1092,17 +1100,21 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
 };
 STRUCT_END(Score, 56);
 
-MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
+MANUALLY_ALIGNED_STRUCT(4) GeneralSetting FLATBUFFERS_FINAL_CLASS {
  private:
   uint8_t available_;
   uint8_t gameLanguage_;
   uint8_t interfaceLanguage_;
-  uint8_t soundLevel_;
+  uint8_t masterVolume_;
   uint8_t competitionMode_;
   uint8_t debugMode_;
   uint8_t timeFrame_;
   uint8_t gameActive_;
   uint8_t gameEnabled_;
+  uint8_t musicVolume_;
+  uint8_t sfxVolume_;
+  uint8_t voices_;
+  uint32_t idleTime_;
 
  public:
   GeneralSetting() {
@@ -1111,16 +1123,20 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
   GeneralSetting(const GeneralSetting &_o) {
     memcpy(this, &_o, sizeof(GeneralSetting));
   }
-  GeneralSetting(bool _available, Language _gameLanguage, Language _interfaceLanguage, uint8_t _soundLevel, bool _competitionMode, bool _debugMode, uint8_t _timeFrame, bool _gameActive, bool _gameEnabled)
+  GeneralSetting(bool _available, Language _gameLanguage, Language _interfaceLanguage, uint8_t _masterVolume, bool _competitionMode, bool _debugMode, uint8_t _timeFrame, bool _gameActive, bool _gameEnabled, uint8_t _musicVolume, uint8_t _sfxVolume, bool _voices, uint32_t _idleTime)
       : available_(flatbuffers::EndianScalar(static_cast<uint8_t>(_available))),
         gameLanguage_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameLanguage))),
         interfaceLanguage_(flatbuffers::EndianScalar(static_cast<uint8_t>(_interfaceLanguage))),
-        soundLevel_(flatbuffers::EndianScalar(_soundLevel)),
+        masterVolume_(flatbuffers::EndianScalar(_masterVolume)),
         competitionMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_competitionMode))),
         debugMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_debugMode))),
         timeFrame_(flatbuffers::EndianScalar(_timeFrame)),
         gameActive_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameActive))),
-        gameEnabled_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameEnabled))) {
+        gameEnabled_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameEnabled))),
+        musicVolume_(flatbuffers::EndianScalar(_musicVolume)),
+        sfxVolume_(flatbuffers::EndianScalar(_sfxVolume)),
+        voices_(flatbuffers::EndianScalar(static_cast<uint8_t>(_voices))),
+        idleTime_(flatbuffers::EndianScalar(_idleTime)) {
   }
   bool available() const {
     return flatbuffers::EndianScalar(available_) != 0;
@@ -1131,8 +1147,8 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
   Language interfaceLanguage() const {
     return static_cast<Language>(flatbuffers::EndianScalar(interfaceLanguage_));
   }
-  uint8_t soundLevel() const {
-    return flatbuffers::EndianScalar(soundLevel_);
+  uint8_t masterVolume() const {
+    return flatbuffers::EndianScalar(masterVolume_);
   }
   bool competitionMode() const {
     return flatbuffers::EndianScalar(competitionMode_) != 0;
@@ -1149,8 +1165,20 @@ MANUALLY_ALIGNED_STRUCT(1) GeneralSetting FLATBUFFERS_FINAL_CLASS {
   bool gameEnabled() const {
     return flatbuffers::EndianScalar(gameEnabled_) != 0;
   }
+  uint8_t musicVolume() const {
+    return flatbuffers::EndianScalar(musicVolume_);
+  }
+  uint8_t sfxVolume() const {
+    return flatbuffers::EndianScalar(sfxVolume_);
+  }
+  bool voices() const {
+    return flatbuffers::EndianScalar(voices_) != 0;
+  }
+  uint32_t idleTime() const {
+    return flatbuffers::EndianScalar(idleTime_);
+  }
 };
-STRUCT_END(GeneralSetting, 9);
+STRUCT_END(GeneralSetting, 16);
 
 MANUALLY_ALIGNED_STRUCT(4) UserSetting FLATBUFFERS_FINAL_CLASS {
  private:

@@ -37,8 +37,9 @@ enum EndReason:ubyte   { WIN, MAP_BORDER, COLLISION, INSTANT_LOSS_ANGLE,
 
 enum TriggerType:ubyte { NEW_ROUND }
 
-enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, SOUND_LEVEL,
-                         COMPETITION_MODE, DEBUG_MODE, TIMEFRAME,
+enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
+                         COMPETITION_MODE, DEBUG_MODE, TIMEFRAME, MUSIC_VOLUME,
+                         SFX_VOLUME, VOICES, IDLE_TIME,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
                          GAME_ACTIVE = 128, GAME_ENABLED }
@@ -91,12 +92,16 @@ struct GeneralSetting {
     available:bool = false;
     gameLanguage:Language = GERMAN;
     interfaceLanguage:Language = GERMAN;
-    soundLevel:ubyte = 191;
+    masterVolume:ubyte = 191;
     competitionMode:bool = true;
     debugMode:bool = false;
     timeFrame:ubyte = 0;
     gameActive:bool = true;
     gameEnabled:bool = false;
+    musicVolume:ubyte = 255;
+    sfxVolume:ubyte = 255;
+    voices:bool = true;
+    idleTime:uint = 30;
 }
 
 struct UserSetting {

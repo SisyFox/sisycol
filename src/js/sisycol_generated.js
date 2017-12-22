@@ -117,10 +117,14 @@ sisyfox.sisycol.TriggerType = {
 sisyfox.sisycol.SettingType = {
   GAME_LANGUAGE: 0,
   INTERFACE_LANGUAGE: 1,
-  SOUND_LEVEL: 2,
+  MASTER_VOLUME: 2,
   COMPETITION_MODE: 3,
   DEBUG_MODE: 4,
   TIMEFRAME: 5,
+  MUSIC_VOLUME: 6,
+  SFX_VOLUME: 7,
+  VOICES: 8,
+  IDLE_TIME: 9,
   WORLD: 64,
   LEVEL: 65,
   DIFFICULTY: 66,
@@ -656,7 +660,7 @@ sisyfox.sisycol.GeneralSetting.prototype.interfaceLanguage = function() {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.GeneralSetting.prototype.soundLevel = function() {
+sisyfox.sisycol.GeneralSetting.prototype.masterVolume = function() {
   return this.bb.readUint8(this.bb_pos + 3);
 };
 
@@ -696,26 +700,62 @@ sisyfox.sisycol.GeneralSetting.prototype.gameEnabled = function() {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.GeneralSetting.prototype.musicVolume = function() {
+  return this.bb.readUint8(this.bb_pos + 9);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.GeneralSetting.prototype.sfxVolume = function() {
+  return this.bb.readUint8(this.bb_pos + 10);
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.GeneralSetting.prototype.voices = function() {
+  return !!this.bb.readInt8(this.bb_pos + 11);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.GeneralSetting.prototype.idleTime = function() {
+  return this.bb.readUint32(this.bb_pos + 12);
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  * @param {boolean} available
  * @param {sisyfox.sisycol.Language} gameLanguage
  * @param {sisyfox.sisycol.Language} interfaceLanguage
- * @param {number} soundLevel
+ * @param {number} masterVolume
  * @param {boolean} competitionMode
  * @param {boolean} debugMode
  * @param {number} timeFrame
  * @param {boolean} gameActive
  * @param {boolean} gameEnabled
+ * @param {number} musicVolume
+ * @param {number} sfxVolume
+ * @param {boolean} voices
+ * @param {number} idleTime
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.GeneralSetting.createGeneralSetting = function(builder, available, gameLanguage, interfaceLanguage, soundLevel, competitionMode, debugMode, timeFrame, gameActive, gameEnabled) {
-  builder.prep(1, 9);
+sisyfox.sisycol.GeneralSetting.createGeneralSetting = function(builder, available, gameLanguage, interfaceLanguage, masterVolume, competitionMode, debugMode, timeFrame, gameActive, gameEnabled, musicVolume, sfxVolume, voices, idleTime) {
+  builder.prep(4, 16);
+  builder.writeInt32(idleTime);
+  builder.writeInt8(+voices);
+  builder.writeInt8(sfxVolume);
+  builder.writeInt8(musicVolume);
   builder.writeInt8(+gameEnabled);
   builder.writeInt8(+gameActive);
   builder.writeInt8(timeFrame);
   builder.writeInt8(+debugMode);
   builder.writeInt8(+competitionMode);
-  builder.writeInt8(soundLevel);
+  builder.writeInt8(masterVolume);
   builder.writeInt8(interfaceLanguage);
   builder.writeInt8(gameLanguage);
   builder.writeInt8(+available);
