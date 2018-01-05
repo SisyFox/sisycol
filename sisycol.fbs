@@ -37,6 +37,10 @@ enum EndReason:ubyte   { WIN, MAP_BORDER, COLLISION, INSTANT_LOSS_ANGLE,
 
 enum TriggerType:ubyte { NEW_ROUND }
 
+
+// Enumerations below 64 are GeneralSettings
+// Enumerations below 128 are UserSettings
+// all other are VirtualSettings
 enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          COMPETITION_MODE, DEBUG_MODE, TIMEFRAME, MUSIC_VOLUME,
                          SFX_VOLUME, VOICES, IDLE_TIME,
