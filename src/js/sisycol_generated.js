@@ -613,7 +613,7 @@ sisyfox.sisycol.Score.createScore = function(builder, id, goal, maxGoal, time, r
 /**
  * @constructor
  */
-sisyfox.sisycol.GeneralSetting = function() {
+sisyfox.sisycol.Setting = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -628,246 +628,39 @@ sisyfox.sisycol.GeneralSetting = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.GeneralSetting}
+ * @returns {sisyfox.sisycol.Setting}
  */
-sisyfox.sisycol.GeneralSetting.prototype.__init = function(i, bb) {
+sisyfox.sisycol.Setting.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
 };
 
 /**
- * @returns {boolean}
+ * @returns {sisyfox.sisycol.SettingType}
  */
-sisyfox.sisycol.GeneralSetting.prototype.available = function() {
-  return !!this.bb.readInt8(this.bb_pos);
-};
-
-/**
- * @returns {sisyfox.sisycol.Language}
- */
-sisyfox.sisycol.GeneralSetting.prototype.gameLanguage = function() {
-  return /** @type {sisyfox.sisycol.Language} */ (this.bb.readUint8(this.bb_pos + 1));
-};
-
-/**
- * @returns {sisyfox.sisycol.Language}
- */
-sisyfox.sisycol.GeneralSetting.prototype.interfaceLanguage = function() {
-  return /** @type {sisyfox.sisycol.Language} */ (this.bb.readUint8(this.bb_pos + 2));
+sisyfox.sisycol.Setting.prototype.type = function() {
+  return /** @type {sisyfox.sisycol.SettingType} */ (this.bb.readUint8(this.bb_pos));
 };
 
 /**
  * @returns {number}
  */
-sisyfox.sisycol.GeneralSetting.prototype.masterVolume = function() {
-  return this.bb.readUint8(this.bb_pos + 3);
-};
-
-/**
- * @returns {boolean}
- */
-sisyfox.sisycol.GeneralSetting.prototype.competitionMode = function() {
-  return !!this.bb.readInt8(this.bb_pos + 4);
-};
-
-/**
- * @returns {boolean}
- */
-sisyfox.sisycol.GeneralSetting.prototype.debugMode = function() {
-  return !!this.bb.readInt8(this.bb_pos + 5);
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.GeneralSetting.prototype.timeFrame = function() {
-  return this.bb.readUint8(this.bb_pos + 6);
-};
-
-/**
- * @returns {boolean}
- */
-sisyfox.sisycol.GeneralSetting.prototype.gameActive = function() {
-  return !!this.bb.readInt8(this.bb_pos + 7);
-};
-
-/**
- * @returns {boolean}
- */
-sisyfox.sisycol.GeneralSetting.prototype.gameEnabled = function() {
-  return !!this.bb.readInt8(this.bb_pos + 8);
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.GeneralSetting.prototype.musicVolume = function() {
-  return this.bb.readUint8(this.bb_pos + 9);
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.GeneralSetting.prototype.sfxVolume = function() {
-  return this.bb.readUint8(this.bb_pos + 10);
-};
-
-/**
- * @returns {boolean}
- */
-sisyfox.sisycol.GeneralSetting.prototype.voices = function() {
-  return !!this.bb.readInt8(this.bb_pos + 11);
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.GeneralSetting.prototype.idleTime = function() {
-  return this.bb.readUint32(this.bb_pos + 12);
+sisyfox.sisycol.Setting.prototype.value = function() {
+  return this.bb.readUint32(this.bb_pos + 4);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {boolean} available
- * @param {sisyfox.sisycol.Language} gameLanguage
- * @param {sisyfox.sisycol.Language} interfaceLanguage
- * @param {number} masterVolume
- * @param {boolean} competitionMode
- * @param {boolean} debugMode
- * @param {number} timeFrame
- * @param {boolean} gameActive
- * @param {boolean} gameEnabled
- * @param {number} musicVolume
- * @param {number} sfxVolume
- * @param {boolean} voices
- * @param {number} idleTime
+ * @param {sisyfox.sisycol.SettingType} type
+ * @param {number} value
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.GeneralSetting.createGeneralSetting = function(builder, available, gameLanguage, interfaceLanguage, masterVolume, competitionMode, debugMode, timeFrame, gameActive, gameEnabled, musicVolume, sfxVolume, voices, idleTime) {
-  builder.prep(4, 16);
-  builder.writeInt32(idleTime);
-  builder.writeInt8(+voices);
-  builder.writeInt8(sfxVolume);
-  builder.writeInt8(musicVolume);
-  builder.writeInt8(+gameEnabled);
-  builder.writeInt8(+gameActive);
-  builder.writeInt8(timeFrame);
-  builder.writeInt8(+debugMode);
-  builder.writeInt8(+competitionMode);
-  builder.writeInt8(masterVolume);
-  builder.writeInt8(interfaceLanguage);
-  builder.writeInt8(gameLanguage);
-  builder.writeInt8(+available);
-  return builder.offset();
-};
-
-/**
- * @constructor
- */
-sisyfox.sisycol.UserSetting = function() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-};
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.UserSetting}
- */
-sisyfox.sisycol.UserSetting.prototype.__init = function(i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @returns {boolean}
- */
-sisyfox.sisycol.UserSetting.prototype.available = function() {
-  return !!this.bb.readInt8(this.bb_pos);
-};
-
-/**
- * @returns {sisyfox.sisycol.World}
- */
-sisyfox.sisycol.UserSetting.prototype.world = function() {
-  return /** @type {sisyfox.sisycol.World} */ (this.bb.readUint8(this.bb_pos + 1));
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.UserSetting.prototype.level = function() {
-  return this.bb.readUint8(this.bb_pos + 2);
-};
-
-/**
- * @returns {sisyfox.sisycol.Difficulty}
- */
-sisyfox.sisycol.UserSetting.prototype.difficulty = function() {
-  return /** @type {sisyfox.sisycol.Difficulty} */ (this.bb.readUint8(this.bb_pos + 3));
-};
-
-/**
- * @returns {sisyfox.sisycol.GameMode}
- */
-sisyfox.sisycol.UserSetting.prototype.gameMode = function() {
-  return /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + 4));
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.UserSetting.prototype.gemScore = function() {
-  return this.bb.readUint32(this.bb_pos + 8);
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.UserSetting.prototype.maxCollectWorld = function() {
-  return this.bb.readUint8(this.bb_pos + 12);
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.UserSetting.prototype.maxCollectLevel = function() {
-  return this.bb.readUint8(this.bb_pos + 13);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {boolean} available
- * @param {sisyfox.sisycol.World} world
- * @param {number} level
- * @param {sisyfox.sisycol.Difficulty} difficulty
- * @param {sisyfox.sisycol.GameMode} gameMode
- * @param {number} gemScore
- * @param {number} maxCollectWorld
- * @param {number} maxCollectLevel
- * @returns {flatbuffers.Offset}
- */
-sisyfox.sisycol.UserSetting.createUserSetting = function(builder, available, world, level, difficulty, gameMode, gemScore, maxCollectWorld, maxCollectLevel) {
-  builder.prep(4, 16);
-  builder.pad(2);
-  builder.writeInt8(maxCollectLevel);
-  builder.writeInt8(maxCollectWorld);
-  builder.writeInt32(gemScore);
+sisyfox.sisycol.Setting.createSetting = function(builder, type, value) {
+  builder.prep(4, 8);
+  builder.writeInt32(value);
   builder.pad(3);
-  builder.writeInt8(gameMode);
-  builder.writeInt8(difficulty);
-  builder.writeInt8(level);
-  builder.writeInt8(world);
-  builder.writeInt8(+available);
+  builder.writeInt8(type);
   return builder.offset();
 };
 
@@ -2666,10 +2459,42 @@ sisyfox.sisycol.request.GetSettings.getRootAsGetSettings = function(bb, obj) {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetSettings.prototype.start = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetSettings.prototype.end = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 255;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.GetSettings.startGetSettings = function(builder) {
-  builder.startObject(0);
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} start
+ */
+sisyfox.sisycol.request.GetSettings.addStart = function(builder, start) {
+  builder.addFieldInt8(0, start, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} end
+ */
+sisyfox.sisycol.request.GetSettings.addEnd = function(builder, end) {
+  builder.addFieldInt8(1, end, 255);
 };
 
 /**
@@ -6513,44 +6338,44 @@ sisyfox.sisycol.response.GetSettings.getRootAsGetSettings = function(bb, obj) {
 };
 
 /**
- * @param {sisyfox.sisycol.GeneralSetting=} obj
- * @returns {sisyfox.sisycol.GeneralSetting|null}
+ * @param {number} index
+ * @param {sisyfox.sisycol.Setting=} obj
+ * @returns {sisyfox.sisycol.Setting}
  */
-sisyfox.sisycol.response.GetSettings.prototype.generalSetting = function(obj) {
+sisyfox.sisycol.response.GetSettings.prototype.settings = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.GeneralSetting).__init(this.bb_pos + offset, this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.Setting).__init(this.bb.__vector(this.bb_pos + offset) + index * 8, this.bb) : null;
 };
 
 /**
- * @param {sisyfox.sisycol.UserSetting=} obj
- * @returns {sisyfox.sisycol.UserSetting|null}
+ * @returns {number}
  */
-sisyfox.sisycol.response.GetSettings.prototype.userSetting = function(obj) {
-  var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? (obj || new sisyfox.sisycol.UserSetting).__init(this.bb_pos + offset, this.bb) : null;
+sisyfox.sisycol.response.GetSettings.prototype.settingsLength = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.response.GetSettings.startGetSettings = function(builder) {
-  builder.startObject(2);
+  builder.startObject(1);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} generalSettingOffset
+ * @param {flatbuffers.Offset} settingsOffset
  */
-sisyfox.sisycol.response.GetSettings.addGeneralSetting = function(builder, generalSettingOffset) {
-  builder.addFieldStruct(0, generalSettingOffset, 0);
+sisyfox.sisycol.response.GetSettings.addSettings = function(builder, settingsOffset) {
+  builder.addFieldOffset(0, settingsOffset, 0);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} userSettingOffset
+ * @param {number} numElems
  */
-sisyfox.sisycol.response.GetSettings.addUserSetting = function(builder, userSettingOffset) {
-  builder.addFieldStruct(1, userSettingOffset, 0);
+sisyfox.sisycol.response.GetSettings.startSettingsVector = function(builder, numElems) {
+  builder.startVector(8, numElems, 4);
 };
 
 /**

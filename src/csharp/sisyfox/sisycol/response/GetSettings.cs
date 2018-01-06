@@ -17,12 +17,19 @@ public struct GetSettings : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public GetSettings __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sisyfox.sisycol.GeneralSetting? GeneralSetting { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.GeneralSetting?)(new sisyfox.sisycol.GeneralSetting()).__assign(o + __p.bb_pos, __p.bb) : null; } }
-  public sisyfox.sisycol.UserSetting? UserSetting { get { int o = __p.__offset(6); return o != 0 ? (sisyfox.sisycol.UserSetting?)(new sisyfox.sisycol.UserSetting()).__assign(o + __p.bb_pos, __p.bb) : null; } }
+  public sisyfox.sisycol.Setting? Settings(int j) { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Setting?)(new sisyfox.sisycol.Setting()).__assign(__p.__vector(o) + j * 8, __p.bb) : null; }
+  public int SettingsLength { get { int o = __p.__offset(4); return o != 0 ? __p.__vector_len(o) : 0; } }
 
-  public static void StartGetSettings(FlatBufferBuilder builder) { builder.StartObject(2); }
-  public static void AddGeneralSetting(FlatBufferBuilder builder, Offset<sisyfox.sisycol.GeneralSetting> generalSettingOffset) { builder.AddStruct(0, generalSettingOffset.Value, 0); }
-  public static void AddUserSetting(FlatBufferBuilder builder, Offset<sisyfox.sisycol.UserSetting> userSettingOffset) { builder.AddStruct(1, userSettingOffset.Value, 0); }
+  public static Offset<GetSettings> CreateGetSettings(FlatBufferBuilder builder,
+      VectorOffset settingsOffset = default(VectorOffset)) {
+    builder.StartObject(1);
+    GetSettings.AddSettings(builder, settingsOffset);
+    return GetSettings.EndGetSettings(builder);
+  }
+
+  public static void StartGetSettings(FlatBufferBuilder builder) { builder.StartObject(1); }
+  public static void AddSettings(FlatBufferBuilder builder, VectorOffset settingsOffset) { builder.AddOffset(0, settingsOffset.Value, 0); }
+  public static void StartSettingsVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(8, numElems, 4); }
   public static Offset<GetSettings> EndGetSettings(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetSettings>(o);

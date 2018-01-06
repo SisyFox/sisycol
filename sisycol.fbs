@@ -92,31 +92,9 @@ struct Score {
     rating:int;
 }
 
-struct GeneralSetting {
-    available:bool = false;
-    gameLanguage:Language = GERMAN;
-    interfaceLanguage:Language = GERMAN;
-    masterVolume:ubyte = 191;
-    competitionMode:bool = true;
-    debugMode:bool = false;
-    timeFrame:ubyte = 0;
-    gameActive:bool = true;
-    gameEnabled:bool = false;
-    musicVolume:ubyte = 255;
-    sfxVolume:ubyte = 255;
-    voices:bool = true;
-    idleTime:uint = 30;
-}
-
-struct UserSetting {
-    available:bool = false;
-    world:World = 0x80;
-    level:ubyte = 0x80;
-    difficulty:Difficulty = NORMAL;
-    gameMode:GameMode = 0x80;
-    gemScore:uint = 0;
-    maxCollectWorld:ubyte = 0;
-    maxCollectLevel:ubyte = 0;
+struct Setting {
+    type:SettingType;
+    value:uint;
 }
 
 struct DmxDeviceChannel {
@@ -242,7 +220,10 @@ table GetSetting {
   type:SettingType;
 }
 
-table GetSettings {}
+table GetSettings {
+  start:ubyte = 0x00;
+  end:ubyte = 0xff;
+}
 
 table Trigger {
     type:TriggerType;
@@ -475,8 +456,7 @@ table GetSetting {
 }
 
 table GetSettings {
-    generalSetting:GeneralSetting;
-    userSetting:UserSetting;
+    settings:[Setting];
 }
 
 table Trigger {

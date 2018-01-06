@@ -17,8 +17,21 @@ public struct GetSettings : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public GetSettings __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
+  public byte Start { get { int o = __p.__offset(4); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public byte End { get { int o = __p.__offset(6); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)255; } }
 
-  public static void StartGetSettings(FlatBufferBuilder builder) { builder.StartObject(0); }
+  public static Offset<GetSettings> CreateGetSettings(FlatBufferBuilder builder,
+      byte start = 0,
+      byte end = 255) {
+    builder.StartObject(2);
+    GetSettings.AddEnd(builder, end);
+    GetSettings.AddStart(builder, start);
+    return GetSettings.EndGetSettings(builder);
+  }
+
+  public static void StartGetSettings(FlatBufferBuilder builder) { builder.StartObject(2); }
+  public static void AddStart(FlatBufferBuilder builder, byte start) { builder.AddByte(0, start, 0); }
+  public static void AddEnd(FlatBufferBuilder builder, byte end) { builder.AddByte(1, end, 255); }
   public static Offset<GetSettings> EndGetSettings(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetSettings>(o);

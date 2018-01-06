@@ -17,9 +17,7 @@ struct LiveData;
 
 struct Score;
 
-struct GeneralSetting;
-
-struct UserSetting;
+struct Setting;
 
 struct DmxDeviceChannel;
 
@@ -1100,147 +1098,34 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
 };
 STRUCT_END(Score, 56);
 
-MANUALLY_ALIGNED_STRUCT(4) GeneralSetting FLATBUFFERS_FINAL_CLASS {
+MANUALLY_ALIGNED_STRUCT(4) Setting FLATBUFFERS_FINAL_CLASS {
  private:
-  uint8_t available_;
-  uint8_t gameLanguage_;
-  uint8_t interfaceLanguage_;
-  uint8_t masterVolume_;
-  uint8_t competitionMode_;
-  uint8_t debugMode_;
-  uint8_t timeFrame_;
-  uint8_t gameActive_;
-  uint8_t gameEnabled_;
-  uint8_t musicVolume_;
-  uint8_t sfxVolume_;
-  uint8_t voices_;
-  uint32_t idleTime_;
-
- public:
-  GeneralSetting() {
-    memset(this, 0, sizeof(GeneralSetting));
-  }
-  GeneralSetting(const GeneralSetting &_o) {
-    memcpy(this, &_o, sizeof(GeneralSetting));
-  }
-  GeneralSetting(bool _available, Language _gameLanguage, Language _interfaceLanguage, uint8_t _masterVolume, bool _competitionMode, bool _debugMode, uint8_t _timeFrame, bool _gameActive, bool _gameEnabled, uint8_t _musicVolume, uint8_t _sfxVolume, bool _voices, uint32_t _idleTime)
-      : available_(flatbuffers::EndianScalar(static_cast<uint8_t>(_available))),
-        gameLanguage_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameLanguage))),
-        interfaceLanguage_(flatbuffers::EndianScalar(static_cast<uint8_t>(_interfaceLanguage))),
-        masterVolume_(flatbuffers::EndianScalar(_masterVolume)),
-        competitionMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_competitionMode))),
-        debugMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_debugMode))),
-        timeFrame_(flatbuffers::EndianScalar(_timeFrame)),
-        gameActive_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameActive))),
-        gameEnabled_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameEnabled))),
-        musicVolume_(flatbuffers::EndianScalar(_musicVolume)),
-        sfxVolume_(flatbuffers::EndianScalar(_sfxVolume)),
-        voices_(flatbuffers::EndianScalar(static_cast<uint8_t>(_voices))),
-        idleTime_(flatbuffers::EndianScalar(_idleTime)) {
-  }
-  bool available() const {
-    return flatbuffers::EndianScalar(available_) != 0;
-  }
-  Language gameLanguage() const {
-    return static_cast<Language>(flatbuffers::EndianScalar(gameLanguage_));
-  }
-  Language interfaceLanguage() const {
-    return static_cast<Language>(flatbuffers::EndianScalar(interfaceLanguage_));
-  }
-  uint8_t masterVolume() const {
-    return flatbuffers::EndianScalar(masterVolume_);
-  }
-  bool competitionMode() const {
-    return flatbuffers::EndianScalar(competitionMode_) != 0;
-  }
-  bool debugMode() const {
-    return flatbuffers::EndianScalar(debugMode_) != 0;
-  }
-  uint8_t timeFrame() const {
-    return flatbuffers::EndianScalar(timeFrame_);
-  }
-  bool gameActive() const {
-    return flatbuffers::EndianScalar(gameActive_) != 0;
-  }
-  bool gameEnabled() const {
-    return flatbuffers::EndianScalar(gameEnabled_) != 0;
-  }
-  uint8_t musicVolume() const {
-    return flatbuffers::EndianScalar(musicVolume_);
-  }
-  uint8_t sfxVolume() const {
-    return flatbuffers::EndianScalar(sfxVolume_);
-  }
-  bool voices() const {
-    return flatbuffers::EndianScalar(voices_) != 0;
-  }
-  uint32_t idleTime() const {
-    return flatbuffers::EndianScalar(idleTime_);
-  }
-};
-STRUCT_END(GeneralSetting, 16);
-
-MANUALLY_ALIGNED_STRUCT(4) UserSetting FLATBUFFERS_FINAL_CLASS {
- private:
-  uint8_t available_;
-  uint8_t world_;
-  uint8_t level_;
-  uint8_t difficulty_;
-  uint8_t gameMode_;
+  uint8_t type_;
   int8_t padding0__;  int16_t padding1__;
-  uint32_t gemScore_;
-  uint8_t maxCollectWorld_;
-  uint8_t maxCollectLevel_;
-  int16_t padding2__;
+  uint32_t value_;
 
  public:
-  UserSetting() {
-    memset(this, 0, sizeof(UserSetting));
+  Setting() {
+    memset(this, 0, sizeof(Setting));
   }
-  UserSetting(const UserSetting &_o) {
-    memcpy(this, &_o, sizeof(UserSetting));
+  Setting(const Setting &_o) {
+    memcpy(this, &_o, sizeof(Setting));
   }
-  UserSetting(bool _available, World _world, uint8_t _level, Difficulty _difficulty, GameMode _gameMode, uint32_t _gemScore, uint8_t _maxCollectWorld, uint8_t _maxCollectLevel)
-      : available_(flatbuffers::EndianScalar(static_cast<uint8_t>(_available))),
-        world_(flatbuffers::EndianScalar(static_cast<uint8_t>(_world))),
-        level_(flatbuffers::EndianScalar(_level)),
-        difficulty_(flatbuffers::EndianScalar(static_cast<uint8_t>(_difficulty))),
-        gameMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameMode))),
+  Setting(SettingType _type, uint32_t _value)
+      : type_(flatbuffers::EndianScalar(static_cast<uint8_t>(_type))),
         padding0__(0),
         padding1__(0),
-        gemScore_(flatbuffers::EndianScalar(_gemScore)),
-        maxCollectWorld_(flatbuffers::EndianScalar(_maxCollectWorld)),
-        maxCollectLevel_(flatbuffers::EndianScalar(_maxCollectLevel)),
-        padding2__(0) {
+        value_(flatbuffers::EndianScalar(_value)) {
     (void)padding0__;    (void)padding1__;
-    (void)padding2__;
   }
-  bool available() const {
-    return flatbuffers::EndianScalar(available_) != 0;
+  SettingType type() const {
+    return static_cast<SettingType>(flatbuffers::EndianScalar(type_));
   }
-  World world() const {
-    return static_cast<World>(flatbuffers::EndianScalar(world_));
-  }
-  uint8_t level() const {
-    return flatbuffers::EndianScalar(level_);
-  }
-  Difficulty difficulty() const {
-    return static_cast<Difficulty>(flatbuffers::EndianScalar(difficulty_));
-  }
-  GameMode gameMode() const {
-    return static_cast<GameMode>(flatbuffers::EndianScalar(gameMode_));
-  }
-  uint32_t gemScore() const {
-    return flatbuffers::EndianScalar(gemScore_);
-  }
-  uint8_t maxCollectWorld() const {
-    return flatbuffers::EndianScalar(maxCollectWorld_);
-  }
-  uint8_t maxCollectLevel() const {
-    return flatbuffers::EndianScalar(maxCollectLevel_);
+  uint32_t value() const {
+    return flatbuffers::EndianScalar(value_);
   }
 };
-STRUCT_END(UserSetting, 16);
+STRUCT_END(Setting, 8);
 
 MANUALLY_ALIGNED_STRUCT(4) DmxDeviceChannel FLATBUFFERS_FINAL_CLASS {
  private:
@@ -2707,8 +2592,20 @@ inline flatbuffers::Offset<GetSetting> CreateGetSetting(
 }
 
 struct GetSettings FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_START = 4,
+    VT_END = 6
+  };
+  uint8_t start() const {
+    return GetField<uint8_t>(VT_START, 0);
+  }
+  uint8_t end() const {
+    return GetField<uint8_t>(VT_END, 255);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, VT_START) &&
+           VerifyField<uint8_t>(verifier, VT_END) &&
            verifier.EndTable();
   }
 };
@@ -2716,6 +2613,12 @@ struct GetSettings FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetSettingsBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
+  void add_start(uint8_t start) {
+    fbb_.AddElement<uint8_t>(GetSettings::VT_START, start, 0);
+  }
+  void add_end(uint8_t end) {
+    fbb_.AddElement<uint8_t>(GetSettings::VT_END, end, 255);
+  }
   explicit GetSettingsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2729,8 +2632,12 @@ struct GetSettingsBuilder {
 };
 
 inline flatbuffers::Offset<GetSettings> CreateGetSettings(
-    flatbuffers::FlatBufferBuilder &_fbb) {
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint8_t start = 0,
+    uint8_t end = 255) {
   GetSettingsBuilder builder_(_fbb);
+  builder_.add_end(end);
+  builder_.add_start(start);
   return builder_.Finish();
 }
 
@@ -5064,19 +4971,15 @@ inline flatbuffers::Offset<GetSetting> CreateGetSetting(
 
 struct GetSettings FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_GENERALSETTING = 4,
-    VT_USERSETTING = 6
+    VT_SETTINGS = 4
   };
-  const sisyfox::sisycol::GeneralSetting *generalSetting() const {
-    return GetStruct<const sisyfox::sisycol::GeneralSetting *>(VT_GENERALSETTING);
-  }
-  const sisyfox::sisycol::UserSetting *userSetting() const {
-    return GetStruct<const sisyfox::sisycol::UserSetting *>(VT_USERSETTING);
+  const flatbuffers::Vector<const sisyfox::sisycol::Setting *> *settings() const {
+    return GetPointer<const flatbuffers::Vector<const sisyfox::sisycol::Setting *> *>(VT_SETTINGS);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<sisyfox::sisycol::GeneralSetting>(verifier, VT_GENERALSETTING) &&
-           VerifyField<sisyfox::sisycol::UserSetting>(verifier, VT_USERSETTING) &&
+           VerifyOffset(verifier, VT_SETTINGS) &&
+           verifier.Verify(settings()) &&
            verifier.EndTable();
   }
 };
@@ -5084,11 +4987,8 @@ struct GetSettings FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetSettingsBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_generalSetting(const sisyfox::sisycol::GeneralSetting *generalSetting) {
-    fbb_.AddStruct(GetSettings::VT_GENERALSETTING, generalSetting);
-  }
-  void add_userSetting(const sisyfox::sisycol::UserSetting *userSetting) {
-    fbb_.AddStruct(GetSettings::VT_USERSETTING, userSetting);
+  void add_settings(flatbuffers::Offset<flatbuffers::Vector<const sisyfox::sisycol::Setting *>> settings) {
+    fbb_.AddOffset(GetSettings::VT_SETTINGS, settings);
   }
   explicit GetSettingsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -5104,12 +5004,18 @@ struct GetSettingsBuilder {
 
 inline flatbuffers::Offset<GetSettings> CreateGetSettings(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const sisyfox::sisycol::GeneralSetting *generalSetting = 0,
-    const sisyfox::sisycol::UserSetting *userSetting = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<const sisyfox::sisycol::Setting *>> settings = 0) {
   GetSettingsBuilder builder_(_fbb);
-  builder_.add_userSetting(userSetting);
-  builder_.add_generalSetting(generalSetting);
+  builder_.add_settings(settings);
   return builder_.Finish();
+}
+
+inline flatbuffers::Offset<GetSettings> CreateGetSettingsDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    const std::vector<const sisyfox::sisycol::Setting *> *settings = nullptr) {
+  return sisyfox::sisycol::response::CreateGetSettings(
+      _fbb,
+      settings ? _fbb.CreateVector<const sisyfox::sisycol::Setting *>(*settings) : 0);
 }
 
 struct Trigger FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
