@@ -235,7 +235,7 @@ table UnsetUser {}
 
 table SetSetting {
   type:SettingType;
-  value:int;
+  value:uint;
 }
 
 table GetSetting {
@@ -471,7 +471,7 @@ table SetSetting {
 }
 
 table GetSetting {
-    value:int;
+    value:uint;
 }
 
 table GetSettings {

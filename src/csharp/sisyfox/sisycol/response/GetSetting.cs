@@ -17,17 +17,17 @@ public struct GetSetting : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public GetSetting __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public int Value { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public uint Value { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
 
   public static Offset<GetSetting> CreateGetSetting(FlatBufferBuilder builder,
-      int value = 0) {
+      uint value = 0) {
     builder.StartObject(1);
     GetSetting.AddValue(builder, value);
     return GetSetting.EndGetSetting(builder);
   }
 
   public static void StartGetSetting(FlatBufferBuilder builder) { builder.StartObject(1); }
-  public static void AddValue(FlatBufferBuilder builder, int value) { builder.AddInt(0, value, 0); }
+  public static void AddValue(FlatBufferBuilder builder, uint value) { builder.AddUint(0, value, 0); }
   public static Offset<GetSetting> EndGetSetting(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetSetting>(o);

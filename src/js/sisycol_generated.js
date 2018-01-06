@@ -2528,7 +2528,7 @@ sisyfox.sisycol.request.SetSetting.prototype.type = function() {
  */
 sisyfox.sisycol.request.SetSetting.prototype.value = function() {
   var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
 
 /**
@@ -6450,7 +6450,7 @@ sisyfox.sisycol.response.GetSetting.getRootAsGetSetting = function(bb, obj) {
  */
 sisyfox.sisycol.response.GetSetting.prototype.value = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
 
 /**
