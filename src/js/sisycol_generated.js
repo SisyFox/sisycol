@@ -2477,42 +2477,10 @@ sisyfox.sisycol.request.GetSettings.getRootAsGetSettings = function(bb, obj) {
 };
 
 /**
- * @returns {number}
- */
-sisyfox.sisycol.request.GetSettings.prototype.start = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.request.GetSettings.prototype.end = function() {
-  var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.readUint8(this.bb_pos + offset) : 255;
-};
-
-/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.GetSettings.startGetSettings = function(builder) {
-  builder.startObject(2);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} start
- */
-sisyfox.sisycol.request.GetSettings.addStart = function(builder, start) {
-  builder.addFieldInt8(0, start, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} end
- */
-sisyfox.sisycol.request.GetSettings.addEnd = function(builder, end) {
-  builder.addFieldInt8(1, end, 255);
+  builder.startObject(0);
 };
 
 /**

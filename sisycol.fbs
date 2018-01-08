@@ -223,8 +223,6 @@ table GetSetting {
 }
 
 table GetSettings {
-  start:ubyte = 0x00;
-  end:ubyte = 0xff;
 }
 
 table Trigger {

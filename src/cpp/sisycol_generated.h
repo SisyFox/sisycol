@@ -2628,20 +2628,8 @@ inline flatbuffers::Offset<GetSetting> CreateGetSetting(
 }
 
 struct GetSettings FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  enum {
-    VT_START = 4,
-    VT_END = 6
-  };
-  uint8_t start() const {
-    return GetField<uint8_t>(VT_START, 0);
-  }
-  uint8_t end() const {
-    return GetField<uint8_t>(VT_END, 255);
-  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_START) &&
-           VerifyField<uint8_t>(verifier, VT_END) &&
            verifier.EndTable();
   }
 };
@@ -2649,12 +2637,6 @@ struct GetSettings FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetSettingsBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_start(uint8_t start) {
-    fbb_.AddElement<uint8_t>(GetSettings::VT_START, start, 0);
-  }
-  void add_end(uint8_t end) {
-    fbb_.AddElement<uint8_t>(GetSettings::VT_END, end, 255);
-  }
   explicit GetSettingsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2668,12 +2650,8 @@ struct GetSettingsBuilder {
 };
 
 inline flatbuffers::Offset<GetSettings> CreateGetSettings(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    uint8_t start = 0,
-    uint8_t end = 255) {
+    flatbuffers::FlatBufferBuilder &_fbb) {
   GetSettingsBuilder builder_(_fbb);
-  builder_.add_end(end);
-  builder_.add_start(start);
   return builder_.Finish();
 }
 
