@@ -683,7 +683,7 @@ inline const char *EnumNameTriggerType(TriggerType e) {
   return EnumNamesTriggerType()[index];
 }
 
-enum SettingId {
+enum SettingType {
   GAME_LANGUAGE = 0,
   INTERFACE_LANGUAGE = 1,
   MASTER_VOLUME = 2,
@@ -705,8 +705,8 @@ enum SettingId {
   GAME_ENABLED = 129
 };
 
-inline SettingId (&EnumValuesSettingId())[19] {
-  static SettingId values[] = {
+inline SettingType (&EnumValuesSettingType())[19] {
+  static SettingType values[] = {
     GAME_LANGUAGE,
     INTERFACE_LANGUAGE,
     MASTER_VOLUME,
@@ -730,14 +730,14 @@ inline SettingId (&EnumValuesSettingId())[19] {
   return values;
 }
 
-enum SettingType {
+enum SettingVariableType {
   BOOL = 0,
   UBYTE = 1,
   UINT = 2
 };
 
-inline SettingType (&EnumValuesSettingType())[3] {
-  static SettingType values[] = {
+inline SettingVariableType (&EnumValuesSettingVariableType())[3] {
+  static SettingVariableType values[] = {
     BOOL,
     UBYTE,
     UINT
@@ -745,7 +745,7 @@ inline SettingType (&EnumValuesSettingType())[3] {
   return values;
 }
 
-inline const char **EnumNamesSettingType() {
+inline const char **EnumNamesSettingVariableType() {
   static const char *names[] = {
     "BOOL",
     "UBYTE",
@@ -755,9 +755,9 @@ inline const char **EnumNamesSettingType() {
   return names;
 }
 
-inline const char *EnumNameSettingType(SettingType e) {
+inline const char *EnumNameSettingVariableType(SettingVariableType e) {
   const size_t index = static_cast<int>(e);
-  return EnumNamesSettingType()[index];
+  return EnumNamesSettingVariableType()[index];
 }
 
 enum Language {
@@ -1106,8 +1106,8 @@ STRUCT_END(Score, 56);
 
 MANUALLY_ALIGNED_STRUCT(4) Setting FLATBUFFERS_FINAL_CLASS {
  private:
-  uint8_t id_;
   uint8_t type_;
+  uint8_t variableType_;
   int16_t padding0__;
   uint32_t value_;
 
@@ -1118,18 +1118,18 @@ MANUALLY_ALIGNED_STRUCT(4) Setting FLATBUFFERS_FINAL_CLASS {
   Setting(const Setting &_o) {
     memcpy(this, &_o, sizeof(Setting));
   }
-  Setting(SettingId _id, SettingType _type, uint32_t _value)
-      : id_(flatbuffers::EndianScalar(static_cast<uint8_t>(_id))),
-        type_(flatbuffers::EndianScalar(static_cast<uint8_t>(_type))),
+  Setting(SettingType _type, SettingVariableType _variableType, uint32_t _value)
+      : type_(flatbuffers::EndianScalar(static_cast<uint8_t>(_type))),
+        variableType_(flatbuffers::EndianScalar(static_cast<uint8_t>(_variableType))),
         padding0__(0),
         value_(flatbuffers::EndianScalar(_value)) {
     (void)padding0__;
   }
-  SettingId id() const {
-    return static_cast<SettingId>(flatbuffers::EndianScalar(id_));
-  }
   SettingType type() const {
     return static_cast<SettingType>(flatbuffers::EndianScalar(type_));
+  }
+  SettingVariableType variableType() const {
+    return static_cast<SettingVariableType>(flatbuffers::EndianScalar(variableType_));
   }
   uint32_t value() const {
     return flatbuffers::EndianScalar(value_);
@@ -2513,18 +2513,18 @@ inline flatbuffers::Offset<UnsetUser> CreateUnsetUser(
 
 struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_ID = 4,
+    VT_TYPE = 4,
     VT_VALUE = 6
   };
-  sisyfox::sisycol::SettingId id() const {
-    return static_cast<sisyfox::sisycol::SettingId>(GetField<uint8_t>(VT_ID, 0));
+  sisyfox::sisycol::SettingType type() const {
+    return static_cast<sisyfox::sisycol::SettingType>(GetField<uint8_t>(VT_TYPE, 0));
   }
   uint32_t value() const {
     return GetField<uint32_t>(VT_VALUE, 0);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_ID) &&
+           VerifyField<uint8_t>(verifier, VT_TYPE) &&
            VerifyField<uint32_t>(verifier, VT_VALUE) &&
            verifier.EndTable();
   }
@@ -2533,8 +2533,8 @@ struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct SetSettingBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_id(sisyfox::sisycol::SettingId id) {
-    fbb_.AddElement<uint8_t>(SetSetting::VT_ID, static_cast<uint8_t>(id), 0);
+  void add_type(sisyfox::sisycol::SettingType type) {
+    fbb_.AddElement<uint8_t>(SetSetting::VT_TYPE, static_cast<uint8_t>(type), 0);
   }
   void add_value(uint32_t value) {
     fbb_.AddElement<uint32_t>(SetSetting::VT_VALUE, value, 0);
@@ -2553,24 +2553,24 @@ struct SetSettingBuilder {
 
 inline flatbuffers::Offset<SetSetting> CreateSetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::SettingId id = sisyfox::sisycol::GAME_LANGUAGE,
+    sisyfox::sisycol::SettingType type = sisyfox::sisycol::GAME_LANGUAGE,
     uint32_t value = 0) {
   SetSettingBuilder builder_(_fbb);
   builder_.add_value(value);
-  builder_.add_id(id);
+  builder_.add_type(type);
   return builder_.Finish();
 }
 
 struct GetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_ID = 4
+    VT_TYPE = 4
   };
-  sisyfox::sisycol::SettingId id() const {
-    return static_cast<sisyfox::sisycol::SettingId>(GetField<uint8_t>(VT_ID, 0));
+  sisyfox::sisycol::SettingType type() const {
+    return static_cast<sisyfox::sisycol::SettingType>(GetField<uint8_t>(VT_TYPE, 0));
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_ID) &&
+           VerifyField<uint8_t>(verifier, VT_TYPE) &&
            verifier.EndTable();
   }
 };
@@ -2578,8 +2578,8 @@ struct GetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetSettingBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_id(sisyfox::sisycol::SettingId id) {
-    fbb_.AddElement<uint8_t>(GetSetting::VT_ID, static_cast<uint8_t>(id), 0);
+  void add_type(sisyfox::sisycol::SettingType type) {
+    fbb_.AddElement<uint8_t>(GetSetting::VT_TYPE, static_cast<uint8_t>(type), 0);
   }
   explicit GetSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -2595,9 +2595,9 @@ struct GetSettingBuilder {
 
 inline flatbuffers::Offset<GetSetting> CreateGetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::SettingId id = sisyfox::sisycol::GAME_LANGUAGE) {
+    sisyfox::sisycol::SettingType type = sisyfox::sisycol::GAME_LANGUAGE) {
   GetSettingBuilder builder_(_fbb);
-  builder_.add_id(id);
+  builder_.add_type(type);
   return builder_.Finish();
 }
 
@@ -4869,18 +4869,18 @@ inline flatbuffers::Offset<RemoveUser> CreateRemoveUser(
 
 struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_ID = 4,
+    VT_TYPE = 4,
     VT_VALUE = 6
   };
-  sisyfox::sisycol::SettingId id() const {
-    return static_cast<sisyfox::sisycol::SettingId>(GetField<uint8_t>(VT_ID, 0));
+  sisyfox::sisycol::SettingType type() const {
+    return static_cast<sisyfox::sisycol::SettingType>(GetField<uint8_t>(VT_TYPE, 0));
   }
   int32_t value() const {
     return GetField<int32_t>(VT_VALUE, 0);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_ID) &&
+           VerifyField<uint8_t>(verifier, VT_TYPE) &&
            VerifyField<int32_t>(verifier, VT_VALUE) &&
            verifier.EndTable();
   }
@@ -4889,8 +4889,8 @@ struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct SetSettingBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_id(sisyfox::sisycol::SettingId id) {
-    fbb_.AddElement<uint8_t>(SetSetting::VT_ID, static_cast<uint8_t>(id), 0);
+  void add_type(sisyfox::sisycol::SettingType type) {
+    fbb_.AddElement<uint8_t>(SetSetting::VT_TYPE, static_cast<uint8_t>(type), 0);
   }
   void add_value(int32_t value) {
     fbb_.AddElement<int32_t>(SetSetting::VT_VALUE, value, 0);
@@ -4909,11 +4909,11 @@ struct SetSettingBuilder {
 
 inline flatbuffers::Offset<SetSetting> CreateSetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::SettingId id = sisyfox::sisycol::GAME_LANGUAGE,
+    sisyfox::sisycol::SettingType type = sisyfox::sisycol::GAME_LANGUAGE,
     int32_t value = 0) {
   SetSettingBuilder builder_(_fbb);
   builder_.add_value(value);
-  builder_.add_id(id);
+  builder_.add_type(type);
   return builder_.Finish();
 }
 

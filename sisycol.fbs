@@ -40,14 +40,14 @@ enum TriggerType:ubyte { NEW_ROUND }
 // Enumerations below 64 are GeneralSettings
 // Enumerations below 128 are UserSettings
 // all other are VirtualSettings
-enum SettingId:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
+enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          COMPETITION_MODE, DEBUG_MODE, TIMEFRAME, MUSIC_VOLUME,
                          SFX_VOLUME, VOICES, IDLE_TIME,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
                          GAME_ACTIVE = 128, GAME_ENABLED }
 
-enum SettingType:ubyte { BOOL, UBYTE, UINT }
+enum SettingVariableType:ubyte { BOOL, UBYTE, UINT }
 
 enum Language:ubyte    { ENGLISH, GERMAN, CRUMMY_GERMAN = 0xff }
 
@@ -94,8 +94,8 @@ struct Score {
 }
 
 struct Setting {
-    id:SettingId;
     type:SettingType;
+    variableType:SettingVariableType;
     value:uint;
 }
 
@@ -214,12 +214,12 @@ table RemoveUser {
 table UnsetUser {}
 
 table SetSetting {
-  id:SettingId;
+  type:SettingType;
   value:uint;
 }
 
 table GetSetting {
-  id:SettingId;
+  type:SettingType;
 }
 
 table GetSettings {
@@ -447,7 +447,7 @@ table RemoveUser {
 }
 
 table SetSetting {
-    id:SettingId;
+    type:SettingType;
     value:int;
 }
 
