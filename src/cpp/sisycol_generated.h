@@ -900,13 +900,13 @@ inline const char *EnumNameDmxChannelRuleType(DmxChannelRuleType e) {
 
 enum DmxDeviceSettingType {
   RANGE = 0,
-  BOOL = 1
+  CHECKBOX = 1
 };
 
 inline DmxDeviceSettingType (&EnumValuesDmxDeviceSettingType())[2] {
   static DmxDeviceSettingType values[] = {
     RANGE,
-    BOOL
+    CHECKBOX
   };
   return values;
 }
@@ -914,7 +914,7 @@ inline DmxDeviceSettingType (&EnumValuesDmxDeviceSettingType())[2] {
 inline const char **EnumNamesDmxDeviceSettingType() {
   static const char *names[] = {
     "RANGE",
-    "BOOL",
+    "CHECKBOX",
     nullptr
   };
   return names;

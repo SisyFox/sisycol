@@ -59,7 +59,7 @@ enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON }
 
 enum DmxChannelRuleType:byte   { GOAL, TIME, PITCH }
 
-enum DmxDeviceSettingType:byte { RANGE, BOOL }
+enum DmxDeviceSettingType:byte { RANGE, CHECKBOX }
 
 enum DmxDeviceMode:byte        { TEST, DISABLED }
 

@@ -196,7 +196,7 @@ sisyfox.sisycol.DmxChannelRuleType = {
  */
 sisyfox.sisycol.DmxDeviceSettingType = {
   RANGE: 0,
-  BOOL: 1
+  CHECKBOX: 1
 };
 
 /**

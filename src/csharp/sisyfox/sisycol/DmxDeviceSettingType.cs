@@ -8,7 +8,7 @@ namespace sisyfox.sisycol
 public enum DmxDeviceSettingType : sbyte
 {
  RANGE = 0,
- BOOL = 1,
+ CHECKBOX = 1,
 };
 
 
