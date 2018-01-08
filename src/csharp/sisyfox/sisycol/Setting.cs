@@ -15,14 +15,16 @@ public struct Setting : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public Setting __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public SettingType Type { get { return (SettingType)__p.bb.Get(__p.bb_pos + 0); } }
+  public SettingId Id { get { return (SettingId)__p.bb.Get(__p.bb_pos + 0); } }
+  public SettingType Type { get { return (SettingType)__p.bb.Get(__p.bb_pos + 1); } }
   public uint Value { get { return __p.bb.GetUint(__p.bb_pos + 4); } }
 
-  public static Offset<Setting> CreateSetting(FlatBufferBuilder builder, SettingType Type, uint Value) {
+  public static Offset<Setting> CreateSetting(FlatBufferBuilder builder, SettingId Id, SettingType Type, uint Value) {
     builder.Prep(4, 8);
     builder.PutUint(Value);
-    builder.Pad(3);
+    builder.Pad(2);
     builder.PutByte((byte)Type);
+    builder.PutByte((byte)Id);
     return new Offset<Setting>(builder.Offset);
   }
 };

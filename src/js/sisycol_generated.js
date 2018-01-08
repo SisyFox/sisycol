@@ -114,7 +114,7 @@ sisyfox.sisycol.TriggerType = {
 /**
  * @enum
  */
-sisyfox.sisycol.SettingType = {
+sisyfox.sisycol.SettingId = {
   GAME_LANGUAGE: 0,
   INTERFACE_LANGUAGE: 1,
   MASTER_VOLUME: 2,
@@ -134,6 +134,15 @@ sisyfox.sisycol.SettingType = {
   GEM_SCORE: 70,
   GAME_ACTIVE: 128,
   GAME_ENABLED: 129
+};
+
+/**
+ * @enum
+ */
+sisyfox.sisycol.SettingType = {
+  BOOL: 0,
+  UBYTE: 1,
+  UINT: 2
 };
 
 /**
@@ -637,10 +646,17 @@ sisyfox.sisycol.Setting.prototype.__init = function(i, bb) {
 };
 
 /**
+ * @returns {sisyfox.sisycol.SettingId}
+ */
+sisyfox.sisycol.Setting.prototype.id = function() {
+  return /** @type {sisyfox.sisycol.SettingId} */ (this.bb.readUint8(this.bb_pos));
+};
+
+/**
  * @returns {sisyfox.sisycol.SettingType}
  */
 sisyfox.sisycol.Setting.prototype.type = function() {
-  return /** @type {sisyfox.sisycol.SettingType} */ (this.bb.readUint8(this.bb_pos));
+  return /** @type {sisyfox.sisycol.SettingType} */ (this.bb.readUint8(this.bb_pos + 1));
 };
 
 /**
@@ -652,15 +668,17 @@ sisyfox.sisycol.Setting.prototype.value = function() {
 
 /**
  * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.SettingId} id
  * @param {sisyfox.sisycol.SettingType} type
  * @param {number} value
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.Setting.createSetting = function(builder, type, value) {
+sisyfox.sisycol.Setting.createSetting = function(builder, id, type, value) {
   builder.prep(4, 8);
   builder.writeInt32(value);
-  builder.pad(3);
+  builder.pad(2);
   builder.writeInt8(type);
+  builder.writeInt8(id);
   return builder.offset();
 };
 
@@ -2309,11 +2327,11 @@ sisyfox.sisycol.request.SetSetting.getRootAsSetSetting = function(bb, obj) {
 };
 
 /**
- * @returns {sisyfox.sisycol.SettingType}
+ * @returns {sisyfox.sisycol.SettingId}
  */
-sisyfox.sisycol.request.SetSetting.prototype.type = function() {
+sisyfox.sisycol.request.SetSetting.prototype.id = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? /** @type {sisyfox.sisycol.SettingType} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingType.GAME_LANGUAGE;
+  return offset ? /** @type {sisyfox.sisycol.SettingId} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingId.GAME_LANGUAGE;
 };
 
 /**
@@ -2333,10 +2351,10 @@ sisyfox.sisycol.request.SetSetting.startSetSetting = function(builder) {
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {sisyfox.sisycol.SettingType} type
+ * @param {sisyfox.sisycol.SettingId} id
  */
-sisyfox.sisycol.request.SetSetting.addType = function(builder, type) {
-  builder.addFieldInt8(0, type, sisyfox.sisycol.SettingType.GAME_LANGUAGE);
+sisyfox.sisycol.request.SetSetting.addId = function(builder, id) {
+  builder.addFieldInt8(0, id, sisyfox.sisycol.SettingId.GAME_LANGUAGE);
 };
 
 /**
@@ -2392,11 +2410,11 @@ sisyfox.sisycol.request.GetSetting.getRootAsGetSetting = function(bb, obj) {
 };
 
 /**
- * @returns {sisyfox.sisycol.SettingType}
+ * @returns {sisyfox.sisycol.SettingId}
  */
-sisyfox.sisycol.request.GetSetting.prototype.type = function() {
+sisyfox.sisycol.request.GetSetting.prototype.id = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? /** @type {sisyfox.sisycol.SettingType} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingType.GAME_LANGUAGE;
+  return offset ? /** @type {sisyfox.sisycol.SettingId} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingId.GAME_LANGUAGE;
 };
 
 /**
@@ -2408,10 +2426,10 @@ sisyfox.sisycol.request.GetSetting.startGetSetting = function(builder) {
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {sisyfox.sisycol.SettingType} type
+ * @param {sisyfox.sisycol.SettingId} id
  */
-sisyfox.sisycol.request.GetSetting.addType = function(builder, type) {
-  builder.addFieldInt8(0, type, sisyfox.sisycol.SettingType.GAME_LANGUAGE);
+sisyfox.sisycol.request.GetSetting.addId = function(builder, id) {
+  builder.addFieldInt8(0, id, sisyfox.sisycol.SettingId.GAME_LANGUAGE);
 };
 
 /**
@@ -6188,11 +6206,11 @@ sisyfox.sisycol.response.SetSetting.getRootAsSetSetting = function(bb, obj) {
 };
 
 /**
- * @returns {sisyfox.sisycol.SettingType}
+ * @returns {sisyfox.sisycol.SettingId}
  */
-sisyfox.sisycol.response.SetSetting.prototype.type = function() {
+sisyfox.sisycol.response.SetSetting.prototype.id = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? /** @type {sisyfox.sisycol.SettingType} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingType.GAME_LANGUAGE;
+  return offset ? /** @type {sisyfox.sisycol.SettingId} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingId.GAME_LANGUAGE;
 };
 
 /**
@@ -6212,10 +6230,10 @@ sisyfox.sisycol.response.SetSetting.startSetSetting = function(builder) {
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {sisyfox.sisycol.SettingType} type
+ * @param {sisyfox.sisycol.SettingId} id
  */
-sisyfox.sisycol.response.SetSetting.addType = function(builder, type) {
-  builder.addFieldInt8(0, type, sisyfox.sisycol.SettingType.GAME_LANGUAGE);
+sisyfox.sisycol.response.SetSetting.addId = function(builder, id) {
+  builder.addFieldInt8(0, id, sisyfox.sisycol.SettingId.GAME_LANGUAGE);
 };
 
 /**

@@ -28,7 +28,6 @@ table Root {
 }
 root_type Root;
 
-
 enum ErrorCode:ubyte   { BAD_TRANSMISSION, BAD_VERSION, BAD_PAYLOAD_TYPE,
                          GENERAL_ERROR, NOT_AVAILABLE }
 
@@ -41,12 +40,14 @@ enum TriggerType:ubyte { NEW_ROUND }
 // Enumerations below 64 are GeneralSettings
 // Enumerations below 128 are UserSettings
 // all other are VirtualSettings
-enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
+enum SettingId:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          COMPETITION_MODE, DEBUG_MODE, TIMEFRAME, MUSIC_VOLUME,
                          SFX_VOLUME, VOICES, IDLE_TIME,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
                          GAME_ACTIVE = 128, GAME_ENABLED }
+
+enum SettingType:ubyte { BOOL, UBYTE, UINT }
 
 enum Language:ubyte    { ENGLISH, GERMAN, CRUMMY_GERMAN = 0xff }
 
@@ -93,6 +94,7 @@ struct Score {
 }
 
 struct Setting {
+    id:SettingId;
     type:SettingType;
     value:uint;
 }
@@ -212,12 +214,12 @@ table RemoveUser {
 table UnsetUser {}
 
 table SetSetting {
-  type:SettingType;
+  id:SettingId;
   value:uint;
 }
 
 table GetSetting {
-  type:SettingType;
+  id:SettingId;
 }
 
 table GetSettings {
@@ -447,7 +449,7 @@ table RemoveUser {
 }
 
 table SetSetting {
-    type:SettingType;
+    id:SettingId;
     value:int;
 }
 

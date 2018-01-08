@@ -691,53 +691,85 @@ inline const char *EnumNameTriggerType(TriggerType e) {
   return EnumNamesTriggerType()[index];
 }
 
-enum SettingType {
-  SettingType_GAME_LANGUAGE = 0,
-  SettingType_INTERFACE_LANGUAGE = 1,
-  SettingType_MASTER_VOLUME = 2,
-  SettingType_COMPETITION_MODE = 3,
-  SettingType_DEBUG_MODE = 4,
-  SettingType_TIMEFRAME = 5,
-  SettingType_MUSIC_VOLUME = 6,
-  SettingType_SFX_VOLUME = 7,
-  SettingType_VOICES = 8,
-  SettingType_IDLE_TIME = 9,
-  SettingType_WORLD = 64,
-  SettingType_LEVEL = 65,
-  SettingType_DIFFICULTY = 66,
-  SettingType_GAME_MODE = 67,
-  SettingType_MAX_COLLECT_WORLD = 68,
-  SettingType_MAX_COLLECT_LEVEL = 69,
-  SettingType_GEM_SCORE = 70,
-  SettingType_GAME_ACTIVE = 128,
-  SettingType_GAME_ENABLED = 129,
-  SettingType_MIN = SettingType_GAME_LANGUAGE,
-  SettingType_MAX = SettingType_GAME_ENABLED
+enum SettingId {
+  SettingId_GAME_LANGUAGE = 0,
+  SettingId_INTERFACE_LANGUAGE = 1,
+  SettingId_MASTER_VOLUME = 2,
+  SettingId_COMPETITION_MODE = 3,
+  SettingId_DEBUG_MODE = 4,
+  SettingId_TIMEFRAME = 5,
+  SettingId_MUSIC_VOLUME = 6,
+  SettingId_SFX_VOLUME = 7,
+  SettingId_VOICES = 8,
+  SettingId_IDLE_TIME = 9,
+  SettingId_WORLD = 64,
+  SettingId_LEVEL = 65,
+  SettingId_DIFFICULTY = 66,
+  SettingId_GAME_MODE = 67,
+  SettingId_MAX_COLLECT_WORLD = 68,
+  SettingId_MAX_COLLECT_LEVEL = 69,
+  SettingId_GEM_SCORE = 70,
+  SettingId_GAME_ACTIVE = 128,
+  SettingId_GAME_ENABLED = 129,
+  SettingId_MIN = SettingId_GAME_LANGUAGE,
+  SettingId_MAX = SettingId_GAME_ENABLED
 };
 
-inline SettingType (&EnumValuesSettingType())[19] {
-  static SettingType values[] = {
-    SettingType_GAME_LANGUAGE,
-    SettingType_INTERFACE_LANGUAGE,
-    SettingType_MASTER_VOLUME,
-    SettingType_COMPETITION_MODE,
-    SettingType_DEBUG_MODE,
-    SettingType_TIMEFRAME,
-    SettingType_MUSIC_VOLUME,
-    SettingType_SFX_VOLUME,
-    SettingType_VOICES,
-    SettingType_IDLE_TIME,
-    SettingType_WORLD,
-    SettingType_LEVEL,
-    SettingType_DIFFICULTY,
-    SettingType_GAME_MODE,
-    SettingType_MAX_COLLECT_WORLD,
-    SettingType_MAX_COLLECT_LEVEL,
-    SettingType_GEM_SCORE,
-    SettingType_GAME_ACTIVE,
-    SettingType_GAME_ENABLED
+inline SettingId (&EnumValuesSettingId())[19] {
+  static SettingId values[] = {
+    SettingId_GAME_LANGUAGE,
+    SettingId_INTERFACE_LANGUAGE,
+    SettingId_MASTER_VOLUME,
+    SettingId_COMPETITION_MODE,
+    SettingId_DEBUG_MODE,
+    SettingId_TIMEFRAME,
+    SettingId_MUSIC_VOLUME,
+    SettingId_SFX_VOLUME,
+    SettingId_VOICES,
+    SettingId_IDLE_TIME,
+    SettingId_WORLD,
+    SettingId_LEVEL,
+    SettingId_DIFFICULTY,
+    SettingId_GAME_MODE,
+    SettingId_MAX_COLLECT_WORLD,
+    SettingId_MAX_COLLECT_LEVEL,
+    SettingId_GEM_SCORE,
+    SettingId_GAME_ACTIVE,
+    SettingId_GAME_ENABLED
   };
   return values;
+}
+
+enum SettingType {
+  SettingType_BOOL = 0,
+  SettingType_UBYTE = 1,
+  SettingType_UINT = 2,
+  SettingType_MIN = SettingType_BOOL,
+  SettingType_MAX = SettingType_UINT
+};
+
+inline SettingType (&EnumValuesSettingType())[3] {
+  static SettingType values[] = {
+    SettingType_BOOL,
+    SettingType_UBYTE,
+    SettingType_UINT
+  };
+  return values;
+}
+
+inline const char **EnumNamesSettingType() {
+  static const char *names[] = {
+    "BOOL",
+    "UBYTE",
+    "UINT",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameSettingType(SettingType e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesSettingType()[index];
 }
 
 enum Language {
@@ -1100,8 +1132,9 @@ STRUCT_END(Score, 56);
 
 MANUALLY_ALIGNED_STRUCT(4) Setting FLATBUFFERS_FINAL_CLASS {
  private:
+  uint8_t id_;
   uint8_t type_;
-  int8_t padding0__;  int16_t padding1__;
+  int16_t padding0__;
   uint32_t value_;
 
  public:
@@ -1111,12 +1144,15 @@ MANUALLY_ALIGNED_STRUCT(4) Setting FLATBUFFERS_FINAL_CLASS {
   Setting(const Setting &_o) {
     memcpy(this, &_o, sizeof(Setting));
   }
-  Setting(SettingType _type, uint32_t _value)
-      : type_(flatbuffers::EndianScalar(static_cast<uint8_t>(_type))),
+  Setting(SettingId _id, SettingType _type, uint32_t _value)
+      : id_(flatbuffers::EndianScalar(static_cast<uint8_t>(_id))),
+        type_(flatbuffers::EndianScalar(static_cast<uint8_t>(_type))),
         padding0__(0),
-        padding1__(0),
         value_(flatbuffers::EndianScalar(_value)) {
-    (void)padding0__;    (void)padding1__;
+    (void)padding0__;
+  }
+  SettingId id() const {
+    return static_cast<SettingId>(flatbuffers::EndianScalar(id_));
   }
   SettingType type() const {
     return static_cast<SettingType>(flatbuffers::EndianScalar(type_));
@@ -2503,18 +2539,18 @@ inline flatbuffers::Offset<UnsetUser> CreateUnsetUser(
 
 struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_TYPE = 4,
+    VT_ID = 4,
     VT_VALUE = 6
   };
-  sisyfox::sisycol::SettingType type() const {
-    return static_cast<sisyfox::sisycol::SettingType>(GetField<uint8_t>(VT_TYPE, 0));
+  sisyfox::sisycol::SettingId id() const {
+    return static_cast<sisyfox::sisycol::SettingId>(GetField<uint8_t>(VT_ID, 0));
   }
   uint32_t value() const {
     return GetField<uint32_t>(VT_VALUE, 0);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_TYPE) &&
+           VerifyField<uint8_t>(verifier, VT_ID) &&
            VerifyField<uint32_t>(verifier, VT_VALUE) &&
            verifier.EndTable();
   }
@@ -2523,8 +2559,8 @@ struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct SetSettingBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_type(sisyfox::sisycol::SettingType type) {
-    fbb_.AddElement<uint8_t>(SetSetting::VT_TYPE, static_cast<uint8_t>(type), 0);
+  void add_id(sisyfox::sisycol::SettingId id) {
+    fbb_.AddElement<uint8_t>(SetSetting::VT_ID, static_cast<uint8_t>(id), 0);
   }
   void add_value(uint32_t value) {
     fbb_.AddElement<uint32_t>(SetSetting::VT_VALUE, value, 0);
@@ -2543,24 +2579,24 @@ struct SetSettingBuilder {
 
 inline flatbuffers::Offset<SetSetting> CreateSetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::SettingType type = sisyfox::sisycol::SettingType_GAME_LANGUAGE,
+    sisyfox::sisycol::SettingId id = sisyfox::sisycol::SettingId_GAME_LANGUAGE,
     uint32_t value = 0) {
   SetSettingBuilder builder_(_fbb);
   builder_.add_value(value);
-  builder_.add_type(type);
+  builder_.add_id(id);
   return builder_.Finish();
 }
 
 struct GetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_TYPE = 4
+    VT_ID = 4
   };
-  sisyfox::sisycol::SettingType type() const {
-    return static_cast<sisyfox::sisycol::SettingType>(GetField<uint8_t>(VT_TYPE, 0));
+  sisyfox::sisycol::SettingId id() const {
+    return static_cast<sisyfox::sisycol::SettingId>(GetField<uint8_t>(VT_ID, 0));
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_TYPE) &&
+           VerifyField<uint8_t>(verifier, VT_ID) &&
            verifier.EndTable();
   }
 };
@@ -2568,8 +2604,8 @@ struct GetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetSettingBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_type(sisyfox::sisycol::SettingType type) {
-    fbb_.AddElement<uint8_t>(GetSetting::VT_TYPE, static_cast<uint8_t>(type), 0);
+  void add_id(sisyfox::sisycol::SettingId id) {
+    fbb_.AddElement<uint8_t>(GetSetting::VT_ID, static_cast<uint8_t>(id), 0);
   }
   explicit GetSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -2585,9 +2621,9 @@ struct GetSettingBuilder {
 
 inline flatbuffers::Offset<GetSetting> CreateGetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::SettingType type = sisyfox::sisycol::SettingType_GAME_LANGUAGE) {
+    sisyfox::sisycol::SettingId id = sisyfox::sisycol::SettingId_GAME_LANGUAGE) {
   GetSettingBuilder builder_(_fbb);
-  builder_.add_type(type);
+  builder_.add_id(id);
   return builder_.Finish();
 }
 
@@ -4881,18 +4917,18 @@ inline flatbuffers::Offset<RemoveUser> CreateRemoveUser(
 
 struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_TYPE = 4,
+    VT_ID = 4,
     VT_VALUE = 6
   };
-  sisyfox::sisycol::SettingType type() const {
-    return static_cast<sisyfox::sisycol::SettingType>(GetField<uint8_t>(VT_TYPE, 0));
+  sisyfox::sisycol::SettingId id() const {
+    return static_cast<sisyfox::sisycol::SettingId>(GetField<uint8_t>(VT_ID, 0));
   }
   int32_t value() const {
     return GetField<int32_t>(VT_VALUE, 0);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_TYPE) &&
+           VerifyField<uint8_t>(verifier, VT_ID) &&
            VerifyField<int32_t>(verifier, VT_VALUE) &&
            verifier.EndTable();
   }
@@ -4901,8 +4937,8 @@ struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct SetSettingBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_type(sisyfox::sisycol::SettingType type) {
-    fbb_.AddElement<uint8_t>(SetSetting::VT_TYPE, static_cast<uint8_t>(type), 0);
+  void add_id(sisyfox::sisycol::SettingId id) {
+    fbb_.AddElement<uint8_t>(SetSetting::VT_ID, static_cast<uint8_t>(id), 0);
   }
   void add_value(int32_t value) {
     fbb_.AddElement<int32_t>(SetSetting::VT_VALUE, value, 0);
@@ -4921,11 +4957,11 @@ struct SetSettingBuilder {
 
 inline flatbuffers::Offset<SetSetting> CreateSetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::SettingType type = sisyfox::sisycol::SettingType_GAME_LANGUAGE,
+    sisyfox::sisycol::SettingId id = sisyfox::sisycol::SettingId_GAME_LANGUAGE,
     int32_t value = 0) {
   SetSettingBuilder builder_(_fbb);
   builder_.add_value(value);
-  builder_.add_type(type);
+  builder_.add_id(id);
   return builder_.Finish();
 }
 

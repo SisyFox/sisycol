@@ -17,20 +17,20 @@ public struct SetSetting : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public SetSetting __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sisyfox.sisycol.SettingType Type { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.SettingType)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.SettingType.GAME_LANGUAGE; } }
+  public sisyfox.sisycol.SettingId Id { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.SettingId)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.SettingId.GAME_LANGUAGE; } }
   public int Value { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
 
   public static Offset<SetSetting> CreateSetSetting(FlatBufferBuilder builder,
-      sisyfox.sisycol.SettingType type = sisyfox.sisycol.SettingType.GAME_LANGUAGE,
+      sisyfox.sisycol.SettingId id = sisyfox.sisycol.SettingId.GAME_LANGUAGE,
       int value = 0) {
     builder.StartObject(2);
     SetSetting.AddValue(builder, value);
-    SetSetting.AddType(builder, type);
+    SetSetting.AddId(builder, id);
     return SetSetting.EndSetSetting(builder);
   }
 
   public static void StartSetSetting(FlatBufferBuilder builder) { builder.StartObject(2); }
-  public static void AddType(FlatBufferBuilder builder, sisyfox.sisycol.SettingType type) { builder.AddByte(0, (byte)type, 0); }
+  public static void AddId(FlatBufferBuilder builder, sisyfox.sisycol.SettingId id) { builder.AddByte(0, (byte)id, 0); }
   public static void AddValue(FlatBufferBuilder builder, int value) { builder.AddInt(1, value, 0); }
   public static Offset<SetSetting> EndSetSetting(FlatBufferBuilder builder) {
     int o = builder.EndObject();
