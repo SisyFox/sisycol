@@ -211,111 +211,111 @@ struct GetDmxRuleBoolSettingRange;
 
 }  // namespace response
 
-enum Payload {
-  Payload_NONE = 0,
-  Payload_Error = 1,
-  Payload_Info = 2,
-  Payload_AddScore = 3,
-  Payload_GetScore = 4,
-  Payload_GetScoreRange = 5,
-  Payload_SetLiveData = 6,
-  Payload_GetLiveData = 7,
-  Payload_AddUser = 8,
-  Payload_GetUser = 9,
-  Payload_SetUser = 10,
-  Payload_GetCurrentUser = 11,
-  Payload_GetUserRange = 12,
-  Payload_RemoveUser = 13,
-  Payload_UnsetUser = 14,
-  Payload_AddLocation = 15,
-  Payload_GetLocation = 16,
-  Payload_SetSetting = 17,
-  Payload_GetSetting = 18,
-  Payload_GetSettings = 19,
-  Payload_Trigger = 20,
-  Payload_AddDmxDevice = 21,
-  Payload_RemoveDmxDevice = 22,
-  Payload_AddDmxDeviceChannel = 23,
-  Payload_RemoveDmxDeviceChannel = 24,
-  Payload_AddDmxChannelRule = 25,
-  Payload_RemoveDmxChannelRule = 26,
-  Payload_AddDmxDeviceSetting = 27,
-  Payload_AddDmxRuleSetting = 28,
-  Payload_RemoveDmxDeviceSetting = 29,
-  Payload_AddDmxRuleRangeSetting = 30,
-  Payload_AddDmxRuleBoolSetting = 31,
-  Payload_RemoveDmxRuleSetting = 32,
-  Payload_ChangeDmxDeviceSettingValue = 33,
-  Payload_GetDmxDevice = 34,
-  Payload_GetDmxDeviceChannel = 35,
-  Payload_GetDmxChannelRule = 36,
-  Payload_GetDmxDeviceSetting = 37,
-  Payload_GetDmxRuleSetting = 38,
-  Payload_GetDmxDeviceRange = 39,
-  Payload_GetDmxDeviceChannelRange = 40,
-  Payload_GetDmxChannelRuleRange = 41,
-  Payload_GetDmxDeviceSettingRange = 42,
-  Payload_GetDmxRuleSettingRange = 43,
-  Payload_GetDmxRuleRangeSetting = 44,
-  Payload_GetDmxRuleRangeSettingRange = 45,
-  Payload_GetDmxRuleBoolSetting = 46,
-  Payload_GetDmxRuleBoolSettingRange = 47,
-  Payload_SetDmxDeviceMode = 48,
-  Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_SetDmxDeviceMode
+enum class Payload : uint8_t {
+  NONE = 0,
+  Error = 1,
+  Info = 2,
+  AddScore = 3,
+  GetScore = 4,
+  GetScoreRange = 5,
+  SetLiveData = 6,
+  GetLiveData = 7,
+  AddUser = 8,
+  GetUser = 9,
+  SetUser = 10,
+  GetCurrentUser = 11,
+  GetUserRange = 12,
+  RemoveUser = 13,
+  UnsetUser = 14,
+  AddLocation = 15,
+  GetLocation = 16,
+  SetSetting = 17,
+  GetSetting = 18,
+  GetSettings = 19,
+  Trigger = 20,
+  AddDmxDevice = 21,
+  RemoveDmxDevice = 22,
+  AddDmxDeviceChannel = 23,
+  RemoveDmxDeviceChannel = 24,
+  AddDmxChannelRule = 25,
+  RemoveDmxChannelRule = 26,
+  AddDmxDeviceSetting = 27,
+  AddDmxRuleSetting = 28,
+  RemoveDmxDeviceSetting = 29,
+  AddDmxRuleRangeSetting = 30,
+  AddDmxRuleBoolSetting = 31,
+  RemoveDmxRuleSetting = 32,
+  ChangeDmxDeviceSettingValue = 33,
+  GetDmxDevice = 34,
+  GetDmxDeviceChannel = 35,
+  GetDmxChannelRule = 36,
+  GetDmxDeviceSetting = 37,
+  GetDmxRuleSetting = 38,
+  GetDmxDeviceRange = 39,
+  GetDmxDeviceChannelRange = 40,
+  GetDmxChannelRuleRange = 41,
+  GetDmxDeviceSettingRange = 42,
+  GetDmxRuleSettingRange = 43,
+  GetDmxRuleRangeSetting = 44,
+  GetDmxRuleRangeSettingRange = 45,
+  GetDmxRuleBoolSetting = 46,
+  GetDmxRuleBoolSettingRange = 47,
+  SetDmxDeviceMode = 48,
+  MIN = NONE,
+  MAX = SetDmxDeviceMode
 };
 
 inline Payload (&EnumValuesPayload())[49] {
   static Payload values[] = {
-    Payload_NONE,
-    Payload_Error,
-    Payload_Info,
-    Payload_AddScore,
-    Payload_GetScore,
-    Payload_GetScoreRange,
-    Payload_SetLiveData,
-    Payload_GetLiveData,
-    Payload_AddUser,
-    Payload_GetUser,
-    Payload_SetUser,
-    Payload_GetCurrentUser,
-    Payload_GetUserRange,
-    Payload_RemoveUser,
-    Payload_UnsetUser,
-    Payload_AddLocation,
-    Payload_GetLocation,
-    Payload_SetSetting,
-    Payload_GetSetting,
-    Payload_GetSettings,
-    Payload_Trigger,
-    Payload_AddDmxDevice,
-    Payload_RemoveDmxDevice,
-    Payload_AddDmxDeviceChannel,
-    Payload_RemoveDmxDeviceChannel,
-    Payload_AddDmxChannelRule,
-    Payload_RemoveDmxChannelRule,
-    Payload_AddDmxDeviceSetting,
-    Payload_AddDmxRuleSetting,
-    Payload_RemoveDmxDeviceSetting,
-    Payload_AddDmxRuleRangeSetting,
-    Payload_AddDmxRuleBoolSetting,
-    Payload_RemoveDmxRuleSetting,
-    Payload_ChangeDmxDeviceSettingValue,
-    Payload_GetDmxDevice,
-    Payload_GetDmxDeviceChannel,
-    Payload_GetDmxChannelRule,
-    Payload_GetDmxDeviceSetting,
-    Payload_GetDmxRuleSetting,
-    Payload_GetDmxDeviceRange,
-    Payload_GetDmxDeviceChannelRange,
-    Payload_GetDmxChannelRuleRange,
-    Payload_GetDmxDeviceSettingRange,
-    Payload_GetDmxRuleSettingRange,
-    Payload_GetDmxRuleRangeSetting,
-    Payload_GetDmxRuleRangeSettingRange,
-    Payload_GetDmxRuleBoolSetting,
-    Payload_GetDmxRuleBoolSettingRange,
-    Payload_SetDmxDeviceMode
+    Payload::NONE,
+    Payload::Error,
+    Payload::Info,
+    Payload::AddScore,
+    Payload::GetScore,
+    Payload::GetScoreRange,
+    Payload::SetLiveData,
+    Payload::GetLiveData,
+    Payload::AddUser,
+    Payload::GetUser,
+    Payload::SetUser,
+    Payload::GetCurrentUser,
+    Payload::GetUserRange,
+    Payload::RemoveUser,
+    Payload::UnsetUser,
+    Payload::AddLocation,
+    Payload::GetLocation,
+    Payload::SetSetting,
+    Payload::GetSetting,
+    Payload::GetSettings,
+    Payload::Trigger,
+    Payload::AddDmxDevice,
+    Payload::RemoveDmxDevice,
+    Payload::AddDmxDeviceChannel,
+    Payload::RemoveDmxDeviceChannel,
+    Payload::AddDmxChannelRule,
+    Payload::RemoveDmxChannelRule,
+    Payload::AddDmxDeviceSetting,
+    Payload::AddDmxRuleSetting,
+    Payload::RemoveDmxDeviceSetting,
+    Payload::AddDmxRuleRangeSetting,
+    Payload::AddDmxRuleBoolSetting,
+    Payload::RemoveDmxRuleSetting,
+    Payload::ChangeDmxDeviceSettingValue,
+    Payload::GetDmxDevice,
+    Payload::GetDmxDeviceChannel,
+    Payload::GetDmxChannelRule,
+    Payload::GetDmxDeviceSetting,
+    Payload::GetDmxRuleSetting,
+    Payload::GetDmxDeviceRange,
+    Payload::GetDmxDeviceChannelRange,
+    Payload::GetDmxChannelRuleRange,
+    Payload::GetDmxDeviceSettingRange,
+    Payload::GetDmxRuleSettingRange,
+    Payload::GetDmxRuleRangeSetting,
+    Payload::GetDmxRuleRangeSettingRange,
+    Payload::GetDmxRuleBoolSetting,
+    Payload::GetDmxRuleBoolSettingRange,
+    Payload::SetDmxDeviceMode
   };
   return values;
 }
@@ -382,221 +382,221 @@ inline const char *EnumNamePayload(Payload e) {
 }
 
 template<typename T> struct PayloadTraits {
-  static const Payload enum_value = Payload_NONE;
+  static const Payload enum_value = Payload::NONE;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::response::Error> {
-  static const Payload enum_value = Payload_Error;
+  static const Payload enum_value = Payload::Error;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::Info> {
-  static const Payload enum_value = Payload_Info;
+  static const Payload enum_value = Payload::Info;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddScore> {
-  static const Payload enum_value = Payload_AddScore;
+  static const Payload enum_value = Payload::AddScore;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetScore> {
-  static const Payload enum_value = Payload_GetScore;
+  static const Payload enum_value = Payload::GetScore;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetScoreRange> {
-  static const Payload enum_value = Payload_GetScoreRange;
+  static const Payload enum_value = Payload::GetScoreRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::SetLiveData> {
-  static const Payload enum_value = Payload_SetLiveData;
+  static const Payload enum_value = Payload::SetLiveData;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetLiveData> {
-  static const Payload enum_value = Payload_GetLiveData;
+  static const Payload enum_value = Payload::GetLiveData;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddUser> {
-  static const Payload enum_value = Payload_AddUser;
+  static const Payload enum_value = Payload::AddUser;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetUser> {
-  static const Payload enum_value = Payload_GetUser;
+  static const Payload enum_value = Payload::GetUser;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::SetUser> {
-  static const Payload enum_value = Payload_SetUser;
+  static const Payload enum_value = Payload::SetUser;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetCurrentUser> {
-  static const Payload enum_value = Payload_GetCurrentUser;
+  static const Payload enum_value = Payload::GetCurrentUser;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetUserRange> {
-  static const Payload enum_value = Payload_GetUserRange;
+  static const Payload enum_value = Payload::GetUserRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::RemoveUser> {
-  static const Payload enum_value = Payload_RemoveUser;
+  static const Payload enum_value = Payload::RemoveUser;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::UnsetUser> {
-  static const Payload enum_value = Payload_UnsetUser;
+  static const Payload enum_value = Payload::UnsetUser;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddLocation> {
-  static const Payload enum_value = Payload_AddLocation;
+  static const Payload enum_value = Payload::AddLocation;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetLocation> {
-  static const Payload enum_value = Payload_GetLocation;
+  static const Payload enum_value = Payload::GetLocation;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::SetSetting> {
-  static const Payload enum_value = Payload_SetSetting;
+  static const Payload enum_value = Payload::SetSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetSetting> {
-  static const Payload enum_value = Payload_GetSetting;
+  static const Payload enum_value = Payload::GetSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetSettings> {
-  static const Payload enum_value = Payload_GetSettings;
+  static const Payload enum_value = Payload::GetSettings;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::Trigger> {
-  static const Payload enum_value = Payload_Trigger;
+  static const Payload enum_value = Payload::Trigger;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddDmxDevice> {
-  static const Payload enum_value = Payload_AddDmxDevice;
+  static const Payload enum_value = Payload::AddDmxDevice;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::RemoveDmxDevice> {
-  static const Payload enum_value = Payload_RemoveDmxDevice;
+  static const Payload enum_value = Payload::RemoveDmxDevice;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddDmxDeviceChannel> {
-  static const Payload enum_value = Payload_AddDmxDeviceChannel;
+  static const Payload enum_value = Payload::AddDmxDeviceChannel;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::RemoveDmxDeviceChannel> {
-  static const Payload enum_value = Payload_RemoveDmxDeviceChannel;
+  static const Payload enum_value = Payload::RemoveDmxDeviceChannel;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddDmxChannelRule> {
-  static const Payload enum_value = Payload_AddDmxChannelRule;
+  static const Payload enum_value = Payload::AddDmxChannelRule;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::RemoveDmxChannelRule> {
-  static const Payload enum_value = Payload_RemoveDmxChannelRule;
+  static const Payload enum_value = Payload::RemoveDmxChannelRule;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddDmxDeviceSetting> {
-  static const Payload enum_value = Payload_AddDmxDeviceSetting;
+  static const Payload enum_value = Payload::AddDmxDeviceSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::response::AddDmxRuleSetting> {
-  static const Payload enum_value = Payload_AddDmxRuleSetting;
+  static const Payload enum_value = Payload::AddDmxRuleSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::RemoveDmxDeviceSetting> {
-  static const Payload enum_value = Payload_RemoveDmxDeviceSetting;
+  static const Payload enum_value = Payload::RemoveDmxDeviceSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddDmxRuleRangeSetting> {
-  static const Payload enum_value = Payload_AddDmxRuleRangeSetting;
+  static const Payload enum_value = Payload::AddDmxRuleRangeSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddDmxRuleBoolSetting> {
-  static const Payload enum_value = Payload_AddDmxRuleBoolSetting;
+  static const Payload enum_value = Payload::AddDmxRuleBoolSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::RemoveDmxRuleSetting> {
-  static const Payload enum_value = Payload_RemoveDmxRuleSetting;
+  static const Payload enum_value = Payload::RemoveDmxRuleSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::ChangeDmxDeviceSettingValue> {
-  static const Payload enum_value = Payload_ChangeDmxDeviceSettingValue;
+  static const Payload enum_value = Payload::ChangeDmxDeviceSettingValue;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxDevice> {
-  static const Payload enum_value = Payload_GetDmxDevice;
+  static const Payload enum_value = Payload::GetDmxDevice;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxDeviceChannel> {
-  static const Payload enum_value = Payload_GetDmxDeviceChannel;
+  static const Payload enum_value = Payload::GetDmxDeviceChannel;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxChannelRule> {
-  static const Payload enum_value = Payload_GetDmxChannelRule;
+  static const Payload enum_value = Payload::GetDmxChannelRule;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxDeviceSetting> {
-  static const Payload enum_value = Payload_GetDmxDeviceSetting;
+  static const Payload enum_value = Payload::GetDmxDeviceSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxRuleSetting> {
-  static const Payload enum_value = Payload_GetDmxRuleSetting;
+  static const Payload enum_value = Payload::GetDmxRuleSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxDeviceRange> {
-  static const Payload enum_value = Payload_GetDmxDeviceRange;
+  static const Payload enum_value = Payload::GetDmxDeviceRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxDeviceChannelRange> {
-  static const Payload enum_value = Payload_GetDmxDeviceChannelRange;
+  static const Payload enum_value = Payload::GetDmxDeviceChannelRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxChannelRuleRange> {
-  static const Payload enum_value = Payload_GetDmxChannelRuleRange;
+  static const Payload enum_value = Payload::GetDmxChannelRuleRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxDeviceSettingRange> {
-  static const Payload enum_value = Payload_GetDmxDeviceSettingRange;
+  static const Payload enum_value = Payload::GetDmxDeviceSettingRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDmxRuleSettingRange> {
-  static const Payload enum_value = Payload_GetDmxRuleSettingRange;
+  static const Payload enum_value = Payload::GetDmxRuleSettingRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::response::GetDmxRuleRangeSetting> {
-  static const Payload enum_value = Payload_GetDmxRuleRangeSetting;
+  static const Payload enum_value = Payload::GetDmxRuleRangeSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::response::GetDmxRuleRangeSettingRange> {
-  static const Payload enum_value = Payload_GetDmxRuleRangeSettingRange;
+  static const Payload enum_value = Payload::GetDmxRuleRangeSettingRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::response::GetDmxRuleBoolSetting> {
-  static const Payload enum_value = Payload_GetDmxRuleBoolSetting;
+  static const Payload enum_value = Payload::GetDmxRuleBoolSetting;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::response::GetDmxRuleBoolSettingRange> {
-  static const Payload enum_value = Payload_GetDmxRuleBoolSettingRange;
+  static const Payload enum_value = Payload::GetDmxRuleBoolSettingRange;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::SetDmxDeviceMode> {
-  static const Payload enum_value = Payload_SetDmxDeviceMode;
+  static const Payload enum_value = Payload::SetDmxDeviceMode;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
 bool VerifyPayloadVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<uint8_t> *types);
 
-enum ErrorCode {
-  ErrorCode_BAD_TRANSMISSION = 0,
-  ErrorCode_BAD_VERSION = 1,
-  ErrorCode_BAD_PAYLOAD_TYPE = 2,
-  ErrorCode_GENERAL_ERROR = 3,
-  ErrorCode_NOT_AVAILABLE = 4,
-  ErrorCode_MIN = ErrorCode_BAD_TRANSMISSION,
-  ErrorCode_MAX = ErrorCode_NOT_AVAILABLE
+enum class ErrorCode : uint8_t {
+  BAD_TRANSMISSION = 0,
+  BAD_VERSION = 1,
+  BAD_PAYLOAD_TYPE = 2,
+  GENERAL_ERROR = 3,
+  NOT_AVAILABLE = 4,
+  MIN = BAD_TRANSMISSION,
+  MAX = NOT_AVAILABLE
 };
 
 inline ErrorCode (&EnumValuesErrorCode())[5] {
   static ErrorCode values[] = {
-    ErrorCode_BAD_TRANSMISSION,
-    ErrorCode_BAD_VERSION,
-    ErrorCode_BAD_PAYLOAD_TYPE,
-    ErrorCode_GENERAL_ERROR,
-    ErrorCode_NOT_AVAILABLE
+    ErrorCode::BAD_TRANSMISSION,
+    ErrorCode::BAD_VERSION,
+    ErrorCode::BAD_PAYLOAD_TYPE,
+    ErrorCode::GENERAL_ERROR,
+    ErrorCode::NOT_AVAILABLE
   };
   return values;
 }
@@ -618,29 +618,29 @@ inline const char *EnumNameErrorCode(ErrorCode e) {
   return EnumNamesErrorCode()[index];
 }
 
-enum EndReason {
-  EndReason_WIN = 0,
-  EndReason_MAP_BORDER = 1,
-  EndReason_COLLISION = 2,
-  EndReason_INSTANT_LOSS_ANGLE = 3,
-  EndReason_GROUND_DIST = 4,
-  EndReason_TOO_STEEP = 5,
-  EndReason_FLASH = 6,
-  EndReason_UNDERWATER = 7,
-  EndReason_MIN = EndReason_WIN,
-  EndReason_MAX = EndReason_UNDERWATER
+enum class EndReason : uint8_t {
+  WIN = 0,
+  MAP_BORDER = 1,
+  COLLISION = 2,
+  INSTANT_LOSS_ANGLE = 3,
+  GROUND_DIST = 4,
+  TOO_STEEP = 5,
+  FLASH = 6,
+  UNDERWATER = 7,
+  MIN = WIN,
+  MAX = UNDERWATER
 };
 
 inline EndReason (&EnumValuesEndReason())[8] {
   static EndReason values[] = {
-    EndReason_WIN,
-    EndReason_MAP_BORDER,
-    EndReason_COLLISION,
-    EndReason_INSTANT_LOSS_ANGLE,
-    EndReason_GROUND_DIST,
-    EndReason_TOO_STEEP,
-    EndReason_FLASH,
-    EndReason_UNDERWATER
+    EndReason::WIN,
+    EndReason::MAP_BORDER,
+    EndReason::COLLISION,
+    EndReason::INSTANT_LOSS_ANGLE,
+    EndReason::GROUND_DIST,
+    EndReason::TOO_STEEP,
+    EndReason::FLASH,
+    EndReason::UNDERWATER
   };
   return values;
 }
@@ -665,15 +665,15 @@ inline const char *EnumNameEndReason(EndReason e) {
   return EnumNamesEndReason()[index];
 }
 
-enum TriggerType {
-  TriggerType_NEW_ROUND = 0,
-  TriggerType_MIN = TriggerType_NEW_ROUND,
-  TriggerType_MAX = TriggerType_NEW_ROUND
+enum class TriggerType : uint8_t {
+  NEW_ROUND = 0,
+  MIN = NEW_ROUND,
+  MAX = NEW_ROUND
 };
 
 inline TriggerType (&EnumValuesTriggerType())[1] {
   static TriggerType values[] = {
-    TriggerType_NEW_ROUND
+    TriggerType::NEW_ROUND
   };
   return values;
 }
@@ -691,68 +691,68 @@ inline const char *EnumNameTriggerType(TriggerType e) {
   return EnumNamesTriggerType()[index];
 }
 
-enum SettingId {
-  SettingId_GAME_LANGUAGE = 0,
-  SettingId_INTERFACE_LANGUAGE = 1,
-  SettingId_MASTER_VOLUME = 2,
-  SettingId_COMPETITION_MODE = 3,
-  SettingId_DEBUG_MODE = 4,
-  SettingId_TIMEFRAME = 5,
-  SettingId_MUSIC_VOLUME = 6,
-  SettingId_SFX_VOLUME = 7,
-  SettingId_VOICES = 8,
-  SettingId_IDLE_TIME = 9,
-  SettingId_WORLD = 64,
-  SettingId_LEVEL = 65,
-  SettingId_DIFFICULTY = 66,
-  SettingId_GAME_MODE = 67,
-  SettingId_MAX_COLLECT_WORLD = 68,
-  SettingId_MAX_COLLECT_LEVEL = 69,
-  SettingId_GEM_SCORE = 70,
-  SettingId_GAME_ACTIVE = 128,
-  SettingId_GAME_ENABLED = 129,
-  SettingId_MIN = SettingId_GAME_LANGUAGE,
-  SettingId_MAX = SettingId_GAME_ENABLED
+enum class SettingId : uint8_t {
+  GAME_LANGUAGE = 0,
+  INTERFACE_LANGUAGE = 1,
+  MASTER_VOLUME = 2,
+  COMPETITION_MODE = 3,
+  DEBUG_MODE = 4,
+  TIMEFRAME = 5,
+  MUSIC_VOLUME = 6,
+  SFX_VOLUME = 7,
+  VOICES = 8,
+  IDLE_TIME = 9,
+  WORLD = 64,
+  LEVEL = 65,
+  DIFFICULTY = 66,
+  GAME_MODE = 67,
+  MAX_COLLECT_WORLD = 68,
+  MAX_COLLECT_LEVEL = 69,
+  GEM_SCORE = 70,
+  GAME_ACTIVE = 128,
+  GAME_ENABLED = 129,
+  MIN = GAME_LANGUAGE,
+  MAX = GAME_ENABLED
 };
 
 inline SettingId (&EnumValuesSettingId())[19] {
   static SettingId values[] = {
-    SettingId_GAME_LANGUAGE,
-    SettingId_INTERFACE_LANGUAGE,
-    SettingId_MASTER_VOLUME,
-    SettingId_COMPETITION_MODE,
-    SettingId_DEBUG_MODE,
-    SettingId_TIMEFRAME,
-    SettingId_MUSIC_VOLUME,
-    SettingId_SFX_VOLUME,
-    SettingId_VOICES,
-    SettingId_IDLE_TIME,
-    SettingId_WORLD,
-    SettingId_LEVEL,
-    SettingId_DIFFICULTY,
-    SettingId_GAME_MODE,
-    SettingId_MAX_COLLECT_WORLD,
-    SettingId_MAX_COLLECT_LEVEL,
-    SettingId_GEM_SCORE,
-    SettingId_GAME_ACTIVE,
-    SettingId_GAME_ENABLED
+    SettingId::GAME_LANGUAGE,
+    SettingId::INTERFACE_LANGUAGE,
+    SettingId::MASTER_VOLUME,
+    SettingId::COMPETITION_MODE,
+    SettingId::DEBUG_MODE,
+    SettingId::TIMEFRAME,
+    SettingId::MUSIC_VOLUME,
+    SettingId::SFX_VOLUME,
+    SettingId::VOICES,
+    SettingId::IDLE_TIME,
+    SettingId::WORLD,
+    SettingId::LEVEL,
+    SettingId::DIFFICULTY,
+    SettingId::GAME_MODE,
+    SettingId::MAX_COLLECT_WORLD,
+    SettingId::MAX_COLLECT_LEVEL,
+    SettingId::GEM_SCORE,
+    SettingId::GAME_ACTIVE,
+    SettingId::GAME_ENABLED
   };
   return values;
 }
 
-enum SettingType {
-  SettingType_BOOL = 0,
-  SettingType_UBYTE = 1,
-  SettingType_UINT = 2,
-  SettingType_MIN = SettingType_BOOL,
-  SettingType_MAX = SettingType_UINT
+enum class SettingType : uint8_t {
+  BOOL = 0,
+  UBYTE = 1,
+  UINT = 2,
+  MIN = BOOL,
+  MAX = UINT
 };
 
 inline SettingType (&EnumValuesSettingType())[3] {
   static SettingType values[] = {
-    SettingType_BOOL,
-    SettingType_UBYTE,
-    SettingType_UINT
+    SettingType::BOOL,
+    SettingType::UBYTE,
+    SettingType::UINT
   };
   return values;
 }
@@ -772,34 +772,34 @@ inline const char *EnumNameSettingType(SettingType e) {
   return EnumNamesSettingType()[index];
 }
 
-enum Language {
-  Language_ENGLISH = 0,
-  Language_GERMAN = 1,
-  Language_CRUMMY_GERMAN = 255,
-  Language_MIN = Language_ENGLISH,
-  Language_MAX = Language_CRUMMY_GERMAN
+enum class Language : uint8_t {
+  ENGLISH = 0,
+  GERMAN = 1,
+  CRUMMY_GERMAN = 255,
+  MIN = ENGLISH,
+  MAX = CRUMMY_GERMAN
 };
 
 inline Language (&EnumValuesLanguage())[3] {
   static Language values[] = {
-    Language_ENGLISH,
-    Language_GERMAN,
-    Language_CRUMMY_GERMAN
+    Language::ENGLISH,
+    Language::GERMAN,
+    Language::CRUMMY_GERMAN
   };
   return values;
 }
 
-enum GameMode {
-  GameMode_FREESTYLE = 0,
-  GameMode_LEVEL_COLLECT = 1,
-  GameMode_MIN = GameMode_FREESTYLE,
-  GameMode_MAX = GameMode_LEVEL_COLLECT
+enum class GameMode : uint8_t {
+  FREESTYLE = 0,
+  LEVEL_COLLECT = 1,
+  MIN = FREESTYLE,
+  MAX = LEVEL_COLLECT
 };
 
 inline GameMode (&EnumValuesGameMode())[2] {
   static GameMode values[] = {
-    GameMode_FREESTYLE,
-    GameMode_LEVEL_COLLECT
+    GameMode::FREESTYLE,
+    GameMode::LEVEL_COLLECT
   };
   return values;
 }
@@ -818,23 +818,23 @@ inline const char *EnumNameGameMode(GameMode e) {
   return EnumNamesGameMode()[index];
 }
 
-enum Difficulty {
-  Difficulty_VERY_EASY = 0,
-  Difficulty_EASY = 1,
-  Difficulty_NORMAL = 2,
-  Difficulty_HARD = 3,
-  Difficulty_VERY_HARD = 4,
-  Difficulty_MIN = Difficulty_VERY_EASY,
-  Difficulty_MAX = Difficulty_VERY_HARD
+enum class Difficulty : uint8_t {
+  VERY_EASY = 0,
+  EASY = 1,
+  NORMAL = 2,
+  HARD = 3,
+  VERY_HARD = 4,
+  MIN = VERY_EASY,
+  MAX = VERY_HARD
 };
 
 inline Difficulty (&EnumValuesDifficulty())[5] {
   static Difficulty values[] = {
-    Difficulty_VERY_EASY,
-    Difficulty_EASY,
-    Difficulty_NORMAL,
-    Difficulty_HARD,
-    Difficulty_VERY_HARD
+    Difficulty::VERY_EASY,
+    Difficulty::EASY,
+    Difficulty::NORMAL,
+    Difficulty::HARD,
+    Difficulty::VERY_HARD
   };
   return values;
 }
@@ -856,19 +856,19 @@ inline const char *EnumNameDifficulty(Difficulty e) {
   return EnumNamesDifficulty()[index];
 }
 
-enum World {
-  World_ORIGIN_MOUNTAIN = 0,
-  World_BLOCKSBERG = 1,
-  World_RED_CANYON = 2,
-  World_MIN = World_ORIGIN_MOUNTAIN,
-  World_MAX = World_RED_CANYON
+enum class World : uint8_t {
+  ORIGIN_MOUNTAIN = 0,
+  BLOCKSBERG = 1,
+  RED_CANYON = 2,
+  MIN = ORIGIN_MOUNTAIN,
+  MAX = RED_CANYON
 };
 
 inline World (&EnumValuesWorld())[3] {
   static World values[] = {
-    World_ORIGIN_MOUNTAIN,
-    World_BLOCKSBERG,
-    World_RED_CANYON
+    World::ORIGIN_MOUNTAIN,
+    World::BLOCKSBERG,
+    World::RED_CANYON
   };
   return values;
 }
@@ -888,19 +888,19 @@ inline const char *EnumNameWorld(World e) {
   return EnumNamesWorld()[index];
 }
 
-enum DmxChannelRuleType {
-  DmxChannelRuleType_GOAL = 0,
-  DmxChannelRuleType_TIME = 1,
-  DmxChannelRuleType_PITCH = 2,
-  DmxChannelRuleType_MIN = DmxChannelRuleType_GOAL,
-  DmxChannelRuleType_MAX = DmxChannelRuleType_PITCH
+enum class DmxChannelRuleType : int8_t {
+  GOAL = 0,
+  TIME = 1,
+  PITCH = 2,
+  MIN = GOAL,
+  MAX = PITCH
 };
 
 inline DmxChannelRuleType (&EnumValuesDmxChannelRuleType())[3] {
   static DmxChannelRuleType values[] = {
-    DmxChannelRuleType_GOAL,
-    DmxChannelRuleType_TIME,
-    DmxChannelRuleType_PITCH
+    DmxChannelRuleType::GOAL,
+    DmxChannelRuleType::TIME,
+    DmxChannelRuleType::PITCH
   };
   return values;
 }
@@ -920,17 +920,17 @@ inline const char *EnumNameDmxChannelRuleType(DmxChannelRuleType e) {
   return EnumNamesDmxChannelRuleType()[index];
 }
 
-enum DmxDeviceSettingType {
-  DmxDeviceSettingType_RANGE = 0,
-  DmxDeviceSettingType_BOOL = 1,
-  DmxDeviceSettingType_MIN = DmxDeviceSettingType_RANGE,
-  DmxDeviceSettingType_MAX = DmxDeviceSettingType_BOOL
+enum class DmxDeviceSettingType : int8_t {
+  RANGE = 0,
+  BOOL = 1,
+  MIN = RANGE,
+  MAX = BOOL
 };
 
 inline DmxDeviceSettingType (&EnumValuesDmxDeviceSettingType())[2] {
   static DmxDeviceSettingType values[] = {
-    DmxDeviceSettingType_RANGE,
-    DmxDeviceSettingType_BOOL
+    DmxDeviceSettingType::RANGE,
+    DmxDeviceSettingType::BOOL
   };
   return values;
 }
@@ -949,17 +949,17 @@ inline const char *EnumNameDmxDeviceSettingType(DmxDeviceSettingType e) {
   return EnumNamesDmxDeviceSettingType()[index];
 }
 
-enum DmxDeviceMode {
-  DmxDeviceMode_TEST = 0,
-  DmxDeviceMode_DISABLED = 1,
-  DmxDeviceMode_MIN = DmxDeviceMode_TEST,
-  DmxDeviceMode_MAX = DmxDeviceMode_DISABLED
+enum class DmxDeviceMode : int8_t {
+  TEST = 0,
+  DISABLED = 1,
+  MIN = TEST,
+  MAX = DISABLED
 };
 
 inline DmxDeviceMode (&EnumValuesDmxDeviceMode())[2] {
   static DmxDeviceMode values[] = {
-    DmxDeviceMode_TEST,
-    DmxDeviceMode_DISABLED
+    DmxDeviceMode::TEST,
+    DmxDeviceMode::DISABLED
   };
   return values;
 }
@@ -1403,148 +1403,148 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   template<typename T> const T *payload_as() const;
   const sisyfox::sisycol::response::Error *payload_as_Error() const {
-    return payload_type() == Payload_Error ? static_cast<const sisyfox::sisycol::response::Error *>(payload()) : nullptr;
+    return payload_type() == Payload::Error ? static_cast<const sisyfox::sisycol::response::Error *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::Info *payload_as_Info() const {
-    return payload_type() == Payload_Info ? static_cast<const sisyfox::sisycol::request::Info *>(payload()) : nullptr;
+    return payload_type() == Payload::Info ? static_cast<const sisyfox::sisycol::request::Info *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::AddScore *payload_as_AddScore() const {
-    return payload_type() == Payload_AddScore ? static_cast<const sisyfox::sisycol::request::AddScore *>(payload()) : nullptr;
+    return payload_type() == Payload::AddScore ? static_cast<const sisyfox::sisycol::request::AddScore *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetScore *payload_as_GetScore() const {
-    return payload_type() == Payload_GetScore ? static_cast<const sisyfox::sisycol::request::GetScore *>(payload()) : nullptr;
+    return payload_type() == Payload::GetScore ? static_cast<const sisyfox::sisycol::request::GetScore *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetScoreRange *payload_as_GetScoreRange() const {
-    return payload_type() == Payload_GetScoreRange ? static_cast<const sisyfox::sisycol::request::GetScoreRange *>(payload()) : nullptr;
+    return payload_type() == Payload::GetScoreRange ? static_cast<const sisyfox::sisycol::request::GetScoreRange *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::SetLiveData *payload_as_SetLiveData() const {
-    return payload_type() == Payload_SetLiveData ? static_cast<const sisyfox::sisycol::request::SetLiveData *>(payload()) : nullptr;
+    return payload_type() == Payload::SetLiveData ? static_cast<const sisyfox::sisycol::request::SetLiveData *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetLiveData *payload_as_GetLiveData() const {
-    return payload_type() == Payload_GetLiveData ? static_cast<const sisyfox::sisycol::request::GetLiveData *>(payload()) : nullptr;
+    return payload_type() == Payload::GetLiveData ? static_cast<const sisyfox::sisycol::request::GetLiveData *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::AddUser *payload_as_AddUser() const {
-    return payload_type() == Payload_AddUser ? static_cast<const sisyfox::sisycol::request::AddUser *>(payload()) : nullptr;
+    return payload_type() == Payload::AddUser ? static_cast<const sisyfox::sisycol::request::AddUser *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetUser *payload_as_GetUser() const {
-    return payload_type() == Payload_GetUser ? static_cast<const sisyfox::sisycol::request::GetUser *>(payload()) : nullptr;
+    return payload_type() == Payload::GetUser ? static_cast<const sisyfox::sisycol::request::GetUser *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::SetUser *payload_as_SetUser() const {
-    return payload_type() == Payload_SetUser ? static_cast<const sisyfox::sisycol::request::SetUser *>(payload()) : nullptr;
+    return payload_type() == Payload::SetUser ? static_cast<const sisyfox::sisycol::request::SetUser *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetCurrentUser *payload_as_GetCurrentUser() const {
-    return payload_type() == Payload_GetCurrentUser ? static_cast<const sisyfox::sisycol::request::GetCurrentUser *>(payload()) : nullptr;
+    return payload_type() == Payload::GetCurrentUser ? static_cast<const sisyfox::sisycol::request::GetCurrentUser *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetUserRange *payload_as_GetUserRange() const {
-    return payload_type() == Payload_GetUserRange ? static_cast<const sisyfox::sisycol::request::GetUserRange *>(payload()) : nullptr;
+    return payload_type() == Payload::GetUserRange ? static_cast<const sisyfox::sisycol::request::GetUserRange *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::RemoveUser *payload_as_RemoveUser() const {
-    return payload_type() == Payload_RemoveUser ? static_cast<const sisyfox::sisycol::request::RemoveUser *>(payload()) : nullptr;
+    return payload_type() == Payload::RemoveUser ? static_cast<const sisyfox::sisycol::request::RemoveUser *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::UnsetUser *payload_as_UnsetUser() const {
-    return payload_type() == Payload_UnsetUser ? static_cast<const sisyfox::sisycol::request::UnsetUser *>(payload()) : nullptr;
+    return payload_type() == Payload::UnsetUser ? static_cast<const sisyfox::sisycol::request::UnsetUser *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::AddLocation *payload_as_AddLocation() const {
-    return payload_type() == Payload_AddLocation ? static_cast<const sisyfox::sisycol::request::AddLocation *>(payload()) : nullptr;
+    return payload_type() == Payload::AddLocation ? static_cast<const sisyfox::sisycol::request::AddLocation *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetLocation *payload_as_GetLocation() const {
-    return payload_type() == Payload_GetLocation ? static_cast<const sisyfox::sisycol::request::GetLocation *>(payload()) : nullptr;
+    return payload_type() == Payload::GetLocation ? static_cast<const sisyfox::sisycol::request::GetLocation *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::SetSetting *payload_as_SetSetting() const {
-    return payload_type() == Payload_SetSetting ? static_cast<const sisyfox::sisycol::request::SetSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::SetSetting ? static_cast<const sisyfox::sisycol::request::SetSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetSetting *payload_as_GetSetting() const {
-    return payload_type() == Payload_GetSetting ? static_cast<const sisyfox::sisycol::request::GetSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::GetSetting ? static_cast<const sisyfox::sisycol::request::GetSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetSettings *payload_as_GetSettings() const {
-    return payload_type() == Payload_GetSettings ? static_cast<const sisyfox::sisycol::request::GetSettings *>(payload()) : nullptr;
+    return payload_type() == Payload::GetSettings ? static_cast<const sisyfox::sisycol::request::GetSettings *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::Trigger *payload_as_Trigger() const {
-    return payload_type() == Payload_Trigger ? static_cast<const sisyfox::sisycol::request::Trigger *>(payload()) : nullptr;
+    return payload_type() == Payload::Trigger ? static_cast<const sisyfox::sisycol::request::Trigger *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::AddDmxDevice *payload_as_AddDmxDevice() const {
-    return payload_type() == Payload_AddDmxDevice ? static_cast<const sisyfox::sisycol::request::AddDmxDevice *>(payload()) : nullptr;
+    return payload_type() == Payload::AddDmxDevice ? static_cast<const sisyfox::sisycol::request::AddDmxDevice *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::RemoveDmxDevice *payload_as_RemoveDmxDevice() const {
-    return payload_type() == Payload_RemoveDmxDevice ? static_cast<const sisyfox::sisycol::request::RemoveDmxDevice *>(payload()) : nullptr;
+    return payload_type() == Payload::RemoveDmxDevice ? static_cast<const sisyfox::sisycol::request::RemoveDmxDevice *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::AddDmxDeviceChannel *payload_as_AddDmxDeviceChannel() const {
-    return payload_type() == Payload_AddDmxDeviceChannel ? static_cast<const sisyfox::sisycol::request::AddDmxDeviceChannel *>(payload()) : nullptr;
+    return payload_type() == Payload::AddDmxDeviceChannel ? static_cast<const sisyfox::sisycol::request::AddDmxDeviceChannel *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::RemoveDmxDeviceChannel *payload_as_RemoveDmxDeviceChannel() const {
-    return payload_type() == Payload_RemoveDmxDeviceChannel ? static_cast<const sisyfox::sisycol::request::RemoveDmxDeviceChannel *>(payload()) : nullptr;
+    return payload_type() == Payload::RemoveDmxDeviceChannel ? static_cast<const sisyfox::sisycol::request::RemoveDmxDeviceChannel *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::AddDmxChannelRule *payload_as_AddDmxChannelRule() const {
-    return payload_type() == Payload_AddDmxChannelRule ? static_cast<const sisyfox::sisycol::request::AddDmxChannelRule *>(payload()) : nullptr;
+    return payload_type() == Payload::AddDmxChannelRule ? static_cast<const sisyfox::sisycol::request::AddDmxChannelRule *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::RemoveDmxChannelRule *payload_as_RemoveDmxChannelRule() const {
-    return payload_type() == Payload_RemoveDmxChannelRule ? static_cast<const sisyfox::sisycol::request::RemoveDmxChannelRule *>(payload()) : nullptr;
+    return payload_type() == Payload::RemoveDmxChannelRule ? static_cast<const sisyfox::sisycol::request::RemoveDmxChannelRule *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::AddDmxDeviceSetting *payload_as_AddDmxDeviceSetting() const {
-    return payload_type() == Payload_AddDmxDeviceSetting ? static_cast<const sisyfox::sisycol::request::AddDmxDeviceSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::AddDmxDeviceSetting ? static_cast<const sisyfox::sisycol::request::AddDmxDeviceSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::response::AddDmxRuleSetting *payload_as_AddDmxRuleSetting() const {
-    return payload_type() == Payload_AddDmxRuleSetting ? static_cast<const sisyfox::sisycol::response::AddDmxRuleSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::AddDmxRuleSetting ? static_cast<const sisyfox::sisycol::response::AddDmxRuleSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::RemoveDmxDeviceSetting *payload_as_RemoveDmxDeviceSetting() const {
-    return payload_type() == Payload_RemoveDmxDeviceSetting ? static_cast<const sisyfox::sisycol::request::RemoveDmxDeviceSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::RemoveDmxDeviceSetting ? static_cast<const sisyfox::sisycol::request::RemoveDmxDeviceSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::AddDmxRuleRangeSetting *payload_as_AddDmxRuleRangeSetting() const {
-    return payload_type() == Payload_AddDmxRuleRangeSetting ? static_cast<const sisyfox::sisycol::request::AddDmxRuleRangeSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::AddDmxRuleRangeSetting ? static_cast<const sisyfox::sisycol::request::AddDmxRuleRangeSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::AddDmxRuleBoolSetting *payload_as_AddDmxRuleBoolSetting() const {
-    return payload_type() == Payload_AddDmxRuleBoolSetting ? static_cast<const sisyfox::sisycol::request::AddDmxRuleBoolSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::AddDmxRuleBoolSetting ? static_cast<const sisyfox::sisycol::request::AddDmxRuleBoolSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::RemoveDmxRuleSetting *payload_as_RemoveDmxRuleSetting() const {
-    return payload_type() == Payload_RemoveDmxRuleSetting ? static_cast<const sisyfox::sisycol::request::RemoveDmxRuleSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::RemoveDmxRuleSetting ? static_cast<const sisyfox::sisycol::request::RemoveDmxRuleSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::ChangeDmxDeviceSettingValue *payload_as_ChangeDmxDeviceSettingValue() const {
-    return payload_type() == Payload_ChangeDmxDeviceSettingValue ? static_cast<const sisyfox::sisycol::request::ChangeDmxDeviceSettingValue *>(payload()) : nullptr;
+    return payload_type() == Payload::ChangeDmxDeviceSettingValue ? static_cast<const sisyfox::sisycol::request::ChangeDmxDeviceSettingValue *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxDevice *payload_as_GetDmxDevice() const {
-    return payload_type() == Payload_GetDmxDevice ? static_cast<const sisyfox::sisycol::request::GetDmxDevice *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxDevice ? static_cast<const sisyfox::sisycol::request::GetDmxDevice *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxDeviceChannel *payload_as_GetDmxDeviceChannel() const {
-    return payload_type() == Payload_GetDmxDeviceChannel ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceChannel *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxDeviceChannel ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceChannel *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxChannelRule *payload_as_GetDmxChannelRule() const {
-    return payload_type() == Payload_GetDmxChannelRule ? static_cast<const sisyfox::sisycol::request::GetDmxChannelRule *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxChannelRule ? static_cast<const sisyfox::sisycol::request::GetDmxChannelRule *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxDeviceSetting *payload_as_GetDmxDeviceSetting() const {
-    return payload_type() == Payload_GetDmxDeviceSetting ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxDeviceSetting ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxRuleSetting *payload_as_GetDmxRuleSetting() const {
-    return payload_type() == Payload_GetDmxRuleSetting ? static_cast<const sisyfox::sisycol::request::GetDmxRuleSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxRuleSetting ? static_cast<const sisyfox::sisycol::request::GetDmxRuleSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxDeviceRange *payload_as_GetDmxDeviceRange() const {
-    return payload_type() == Payload_GetDmxDeviceRange ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceRange *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxDeviceRange ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceRange *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxDeviceChannelRange *payload_as_GetDmxDeviceChannelRange() const {
-    return payload_type() == Payload_GetDmxDeviceChannelRange ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceChannelRange *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxDeviceChannelRange ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceChannelRange *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxChannelRuleRange *payload_as_GetDmxChannelRuleRange() const {
-    return payload_type() == Payload_GetDmxChannelRuleRange ? static_cast<const sisyfox::sisycol::request::GetDmxChannelRuleRange *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxChannelRuleRange ? static_cast<const sisyfox::sisycol::request::GetDmxChannelRuleRange *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxDeviceSettingRange *payload_as_GetDmxDeviceSettingRange() const {
-    return payload_type() == Payload_GetDmxDeviceSettingRange ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceSettingRange *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxDeviceSettingRange ? static_cast<const sisyfox::sisycol::request::GetDmxDeviceSettingRange *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::GetDmxRuleSettingRange *payload_as_GetDmxRuleSettingRange() const {
-    return payload_type() == Payload_GetDmxRuleSettingRange ? static_cast<const sisyfox::sisycol::request::GetDmxRuleSettingRange *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxRuleSettingRange ? static_cast<const sisyfox::sisycol::request::GetDmxRuleSettingRange *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::response::GetDmxRuleRangeSetting *payload_as_GetDmxRuleRangeSetting() const {
-    return payload_type() == Payload_GetDmxRuleRangeSetting ? static_cast<const sisyfox::sisycol::response::GetDmxRuleRangeSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxRuleRangeSetting ? static_cast<const sisyfox::sisycol::response::GetDmxRuleRangeSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::response::GetDmxRuleRangeSettingRange *payload_as_GetDmxRuleRangeSettingRange() const {
-    return payload_type() == Payload_GetDmxRuleRangeSettingRange ? static_cast<const sisyfox::sisycol::response::GetDmxRuleRangeSettingRange *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxRuleRangeSettingRange ? static_cast<const sisyfox::sisycol::response::GetDmxRuleRangeSettingRange *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::response::GetDmxRuleBoolSetting *payload_as_GetDmxRuleBoolSetting() const {
-    return payload_type() == Payload_GetDmxRuleBoolSetting ? static_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSetting *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxRuleBoolSetting ? static_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSetting *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::response::GetDmxRuleBoolSettingRange *payload_as_GetDmxRuleBoolSettingRange() const {
-    return payload_type() == Payload_GetDmxRuleBoolSettingRange ? static_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSettingRange *>(payload()) : nullptr;
+    return payload_type() == Payload::GetDmxRuleBoolSettingRange ? static_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSettingRange *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::SetDmxDeviceMode *payload_as_SetDmxDeviceMode() const {
-    return payload_type() == Payload_SetDmxDeviceMode ? static_cast<const sisyfox::sisycol::request::SetDmxDeviceMode *>(payload()) : nullptr;
+    return payload_type() == Payload::SetDmxDeviceMode ? static_cast<const sisyfox::sisycol::request::SetDmxDeviceMode *>(payload()) : nullptr;
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -1780,7 +1780,7 @@ inline flatbuffers::Offset<Root> CreateRoot(
     flatbuffers::FlatBufferBuilder &_fbb,
     const Version *version = 0,
     uint16_t messageId = 0,
-    Payload payload_type = Payload_NONE,
+    Payload payload_type = Payload::NONE,
     flatbuffers::Offset<void> payload = 0) {
   RootBuilder builder_(_fbb);
   builder_.add_payload(payload);
@@ -1986,11 +1986,11 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     int32_t goal = 0,
     int32_t maxGoal = 0,
     int32_t time = 0,
-    sisyfox::sisycol::EndReason reason = sisyfox::sisycol::EndReason_WIN,
+    sisyfox::sisycol::EndReason reason = sisyfox::sisycol::EndReason::WIN,
     uint8_t level = 0,
     uint8_t world = 0,
-    sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::GameMode_FREESTYLE,
-    sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::Difficulty_VERY_EASY) {
+    sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::GameMode::FREESTYLE,
+    sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::Difficulty::VERY_EASY) {
   AddScoreBuilder builder_(_fbb);
   builder_.add_time(time);
   builder_.add_maxGoal(maxGoal);
@@ -2579,7 +2579,7 @@ struct SetSettingBuilder {
 
 inline flatbuffers::Offset<SetSetting> CreateSetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::SettingId id = sisyfox::sisycol::SettingId_GAME_LANGUAGE,
+    sisyfox::sisycol::SettingId id = sisyfox::sisycol::SettingId::GAME_LANGUAGE,
     uint32_t value = 0) {
   SetSettingBuilder builder_(_fbb);
   builder_.add_value(value);
@@ -2621,7 +2621,7 @@ struct GetSettingBuilder {
 
 inline flatbuffers::Offset<GetSetting> CreateGetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::SettingId id = sisyfox::sisycol::SettingId_GAME_LANGUAGE) {
+    sisyfox::sisycol::SettingId id = sisyfox::sisycol::SettingId::GAME_LANGUAGE) {
   GetSettingBuilder builder_(_fbb);
   builder_.add_id(id);
   return builder_.Finish();
@@ -2689,7 +2689,7 @@ struct TriggerBuilder {
 
 inline flatbuffers::Offset<Trigger> CreateTrigger(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::TriggerType type = sisyfox::sisycol::TriggerType_NEW_ROUND) {
+    sisyfox::sisycol::TriggerType type = sisyfox::sisycol::TriggerType::NEW_ROUND) {
   TriggerBuilder builder_(_fbb);
   builder_.add_type(type);
   return builder_.Finish();
@@ -2988,7 +2988,7 @@ inline flatbuffers::Offset<AddDmxChannelRule> CreateAddDmxChannelRule(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint32_t deviceId = 0,
     uint32_t channelId = 0,
-    sisyfox::sisycol::DmxChannelRuleType ruleType = sisyfox::sisycol::DmxChannelRuleType_GOAL,
+    sisyfox::sisycol::DmxChannelRuleType ruleType = sisyfox::sisycol::DmxChannelRuleType::GOAL,
     int32_t on = 0,
     int32_t off = 0,
     uint8_t start = 0,
@@ -3124,7 +3124,7 @@ struct AddDmxDeviceSettingBuilder {
 inline flatbuffers::Offset<AddDmxDeviceSetting> CreateAddDmxDeviceSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint32_t deviceId = 0,
-    sisyfox::sisycol::DmxDeviceSettingType settingType = sisyfox::sisycol::DmxDeviceSettingType_RANGE,
+    sisyfox::sisycol::DmxDeviceSettingType settingType = sisyfox::sisycol::DmxDeviceSettingType::RANGE,
     flatbuffers::Offset<flatbuffers::String> name = 0,
     int8_t norm = 0) {
   AddDmxDeviceSettingBuilder builder_(_fbb);
@@ -3138,7 +3138,7 @@ inline flatbuffers::Offset<AddDmxDeviceSetting> CreateAddDmxDeviceSetting(
 inline flatbuffers::Offset<AddDmxDeviceSetting> CreateAddDmxDeviceSettingDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint32_t deviceId = 0,
-    sisyfox::sisycol::DmxDeviceSettingType settingType = sisyfox::sisycol::DmxDeviceSettingType_RANGE,
+    sisyfox::sisycol::DmxDeviceSettingType settingType = sisyfox::sisycol::DmxDeviceSettingType::RANGE,
     const char *name = nullptr,
     int8_t norm = 0) {
   return sisyfox::sisycol::request::CreateAddDmxDeviceSetting(
@@ -3590,7 +3590,7 @@ struct SetDmxDeviceModeBuilder {
 inline flatbuffers::Offset<SetDmxDeviceMode> CreateSetDmxDeviceMode(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint32_t deviceId = 0,
-    sisyfox::sisycol::DmxDeviceMode mode = sisyfox::sisycol::DmxDeviceMode_TEST,
+    sisyfox::sisycol::DmxDeviceMode mode = sisyfox::sisycol::DmxDeviceMode::TEST,
     bool value = false) {
   SetDmxDeviceModeBuilder builder_(_fbb);
   builder_.add_deviceId(deviceId);
@@ -4100,7 +4100,7 @@ inline flatbuffers::Offset<GetDmxRuleSetting> CreateGetDmxRuleSetting(
     uint32_t deviceId = 0,
     uint32_t settingId = 0,
     uint32_t ruleSettingId = 0,
-    sisyfox::sisycol::DmxDeviceSettingType type = sisyfox::sisycol::DmxDeviceSettingType_RANGE) {
+    sisyfox::sisycol::DmxDeviceSettingType type = sisyfox::sisycol::DmxDeviceSettingType::RANGE) {
   GetDmxRuleSettingBuilder builder_(_fbb);
   builder_.add_ruleSettingId(ruleSettingId);
   builder_.add_settingId(settingId);
@@ -4178,7 +4178,7 @@ inline flatbuffers::Offset<GetDmxRuleSettingRange> CreateGetDmxRuleSettingRange(
     uint32_t deviceId = 0,
     uint32_t settingId = 0,
     uint32_t ruleSettingId = 0,
-    sisyfox::sisycol::DmxDeviceSettingType type = sisyfox::sisycol::DmxDeviceSettingType_RANGE,
+    sisyfox::sisycol::DmxDeviceSettingType type = sisyfox::sisycol::DmxDeviceSettingType::RANGE,
     uint8_t range = 0) {
   GetDmxRuleSettingRangeBuilder builder_(_fbb);
   builder_.add_ruleSettingId(ruleSettingId);
@@ -4227,7 +4227,7 @@ struct ErrorBuilder {
 
 inline flatbuffers::Offset<Error> CreateError(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::ErrorCode errorCode = sisyfox::sisycol::ErrorCode_BAD_TRANSMISSION) {
+    sisyfox::sisycol::ErrorCode errorCode = sisyfox::sisycol::ErrorCode::BAD_TRANSMISSION) {
   ErrorBuilder builder_(_fbb);
   builder_.add_errorCode(errorCode);
   return builder_.Finish();
@@ -4935,7 +4935,7 @@ struct SetSettingBuilder {
 
 inline flatbuffers::Offset<SetSetting> CreateSetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::SettingId id = sisyfox::sisycol::SettingId_GAME_LANGUAGE,
+    sisyfox::sisycol::SettingId id = sisyfox::sisycol::SettingId::GAME_LANGUAGE,
     int32_t value = 0) {
   SetSettingBuilder builder_(_fbb);
   builder_.add_value(value);
@@ -5066,7 +5066,7 @@ struct TriggerBuilder {
 
 inline flatbuffers::Offset<Trigger> CreateTrigger(
     flatbuffers::FlatBufferBuilder &_fbb,
-    sisyfox::sisycol::TriggerType type = sisyfox::sisycol::TriggerType_NEW_ROUND) {
+    sisyfox::sisycol::TriggerType type = sisyfox::sisycol::TriggerType::NEW_ROUND) {
   TriggerBuilder builder_(_fbb);
   builder_.add_type(type);
   return builder_.Finish();
@@ -5703,7 +5703,7 @@ struct SetDmxDeviceModeBuilder {
 inline flatbuffers::Offset<SetDmxDeviceMode> CreateSetDmxDeviceMode(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint32_t deviceId = 0,
-    sisyfox::sisycol::DmxDeviceMode mode = sisyfox::sisycol::DmxDeviceMode_TEST,
+    sisyfox::sisycol::DmxDeviceMode mode = sisyfox::sisycol::DmxDeviceMode::TEST,
     bool value = false) {
   SetDmxDeviceModeBuilder builder_(_fbb);
   builder_.add_deviceId(deviceId);
@@ -6290,7 +6290,7 @@ inline flatbuffers::Offset<DmxDeviceSetting> CreateDmxDeviceSetting(
     uint32_t ruleSettingCount = 0,
     int8_t norm = 0,
     int8_t value = 0,
-    sisyfox::sisycol::DmxDeviceSettingType type = sisyfox::sisycol::DmxDeviceSettingType_RANGE) {
+    sisyfox::sisycol::DmxDeviceSettingType type = sisyfox::sisycol::DmxDeviceSettingType::RANGE) {
   DmxDeviceSettingBuilder builder_(_fbb);
   builder_.add_ruleSettingCount(ruleSettingCount);
   builder_.add_storageRef(storageRef);
@@ -6308,7 +6308,7 @@ inline flatbuffers::Offset<DmxDeviceSetting> CreateDmxDeviceSettingDirect(
     uint32_t ruleSettingCount = 0,
     int8_t norm = 0,
     int8_t value = 0,
-    sisyfox::sisycol::DmxDeviceSettingType type = sisyfox::sisycol::DmxDeviceSettingType_RANGE) {
+    sisyfox::sisycol::DmxDeviceSettingType type = sisyfox::sisycol::DmxDeviceSettingType::RANGE) {
   return sisyfox::sisycol::response::CreateDmxDeviceSetting(
       _fbb,
       name ? _fbb.CreateString(name) : 0,
@@ -6776,198 +6776,198 @@ namespace response {
 
 inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type) {
   switch (type) {
-    case Payload_NONE: {
+    case Payload::NONE: {
       return true;
     }
-    case Payload_Error: {
+    case Payload::Error: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::response::Error *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_Info: {
+    case Payload::Info: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::Info *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddScore: {
+    case Payload::AddScore: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddScore *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetScore: {
+    case Payload::GetScore: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetScore *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetScoreRange: {
+    case Payload::GetScoreRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetScoreRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_SetLiveData: {
+    case Payload::SetLiveData: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::SetLiveData *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetLiveData: {
+    case Payload::GetLiveData: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetLiveData *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddUser: {
+    case Payload::AddUser: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddUser *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetUser: {
+    case Payload::GetUser: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetUser *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_SetUser: {
+    case Payload::SetUser: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::SetUser *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetCurrentUser: {
+    case Payload::GetCurrentUser: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetCurrentUser *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetUserRange: {
+    case Payload::GetUserRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetUserRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_RemoveUser: {
+    case Payload::RemoveUser: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::RemoveUser *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_UnsetUser: {
+    case Payload::UnsetUser: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::UnsetUser *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddLocation: {
+    case Payload::AddLocation: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddLocation *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetLocation: {
+    case Payload::GetLocation: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetLocation *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_SetSetting: {
+    case Payload::SetSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::SetSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetSetting: {
+    case Payload::GetSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetSettings: {
+    case Payload::GetSettings: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetSettings *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_Trigger: {
+    case Payload::Trigger: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::Trigger *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddDmxDevice: {
+    case Payload::AddDmxDevice: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddDmxDevice *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_RemoveDmxDevice: {
+    case Payload::RemoveDmxDevice: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::RemoveDmxDevice *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddDmxDeviceChannel: {
+    case Payload::AddDmxDeviceChannel: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddDmxDeviceChannel *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_RemoveDmxDeviceChannel: {
+    case Payload::RemoveDmxDeviceChannel: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::RemoveDmxDeviceChannel *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddDmxChannelRule: {
+    case Payload::AddDmxChannelRule: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddDmxChannelRule *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_RemoveDmxChannelRule: {
+    case Payload::RemoveDmxChannelRule: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::RemoveDmxChannelRule *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddDmxDeviceSetting: {
+    case Payload::AddDmxDeviceSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddDmxDeviceSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddDmxRuleSetting: {
+    case Payload::AddDmxRuleSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::response::AddDmxRuleSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_RemoveDmxDeviceSetting: {
+    case Payload::RemoveDmxDeviceSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::RemoveDmxDeviceSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddDmxRuleRangeSetting: {
+    case Payload::AddDmxRuleRangeSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddDmxRuleRangeSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_AddDmxRuleBoolSetting: {
+    case Payload::AddDmxRuleBoolSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddDmxRuleBoolSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_RemoveDmxRuleSetting: {
+    case Payload::RemoveDmxRuleSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::RemoveDmxRuleSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_ChangeDmxDeviceSettingValue: {
+    case Payload::ChangeDmxDeviceSettingValue: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::ChangeDmxDeviceSettingValue *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxDevice: {
+    case Payload::GetDmxDevice: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxDevice *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxDeviceChannel: {
+    case Payload::GetDmxDeviceChannel: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxDeviceChannel *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxChannelRule: {
+    case Payload::GetDmxChannelRule: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxChannelRule *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxDeviceSetting: {
+    case Payload::GetDmxDeviceSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxDeviceSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxRuleSetting: {
+    case Payload::GetDmxRuleSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxRuleSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxDeviceRange: {
+    case Payload::GetDmxDeviceRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxDeviceRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxDeviceChannelRange: {
+    case Payload::GetDmxDeviceChannelRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxDeviceChannelRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxChannelRuleRange: {
+    case Payload::GetDmxChannelRuleRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxChannelRuleRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxDeviceSettingRange: {
+    case Payload::GetDmxDeviceSettingRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxDeviceSettingRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxRuleSettingRange: {
+    case Payload::GetDmxRuleSettingRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDmxRuleSettingRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxRuleRangeSetting: {
+    case Payload::GetDmxRuleRangeSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GetDmxRuleRangeSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxRuleRangeSettingRange: {
+    case Payload::GetDmxRuleRangeSettingRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GetDmxRuleRangeSettingRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxRuleBoolSetting: {
+    case Payload::GetDmxRuleBoolSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDmxRuleBoolSettingRange: {
+    case Payload::GetDmxRuleBoolSettingRange: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GetDmxRuleBoolSettingRange *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_SetDmxDeviceMode: {
+    case Payload::SetDmxDeviceMode: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::SetDmxDeviceMode *>(obj);
       return verifier.VerifyTable(ptr);
     }
