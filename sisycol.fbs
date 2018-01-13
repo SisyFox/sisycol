@@ -19,7 +19,7 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxChannelRuleRange, GetDmxDeviceSettingRange,
              GetDmxRuleSettingRange, GetDmxRuleRangeSetting,
              GetDmxRuleRangeSettingRange, GetDmxRuleBoolSetting,
-             GetDmxRuleBoolSettingRange, SetDmxDeviceMode }
+             GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig }
 
 table Root {
   version:Version;
@@ -376,6 +376,8 @@ table GetDmxRuleSettingRange {
     range:ubyte;
 }
 
+table ResetDmxConfig {}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -619,3 +621,5 @@ table GetDmxRuleBoolSettingRange {
     ruleSettingId:uint;
     ruleSetting:[DmxRuleBoolSetting];
 }
+
+table ResetDmxConfig {}

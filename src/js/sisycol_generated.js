@@ -76,7 +76,8 @@ sisyfox.sisycol.Payload = {
   GetDmxRuleRangeSettingRange: 45,
   GetDmxRuleBoolSetting: 46,
   GetDmxRuleBoolSettingRange: 47,
-  SetDmxDeviceMode: 48
+  SetDmxDeviceMode: 48,
+  ResetDmxConfig: 49
 };
 
 /**
@@ -4985,6 +4986,57 @@ sisyfox.sisycol.request.GetDmxRuleSettingRange.endGetDmxRuleSettingRange = funct
 /**
  * @constructor
  */
+sisyfox.sisycol.request.ResetDmxConfig = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.ResetDmxConfig}
+ */
+sisyfox.sisycol.request.ResetDmxConfig.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.ResetDmxConfig=} obj
+ * @returns {sisyfox.sisycol.request.ResetDmxConfig}
+ */
+sisyfox.sisycol.request.ResetDmxConfig.getRootAsResetDmxConfig = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.ResetDmxConfig).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.ResetDmxConfig.startResetDmxConfig = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.ResetDmxConfig.endResetDmxConfig = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -9168,6 +9220,57 @@ sisyfox.sisycol.response.GetDmxRuleBoolSettingRange.startRuleSettingVector = fun
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.GetDmxRuleBoolSettingRange.endGetDmxRuleBoolSettingRange = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.ResetDmxConfig = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.ResetDmxConfig}
+ */
+sisyfox.sisycol.response.ResetDmxConfig.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.ResetDmxConfig=} obj
+ * @returns {sisyfox.sisycol.response.ResetDmxConfig}
+ */
+sisyfox.sisycol.response.ResetDmxConfig.getRootAsResetDmxConfig = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.ResetDmxConfig).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.ResetDmxConfig.startResetDmxConfig = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.ResetDmxConfig.endResetDmxConfig = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

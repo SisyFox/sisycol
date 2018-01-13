@@ -56,6 +56,7 @@ public enum Payload : byte
  GetDmxRuleBoolSetting = 46,
  GetDmxRuleBoolSettingRange = 47,
  SetDmxDeviceMode = 48,
+ ResetDmxConfig = 49,
 };
 
 

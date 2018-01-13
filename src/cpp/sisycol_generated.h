@@ -115,6 +115,8 @@ struct GetDmxRuleSetting;
 
 struct GetDmxRuleSettingRange;
 
+struct ResetDmxConfig;
+
 }  // namespace request
 
 namespace response {
@@ -209,6 +211,8 @@ struct GetDmxRuleBoolSetting;
 
 struct GetDmxRuleBoolSettingRange;
 
+struct ResetDmxConfig;
+
 }  // namespace response
 
 enum Payload {
@@ -260,10 +264,11 @@ enum Payload {
   GetDmxRuleRangeSettingRange = 45,
   GetDmxRuleBoolSetting = 46,
   GetDmxRuleBoolSettingRange = 47,
-  SetDmxDeviceMode = 48
+  SetDmxDeviceMode = 48,
+  ResetDmxConfig = 49
 };
 
-inline Payload (&EnumValuesPayload())[49] {
+inline Payload (&EnumValuesPayload())[50] {
   static Payload values[] = {
     NONE,
     Error,
@@ -313,7 +318,8 @@ inline Payload (&EnumValuesPayload())[49] {
     GetDmxRuleRangeSettingRange,
     GetDmxRuleBoolSetting,
     GetDmxRuleBoolSettingRange,
-    SetDmxDeviceMode
+    SetDmxDeviceMode,
+    ResetDmxConfig
   };
   return values;
 }
@@ -369,6 +375,7 @@ inline const char **EnumNamesPayload() {
     "GetDmxRuleBoolSetting",
     "GetDmxRuleBoolSettingRange",
     "SetDmxDeviceMode",
+    "ResetDmxConfig",
     nullptr
   };
   return names;
@@ -573,6 +580,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::response::GetDmxRuleBoolSettin
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::SetDmxDeviceMode> {
   static const Payload enum_value = SetDmxDeviceMode;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::ResetDmxConfig> {
+  static const Payload enum_value = ResetDmxConfig;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1520,6 +1531,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::SetDmxDeviceMode *payload_as_SetDmxDeviceMode() const {
     return payload_type() == SetDmxDeviceMode ? static_cast<const sisyfox::sisycol::request::SetDmxDeviceMode *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::ResetDmxConfig *payload_as_ResetDmxConfig() const {
+    return payload_type() == ResetDmxConfig ? static_cast<const sisyfox::sisycol::request::ResetDmxConfig *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -1721,6 +1735,10 @@ template<> inline const sisyfox::sisycol::response::GetDmxRuleBoolSettingRange *
 
 template<> inline const sisyfox::sisycol::request::SetDmxDeviceMode *Root::payload_as<sisyfox::sisycol::request::SetDmxDeviceMode>() const {
   return payload_as_SetDmxDeviceMode();
+}
+
+template<> inline const sisyfox::sisycol::request::ResetDmxConfig *Root::payload_as<sisyfox::sisycol::request::ResetDmxConfig>() const {
+  return payload_as_ResetDmxConfig();
 }
 
 struct RootBuilder {
@@ -4160,6 +4178,34 @@ inline flatbuffers::Offset<GetDmxRuleSettingRange> CreateGetDmxRuleSettingRange(
   builder_.add_deviceId(deviceId);
   builder_.add_range(range);
   builder_.add_type(type);
+  return builder_.Finish();
+}
+
+struct ResetDmxConfig FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct ResetDmxConfigBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit ResetDmxConfigBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ResetDmxConfigBuilder &operator=(const ResetDmxConfigBuilder &);
+  flatbuffers::Offset<ResetDmxConfig> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<ResetDmxConfig>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<ResetDmxConfig> CreateResetDmxConfig(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  ResetDmxConfigBuilder builder_(_fbb);
   return builder_.Finish();
 }
 
@@ -6738,6 +6784,34 @@ inline flatbuffers::Offset<GetDmxRuleBoolSettingRange> CreateGetDmxRuleBoolSetti
       ruleSetting ? _fbb.CreateVector<const sisyfox::sisycol::DmxRuleBoolSetting *>(*ruleSetting) : 0);
 }
 
+struct ResetDmxConfig FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct ResetDmxConfigBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit ResetDmxConfigBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ResetDmxConfigBuilder &operator=(const ResetDmxConfigBuilder &);
+  flatbuffers::Offset<ResetDmxConfig> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<ResetDmxConfig>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<ResetDmxConfig> CreateResetDmxConfig(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  ResetDmxConfigBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
 }  // namespace response
 
 namespace request {
@@ -6943,6 +7017,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case SetDmxDeviceMode: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::SetDmxDeviceMode *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case ResetDmxConfig: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::ResetDmxConfig *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;
