@@ -10,6 +10,7 @@ public enum World : byte
  ORIGIN_MOUNTAIN = 0,
  BLOCKSBERG = 1,
  RED_CANYON = 2,
+ TURTLE_ISLAND = 3,
 };
 
 

@@ -180,7 +180,8 @@ sisyfox.sisycol.Difficulty = {
 sisyfox.sisycol.World = {
   ORIGIN_MOUNTAIN: 0,
   BLOCKSBERG: 1,
-  RED_CANYON: 2
+  RED_CANYON: 2,
+  TURTLE_ISLAND: 3
 };
 
 /**

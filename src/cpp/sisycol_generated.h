@@ -852,14 +852,16 @@ inline const char *EnumNameDifficulty(Difficulty e) {
 enum World {
   ORIGIN_MOUNTAIN = 0,
   BLOCKSBERG = 1,
-  RED_CANYON = 2
+  RED_CANYON = 2,
+  TURTLE_ISLAND = 3
 };
 
-inline World (&EnumValuesWorld())[3] {
+inline World (&EnumValuesWorld())[4] {
   static World values[] = {
     ORIGIN_MOUNTAIN,
     BLOCKSBERG,
-    RED_CANYON
+    RED_CANYON,
+    TURTLE_ISLAND
   };
   return values;
 }
@@ -869,6 +871,7 @@ inline const char **EnumNamesWorld() {
     "ORIGIN_MOUNTAIN",
     "BLOCKSBERG",
     "RED_CANYON",
+    "TURTLE_ISLAND",
     nullptr
   };
   return names;

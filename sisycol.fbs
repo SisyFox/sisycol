@@ -55,7 +55,7 @@ enum GameMode:ubyte    { FREESTYLE, LEVEL_COLLECT }
 
 enum Difficulty:ubyte  { VERY_EASY, EASY, NORMAL, HARD, VERY_HARD }
 
-enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON }
+enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON, TURTLE_ISLAND }
 
 enum DmxChannelRuleType:byte   { GOAL, TIME, PITCH }
 
