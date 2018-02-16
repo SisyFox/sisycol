@@ -15,6 +15,8 @@ struct Version;
 
 struct LiveData;
 
+struct Coordinates;
+
 struct Score;
 
 struct Setting;
@@ -1021,6 +1023,36 @@ MANUALLY_ALIGNED_STRUCT(4) LiveData FLATBUFFERS_FINAL_CLASS {
 };
 STRUCT_END(LiveData, 12);
 
+MANUALLY_ALIGNED_STRUCT(4) Coordinates FLATBUFFERS_FINAL_CLASS {
+ private:
+  int32_t x_;
+  int32_t y_;
+  int32_t z_;
+
+ public:
+  Coordinates() {
+    memset(this, 0, sizeof(Coordinates));
+  }
+  Coordinates(const Coordinates &_o) {
+    memcpy(this, &_o, sizeof(Coordinates));
+  }
+  Coordinates(int32_t _x, int32_t _y, int32_t _z)
+      : x_(flatbuffers::EndianScalar(_x)),
+        y_(flatbuffers::EndianScalar(_y)),
+        z_(flatbuffers::EndianScalar(_z)) {
+  }
+  int32_t x() const {
+    return flatbuffers::EndianScalar(x_);
+  }
+  int32_t y() const {
+    return flatbuffers::EndianScalar(y_);
+  }
+  int32_t z() const {
+    return flatbuffers::EndianScalar(z_);
+  }
+};
+STRUCT_END(Coordinates, 12);
+
 MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
  private:
   uint32_t id_;
@@ -1040,6 +1072,8 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   int32_t timeScore_;
   int32_t endScore_;
   int32_t rating_;
+  int32_t modeSpecifcValue_;
+  Coordinates endPosition_;
 
  public:
   Score() {
@@ -1048,7 +1082,7 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   Score(const Score &_o) {
     memcpy(this, &_o, sizeof(Score));
   }
-  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, GameMode _gameMode, Difficulty _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating)
+  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, GameMode _gameMode, Difficulty _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating, int32_t _modeSpecifcValue, const Coordinates &_endPosition)
       : id_(flatbuffers::EndianScalar(_id)),
         goal_(flatbuffers::EndianScalar(_goal)),
         maxGoal_(flatbuffers::EndianScalar(_maxGoal)),
@@ -1066,7 +1100,9 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
         goalScore_(flatbuffers::EndianScalar(_goalScore)),
         timeScore_(flatbuffers::EndianScalar(_timeScore)),
         endScore_(flatbuffers::EndianScalar(_endScore)),
-        rating_(flatbuffers::EndianScalar(_rating)) {
+        rating_(flatbuffers::EndianScalar(_rating)),
+        modeSpecifcValue_(flatbuffers::EndianScalar(_modeSpecifcValue)),
+        endPosition_(_endPosition) {
     (void)padding0__;
     (void)padding1__;    (void)padding2__;
   }
@@ -1115,8 +1151,14 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   int32_t rating() const {
     return flatbuffers::EndianScalar(rating_);
   }
+  int32_t modeSpecifcValue() const {
+    return flatbuffers::EndianScalar(modeSpecifcValue_);
+  }
+  const Coordinates &endPosition() const {
+    return endPosition_;
+  }
 };
-STRUCT_END(Score, 56);
+STRUCT_END(Score, 72);
 
 MANUALLY_ALIGNED_STRUCT(4) Setting FLATBUFFERS_FINAL_CLASS {
  private:
@@ -1897,7 +1939,9 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_LEVEL = 12,
     VT_WORLD = 14,
     VT_GAMEMODE = 16,
-    VT_DIFFICULTY = 18
+    VT_DIFFICULTY = 18,
+    VT_MODESPECIFICVALUE = 20,
+    VT_ENDPOSITION = 22
   };
   int32_t goal() const {
     return GetField<int32_t>(VT_GOAL, 0);
@@ -1923,6 +1967,12 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   sisyfox::sisycol::Difficulty difficulty() const {
     return static_cast<sisyfox::sisycol::Difficulty>(GetField<uint8_t>(VT_DIFFICULTY, 0));
   }
+  int32_t modeSpecificValue() const {
+    return GetField<int32_t>(VT_MODESPECIFICVALUE, 0);
+  }
+  const sisyfox::sisycol::Coordinates *endPosition() const {
+    return GetStruct<const sisyfox::sisycol::Coordinates *>(VT_ENDPOSITION);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_GOAL) &&
@@ -1933,6 +1983,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_WORLD) &&
            VerifyField<uint8_t>(verifier, VT_GAMEMODE) &&
            VerifyField<uint8_t>(verifier, VT_DIFFICULTY) &&
+           VerifyField<int32_t>(verifier, VT_MODESPECIFICVALUE) &&
+           VerifyField<sisyfox::sisycol::Coordinates>(verifier, VT_ENDPOSITION) &&
            verifier.EndTable();
   }
 };
@@ -1964,6 +2016,12 @@ struct AddScoreBuilder {
   void add_difficulty(sisyfox::sisycol::Difficulty difficulty) {
     fbb_.AddElement<uint8_t>(AddScore::VT_DIFFICULTY, static_cast<uint8_t>(difficulty), 0);
   }
+  void add_modeSpecificValue(int32_t modeSpecificValue) {
+    fbb_.AddElement<int32_t>(AddScore::VT_MODESPECIFICVALUE, modeSpecificValue, 0);
+  }
+  void add_endPosition(const sisyfox::sisycol::Coordinates *endPosition) {
+    fbb_.AddStruct(AddScore::VT_ENDPOSITION, endPosition);
+  }
   explicit AddScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -1985,8 +2043,12 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     uint8_t level = 0,
     uint8_t world = 0,
     sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::FREESTYLE,
-    sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::VERY_EASY) {
+    sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::VERY_EASY,
+    int32_t modeSpecificValue = 0,
+    const sisyfox::sisycol::Coordinates *endPosition = 0) {
   AddScoreBuilder builder_(_fbb);
+  builder_.add_endPosition(endPosition);
+  builder_.add_modeSpecificValue(modeSpecificValue);
   builder_.add_time(time);
   builder_.add_maxGoal(maxGoal);
   builder_.add_goal(goal);

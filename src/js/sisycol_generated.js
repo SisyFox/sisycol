@@ -452,6 +452,68 @@ sisyfox.sisycol.LiveData.createLiveData = function(builder, goal, time, pitch) {
 /**
  * @constructor
  */
+sisyfox.sisycol.Coordinates = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.Coordinates}
+ */
+sisyfox.sisycol.Coordinates.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Coordinates.prototype.x = function() {
+  return this.bb.readInt32(this.bb_pos);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Coordinates.prototype.y = function() {
+  return this.bb.readInt32(this.bb_pos + 4);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Coordinates.prototype.z = function() {
+  return this.bb.readInt32(this.bb_pos + 8);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} x
+ * @param {number} y
+ * @param {number} z
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.Coordinates.createCoordinates = function(builder, x, y, z) {
+  builder.prep(4, 12);
+  builder.writeInt32(z);
+  builder.writeInt32(y);
+  builder.writeInt32(x);
+  return builder.offset();
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.Score = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -581,6 +643,21 @@ sisyfox.sisycol.Score.prototype.rating = function() {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.Score.prototype.modeSpecifcValue = function() {
+  return this.bb.readInt32(this.bb_pos + 56);
+};
+
+/**
+ * @param {sisyfox.sisycol.Coordinates=} obj
+ * @returns {sisyfox.sisycol.Coordinates|null}
+ */
+sisyfox.sisycol.Score.prototype.endPosition = function(obj) {
+  return (obj || new sisyfox.sisycol.Coordinates).__init(this.bb_pos + 60, this.bb);
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  * @param {number} id
  * @param {number} goal
@@ -597,10 +674,19 @@ sisyfox.sisycol.Score.prototype.rating = function() {
  * @param {number} timeScore
  * @param {number} endScore
  * @param {number} rating
+ * @param {number} modeSpecifcValue
+ * @param {number} endPosition_x
+ * @param {number} endPosition_y
+ * @param {number} endPosition_z
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.Score.createScore = function(builder, id, goal, maxGoal, time, rank, timestamp, level, world, gameMode, difficulty, reason, goalScore, timeScore, endScore, rating) {
-  builder.prep(8, 56);
+sisyfox.sisycol.Score.createScore = function(builder, id, goal, maxGoal, time, rank, timestamp, level, world, gameMode, difficulty, reason, goalScore, timeScore, endScore, rating, modeSpecifcValue, endPosition_x, endPosition_y, endPosition_z) {
+  builder.prep(8, 72);
+  builder.prep(4, 12);
+  builder.writeInt32(endPosition_z);
+  builder.writeInt32(endPosition_y);
+  builder.writeInt32(endPosition_x);
+  builder.writeInt32(modeSpecifcValue);
   builder.writeInt32(rating);
   builder.writeInt32(endScore);
   builder.writeInt32(timeScore);
@@ -1340,10 +1426,27 @@ sisyfox.sisycol.request.AddScore.prototype.difficulty = function() {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.AddScore.prototype.modeSpecificValue = function() {
+  var offset = this.bb.__offset(this.bb_pos, 20);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {sisyfox.sisycol.Coordinates=} obj
+ * @returns {sisyfox.sisycol.Coordinates|null}
+ */
+sisyfox.sisycol.request.AddScore.prototype.endPosition = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 22);
+  return offset ? (obj || new sisyfox.sisycol.Coordinates).__init(this.bb_pos + offset, this.bb) : null;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.AddScore.startAddScore = function(builder) {
-  builder.startObject(8);
+  builder.startObject(10);
 };
 
 /**
@@ -1408,6 +1511,22 @@ sisyfox.sisycol.request.AddScore.addGameMode = function(builder, gameMode) {
  */
 sisyfox.sisycol.request.AddScore.addDifficulty = function(builder, difficulty) {
   builder.addFieldInt8(7, difficulty, sisyfox.sisycol.Difficulty.VERY_EASY);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} modeSpecificValue
+ */
+sisyfox.sisycol.request.AddScore.addModeSpecificValue = function(builder, modeSpecificValue) {
+  builder.addFieldInt32(8, modeSpecificValue, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} endPositionOffset
+ */
+sisyfox.sisycol.request.AddScore.addEndPosition = function(builder, endPositionOffset) {
+  builder.addFieldStruct(9, endPositionOffset, 0);
 };
 
 /**
@@ -5427,7 +5546,7 @@ sisyfox.sisycol.response.GetScoreRange.getRootAsGetScoreRange = function(bb, obj
  */
 sisyfox.sisycol.response.GetScoreRange.prototype.data = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.Score).__init(this.bb.__vector(this.bb_pos + offset) + index * 56, this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.Score).__init(this.bb.__vector(this.bb_pos + offset) + index * 72, this.bb) : null;
 };
 
 /**
@@ -5458,7 +5577,7 @@ sisyfox.sisycol.response.GetScoreRange.addData = function(builder, dataOffset) {
  * @param {number} numElems
  */
 sisyfox.sisycol.response.GetScoreRange.startDataVector = function(builder, numElems) {
-  builder.startVector(56, numElems, 8);
+  builder.startVector(72, numElems, 8);
 };
 
 /**

@@ -75,6 +75,12 @@ struct LiveData {
   pitch:int;
 }
 
+struct Coordinates {
+  x:int;
+  y:int;
+  z:int;
+}
+
 struct Score {
     id:uint;
     goal:int;
@@ -91,6 +97,8 @@ struct Score {
     timeScore:int;
     endScore:int;
     rating:int;
+    modeSpecifcValue:int;
+    endPosition:Coordinates;
 }
 
 struct Setting {
@@ -161,7 +169,9 @@ table AddScore {
   level:ubyte;
   world:ubyte;
   gameMode:GameMode;
-  difficulty:Difficulty; 
+  difficulty:Difficulty;
+  modeSpecificValue:int;
+  endPosition:Coordinates;
 }
 
 table GetScore {
