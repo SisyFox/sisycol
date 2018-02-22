@@ -4986,13 +4986,13 @@ struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   sisyfox::sisycol::SettingType type() const {
     return static_cast<sisyfox::sisycol::SettingType>(GetField<uint8_t>(VT_TYPE, 0));
   }
-  int32_t value() const {
-    return GetField<int32_t>(VT_VALUE, 0);
+  uint32_t value() const {
+    return GetField<uint32_t>(VT_VALUE, 0);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint8_t>(verifier, VT_TYPE) &&
-           VerifyField<int32_t>(verifier, VT_VALUE) &&
+           VerifyField<uint32_t>(verifier, VT_VALUE) &&
            verifier.EndTable();
   }
 };
@@ -5003,8 +5003,8 @@ struct SetSettingBuilder {
   void add_type(sisyfox::sisycol::SettingType type) {
     fbb_.AddElement<uint8_t>(SetSetting::VT_TYPE, static_cast<uint8_t>(type), 0);
   }
-  void add_value(int32_t value) {
-    fbb_.AddElement<int32_t>(SetSetting::VT_VALUE, value, 0);
+  void add_value(uint32_t value) {
+    fbb_.AddElement<uint32_t>(SetSetting::VT_VALUE, value, 0);
   }
   explicit SetSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -5021,7 +5021,7 @@ struct SetSettingBuilder {
 inline flatbuffers::Offset<SetSetting> CreateSetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
     sisyfox::sisycol::SettingType type = sisyfox::sisycol::GAME_LANGUAGE,
-    int32_t value = 0) {
+    uint32_t value = 0) {
   SetSettingBuilder builder_(_fbb);
   builder_.add_value(value);
   builder_.add_type(type);
