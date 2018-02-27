@@ -6932,12 +6932,12 @@ struct GetIdealTime FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_TIME = 4
   };
-  uint32_t time() const {
-    return GetField<uint32_t>(VT_TIME, 0);
+  float time() const {
+    return GetField<float>(VT_TIME, 0.0f);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint32_t>(verifier, VT_TIME) &&
+           VerifyField<float>(verifier, VT_TIME) &&
            verifier.EndTable();
   }
 };
@@ -6945,8 +6945,8 @@ struct GetIdealTime FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetIdealTimeBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_time(uint32_t time) {
-    fbb_.AddElement<uint32_t>(GetIdealTime::VT_TIME, time, 0);
+  void add_time(float time) {
+    fbb_.AddElement<float>(GetIdealTime::VT_TIME, time, 0.0f);
   }
   explicit GetIdealTimeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -6962,7 +6962,7 @@ struct GetIdealTimeBuilder {
 
 inline flatbuffers::Offset<GetIdealTime> CreateGetIdealTime(
     flatbuffers::FlatBufferBuilder &_fbb,
-    uint32_t time = 0) {
+    float time = 0.0f) {
   GetIdealTimeBuilder builder_(_fbb);
   builder_.add_time(time);
   return builder_.Finish();

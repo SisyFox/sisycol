@@ -17,17 +17,17 @@ public struct GetIdealTime : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public GetIdealTime __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public uint Time { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public float Time { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
 
   public static Offset<GetIdealTime> CreateGetIdealTime(FlatBufferBuilder builder,
-      uint time = 0) {
+      float time = 0.0f) {
     builder.StartObject(1);
     GetIdealTime.AddTime(builder, time);
     return GetIdealTime.EndGetIdealTime(builder);
   }
 
   public static void StartGetIdealTime(FlatBufferBuilder builder) { builder.StartObject(1); }
-  public static void AddTime(FlatBufferBuilder builder, uint time) { builder.AddUint(0, time, 0); }
+  public static void AddTime(FlatBufferBuilder builder, float time) { builder.AddFloat(0, time, 0.0f); }
   public static Offset<GetIdealTime> EndGetIdealTime(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetIdealTime>(o);

@@ -639,5 +639,5 @@ table GetDmxRuleBoolSettingRange {
 table ResetDmxConfig {}
 
 table GetIdealTime {
-    time:uint;
+    time:float;
 }

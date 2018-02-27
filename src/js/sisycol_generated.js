@@ -9489,7 +9489,7 @@ sisyfox.sisycol.response.GetIdealTime.getRootAsGetIdealTime = function(bb, obj) 
  */
 sisyfox.sisycol.response.GetIdealTime.prototype.time = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+  return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
 };
 
 /**
@@ -9504,7 +9504,7 @@ sisyfox.sisycol.response.GetIdealTime.startGetIdealTime = function(builder) {
  * @param {number} time
  */
 sisyfox.sisycol.response.GetIdealTime.addTime = function(builder, time) {
-  builder.addFieldInt32(0, time, 0);
+  builder.addFieldFloat32(0, time, 0.0);
 };
 
 /**
