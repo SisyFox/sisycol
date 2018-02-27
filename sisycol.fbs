@@ -19,7 +19,8 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxChannelRuleRange, GetDmxDeviceSettingRange,
              GetDmxRuleSettingRange, GetDmxRuleRangeSetting,
              GetDmxRuleRangeSettingRange, GetDmxRuleBoolSetting,
-             GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig }
+             GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
+             GetIdealTime }
 
 table Root {
   version:Version;
@@ -32,7 +33,7 @@ enum ErrorCode:ubyte   { BAD_TRANSMISSION, BAD_VERSION, BAD_PAYLOAD_TYPE,
                          GENERAL_ERROR, NOT_AVAILABLE }
 
 enum EndReason:ubyte   { WIN, MAP_BORDER, COLLISION, INSTANT_LOSS_ANGLE,
-                         GROUND_DIST, TOO_STEEP, FLASH, UNDERWATER }
+                         GROUND_DIST, TOO_STEEP, FLASH, UNDERWATER, TIME_ATTACK }
 
 enum TriggerType:ubyte { NEW_ROUND }
 
@@ -45,6 +46,7 @@ enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          SFX_VOLUME, VOICES, IDLE_TIME,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
+                         TIME_ATTACK,
                          GAME_ACTIVE = 128, GAME_ENABLED }
 
 enum SettingVariableType:ubyte { BOOL, UBYTE, UINT }
@@ -388,6 +390,8 @@ table GetDmxRuleSettingRange {
 
 table ResetDmxConfig {}
 
+table GetIdealTime {}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -633,3 +637,7 @@ table GetDmxRuleBoolSettingRange {
 }
 
 table ResetDmxConfig {}
+
+table GetIdealTime {
+    time:uint;
+}

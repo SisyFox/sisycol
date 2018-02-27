@@ -119,6 +119,8 @@ struct GetDmxRuleSettingRange;
 
 struct ResetDmxConfig;
 
+struct GetIdealTime;
+
 }  // namespace request
 
 namespace response {
@@ -215,6 +217,8 @@ struct GetDmxRuleBoolSettingRange;
 
 struct ResetDmxConfig;
 
+struct GetIdealTime;
+
 }  // namespace response
 
 enum Payload {
@@ -267,10 +271,11 @@ enum Payload {
   GetDmxRuleBoolSetting = 46,
   GetDmxRuleBoolSettingRange = 47,
   SetDmxDeviceMode = 48,
-  ResetDmxConfig = 49
+  ResetDmxConfig = 49,
+  GetIdealTime = 50
 };
 
-inline Payload (&EnumValuesPayload())[50] {
+inline Payload (&EnumValuesPayload())[51] {
   static Payload values[] = {
     NONE,
     Error,
@@ -321,7 +326,8 @@ inline Payload (&EnumValuesPayload())[50] {
     GetDmxRuleBoolSetting,
     GetDmxRuleBoolSettingRange,
     SetDmxDeviceMode,
-    ResetDmxConfig
+    ResetDmxConfig,
+    GetIdealTime
   };
   return values;
 }
@@ -378,6 +384,7 @@ inline const char **EnumNamesPayload() {
     "GetDmxRuleBoolSettingRange",
     "SetDmxDeviceMode",
     "ResetDmxConfig",
+    "GetIdealTime",
     nullptr
   };
   return names;
@@ -588,6 +595,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::ResetDmxConfig> {
   static const Payload enum_value = ResetDmxConfig;
 };
 
+template<> struct PayloadTraits<sisyfox::sisycol::request::GetIdealTime> {
+  static const Payload enum_value = GetIdealTime;
+};
+
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
 bool VerifyPayloadVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<uint8_t> *types);
 
@@ -635,10 +646,11 @@ enum EndReason {
   GROUND_DIST = 4,
   TOO_STEEP = 5,
   FLASH = 6,
-  UNDERWATER = 7
+  UNDERWATER = 7,
+  TIME_ATTACK = 8
 };
 
-inline EndReason (&EnumValuesEndReason())[8] {
+inline EndReason (&EnumValuesEndReason())[9] {
   static EndReason values[] = {
     WIN,
     MAP_BORDER,
@@ -647,7 +659,8 @@ inline EndReason (&EnumValuesEndReason())[8] {
     GROUND_DIST,
     TOO_STEEP,
     FLASH,
-    UNDERWATER
+    UNDERWATER,
+    TIME_ATTACK
   };
   return values;
 }
@@ -662,6 +675,7 @@ inline const char **EnumNamesEndReason() {
     "TOO_STEEP",
     "FLASH",
     "UNDERWATER",
+    "TIME_ATTACK",
     nullptr
   };
   return names;
@@ -714,11 +728,12 @@ enum SettingType {
   MAX_COLLECT_WORLD = 68,
   MAX_COLLECT_LEVEL = 69,
   GEM_SCORE = 70,
+  TIME_ATTACK = 71,
   GAME_ACTIVE = 128,
   GAME_ENABLED = 129
 };
 
-inline SettingType (&EnumValuesSettingType())[19] {
+inline SettingType (&EnumValuesSettingType())[20] {
   static SettingType values[] = {
     GAME_LANGUAGE,
     INTERFACE_LANGUAGE,
@@ -737,6 +752,7 @@ inline SettingType (&EnumValuesSettingType())[19] {
     MAX_COLLECT_WORLD,
     MAX_COLLECT_LEVEL,
     GEM_SCORE,
+    TIME_ATTACK,
     GAME_ACTIVE,
     GAME_ENABLED
   };
@@ -1579,6 +1595,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::ResetDmxConfig *payload_as_ResetDmxConfig() const {
     return payload_type() == ResetDmxConfig ? static_cast<const sisyfox::sisycol::request::ResetDmxConfig *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::GetIdealTime *payload_as_GetIdealTime() const {
+    return payload_type() == GetIdealTime ? static_cast<const sisyfox::sisycol::request::GetIdealTime *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -1784,6 +1803,10 @@ template<> inline const sisyfox::sisycol::request::SetDmxDeviceMode *Root::paylo
 
 template<> inline const sisyfox::sisycol::request::ResetDmxConfig *Root::payload_as<sisyfox::sisycol::request::ResetDmxConfig>() const {
   return payload_as_ResetDmxConfig();
+}
+
+template<> inline const sisyfox::sisycol::request::GetIdealTime *Root::payload_as<sisyfox::sisycol::request::GetIdealTime>() const {
+  return payload_as_GetIdealTime();
 }
 
 struct RootBuilder {
@@ -4271,6 +4294,34 @@ struct ResetDmxConfigBuilder {
 inline flatbuffers::Offset<ResetDmxConfig> CreateResetDmxConfig(
     flatbuffers::FlatBufferBuilder &_fbb) {
   ResetDmxConfigBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+struct GetIdealTime FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetIdealTimeBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit GetIdealTimeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetIdealTimeBuilder &operator=(const GetIdealTimeBuilder &);
+  flatbuffers::Offset<GetIdealTime> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetIdealTime>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetIdealTime> CreateGetIdealTime(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  GetIdealTimeBuilder builder_(_fbb);
   return builder_.Finish();
 }
 
@@ -6877,6 +6928,46 @@ inline flatbuffers::Offset<ResetDmxConfig> CreateResetDmxConfig(
   return builder_.Finish();
 }
 
+struct GetIdealTime FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_TIME = 4
+  };
+  uint32_t time() const {
+    return GetField<uint32_t>(VT_TIME, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_TIME) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetIdealTimeBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_time(uint32_t time) {
+    fbb_.AddElement<uint32_t>(GetIdealTime::VT_TIME, time, 0);
+  }
+  explicit GetIdealTimeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetIdealTimeBuilder &operator=(const GetIdealTimeBuilder &);
+  flatbuffers::Offset<GetIdealTime> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetIdealTime>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetIdealTime> CreateGetIdealTime(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t time = 0) {
+  GetIdealTimeBuilder builder_(_fbb);
+  builder_.add_time(time);
+  return builder_.Finish();
+}
+
 }  // namespace response
 
 namespace request {
@@ -7086,6 +7177,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case ResetDmxConfig: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::ResetDmxConfig *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case GetIdealTime: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetIdealTime *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

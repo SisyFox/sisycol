@@ -24,6 +24,7 @@ public enum SettingType : byte
  MAX_COLLECT_WORLD = 68,
  MAX_COLLECT_LEVEL = 69,
  GEM_SCORE = 70,
+ TIME_ATTACK = 71,
  GAME_ACTIVE = 128,
  GAME_ENABLED = 129,
 };

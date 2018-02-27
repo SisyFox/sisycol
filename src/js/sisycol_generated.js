@@ -77,7 +77,8 @@ sisyfox.sisycol.Payload = {
   GetDmxRuleBoolSetting: 46,
   GetDmxRuleBoolSettingRange: 47,
   SetDmxDeviceMode: 48,
-  ResetDmxConfig: 49
+  ResetDmxConfig: 49,
+  GetIdealTime: 50
 };
 
 /**
@@ -102,7 +103,8 @@ sisyfox.sisycol.EndReason = {
   GROUND_DIST: 4,
   TOO_STEEP: 5,
   FLASH: 6,
-  UNDERWATER: 7
+  UNDERWATER: 7,
+  TIME_ATTACK: 8
 };
 
 /**
@@ -133,6 +135,7 @@ sisyfox.sisycol.SettingType = {
   MAX_COLLECT_WORLD: 68,
   MAX_COLLECT_LEVEL: 69,
   GEM_SCORE: 70,
+  TIME_ATTACK: 71,
   GAME_ACTIVE: 128,
   GAME_ENABLED: 129
 };
@@ -5157,6 +5160,57 @@ sisyfox.sisycol.request.ResetDmxConfig.endResetDmxConfig = function(builder) {
 /**
  * @constructor
  */
+sisyfox.sisycol.request.GetIdealTime = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.GetIdealTime}
+ */
+sisyfox.sisycol.request.GetIdealTime.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.GetIdealTime=} obj
+ * @returns {sisyfox.sisycol.request.GetIdealTime}
+ */
+sisyfox.sisycol.request.GetIdealTime.getRootAsGetIdealTime = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.GetIdealTime).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.GetIdealTime.startGetIdealTime = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.GetIdealTime.endGetIdealTime = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -9391,6 +9445,73 @@ sisyfox.sisycol.response.ResetDmxConfig.startResetDmxConfig = function(builder) 
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.ResetDmxConfig.endResetDmxConfig = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.GetIdealTime = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.GetIdealTime}
+ */
+sisyfox.sisycol.response.GetIdealTime.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.GetIdealTime=} obj
+ * @returns {sisyfox.sisycol.response.GetIdealTime}
+ */
+sisyfox.sisycol.response.GetIdealTime.getRootAsGetIdealTime = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.GetIdealTime).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.GetIdealTime.prototype.time = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.GetIdealTime.startGetIdealTime = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} time
+ */
+sisyfox.sisycol.response.GetIdealTime.addTime = function(builder, time) {
+  builder.addFieldInt32(0, time, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.GetIdealTime.endGetIdealTime = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
