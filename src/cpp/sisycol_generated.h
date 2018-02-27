@@ -647,7 +647,7 @@ enum EndReason {
   TOO_STEEP = 5,
   FLASH = 6,
   UNDERWATER = 7,
-  TIME_ATTACK = 8
+  TIME_UP = 8
 };
 
 inline EndReason (&EnumValuesEndReason())[9] {
@@ -660,7 +660,7 @@ inline EndReason (&EnumValuesEndReason())[9] {
     TOO_STEEP,
     FLASH,
     UNDERWATER,
-    TIME_ATTACK
+    TIME_UP
   };
   return values;
 }
@@ -675,7 +675,7 @@ inline const char **EnumNamesEndReason() {
     "TOO_STEEP",
     "FLASH",
     "UNDERWATER",
-    "TIME_ATTACK",
+    "TIME_UP",
     nullptr
   };
   return names;

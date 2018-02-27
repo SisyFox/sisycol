@@ -33,7 +33,7 @@ enum ErrorCode:ubyte   { BAD_TRANSMISSION, BAD_VERSION, BAD_PAYLOAD_TYPE,
                          GENERAL_ERROR, NOT_AVAILABLE }
 
 enum EndReason:ubyte   { WIN, MAP_BORDER, COLLISION, INSTANT_LOSS_ANGLE,
-                         GROUND_DIST, TOO_STEEP, FLASH, UNDERWATER, TIME_ATTACK }
+                         GROUND_DIST, TOO_STEEP, FLASH, UNDERWATER, TIME_UP }
 
 enum TriggerType:ubyte { NEW_ROUND }
 

@@ -15,7 +15,7 @@ public enum EndReason : byte
  TOO_STEEP = 5,
  FLASH = 6,
  UNDERWATER = 7,
- TIME_ATTACK = 8,
+ TIME_UP = 8,
 };
 
 
