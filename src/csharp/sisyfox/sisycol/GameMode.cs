@@ -9,6 +9,7 @@ public enum GameMode : byte
 {
  FREESTYLE = 0,
  LEVEL_COLLECT = 1,
+ EXPLORE = 2,
 };
 
 

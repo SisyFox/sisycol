@@ -163,7 +163,8 @@ sisyfox.sisycol.Language = {
  */
 sisyfox.sisycol.GameMode = {
   FREESTYLE: 0,
-  LEVEL_COLLECT: 1
+  LEVEL_COLLECT: 1,
+  EXPLORE: 2
 };
 
 /**

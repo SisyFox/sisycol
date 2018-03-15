@@ -806,13 +806,15 @@ inline Language (&EnumValuesLanguage())[3] {
 
 enum GameMode {
   FREESTYLE = 0,
-  LEVEL_COLLECT = 1
+  LEVEL_COLLECT = 1,
+  EXPLORE = 2
 };
 
-inline GameMode (&EnumValuesGameMode())[2] {
+inline GameMode (&EnumValuesGameMode())[3] {
   static GameMode values[] = {
     FREESTYLE,
-    LEVEL_COLLECT
+    LEVEL_COLLECT,
+    EXPLORE
   };
   return values;
 }
@@ -821,6 +823,7 @@ inline const char **EnumNamesGameMode() {
   static const char *names[] = {
     "FREESTYLE",
     "LEVEL_COLLECT",
+    "EXPLORE",
     nullptr
   };
   return names;

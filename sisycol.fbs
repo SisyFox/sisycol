@@ -53,7 +53,7 @@ enum SettingVariableType:ubyte { BOOL, UBYTE, UINT }
 
 enum Language:ubyte    { ENGLISH, GERMAN, CRUMMY_GERMAN = 0xff }
 
-enum GameMode:ubyte    { FREESTYLE, LEVEL_COLLECT }
+enum GameMode:ubyte    { FREESTYLE, LEVEL_COLLECT, EXPLORE }
 
 enum Difficulty:ubyte  { VERY_EASY, EASY, NORMAL, HARD, VERY_HARD }
 
