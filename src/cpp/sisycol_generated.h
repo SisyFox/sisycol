@@ -792,13 +792,15 @@ inline const char *EnumNameSettingVariableType(SettingVariableType e) {
 enum Language {
   ENGLISH = 0,
   GERMAN = 1,
+  CHINESE = 2,
   CRUMMY_GERMAN = 255
 };
 
-inline Language (&EnumValuesLanguage())[3] {
+inline Language (&EnumValuesLanguage())[4] {
   static Language values[] = {
     ENGLISH,
     GERMAN,
+    CHINESE,
     CRUMMY_GERMAN
   };
   return values;

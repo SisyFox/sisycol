@@ -9,6 +9,7 @@ public enum Language : byte
 {
  ENGLISH = 0,
  GERMAN = 1,
+ CHINESE = 2,
  CRUMMY_GERMAN = 255,
 };
 

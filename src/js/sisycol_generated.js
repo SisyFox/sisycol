@@ -155,6 +155,7 @@ sisyfox.sisycol.SettingVariableType = {
 sisyfox.sisycol.Language = {
   ENGLISH: 0,
   GERMAN: 1,
+  CHINESE: 2,
   CRUMMY_GERMAN: 255
 };
 

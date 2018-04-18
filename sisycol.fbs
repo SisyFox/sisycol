@@ -51,7 +51,7 @@ enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
 
 enum SettingVariableType:ubyte { BOOL, UBYTE, UINT }
 
-enum Language:ubyte    { ENGLISH, GERMAN, CRUMMY_GERMAN = 0xff }
+enum Language:ubyte    { ENGLISH, GERMAN, CHINESE, CRUMMY_GERMAN = 0xff }
 
 enum GameMode:ubyte    { FREESTYLE, LEVEL_COLLECT, EXPLORE }
 
