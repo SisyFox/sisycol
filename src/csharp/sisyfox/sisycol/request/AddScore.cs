@@ -23,7 +23,7 @@ public struct AddScore : IFlatbufferObject
   public sisyfox.sisycol.EndReason Reason { get { int o = __p.__offset(10); return o != 0 ? (sisyfox.sisycol.EndReason)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.EndReason.WIN; } }
   public byte Level { get { int o = __p.__offset(12); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
   public byte World { get { int o = __p.__offset(14); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
-  public sisyfox.sisycol.GameMode GameMode { get { int o = __p.__offset(16); return o != 0 ? (sisyfox.sisycol.GameMode)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.GameMode.FREESTYLE; } }
+  public sisyfox.sisycol.GameMode GameMode { get { int o = __p.__offset(16); return o != 0 ? (sisyfox.sisycol.GameMode)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.GameMode.CLIMB; } }
   public sisyfox.sisycol.Difficulty Difficulty { get { int o = __p.__offset(18); return o != 0 ? (sisyfox.sisycol.Difficulty)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.Difficulty.VERY_EASY; } }
   public int ModeSpecificValue { get { int o = __p.__offset(20); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public sisyfox.sisycol.Coordinates? EndPosition { get { int o = __p.__offset(22); return o != 0 ? (sisyfox.sisycol.Coordinates?)(new sisyfox.sisycol.Coordinates()).__assign(o + __p.bb_pos, __p.bb) : null; } }

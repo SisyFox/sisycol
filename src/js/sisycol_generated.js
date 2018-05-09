@@ -163,8 +163,8 @@ sisyfox.sisycol.Language = {
  * @enum
  */
 sisyfox.sisycol.GameMode = {
-  FREESTYLE: 0,
-  LEVEL_COLLECT: 1,
+  CLIMB: 0,
+  COLLECT: 1,
   EXPLORE: 2
 };
 
@@ -186,7 +186,7 @@ sisyfox.sisycol.World = {
   ORIGIN_MOUNTAIN: 0,
   BLOCKSBERG: 1,
   RED_CANYON: 2,
-  TURTLE_ISLAND: 3
+  SECRET_ISLAND: 3
 };
 
 /**
@@ -1419,7 +1419,7 @@ sisyfox.sisycol.request.AddScore.prototype.world = function() {
  */
 sisyfox.sisycol.request.AddScore.prototype.gameMode = function() {
   var offset = this.bb.__offset(this.bb_pos, 16);
-  return offset ? /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.GameMode.FREESTYLE;
+  return offset ? /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.GameMode.CLIMB;
 };
 
 /**
@@ -1507,7 +1507,7 @@ sisyfox.sisycol.request.AddScore.addWorld = function(builder, world) {
  * @param {sisyfox.sisycol.GameMode} gameMode
  */
 sisyfox.sisycol.request.AddScore.addGameMode = function(builder, gameMode) {
-  builder.addFieldInt8(6, gameMode, sisyfox.sisycol.GameMode.FREESTYLE);
+  builder.addFieldInt8(6, gameMode, sisyfox.sisycol.GameMode.CLIMB);
 };
 
 /**

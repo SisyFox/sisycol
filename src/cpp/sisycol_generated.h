@@ -807,15 +807,15 @@ inline Language (&EnumValuesLanguage())[4] {
 }
 
 enum GameMode {
-  FREESTYLE = 0,
-  LEVEL_COLLECT = 1,
+  CLIMB = 0,
+  COLLECT = 1,
   EXPLORE = 2
 };
 
 inline GameMode (&EnumValuesGameMode())[3] {
   static GameMode values[] = {
-    FREESTYLE,
-    LEVEL_COLLECT,
+    CLIMB,
+    COLLECT,
     EXPLORE
   };
   return values;
@@ -823,8 +823,8 @@ inline GameMode (&EnumValuesGameMode())[3] {
 
 inline const char **EnumNamesGameMode() {
   static const char *names[] = {
-    "FREESTYLE",
-    "LEVEL_COLLECT",
+    "CLIMB",
+    "COLLECT",
     "EXPLORE",
     nullptr
   };
@@ -876,7 +876,7 @@ enum World {
   ORIGIN_MOUNTAIN = 0,
   BLOCKSBERG = 1,
   RED_CANYON = 2,
-  TURTLE_ISLAND = 3
+  SECRET_ISLAND = 3
 };
 
 inline World (&EnumValuesWorld())[4] {
@@ -884,7 +884,7 @@ inline World (&EnumValuesWorld())[4] {
     ORIGIN_MOUNTAIN,
     BLOCKSBERG,
     RED_CANYON,
-    TURTLE_ISLAND
+    SECRET_ISLAND
   };
   return values;
 }
@@ -894,7 +894,7 @@ inline const char **EnumNamesWorld() {
     "ORIGIN_MOUNTAIN",
     "BLOCKSBERG",
     "RED_CANYON",
-    "TURTLE_ISLAND",
+    "SECRET_ISLAND",
     nullptr
   };
   return names;
@@ -2070,7 +2070,7 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     sisyfox::sisycol::EndReason reason = sisyfox::sisycol::WIN,
     uint8_t level = 0,
     uint8_t world = 0,
-    sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::FREESTYLE,
+    sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::CLIMB,
     sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::VERY_EASY,
     int32_t modeSpecificValue = 0,
     const sisyfox::sisycol::Coordinates *endPosition = 0) {

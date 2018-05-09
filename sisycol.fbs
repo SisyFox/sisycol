@@ -53,11 +53,11 @@ enum SettingVariableType:ubyte { BOOL, UBYTE, UINT }
 
 enum Language:ubyte    { ENGLISH, GERMAN, CHINESE, CRUMMY_GERMAN = 0xff }
 
-enum GameMode:ubyte    { FREESTYLE, LEVEL_COLLECT, EXPLORE }
+enum GameMode:ubyte    { CLIMB, COLLECT, EXPLORE }
 
 enum Difficulty:ubyte  { VERY_EASY, EASY, NORMAL, HARD, VERY_HARD }
 
-enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON, TURTLE_ISLAND }
+enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON, SECRET_ISLAND }
 
 enum DmxChannelRuleType:byte   { GOAL, TIME, PITCH }
 
