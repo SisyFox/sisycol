@@ -32,9 +32,12 @@ public struct Score : IFlatbufferObject
   public int Rating { get { return __p.bb.GetInt(__p.bb_pos + 52); } }
   public int ModeSpecifcValue { get { return __p.bb.GetInt(__p.bb_pos + 56); } }
   public Coordinates EndPosition { get { return (new Coordinates()).__assign(__p.bb_pos + 60, __p.bb); } }
+  public uint Hash { get { return __p.bb.GetUint(__p.bb_pos + 72); } }
 
-  public static Offset<Score> CreateScore(FlatBufferBuilder builder, uint Id, int Goal, int MaxGoal, int Time, uint Rank, long Timestamp, byte Level, byte World, GameMode GameMode, Difficulty Difficulty, EndReason Reason, int GoalScore, int TimeScore, int EndScore, int Rating, int ModeSpecifcValue, int endPosition_X, int endPosition_Y, int endPosition_Z) {
-    builder.Prep(8, 72);
+  public static Offset<Score> CreateScore(FlatBufferBuilder builder, uint Id, int Goal, int MaxGoal, int Time, uint Rank, long Timestamp, byte Level, byte World, GameMode GameMode, Difficulty Difficulty, EndReason Reason, int GoalScore, int TimeScore, int EndScore, int Rating, int ModeSpecifcValue, int endPosition_X, int endPosition_Y, int endPosition_Z, uint Hash) {
+    builder.Prep(8, 80);
+    builder.Pad(4);
+    builder.PutUint(Hash);
     builder.Prep(4, 12);
     builder.PutInt(endPosition_Z);
     builder.PutInt(endPosition_Y);

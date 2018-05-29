@@ -665,6 +665,13 @@ sisyfox.sisycol.Score.prototype.endPosition = function(obj) {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.Score.prototype.hash = function() {
+  return this.bb.readUint32(this.bb_pos + 72);
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  * @param {number} id
  * @param {number} goal
@@ -685,10 +692,13 @@ sisyfox.sisycol.Score.prototype.endPosition = function(obj) {
  * @param {number} endPosition_x
  * @param {number} endPosition_y
  * @param {number} endPosition_z
+ * @param {number} hash
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.Score.createScore = function(builder, id, goal, maxGoal, time, rank, timestamp, level, world, gameMode, difficulty, reason, goalScore, timeScore, endScore, rating, modeSpecifcValue, endPosition_x, endPosition_y, endPosition_z) {
-  builder.prep(8, 72);
+sisyfox.sisycol.Score.createScore = function(builder, id, goal, maxGoal, time, rank, timestamp, level, world, gameMode, difficulty, reason, goalScore, timeScore, endScore, rating, modeSpecifcValue, endPosition_x, endPosition_y, endPosition_z, hash) {
+  builder.prep(8, 80);
+  builder.pad(4);
+  builder.writeInt32(hash);
   builder.prep(4, 12);
   builder.writeInt32(endPosition_z);
   builder.writeInt32(endPosition_y);
@@ -1450,10 +1460,18 @@ sisyfox.sisycol.request.AddScore.prototype.endPosition = function(obj) {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.AddScore.prototype.hash = function() {
+  var offset = this.bb.__offset(this.bb_pos, 24);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.AddScore.startAddScore = function(builder) {
-  builder.startObject(10);
+  builder.startObject(11);
 };
 
 /**
@@ -1534,6 +1552,14 @@ sisyfox.sisycol.request.AddScore.addModeSpecificValue = function(builder, modeSp
  */
 sisyfox.sisycol.request.AddScore.addEndPosition = function(builder, endPositionOffset) {
   builder.addFieldStruct(9, endPositionOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} hash
+ */
+sisyfox.sisycol.request.AddScore.addHash = function(builder, hash) {
+  builder.addFieldInt32(10, hash, 0);
 };
 
 /**
@@ -5604,7 +5630,7 @@ sisyfox.sisycol.response.GetScoreRange.getRootAsGetScoreRange = function(bb, obj
  */
 sisyfox.sisycol.response.GetScoreRange.prototype.data = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.Score).__init(this.bb.__vector(this.bb_pos + offset) + index * 72, this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.Score).__init(this.bb.__vector(this.bb_pos + offset) + index * 80, this.bb) : null;
 };
 
 /**
@@ -5635,7 +5661,7 @@ sisyfox.sisycol.response.GetScoreRange.addData = function(builder, dataOffset) {
  * @param {number} numElems
  */
 sisyfox.sisycol.response.GetScoreRange.startDataVector = function(builder, numElems) {
-  builder.startVector(72, numElems, 8);
+  builder.startVector(80, numElems, 8);
 };
 
 /**

@@ -175,6 +175,7 @@ table AddScore {
   difficulty:Difficulty;
   modeSpecificValue:int;
   endPosition:Coordinates;
+  hash:uint;
 }
 
 table GetScore {

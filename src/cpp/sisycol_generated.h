@@ -1099,6 +1099,8 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   int32_t rating_;
   int32_t modeSpecifcValue_;
   Coordinates endPosition_;
+  uint32_t hash_;
+  int32_t padding3__;
 
  public:
   Score() {
@@ -1107,7 +1109,7 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   Score(const Score &_o) {
     memcpy(this, &_o, sizeof(Score));
   }
-  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, GameMode _gameMode, Difficulty _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating, int32_t _modeSpecifcValue, const Coordinates &_endPosition)
+  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, GameMode _gameMode, Difficulty _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating, int32_t _modeSpecifcValue, const Coordinates &_endPosition, uint32_t _hash)
       : id_(flatbuffers::EndianScalar(_id)),
         goal_(flatbuffers::EndianScalar(_goal)),
         maxGoal_(flatbuffers::EndianScalar(_maxGoal)),
@@ -1127,9 +1129,12 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
         endScore_(flatbuffers::EndianScalar(_endScore)),
         rating_(flatbuffers::EndianScalar(_rating)),
         modeSpecifcValue_(flatbuffers::EndianScalar(_modeSpecifcValue)),
-        endPosition_(_endPosition) {
+        endPosition_(_endPosition),
+        hash_(flatbuffers::EndianScalar(_hash)),
+        padding3__(0) {
     (void)padding0__;
     (void)padding1__;    (void)padding2__;
+    (void)padding3__;
   }
   uint32_t id() const {
     return flatbuffers::EndianScalar(id_);
@@ -1182,8 +1187,11 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   const Coordinates &endPosition() const {
     return endPosition_;
   }
+  uint32_t hash() const {
+    return flatbuffers::EndianScalar(hash_);
+  }
 };
-STRUCT_END(Score, 72);
+STRUCT_END(Score, 80);
 
 MANUALLY_ALIGNED_STRUCT(4) Setting FLATBUFFERS_FINAL_CLASS {
  private:
@@ -1973,7 +1981,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_GAMEMODE = 16,
     VT_DIFFICULTY = 18,
     VT_MODESPECIFICVALUE = 20,
-    VT_ENDPOSITION = 22
+    VT_ENDPOSITION = 22,
+    VT_HASH = 24
   };
   int32_t goal() const {
     return GetField<int32_t>(VT_GOAL, 0);
@@ -2005,6 +2014,9 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::Coordinates *endPosition() const {
     return GetStruct<const sisyfox::sisycol::Coordinates *>(VT_ENDPOSITION);
   }
+  uint32_t hash() const {
+    return GetField<uint32_t>(VT_HASH, 0);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_GOAL) &&
@@ -2017,6 +2029,7 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_DIFFICULTY) &&
            VerifyField<int32_t>(verifier, VT_MODESPECIFICVALUE) &&
            VerifyField<sisyfox::sisycol::Coordinates>(verifier, VT_ENDPOSITION) &&
+           VerifyField<uint32_t>(verifier, VT_HASH) &&
            verifier.EndTable();
   }
 };
@@ -2054,6 +2067,9 @@ struct AddScoreBuilder {
   void add_endPosition(const sisyfox::sisycol::Coordinates *endPosition) {
     fbb_.AddStruct(AddScore::VT_ENDPOSITION, endPosition);
   }
+  void add_hash(uint32_t hash) {
+    fbb_.AddElement<uint32_t>(AddScore::VT_HASH, hash, 0);
+  }
   explicit AddScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2077,8 +2093,10 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::CLIMB,
     sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::VERY_EASY,
     int32_t modeSpecificValue = 0,
-    const sisyfox::sisycol::Coordinates *endPosition = 0) {
+    const sisyfox::sisycol::Coordinates *endPosition = 0,
+    uint32_t hash = 0) {
   AddScoreBuilder builder_(_fbb);
+  builder_.add_hash(hash);
   builder_.add_endPosition(endPosition);
   builder_.add_modeSpecificValue(modeSpecificValue);
   builder_.add_time(time);
