@@ -21,11 +21,11 @@ public struct Score : IFlatbufferObject
   public int Time { get { return __p.bb.GetInt(__p.bb_pos + 12); } }
   public uint Rank { get { return __p.bb.GetUint(__p.bb_pos + 16); } }
   public long Timestamp { get { return __p.bb.GetLong(__p.bb_pos + 24); } }
-  public byte Level { get { return __p.bb.Get(__p.bb_pos + 32); } }
-  public byte World { get { return __p.bb.Get(__p.bb_pos + 33); } }
-  public GameMode GameMode { get { return (GameMode)__p.bb.Get(__p.bb_pos + 34); } }
-  public Difficulty Difficulty { get { return (Difficulty)__p.bb.Get(__p.bb_pos + 35); } }
-  public EndReason Reason { get { return (EndReason)__p.bb.Get(__p.bb_pos + 36); } }
+  public uint Level { get { return __p.bb.GetUint(__p.bb_pos + 32); } }
+  public byte World { get { return __p.bb.Get(__p.bb_pos + 36); } }
+  public GameMode GameMode { get { return (GameMode)__p.bb.Get(__p.bb_pos + 37); } }
+  public Difficulty Difficulty { get { return (Difficulty)__p.bb.Get(__p.bb_pos + 38); } }
+  public EndReason Reason { get { return (EndReason)__p.bb.Get(__p.bb_pos + 39); } }
   public int GoalScore { get { return __p.bb.GetInt(__p.bb_pos + 40); } }
   public int TimeScore { get { return __p.bb.GetInt(__p.bb_pos + 44); } }
   public int EndScore { get { return __p.bb.GetInt(__p.bb_pos + 48); } }
@@ -33,7 +33,7 @@ public struct Score : IFlatbufferObject
   public int ModeSpecifcValue { get { return __p.bb.GetInt(__p.bb_pos + 56); } }
   public Coordinates EndPosition { get { return (new Coordinates()).__assign(__p.bb_pos + 60, __p.bb); } }
 
-  public static Offset<Score> CreateScore(FlatBufferBuilder builder, uint Id, int Goal, int MaxGoal, int Time, uint Rank, long Timestamp, byte Level, byte World, GameMode GameMode, Difficulty Difficulty, EndReason Reason, int GoalScore, int TimeScore, int EndScore, int Rating, int ModeSpecifcValue, int endPosition_X, int endPosition_Y, int endPosition_Z) {
+  public static Offset<Score> CreateScore(FlatBufferBuilder builder, uint Id, int Goal, int MaxGoal, int Time, uint Rank, long Timestamp, uint Level, byte World, GameMode GameMode, Difficulty Difficulty, EndReason Reason, int GoalScore, int TimeScore, int EndScore, int Rating, int ModeSpecifcValue, int endPosition_X, int endPosition_Y, int endPosition_Z) {
     builder.Prep(8, 72);
     builder.Prep(4, 12);
     builder.PutInt(endPosition_Z);
@@ -44,12 +44,11 @@ public struct Score : IFlatbufferObject
     builder.PutInt(EndScore);
     builder.PutInt(TimeScore);
     builder.PutInt(GoalScore);
-    builder.Pad(3);
     builder.PutByte((byte)Reason);
     builder.PutByte((byte)Difficulty);
     builder.PutByte((byte)GameMode);
     builder.PutByte(World);
-    builder.PutByte(Level);
+    builder.PutUint(Level);
     builder.PutLong(Timestamp);
     builder.Pad(4);
     builder.PutUint(Rank);

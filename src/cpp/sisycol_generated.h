@@ -729,11 +729,12 @@ enum SettingType {
   MAX_COLLECT_LEVEL = 69,
   GEM_SCORE = 70,
   TIME_ATTACK = 71,
+  ENDLESS = 72,
   GAME_ACTIVE = 128,
   GAME_ENABLED = 129
 };
 
-inline SettingType (&EnumValuesSettingType())[20] {
+inline SettingType (&EnumValuesSettingType())[21] {
   static SettingType values[] = {
     GAME_LANGUAGE,
     INTERFACE_LANGUAGE,
@@ -753,6 +754,7 @@ inline SettingType (&EnumValuesSettingType())[20] {
     MAX_COLLECT_LEVEL,
     GEM_SCORE,
     TIME_ATTACK,
+    ENDLESS,
     GAME_ACTIVE,
     GAME_ENABLED
   };
@@ -1083,12 +1085,11 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   uint32_t rank_;
   int32_t padding0__;
   int64_t timestamp_;
-  uint8_t level_;
+  uint32_t level_;
   uint8_t world_;
   uint8_t gameMode_;
   uint8_t difficulty_;
   uint8_t reason_;
-  int8_t padding1__;  int16_t padding2__;
   int32_t goalScore_;
   int32_t timeScore_;
   int32_t endScore_;
@@ -1103,7 +1104,7 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   Score(const Score &_o) {
     memcpy(this, &_o, sizeof(Score));
   }
-  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, GameMode _gameMode, Difficulty _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating, int32_t _modeSpecifcValue, const Coordinates &_endPosition)
+  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint32_t _level, uint8_t _world, GameMode _gameMode, Difficulty _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating, int32_t _modeSpecifcValue, const Coordinates &_endPosition)
       : id_(flatbuffers::EndianScalar(_id)),
         goal_(flatbuffers::EndianScalar(_goal)),
         maxGoal_(flatbuffers::EndianScalar(_maxGoal)),
@@ -1116,8 +1117,6 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
         gameMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameMode))),
         difficulty_(flatbuffers::EndianScalar(static_cast<uint8_t>(_difficulty))),
         reason_(flatbuffers::EndianScalar(static_cast<uint8_t>(_reason))),
-        padding1__(0),
-        padding2__(0),
         goalScore_(flatbuffers::EndianScalar(_goalScore)),
         timeScore_(flatbuffers::EndianScalar(_timeScore)),
         endScore_(flatbuffers::EndianScalar(_endScore)),
@@ -1125,7 +1124,6 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
         modeSpecifcValue_(flatbuffers::EndianScalar(_modeSpecifcValue)),
         endPosition_(_endPosition) {
     (void)padding0__;
-    (void)padding1__;    (void)padding2__;
   }
   uint32_t id() const {
     return flatbuffers::EndianScalar(id_);
@@ -1145,7 +1143,7 @@ MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
   int64_t timestamp() const {
     return flatbuffers::EndianScalar(timestamp_);
   }
-  uint8_t level() const {
+  uint32_t level() const {
     return flatbuffers::EndianScalar(level_);
   }
   uint8_t world() const {
@@ -1983,8 +1981,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   sisyfox::sisycol::EndReason reason() const {
     return static_cast<sisyfox::sisycol::EndReason>(GetField<uint8_t>(VT_REASON, 0));
   }
-  uint8_t level() const {
-    return GetField<uint8_t>(VT_LEVEL, 0);
+  uint32_t level() const {
+    return GetField<uint32_t>(VT_LEVEL, 0);
   }
   uint8_t world() const {
     return GetField<uint8_t>(VT_WORLD, 0);
@@ -2007,7 +2005,7 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<int32_t>(verifier, VT_MAXGOAL) &&
            VerifyField<int32_t>(verifier, VT_TIME) &&
            VerifyField<uint8_t>(verifier, VT_REASON) &&
-           VerifyField<uint8_t>(verifier, VT_LEVEL) &&
+           VerifyField<uint32_t>(verifier, VT_LEVEL) &&
            VerifyField<uint8_t>(verifier, VT_WORLD) &&
            VerifyField<uint8_t>(verifier, VT_GAMEMODE) &&
            VerifyField<uint8_t>(verifier, VT_DIFFICULTY) &&
@@ -2032,8 +2030,8 @@ struct AddScoreBuilder {
   void add_reason(sisyfox::sisycol::EndReason reason) {
     fbb_.AddElement<uint8_t>(AddScore::VT_REASON, static_cast<uint8_t>(reason), 0);
   }
-  void add_level(uint8_t level) {
-    fbb_.AddElement<uint8_t>(AddScore::VT_LEVEL, level, 0);
+  void add_level(uint32_t level) {
+    fbb_.AddElement<uint32_t>(AddScore::VT_LEVEL, level, 0);
   }
   void add_world(uint8_t world) {
     fbb_.AddElement<uint8_t>(AddScore::VT_WORLD, world, 0);
@@ -2068,7 +2066,7 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     int32_t maxGoal = 0,
     int32_t time = 0,
     sisyfox::sisycol::EndReason reason = sisyfox::sisycol::WIN,
-    uint8_t level = 0,
+    uint32_t level = 0,
     uint8_t world = 0,
     sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::CLIMB,
     sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::VERY_EASY,
@@ -2077,13 +2075,13 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
   AddScoreBuilder builder_(_fbb);
   builder_.add_endPosition(endPosition);
   builder_.add_modeSpecificValue(modeSpecificValue);
+  builder_.add_level(level);
   builder_.add_time(time);
   builder_.add_maxGoal(maxGoal);
   builder_.add_goal(goal);
   builder_.add_difficulty(difficulty);
   builder_.add_gameMode(gameMode);
   builder_.add_world(world);
-  builder_.add_level(level);
   builder_.add_reason(reason);
   return builder_.Finish();
 }

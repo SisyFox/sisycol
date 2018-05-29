@@ -136,6 +136,7 @@ sisyfox.sisycol.SettingType = {
   MAX_COLLECT_LEVEL: 69,
   GEM_SCORE: 70,
   TIME_ATTACK: 71,
+  ENDLESS: 72,
   GAME_ACTIVE: 128,
   GAME_ENABLED: 129
 };
@@ -588,35 +589,35 @@ sisyfox.sisycol.Score.prototype.timestamp = function() {
  * @returns {number}
  */
 sisyfox.sisycol.Score.prototype.level = function() {
-  return this.bb.readUint8(this.bb_pos + 32);
+  return this.bb.readUint32(this.bb_pos + 32);
 };
 
 /**
  * @returns {number}
  */
 sisyfox.sisycol.Score.prototype.world = function() {
-  return this.bb.readUint8(this.bb_pos + 33);
+  return this.bb.readUint8(this.bb_pos + 36);
 };
 
 /**
  * @returns {sisyfox.sisycol.GameMode}
  */
 sisyfox.sisycol.Score.prototype.gameMode = function() {
-  return /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + 34));
+  return /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + 37));
 };
 
 /**
  * @returns {sisyfox.sisycol.Difficulty}
  */
 sisyfox.sisycol.Score.prototype.difficulty = function() {
-  return /** @type {sisyfox.sisycol.Difficulty} */ (this.bb.readUint8(this.bb_pos + 35));
+  return /** @type {sisyfox.sisycol.Difficulty} */ (this.bb.readUint8(this.bb_pos + 38));
 };
 
 /**
  * @returns {sisyfox.sisycol.EndReason}
  */
 sisyfox.sisycol.Score.prototype.reason = function() {
-  return /** @type {sisyfox.sisycol.EndReason} */ (this.bb.readUint8(this.bb_pos + 36));
+  return /** @type {sisyfox.sisycol.EndReason} */ (this.bb.readUint8(this.bb_pos + 39));
 };
 
 /**
@@ -696,12 +697,11 @@ sisyfox.sisycol.Score.createScore = function(builder, id, goal, maxGoal, time, r
   builder.writeInt32(endScore);
   builder.writeInt32(timeScore);
   builder.writeInt32(goalScore);
-  builder.pad(3);
   builder.writeInt8(reason);
   builder.writeInt8(difficulty);
   builder.writeInt8(gameMode);
   builder.writeInt8(world);
-  builder.writeInt8(level);
+  builder.writeInt32(level);
   builder.writeInt64(timestamp);
   builder.pad(4);
   builder.writeInt32(rank);
@@ -1403,7 +1403,7 @@ sisyfox.sisycol.request.AddScore.prototype.reason = function() {
  */
 sisyfox.sisycol.request.AddScore.prototype.level = function() {
   var offset = this.bb.__offset(this.bb_pos, 12);
-  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
 
 /**
@@ -1491,7 +1491,7 @@ sisyfox.sisycol.request.AddScore.addReason = function(builder, reason) {
  * @param {number} level
  */
 sisyfox.sisycol.request.AddScore.addLevel = function(builder, level) {
-  builder.addFieldInt8(4, level, 0);
+  builder.addFieldInt32(4, level, 0);
 };
 
 /**
