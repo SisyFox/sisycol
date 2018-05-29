@@ -21,7 +21,7 @@ public struct AddScore : IFlatbufferObject
   public int MaxGoal { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public int Time { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public sisyfox.sisycol.EndReason Reason { get { int o = __p.__offset(10); return o != 0 ? (sisyfox.sisycol.EndReason)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.EndReason.WIN; } }
-  public uint Level { get { int o = __p.__offset(12); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public byte Level { get { int o = __p.__offset(12); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
   public byte World { get { int o = __p.__offset(14); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
   public sisyfox.sisycol.GameMode GameMode { get { int o = __p.__offset(16); return o != 0 ? (sisyfox.sisycol.GameMode)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.GameMode.CLIMB; } }
   public sisyfox.sisycol.Difficulty Difficulty { get { int o = __p.__offset(18); return o != 0 ? (sisyfox.sisycol.Difficulty)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.Difficulty.VERY_EASY; } }
@@ -33,7 +33,7 @@ public struct AddScore : IFlatbufferObject
   public static void AddMaxGoal(FlatBufferBuilder builder, int maxGoal) { builder.AddInt(1, maxGoal, 0); }
   public static void AddTime(FlatBufferBuilder builder, int time) { builder.AddInt(2, time, 0); }
   public static void AddReason(FlatBufferBuilder builder, sisyfox.sisycol.EndReason reason) { builder.AddByte(3, (byte)reason, 0); }
-  public static void AddLevel(FlatBufferBuilder builder, uint level) { builder.AddUint(4, level, 0); }
+  public static void AddLevel(FlatBufferBuilder builder, byte level) { builder.AddByte(4, level, 0); }
   public static void AddWorld(FlatBufferBuilder builder, byte world) { builder.AddByte(5, world, 0); }
   public static void AddGameMode(FlatBufferBuilder builder, sisyfox.sisycol.GameMode gameMode) { builder.AddByte(6, (byte)gameMode, 0); }
   public static void AddDifficulty(FlatBufferBuilder builder, sisyfox.sisycol.Difficulty difficulty) { builder.AddByte(7, (byte)difficulty, 0); }

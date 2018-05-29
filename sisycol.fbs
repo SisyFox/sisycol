@@ -46,7 +46,7 @@ enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          SFX_VOLUME, VOICES, IDLE_TIME,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
-                         TIME_ATTACK, ENDLESS,
+                         TIME_ATTACK, ENDLESS, HASH,
                          GAME_ACTIVE = 128, GAME_ENABLED }
 
 enum SettingVariableType:ubyte { BOOL, UBYTE, UINT }
@@ -90,7 +90,7 @@ struct Score {
     time:int;
     rank:uint;
     timestamp:long;
-    level:uint;
+    level:ubyte;
     world:ubyte;
     gameMode:GameMode;
     difficulty:Difficulty;
@@ -101,6 +101,7 @@ struct Score {
     rating:int;
     modeSpecifcValue:int;
     endPosition:Coordinates;
+    hash:uint;
 }
 
 struct Setting {
@@ -168,7 +169,7 @@ table AddScore {
   maxGoal:int;
   time:int;
   reason:EndReason;
-  level:uint;
+  level:ubyte;
   world:ubyte;
   gameMode:GameMode;
   difficulty:Difficulty;

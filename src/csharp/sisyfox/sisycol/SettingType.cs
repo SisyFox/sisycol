@@ -26,6 +26,7 @@ public enum SettingType : byte
  GEM_SCORE = 70,
  TIME_ATTACK = 71,
  ENDLESS = 72,
+ HASH = 73,
  GAME_ACTIVE = 128,
  GAME_ENABLED = 129,
 };
