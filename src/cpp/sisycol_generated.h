@@ -731,11 +731,12 @@ enum SettingType {
   TIME_ATTACK = 71,
   ENDLESS = 72,
   HASH = 73,
+  GAME = 74,
   GAME_ACTIVE = 128,
   GAME_ENABLED = 129
 };
 
-inline SettingType (&EnumValuesSettingType())[22] {
+inline SettingType (&EnumValuesSettingType())[23] {
   static SettingType values[] = {
     GAME_LANGUAGE,
     INTERFACE_LANGUAGE,
@@ -757,6 +758,7 @@ inline SettingType (&EnumValuesSettingType())[22] {
     TIME_ATTACK,
     ENDLESS,
     HASH,
+    GAME,
     GAME_ACTIVE,
     GAME_ENABLED
   };
@@ -907,6 +909,33 @@ inline const char **EnumNamesWorld() {
 inline const char *EnumNameWorld(World e) {
   const size_t index = static_cast<int>(e);
   return EnumNamesWorld()[index];
+}
+
+enum Game {
+  CLASSIC = 0,
+  DOWNHILL = 1
+};
+
+inline Game (&EnumValuesGame())[2] {
+  static Game values[] = {
+    CLASSIC,
+    DOWNHILL
+  };
+  return values;
+}
+
+inline const char **EnumNamesGame() {
+  static const char *names[] = {
+    "CLASSIC",
+    "DOWNHILL",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameGame(Game e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesGame()[index];
 }
 
 enum DmxChannelRuleType {

@@ -27,6 +27,7 @@ public enum SettingType : byte
  TIME_ATTACK = 71,
  ENDLESS = 72,
  HASH = 73,
+ GAME = 74,
  GAME_ACTIVE = 128,
  GAME_ENABLED = 129,
 };
