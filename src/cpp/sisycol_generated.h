@@ -737,7 +737,7 @@ enum SettingType {
   GAME_ENABLED = 129
 };
 
-inline SettingType (&EnumValuesSettingType())[23] {
+inline SettingType (&EnumValuesSettingType())[24] {
   static SettingType values[] = {
     GAME_LANGUAGE,
     INTERFACE_LANGUAGE,
