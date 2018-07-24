@@ -139,6 +139,7 @@ sisyfox.sisycol.SettingType = {
   TIME_ATTACK: 71,
   ENDLESS: 72,
   HASH: 73,
+  GAME: 74,
   GAME_ACTIVE: 128,
   GAME_ENABLED: 129
 };
@@ -190,6 +191,14 @@ sisyfox.sisycol.World = {
   BLOCKSBERG: 1,
   RED_CANYON: 2,
   SECRET_ISLAND: 3
+};
+
+/**
+ * @enum
+ */
+sisyfox.sisycol.Game = {
+  CLASSIC: 0,
+  DOWNHILL: 1
 };
 
 /**
