@@ -721,6 +721,7 @@ enum SettingType {
   SFX_VOLUME = 7,
   VOICES = 8,
   IDLE_TIME = 9,
+  WIN_TRANSITIONS_TO_LOSS = 10,
   WORLD = 64,
   LEVEL = 65,
   DIFFICULTY = 66,
@@ -735,7 +736,7 @@ enum SettingType {
   GAME_ENABLED = 129
 };
 
-inline SettingType (&EnumValuesSettingType())[22] {
+inline SettingType (&EnumValuesSettingType())[23] {
   static SettingType values[] = {
     GAME_LANGUAGE,
     INTERFACE_LANGUAGE,
@@ -747,6 +748,7 @@ inline SettingType (&EnumValuesSettingType())[22] {
     SFX_VOLUME,
     VOICES,
     IDLE_TIME,
+    WIN_TRANSITIONS_TO_LOSS,
     WORLD,
     LEVEL,
     DIFFICULTY,

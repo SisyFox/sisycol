@@ -17,6 +17,7 @@ public enum SettingType : byte
  SFX_VOLUME = 7,
  VOICES = 8,
  IDLE_TIME = 9,
+ WIN_TRANSITIONS_TO_LOSS = 10,
  WORLD = 64,
  LEVEL = 65,
  DIFFICULTY = 66,

@@ -43,7 +43,7 @@ enum TriggerType:ubyte { NEW_ROUND }
 // all other are VirtualSettings
 enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          COMPETITION_MODE, DEBUG_MODE, TIMEFRAME, MUSIC_VOLUME,
-                         SFX_VOLUME, VOICES, IDLE_TIME,
+                         SFX_VOLUME, VOICES, IDLE_TIME, WIN_TRANSITIONS_TO_LOSS,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
                          TIME_ATTACK, ENDLESS, HASH,
