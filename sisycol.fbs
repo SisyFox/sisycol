@@ -467,8 +467,7 @@ table RemoveUser {
 }
 
 table SetSetting {
-    type:SettingType;
-    value:uint;
+    setting:Setting;
 }
 
 table GetSetting {

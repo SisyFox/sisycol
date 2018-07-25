@@ -6440,42 +6440,27 @@ sisyfox.sisycol.response.SetSetting.getRootAsSetSetting = function(bb, obj) {
 };
 
 /**
- * @returns {sisyfox.sisycol.SettingType}
+ * @param {sisyfox.sisycol.Setting=} obj
+ * @returns {sisyfox.sisycol.Setting|null}
  */
-sisyfox.sisycol.response.SetSetting.prototype.type = function() {
+sisyfox.sisycol.response.SetSetting.prototype.setting = function(obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? /** @type {sisyfox.sisycol.SettingType} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingType.GAME_LANGUAGE;
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.response.SetSetting.prototype.value = function() {
-  var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+  return offset ? (obj || new sisyfox.sisycol.Setting).__init(this.bb_pos + offset, this.bb) : null;
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.response.SetSetting.startSetSetting = function(builder) {
-  builder.startObject(2);
+  builder.startObject(1);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {sisyfox.sisycol.SettingType} type
+ * @param {flatbuffers.Offset} settingOffset
  */
-sisyfox.sisycol.response.SetSetting.addType = function(builder, type) {
-  builder.addFieldInt8(0, type, sisyfox.sisycol.SettingType.GAME_LANGUAGE);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} value
- */
-sisyfox.sisycol.response.SetSetting.addValue = function(builder, value) {
-  builder.addFieldInt32(1, value, 0);
+sisyfox.sisycol.response.SetSetting.addSetting = function(builder, settingOffset) {
+  builder.addFieldStruct(0, settingOffset, 0);
 };
 
 /**
