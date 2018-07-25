@@ -153,49 +153,7 @@ class Sisyfox {
             console.log("user logged out");
         };
         this.defaultCallback[sisyfox.sisycol.Payload.SetSetting] = function (response) {
-            const payload = response.payload(new sisyfox.sisycol.response.SetSetting());
-            switch (payload.type()) {
-                case sisyfox.sisycol.SettingType.SPAWN_POINT:
-                    console.log("spawn point changed");
-                    break;
-                case sisyfox.sisycol.SettingType.PITCH_SENSITIVITY:
-                    console.log("Info", "Steigungs-Empfindlichkeit wurde auf " +
-                        Math.round(payload.value() / 2.55).toString() + "% geändert");
-                    break;
-                case sisyfox.sisycol.SettingType.DIRECTION_HELPER:
-                    if (payload.value()) {
-                        console.log("Info", "Richtungshilfe wurde aktiviert");
-                    } else {
-
-                        console.log("Info", "Richtungshilfe wurde deaktiviert");
-                    }
-                    break;
-                case sisyfox.sisycol.SettingType.EVENT_PROBABILITY:
-                    console.log("Info", "Event-Wahrscheinlichkeit wurde auf " +
-                        Math.round(payload.value() / 2.55).toString() + "% geändert");
-                    break;
-                case sisyfox.sisycol.SettingType.MOUSE_SENSITIVITY:
-                    console.log("Info", "Empfindlichkeit des Balls wurde auf " +
-                        Math.round(payload.value() / 2.55).toString() + "% geändert");
-                    break;
-                case sisyfox.sisycol.SettingType.COMPETITION_MODE:
-                    if (payload.value()) {
-                        console.log("Info", "Highscore Modus wurde aktiviert");
-                    } else {
-                        console.log("Info", "Highscore Modus wurde deaktiviert");
-                    }
-                    break;
-                case sisyfox.sisycol.SettingType.TREE_COLLIDER:
-                    if (payload.value()) {
-                        console.log("Info", "Baum-Collider wurde aktiviert");
-                    } else {
-                        console.log("Info", "Baum-Collider wurde deaktiviert");
-                    }
-                    break;
-                case sisyfox.sisycol.SettingType.GAME_MODE:
-                    console.log("Info", "Spielmodus wurde geändert");
-                    break;
-            }
+            console.log("changed setting")
         };
         this.defaultCallback[sisyfox.sisycol.Payload.Trigger] = function (response) {
             const payload = response.payload(new sisyfox.sisycol.response.Trigger());
