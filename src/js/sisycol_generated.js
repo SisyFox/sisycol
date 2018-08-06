@@ -2003,11 +2003,19 @@ sisyfox.sisycol.request.AddScore.prototype.endPosition = function(obj) {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.AddScore.prototype.mode = function() {
+  var offset = this.bb.__offset(this.bb_pos, 24);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
  * @param {number} index
  * @returns {number}
  */
 sisyfox.sisycol.request.AddScore.prototype.hash = function(index) {
-  var offset = this.bb.__offset(this.bb_pos, 24);
+  var offset = this.bb.__offset(this.bb_pos, 26);
   return offset ? this.bb.readUint8(this.bb.__vector(this.bb_pos + offset) + index) : 0;
 };
 
@@ -2015,7 +2023,7 @@ sisyfox.sisycol.request.AddScore.prototype.hash = function(index) {
  * @returns {number}
  */
 sisyfox.sisycol.request.AddScore.prototype.hashLength = function() {
-  var offset = this.bb.__offset(this.bb_pos, 24);
+  var offset = this.bb.__offset(this.bb_pos, 26);
   return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
 };
 
@@ -2023,7 +2031,7 @@ sisyfox.sisycol.request.AddScore.prototype.hashLength = function() {
  * @returns {Uint8Array}
  */
 sisyfox.sisycol.request.AddScore.prototype.hashArray = function() {
-  var offset = this.bb.__offset(this.bb_pos, 24);
+  var offset = this.bb.__offset(this.bb_pos, 26);
   return offset ? new Uint8Array(this.bb.bytes().buffer, this.bb.bytes().byteOffset + this.bb.__vector(this.bb_pos + offset), this.bb.__vector_len(this.bb_pos + offset)) : null;
 };
 
@@ -2031,7 +2039,7 @@ sisyfox.sisycol.request.AddScore.prototype.hashArray = function() {
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.AddScore.startAddScore = function(builder) {
-  builder.startObject(11);
+  builder.startObject(12);
 };
 
 /**
@@ -2116,10 +2124,18 @@ sisyfox.sisycol.request.AddScore.addEndPosition = function(builder, endPositionO
 
 /**
  * @param {flatbuffers.Builder} builder
+ * @param {number} mode
+ */
+sisyfox.sisycol.request.AddScore.addMode = function(builder, mode) {
+  builder.addFieldInt8(10, mode, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} hashOffset
  */
 sisyfox.sisycol.request.AddScore.addHash = function(builder, hashOffset) {
-  builder.addFieldOffset(10, hashOffset, 0);
+  builder.addFieldOffset(11, hashOffset, 0);
 };
 
 /**

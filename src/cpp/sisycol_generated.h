@@ -2454,7 +2454,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_DIFFICULTY = 18,
     VT_MODESPECIFICVALUE = 20,
     VT_ENDPOSITION = 22,
-    VT_HASH = 24
+    VT_MODE = 24,
+    VT_HASH = 26
   };
   int32_t goal() const {
     return GetField<int32_t>(VT_GOAL, 0);
@@ -2486,6 +2487,9 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::Coordinates *endPosition() const {
     return GetStruct<const sisyfox::sisycol::Coordinates *>(VT_ENDPOSITION);
   }
+  uint8_t mode() const {
+    return GetField<uint8_t>(VT_MODE, 0);
+  }
   const flatbuffers::Vector<uint8_t> *hash() const {
     return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_HASH);
   }
@@ -2501,6 +2505,7 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_DIFFICULTY) &&
            VerifyField<int32_t>(verifier, VT_MODESPECIFICVALUE) &&
            VerifyField<sisyfox::sisycol::Coordinates>(verifier, VT_ENDPOSITION) &&
+           VerifyField<uint8_t>(verifier, VT_MODE) &&
            VerifyOffset(verifier, VT_HASH) &&
            verifier.Verify(hash()) &&
            verifier.EndTable();
@@ -2540,6 +2545,9 @@ struct AddScoreBuilder {
   void add_endPosition(const sisyfox::sisycol::Coordinates *endPosition) {
     fbb_.AddStruct(AddScore::VT_ENDPOSITION, endPosition);
   }
+  void add_mode(uint8_t mode) {
+    fbb_.AddElement<uint8_t>(AddScore::VT_MODE, mode, 0);
+  }
   void add_hash(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash) {
     fbb_.AddOffset(AddScore::VT_HASH, hash);
   }
@@ -2567,6 +2575,7 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::Difficulty_VERY_EASY,
     int32_t modeSpecificValue = 0,
     const sisyfox::sisycol::Coordinates *endPosition = 0,
+    uint8_t mode = 0,
     flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0) {
   AddScoreBuilder builder_(_fbb);
   builder_.add_hash(hash);
@@ -2575,6 +2584,7 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
   builder_.add_time(time);
   builder_.add_maxGoal(maxGoal);
   builder_.add_goal(goal);
+  builder_.add_mode(mode);
   builder_.add_difficulty(difficulty);
   builder_.add_gameMode(gameMode);
   builder_.add_world(world);
@@ -2595,6 +2605,7 @@ inline flatbuffers::Offset<AddScore> CreateAddScoreDirect(
     sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::Difficulty_VERY_EASY,
     int32_t modeSpecificValue = 0,
     const sisyfox::sisycol::Coordinates *endPosition = 0,
+    uint8_t mode = 0,
     const std::vector<uint8_t> *hash = nullptr) {
   return sisyfox::sisycol::request::CreateAddScore(
       _fbb,
@@ -2608,6 +2619,7 @@ inline flatbuffers::Offset<AddScore> CreateAddScoreDirect(
       difficulty,
       modeSpecificValue,
       endPosition,
+      mode,
       hash ? _fbb.CreateVector<uint8_t>(*hash) : 0);
 }
 

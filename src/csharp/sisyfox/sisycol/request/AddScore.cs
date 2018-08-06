@@ -27,11 +27,12 @@ public struct AddScore : IFlatbufferObject
   public sisyfox.sisycol.Difficulty Difficulty { get { int o = __p.__offset(18); return o != 0 ? (sisyfox.sisycol.Difficulty)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.Difficulty.VERY_EASY; } }
   public int ModeSpecificValue { get { int o = __p.__offset(20); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public sisyfox.sisycol.Coordinates? EndPosition { get { int o = __p.__offset(22); return o != 0 ? (sisyfox.sisycol.Coordinates?)(new sisyfox.sisycol.Coordinates()).__assign(o + __p.bb_pos, __p.bb) : null; } }
-  public byte Hash(int j) { int o = __p.__offset(24); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
-  public int HashLength { get { int o = __p.__offset(24); return o != 0 ? __p.__vector_len(o) : 0; } }
-  public ArraySegment<byte>? GetHashBytes() { return __p.__vector_as_arraysegment(24); }
+  public byte Mode { get { int o = __p.__offset(24); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public byte Hash(int j) { int o = __p.__offset(26); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
+  public int HashLength { get { int o = __p.__offset(26); return o != 0 ? __p.__vector_len(o) : 0; } }
+  public ArraySegment<byte>? GetHashBytes() { return __p.__vector_as_arraysegment(26); }
 
-  public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(11); }
+  public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(12); }
   public static void AddGoal(FlatBufferBuilder builder, int goal) { builder.AddInt(0, goal, 0); }
   public static void AddMaxGoal(FlatBufferBuilder builder, int maxGoal) { builder.AddInt(1, maxGoal, 0); }
   public static void AddTime(FlatBufferBuilder builder, int time) { builder.AddInt(2, time, 0); }
@@ -42,7 +43,8 @@ public struct AddScore : IFlatbufferObject
   public static void AddDifficulty(FlatBufferBuilder builder, sisyfox.sisycol.Difficulty difficulty) { builder.AddByte(7, (byte)difficulty, 0); }
   public static void AddModeSpecificValue(FlatBufferBuilder builder, int modeSpecificValue) { builder.AddInt(8, modeSpecificValue, 0); }
   public static void AddEndPosition(FlatBufferBuilder builder, Offset<sisyfox.sisycol.Coordinates> endPositionOffset) { builder.AddStruct(9, endPositionOffset.Value, 0); }
-  public static void AddHash(FlatBufferBuilder builder, VectorOffset hashOffset) { builder.AddOffset(10, hashOffset.Value, 0); }
+  public static void AddMode(FlatBufferBuilder builder, byte mode) { builder.AddByte(10, mode, 0); }
+  public static void AddHash(FlatBufferBuilder builder, VectorOffset hashOffset) { builder.AddOffset(11, hashOffset.Value, 0); }
   public static VectorOffset CreateHashVector(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); for (int i = data.Length - 1; i >= 0; i--) builder.AddByte(data[i]); return builder.EndVector(); }
   public static void StartHashVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(1, numElems, 1); }
   public static Offset<AddScore> EndAddScore(FlatBufferBuilder builder) {
