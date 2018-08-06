@@ -106,10 +106,20 @@ table Score {
     hash:[ubyte];
 }
 
-struct Setting {
+table SimpleValue {
+    value:uint;
+}
+
+table Hash {
+    value:[ubyte];
+}
+
+union SettingValue { SimpleValue, Hash }
+
+table Setting {
     type:SettingType;
     variableType:SettingVariableType;
-    value:uint;
+    value:SettingValue;
 }
 
 struct DmxDeviceChannel {
@@ -231,7 +241,7 @@ table UnsetUser {}
 
 table SetSetting {
   type:SettingType;
-  value:uint;
+  value:SettingValue;
 }
 
 table GetSetting {
@@ -471,7 +481,7 @@ table SetSetting {
 }
 
 table GetSetting {
-    value:uint;
+    value:SettingValue;
 }
 
 table GetSettings {

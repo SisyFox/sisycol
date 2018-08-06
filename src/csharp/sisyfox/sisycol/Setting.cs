@@ -10,22 +10,39 @@ using global::FlatBuffers;
 
 public struct Setting : IFlatbufferObject
 {
-  private Struct __p;
+  private Table __p;
   public ByteBuffer ByteBuffer { get { return __p.bb; } }
+  public static Setting GetRootAsSetting(ByteBuffer _bb) { return GetRootAsSetting(_bb, new Setting()); }
+  public static Setting GetRootAsSetting(ByteBuffer _bb, Setting obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public Setting __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public SettingType Type { get { return (SettingType)__p.bb.Get(__p.bb_pos + 0); } }
-  public SettingVariableType VariableType { get { return (SettingVariableType)__p.bb.Get(__p.bb_pos + 1); } }
-  public uint Value { get { return __p.bb.GetUint(__p.bb_pos + 4); } }
+  public SettingType Type { get { int o = __p.__offset(4); return o != 0 ? (SettingType)__p.bb.Get(o + __p.bb_pos) : SettingType.GAME_LANGUAGE; } }
+  public SettingVariableType VariableType { get { int o = __p.__offset(6); return o != 0 ? (SettingVariableType)__p.bb.Get(o + __p.bb_pos) : SettingVariableType.BOOL; } }
+  public SettingValue ValueType { get { int o = __p.__offset(8); return o != 0 ? (SettingValue)__p.bb.Get(o + __p.bb_pos) : SettingValue.NONE; } }
+  public TTable? Value<TTable>() where TTable : struct, IFlatbufferObject { int o = __p.__offset(10); return o != 0 ? (TTable?)__p.__union<TTable>(o) : null; }
 
-  public static Offset<Setting> CreateSetting(FlatBufferBuilder builder, SettingType Type, SettingVariableType VariableType, uint Value) {
-    builder.Prep(4, 8);
-    builder.PutUint(Value);
-    builder.Pad(2);
-    builder.PutByte((byte)VariableType);
-    builder.PutByte((byte)Type);
-    return new Offset<Setting>(builder.Offset);
+  public static Offset<Setting> CreateSetting(FlatBufferBuilder builder,
+      SettingType type = SettingType.GAME_LANGUAGE,
+      SettingVariableType variableType = SettingVariableType.BOOL,
+      SettingValue value_type = SettingValue.NONE,
+      int valueOffset = 0) {
+    builder.StartObject(4);
+    Setting.AddValue(builder, valueOffset);
+    Setting.AddValueType(builder, value_type);
+    Setting.AddVariableType(builder, variableType);
+    Setting.AddType(builder, type);
+    return Setting.EndSetting(builder);
+  }
+
+  public static void StartSetting(FlatBufferBuilder builder) { builder.StartObject(4); }
+  public static void AddType(FlatBufferBuilder builder, SettingType type) { builder.AddByte(0, (byte)type, 0); }
+  public static void AddVariableType(FlatBufferBuilder builder, SettingVariableType variableType) { builder.AddByte(1, (byte)variableType, 0); }
+  public static void AddValueType(FlatBufferBuilder builder, SettingValue valueType) { builder.AddByte(2, (byte)valueType, 0); }
+  public static void AddValue(FlatBufferBuilder builder, int valueOffset) { builder.AddOffset(3, valueOffset, 0); }
+  public static Offset<Setting> EndSetting(FlatBufferBuilder builder) {
+    int o = builder.EndObject();
+    return new Offset<Setting>(o);
   }
 };
 

@@ -19,6 +19,10 @@ struct Coordinates;
 
 struct Score;
 
+struct SimpleValue;
+
+struct Hash;
+
 struct Setting;
 
 struct DmxDeviceChannel;
@@ -1024,6 +1028,51 @@ inline const char *EnumNameDmxDeviceMode(DmxDeviceMode e) {
   return EnumNamesDmxDeviceMode()[index];
 }
 
+enum SettingValue {
+  NONE = 0,
+  SimpleValue = 1,
+  Hash = 2
+};
+
+inline SettingValue (&EnumValuesSettingValue())[3] {
+  static SettingValue values[] = {
+    NONE,
+    SimpleValue,
+    Hash
+  };
+  return values;
+}
+
+inline const char **EnumNamesSettingValue() {
+  static const char *names[] = {
+    "NONE",
+    "SimpleValue",
+    "Hash",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameSettingValue(SettingValue e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesSettingValue()[index];
+}
+
+template<typename T> struct SettingValueTraits {
+  static const SettingValue enum_value = NONE;
+};
+
+template<> struct SettingValueTraits<SimpleValue> {
+  static const SettingValue enum_value = SimpleValue;
+};
+
+template<> struct SettingValueTraits<Hash> {
+  static const SettingValue enum_value = Hash;
+};
+
+bool VerifySettingValue(flatbuffers::Verifier &verifier, const void *obj, SettingValue type);
+bool VerifySettingValueVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<uint8_t> *types);
+
 MANUALLY_ALIGNED_STRUCT(1) Version FLATBUFFERS_FINAL_CLASS {
  private:
   uint8_t high_;
@@ -1108,39 +1157,6 @@ MANUALLY_ALIGNED_STRUCT(4) Coordinates FLATBUFFERS_FINAL_CLASS {
   }
 };
 STRUCT_END(Coordinates, 12);
-
-MANUALLY_ALIGNED_STRUCT(4) Setting FLATBUFFERS_FINAL_CLASS {
- private:
-  uint8_t type_;
-  uint8_t variableType_;
-  int16_t padding0__;
-  uint32_t value_;
-
- public:
-  Setting() {
-    memset(this, 0, sizeof(Setting));
-  }
-  Setting(const Setting &_o) {
-    memcpy(this, &_o, sizeof(Setting));
-  }
-  Setting(SettingType _type, SettingVariableType _variableType, uint32_t _value)
-      : type_(flatbuffers::EndianScalar(static_cast<uint8_t>(_type))),
-        variableType_(flatbuffers::EndianScalar(static_cast<uint8_t>(_variableType))),
-        padding0__(0),
-        value_(flatbuffers::EndianScalar(_value)) {
-    (void)padding0__;
-  }
-  SettingType type() const {
-    return static_cast<SettingType>(flatbuffers::EndianScalar(type_));
-  }
-  SettingVariableType variableType() const {
-    return static_cast<SettingVariableType>(flatbuffers::EndianScalar(variableType_));
-  }
-  uint32_t value() const {
-    return flatbuffers::EndianScalar(value_);
-  }
-};
-STRUCT_END(Setting, 8);
 
 MANUALLY_ALIGNED_STRUCT(4) DmxDeviceChannel FLATBUFFERS_FINAL_CLASS {
  private:
@@ -2036,6 +2052,181 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
       hash ? _fbb.CreateVector<uint8_t>(*hash) : 0);
 }
 
+struct SimpleValue FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_VALUE = 4
+  };
+  uint32_t value() const {
+    return GetField<uint32_t>(VT_VALUE, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_VALUE) &&
+           verifier.EndTable();
+  }
+};
+
+struct SimpleValueBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_value(uint32_t value) {
+    fbb_.AddElement<uint32_t>(SimpleValue::VT_VALUE, value, 0);
+  }
+  explicit SimpleValueBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  SimpleValueBuilder &operator=(const SimpleValueBuilder &);
+  flatbuffers::Offset<SimpleValue> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<SimpleValue>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<SimpleValue> CreateSimpleValue(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t value = 0) {
+  SimpleValueBuilder builder_(_fbb);
+  builder_.add_value(value);
+  return builder_.Finish();
+}
+
+struct Hash FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_VALUE = 4
+  };
+  const flatbuffers::Vector<uint8_t> *value() const {
+    return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_VALUE);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_VALUE) &&
+           verifier.Verify(value()) &&
+           verifier.EndTable();
+  }
+};
+
+struct HashBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_value(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> value) {
+    fbb_.AddOffset(Hash::VT_VALUE, value);
+  }
+  explicit HashBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  HashBuilder &operator=(const HashBuilder &);
+  flatbuffers::Offset<Hash> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<Hash>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<Hash> CreateHash(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> value = 0) {
+  HashBuilder builder_(_fbb);
+  builder_.add_value(value);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<Hash> CreateHashDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    const std::vector<uint8_t> *value = nullptr) {
+  return sisyfox::sisycol::CreateHash(
+      _fbb,
+      value ? _fbb.CreateVector<uint8_t>(*value) : 0);
+}
+
+struct Setting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_TYPE = 4,
+    VT_VARIABLETYPE = 6,
+    VT_VALUE_TYPE = 8,
+    VT_VALUE = 10
+  };
+  SettingType type() const {
+    return static_cast<SettingType>(GetField<uint8_t>(VT_TYPE, 0));
+  }
+  SettingVariableType variableType() const {
+    return static_cast<SettingVariableType>(GetField<uint8_t>(VT_VARIABLETYPE, 0));
+  }
+  SettingValue value_type() const {
+    return static_cast<SettingValue>(GetField<uint8_t>(VT_VALUE_TYPE, 0));
+  }
+  const void *value() const {
+    return GetPointer<const void *>(VT_VALUE);
+  }
+  template<typename T> const T *value_as() const;
+  const SimpleValue *value_as_SimpleValue() const {
+    return value_type() == SimpleValue ? static_cast<const SimpleValue *>(value()) : nullptr;
+  }
+  const Hash *value_as_Hash() const {
+    return value_type() == Hash ? static_cast<const Hash *>(value()) : nullptr;
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, VT_TYPE) &&
+           VerifyField<uint8_t>(verifier, VT_VARIABLETYPE) &&
+           VerifyField<uint8_t>(verifier, VT_VALUE_TYPE) &&
+           VerifyOffset(verifier, VT_VALUE) &&
+           VerifySettingValue(verifier, value(), value_type()) &&
+           verifier.EndTable();
+  }
+};
+
+template<> inline const SimpleValue *Setting::value_as<SimpleValue>() const {
+  return value_as_SimpleValue();
+}
+
+template<> inline const Hash *Setting::value_as<Hash>() const {
+  return value_as_Hash();
+}
+
+struct SettingBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_type(SettingType type) {
+    fbb_.AddElement<uint8_t>(Setting::VT_TYPE, static_cast<uint8_t>(type), 0);
+  }
+  void add_variableType(SettingVariableType variableType) {
+    fbb_.AddElement<uint8_t>(Setting::VT_VARIABLETYPE, static_cast<uint8_t>(variableType), 0);
+  }
+  void add_value_type(SettingValue value_type) {
+    fbb_.AddElement<uint8_t>(Setting::VT_VALUE_TYPE, static_cast<uint8_t>(value_type), 0);
+  }
+  void add_value(flatbuffers::Offset<void> value) {
+    fbb_.AddOffset(Setting::VT_VALUE, value);
+  }
+  explicit SettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  SettingBuilder &operator=(const SettingBuilder &);
+  flatbuffers::Offset<Setting> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<Setting>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<Setting> CreateSetting(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    SettingType type = GAME_LANGUAGE,
+    SettingVariableType variableType = BOOL,
+    SettingValue value_type = NONE,
+    flatbuffers::Offset<void> value = 0) {
+  SettingBuilder builder_(_fbb);
+  builder_.add_value(value);
+  builder_.add_value_type(value_type);
+  builder_.add_variableType(variableType);
+  builder_.add_type(type);
+  return builder_.Finish();
+}
+
 struct User FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_UID = 4,
@@ -2845,21 +3036,42 @@ inline flatbuffers::Offset<UnsetUser> CreateUnsetUser(
 struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_TYPE = 4,
-    VT_VALUE = 6
+    VT_VALUE_TYPE = 6,
+    VT_VALUE = 8
   };
   sisyfox::sisycol::SettingType type() const {
     return static_cast<sisyfox::sisycol::SettingType>(GetField<uint8_t>(VT_TYPE, 0));
   }
-  uint32_t value() const {
-    return GetField<uint32_t>(VT_VALUE, 0);
+  sisyfox::sisycol::SettingValue value_type() const {
+    return static_cast<sisyfox::sisycol::SettingValue>(GetField<uint8_t>(VT_VALUE_TYPE, 0));
+  }
+  const void *value() const {
+    return GetPointer<const void *>(VT_VALUE);
+  }
+  template<typename T> const T *value_as() const;
+  const sisyfox::sisycol::SimpleValue *value_as_SimpleValue() const {
+    return value_type() == sisyfox::sisycol::SimpleValue ? static_cast<const sisyfox::sisycol::SimpleValue *>(value()) : nullptr;
+  }
+  const sisyfox::sisycol::Hash *value_as_Hash() const {
+    return value_type() == sisyfox::sisycol::Hash ? static_cast<const sisyfox::sisycol::Hash *>(value()) : nullptr;
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint8_t>(verifier, VT_TYPE) &&
-           VerifyField<uint32_t>(verifier, VT_VALUE) &&
+           VerifyField<uint8_t>(verifier, VT_VALUE_TYPE) &&
+           VerifyOffset(verifier, VT_VALUE) &&
+           VerifySettingValue(verifier, value(), value_type()) &&
            verifier.EndTable();
   }
 };
+
+template<> inline const sisyfox::sisycol::SimpleValue *SetSetting::value_as<sisyfox::sisycol::SimpleValue>() const {
+  return value_as_SimpleValue();
+}
+
+template<> inline const sisyfox::sisycol::Hash *SetSetting::value_as<sisyfox::sisycol::Hash>() const {
+  return value_as_Hash();
+}
 
 struct SetSettingBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
@@ -2867,8 +3079,11 @@ struct SetSettingBuilder {
   void add_type(sisyfox::sisycol::SettingType type) {
     fbb_.AddElement<uint8_t>(SetSetting::VT_TYPE, static_cast<uint8_t>(type), 0);
   }
-  void add_value(uint32_t value) {
-    fbb_.AddElement<uint32_t>(SetSetting::VT_VALUE, value, 0);
+  void add_value_type(sisyfox::sisycol::SettingValue value_type) {
+    fbb_.AddElement<uint8_t>(SetSetting::VT_VALUE_TYPE, static_cast<uint8_t>(value_type), 0);
+  }
+  void add_value(flatbuffers::Offset<void> value) {
+    fbb_.AddOffset(SetSetting::VT_VALUE, value);
   }
   explicit SetSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -2885,9 +3100,11 @@ struct SetSettingBuilder {
 inline flatbuffers::Offset<SetSetting> CreateSetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
     sisyfox::sisycol::SettingType type = sisyfox::sisycol::GAME_LANGUAGE,
-    uint32_t value = 0) {
+    sisyfox::sisycol::SettingValue value_type = sisyfox::sisycol::NONE,
+    flatbuffers::Offset<void> value = 0) {
   SetSettingBuilder builder_(_fbb);
   builder_.add_value(value);
+  builder_.add_value_type(value_type);
   builder_.add_type(type);
   return builder_.Finish();
 }
@@ -5262,11 +5479,12 @@ struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_SETTING = 4
   };
   const sisyfox::sisycol::Setting *setting() const {
-    return GetStruct<const sisyfox::sisycol::Setting *>(VT_SETTING);
+    return GetPointer<const sisyfox::sisycol::Setting *>(VT_SETTING);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<sisyfox::sisycol::Setting>(verifier, VT_SETTING) &&
+           VerifyOffset(verifier, VT_SETTING) &&
+           verifier.VerifyTable(setting()) &&
            verifier.EndTable();
   }
 };
@@ -5274,8 +5492,8 @@ struct SetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct SetSettingBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_setting(const sisyfox::sisycol::Setting *setting) {
-    fbb_.AddStruct(SetSetting::VT_SETTING, setting);
+  void add_setting(flatbuffers::Offset<sisyfox::sisycol::Setting> setting) {
+    fbb_.AddOffset(SetSetting::VT_SETTING, setting);
   }
   explicit SetSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -5291,7 +5509,7 @@ struct SetSettingBuilder {
 
 inline flatbuffers::Offset<SetSetting> CreateSetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const sisyfox::sisycol::Setting *setting = 0) {
+    flatbuffers::Offset<sisyfox::sisycol::Setting> setting = 0) {
   SetSettingBuilder builder_(_fbb);
   builder_.add_setting(setting);
   return builder_.Finish();
@@ -5299,23 +5517,47 @@ inline flatbuffers::Offset<SetSetting> CreateSetSetting(
 
 struct GetSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_VALUE = 4
+    VT_VALUE_TYPE = 4,
+    VT_VALUE = 6
   };
-  uint32_t value() const {
-    return GetField<uint32_t>(VT_VALUE, 0);
+  sisyfox::sisycol::SettingValue value_type() const {
+    return static_cast<sisyfox::sisycol::SettingValue>(GetField<uint8_t>(VT_VALUE_TYPE, 0));
+  }
+  const void *value() const {
+    return GetPointer<const void *>(VT_VALUE);
+  }
+  template<typename T> const T *value_as() const;
+  const sisyfox::sisycol::SimpleValue *value_as_SimpleValue() const {
+    return value_type() == sisyfox::sisycol::SimpleValue ? static_cast<const sisyfox::sisycol::SimpleValue *>(value()) : nullptr;
+  }
+  const sisyfox::sisycol::Hash *value_as_Hash() const {
+    return value_type() == sisyfox::sisycol::Hash ? static_cast<const sisyfox::sisycol::Hash *>(value()) : nullptr;
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint32_t>(verifier, VT_VALUE) &&
+           VerifyField<uint8_t>(verifier, VT_VALUE_TYPE) &&
+           VerifyOffset(verifier, VT_VALUE) &&
+           VerifySettingValue(verifier, value(), value_type()) &&
            verifier.EndTable();
   }
 };
 
+template<> inline const sisyfox::sisycol::SimpleValue *GetSetting::value_as<sisyfox::sisycol::SimpleValue>() const {
+  return value_as_SimpleValue();
+}
+
+template<> inline const sisyfox::sisycol::Hash *GetSetting::value_as<sisyfox::sisycol::Hash>() const {
+  return value_as_Hash();
+}
+
 struct GetSettingBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_value(uint32_t value) {
-    fbb_.AddElement<uint32_t>(GetSetting::VT_VALUE, value, 0);
+  void add_value_type(sisyfox::sisycol::SettingValue value_type) {
+    fbb_.AddElement<uint8_t>(GetSetting::VT_VALUE_TYPE, static_cast<uint8_t>(value_type), 0);
+  }
+  void add_value(flatbuffers::Offset<void> value) {
+    fbb_.AddOffset(GetSetting::VT_VALUE, value);
   }
   explicit GetSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -5331,9 +5573,11 @@ struct GetSettingBuilder {
 
 inline flatbuffers::Offset<GetSetting> CreateGetSetting(
     flatbuffers::FlatBufferBuilder &_fbb,
-    uint32_t value = 0) {
+    sisyfox::sisycol::SettingValue value_type = sisyfox::sisycol::NONE,
+    flatbuffers::Offset<void> value = 0) {
   GetSettingBuilder builder_(_fbb);
   builder_.add_value(value);
+  builder_.add_value_type(value_type);
   return builder_.Finish();
 }
 
@@ -5341,13 +5585,14 @@ struct GetSettings FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_SETTINGS = 4
   };
-  const flatbuffers::Vector<const sisyfox::sisycol::Setting *> *settings() const {
-    return GetPointer<const flatbuffers::Vector<const sisyfox::sisycol::Setting *> *>(VT_SETTINGS);
+  const flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Setting>> *settings() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Setting>> *>(VT_SETTINGS);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_SETTINGS) &&
            verifier.Verify(settings()) &&
+           verifier.VerifyVectorOfTables(settings()) &&
            verifier.EndTable();
   }
 };
@@ -5355,7 +5600,7 @@ struct GetSettings FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetSettingsBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_settings(flatbuffers::Offset<flatbuffers::Vector<const sisyfox::sisycol::Setting *>> settings) {
+  void add_settings(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Setting>>> settings) {
     fbb_.AddOffset(GetSettings::VT_SETTINGS, settings);
   }
   explicit GetSettingsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -5372,7 +5617,7 @@ struct GetSettingsBuilder {
 
 inline flatbuffers::Offset<GetSettings> CreateGetSettings(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<const sisyfox::sisycol::Setting *>> settings = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Setting>>> settings = 0) {
   GetSettingsBuilder builder_(_fbb);
   builder_.add_settings(settings);
   return builder_.Finish();
@@ -5380,10 +5625,10 @@ inline flatbuffers::Offset<GetSettings> CreateGetSettings(
 
 inline flatbuffers::Offset<GetSettings> CreateGetSettingsDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<const sisyfox::sisycol::Setting *> *settings = nullptr) {
+    const std::vector<flatbuffers::Offset<sisyfox::sisycol::Setting>> *settings = nullptr) {
   return sisyfox::sisycol::response::CreateGetSettings(
       _fbb,
-      settings ? _fbb.CreateVector<const sisyfox::sisycol::Setting *>(*settings) : 0);
+      settings ? _fbb.CreateVector<flatbuffers::Offset<sisyfox::sisycol::Setting>>(*settings) : 0);
 }
 
 struct Trigger FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -7410,6 +7655,34 @@ inline bool VerifyPayloadVector(flatbuffers::Verifier &verifier, const flatbuffe
   for (flatbuffers::uoffset_t i = 0; i < values->size(); ++i) {
     if (!VerifyPayload(
         verifier,  values->Get(i), types->GetEnum<Payload>(i))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+inline bool VerifySettingValue(flatbuffers::Verifier &verifier, const void *obj, SettingValue type) {
+  switch (type) {
+    case NONE: {
+      return true;
+    }
+    case SimpleValue: {
+      auto ptr = reinterpret_cast<const SimpleValue *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Hash: {
+      auto ptr = reinterpret_cast<const Hash *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    default: return false;
+  }
+}
+
+inline bool VerifySettingValueVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<uint8_t> *types) {
+  if (values->size() != types->size()) return false;
+  for (flatbuffers::uoffset_t i = 0; i < values->size(); ++i) {
+    if (!VerifySettingValue(
+        verifier,  values->Get(i), types->GetEnum<SettingValue>(i))) {
       return false;
     }
   }

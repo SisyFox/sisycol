@@ -227,6 +227,15 @@ sisyfox.sisycol.DmxDeviceMode = {
 };
 
 /**
+ * @enum
+ */
+sisyfox.sisycol.SettingValue = {
+  NONE: 0,
+  SimpleValue: 1,
+  Hash: 2
+};
+
+/**
  * @constructor
  */
 sisyfox.sisycol.Root = function() {
@@ -909,6 +918,178 @@ sisyfox.sisycol.Score.endScore = function(builder) {
 /**
  * @constructor
  */
+sisyfox.sisycol.SimpleValue = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.SimpleValue}
+ */
+sisyfox.sisycol.SimpleValue.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.SimpleValue=} obj
+ * @returns {sisyfox.sisycol.SimpleValue}
+ */
+sisyfox.sisycol.SimpleValue.getRootAsSimpleValue = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.SimpleValue).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.SimpleValue.prototype.value = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.SimpleValue.startSimpleValue = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} value
+ */
+sisyfox.sisycol.SimpleValue.addValue = function(builder, value) {
+  builder.addFieldInt32(0, value, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.SimpleValue.endSimpleValue = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.Hash = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.Hash}
+ */
+sisyfox.sisycol.Hash.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.Hash=} obj
+ * @returns {sisyfox.sisycol.Hash}
+ */
+sisyfox.sisycol.Hash.getRootAsHash = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.Hash).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {number} index
+ * @returns {number}
+ */
+sisyfox.sisycol.Hash.prototype.value = function(index) {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint8(this.bb.__vector(this.bb_pos + offset) + index) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Hash.prototype.valueLength = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {Uint8Array}
+ */
+sisyfox.sisycol.Hash.prototype.valueArray = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? new Uint8Array(this.bb.bytes().buffer, this.bb.bytes().byteOffset + this.bb.__vector(this.bb_pos + offset), this.bb.__vector_len(this.bb_pos + offset)) : null;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.Hash.startHash = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} valueOffset
+ */
+sisyfox.sisycol.Hash.addValue = function(builder, valueOffset) {
+  builder.addFieldOffset(0, valueOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {Array.<number>} data
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.Hash.createValueVector = function(builder, data) {
+  builder.startVector(1, data.length, 1);
+  for (var i = data.length - 1; i >= 0; i--) {
+    builder.addInt8(data[i]);
+  }
+  return builder.endVector();
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} numElems
+ */
+sisyfox.sisycol.Hash.startValueVector = function(builder, numElems) {
+  builder.startVector(1, numElems, 1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.Hash.endHash = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.Setting = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -933,40 +1114,93 @@ sisyfox.sisycol.Setting.prototype.__init = function(i, bb) {
 };
 
 /**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.Setting=} obj
+ * @returns {sisyfox.sisycol.Setting}
+ */
+sisyfox.sisycol.Setting.getRootAsSetting = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.Setting).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
  * @returns {sisyfox.sisycol.SettingType}
  */
 sisyfox.sisycol.Setting.prototype.type = function() {
-  return /** @type {sisyfox.sisycol.SettingType} */ (this.bb.readUint8(this.bb_pos));
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? /** @type {sisyfox.sisycol.SettingType} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingType.GAME_LANGUAGE;
 };
 
 /**
  * @returns {sisyfox.sisycol.SettingVariableType}
  */
 sisyfox.sisycol.Setting.prototype.variableType = function() {
-  return /** @type {sisyfox.sisycol.SettingVariableType} */ (this.bb.readUint8(this.bb_pos + 1));
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? /** @type {sisyfox.sisycol.SettingVariableType} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingVariableType.BOOL;
 };
 
 /**
- * @returns {number}
+ * @returns {sisyfox.sisycol.SettingValue}
  */
-sisyfox.sisycol.Setting.prototype.value = function() {
-  return this.bb.readUint32(this.bb_pos + 4);
+sisyfox.sisycol.Setting.prototype.valueType = function() {
+  var offset = this.bb.__offset(this.bb_pos, 8);
+  return offset ? /** @type {sisyfox.sisycol.SettingValue} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingValue.NONE;
+};
+
+/**
+ * @param {flatbuffers.Table} obj
+ * @returns {?flatbuffers.Table}
+ */
+sisyfox.sisycol.Setting.prototype.value = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 10);
+  return offset ? this.bb.__union(obj, this.bb_pos + offset) : null;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.Setting.startSetting = function(builder) {
+  builder.startObject(4);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  * @param {sisyfox.sisycol.SettingType} type
+ */
+sisyfox.sisycol.Setting.addType = function(builder, type) {
+  builder.addFieldInt8(0, type, sisyfox.sisycol.SettingType.GAME_LANGUAGE);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
  * @param {sisyfox.sisycol.SettingVariableType} variableType
- * @param {number} value
+ */
+sisyfox.sisycol.Setting.addVariableType = function(builder, variableType) {
+  builder.addFieldInt8(1, variableType, sisyfox.sisycol.SettingVariableType.BOOL);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.SettingValue} valueType
+ */
+sisyfox.sisycol.Setting.addValueType = function(builder, valueType) {
+  builder.addFieldInt8(2, valueType, sisyfox.sisycol.SettingValue.NONE);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} valueOffset
+ */
+sisyfox.sisycol.Setting.addValue = function(builder, valueOffset) {
+  builder.addFieldOffset(3, valueOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.Setting.createSetting = function(builder, type, variableType, value) {
-  builder.prep(4, 8);
-  builder.writeInt32(value);
-  builder.pad(2);
-  builder.writeInt8(variableType);
-  builder.writeInt8(type);
-  return builder.offset();
+sisyfox.sisycol.Setting.endSetting = function(builder) {
+  var offset = builder.endObject();
+  return offset;
 };
 
 /**
@@ -2709,18 +2943,27 @@ sisyfox.sisycol.request.SetSetting.prototype.type = function() {
 };
 
 /**
- * @returns {number}
+ * @returns {sisyfox.sisycol.SettingValue}
  */
-sisyfox.sisycol.request.SetSetting.prototype.value = function() {
+sisyfox.sisycol.request.SetSetting.prototype.valueType = function() {
   var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+  return offset ? /** @type {sisyfox.sisycol.SettingValue} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingValue.NONE;
+};
+
+/**
+ * @param {flatbuffers.Table} obj
+ * @returns {?flatbuffers.Table}
+ */
+sisyfox.sisycol.request.SetSetting.prototype.value = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 8);
+  return offset ? this.bb.__union(obj, this.bb_pos + offset) : null;
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.SetSetting.startSetSetting = function(builder) {
-  builder.startObject(2);
+  builder.startObject(3);
 };
 
 /**
@@ -2733,10 +2976,18 @@ sisyfox.sisycol.request.SetSetting.addType = function(builder, type) {
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {number} value
+ * @param {sisyfox.sisycol.SettingValue} valueType
  */
-sisyfox.sisycol.request.SetSetting.addValue = function(builder, value) {
-  builder.addFieldInt32(1, value, 0);
+sisyfox.sisycol.request.SetSetting.addValueType = function(builder, valueType) {
+  builder.addFieldInt8(1, valueType, sisyfox.sisycol.SettingValue.NONE);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} valueOffset
+ */
+sisyfox.sisycol.request.SetSetting.addValue = function(builder, valueOffset) {
+  builder.addFieldOffset(2, valueOffset, 0);
 };
 
 /**
@@ -6668,7 +6919,7 @@ sisyfox.sisycol.response.SetSetting.getRootAsSetSetting = function(bb, obj) {
  */
 sisyfox.sisycol.response.SetSetting.prototype.setting = function(obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.Setting).__init(this.bb_pos + offset, this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.Setting).__init(this.bb.__indirect(this.bb_pos + offset), this.bb) : null;
 };
 
 /**
@@ -6683,7 +6934,7 @@ sisyfox.sisycol.response.SetSetting.startSetSetting = function(builder) {
  * @param {flatbuffers.Offset} settingOffset
  */
 sisyfox.sisycol.response.SetSetting.addSetting = function(builder, settingOffset) {
-  builder.addFieldStruct(0, settingOffset, 0);
+  builder.addFieldOffset(0, settingOffset, 0);
 };
 
 /**
@@ -6731,26 +6982,43 @@ sisyfox.sisycol.response.GetSetting.getRootAsGetSetting = function(bb, obj) {
 };
 
 /**
- * @returns {number}
+ * @returns {sisyfox.sisycol.SettingValue}
  */
-sisyfox.sisycol.response.GetSetting.prototype.value = function() {
+sisyfox.sisycol.response.GetSetting.prototype.valueType = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+  return offset ? /** @type {sisyfox.sisycol.SettingValue} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.SettingValue.NONE;
+};
+
+/**
+ * @param {flatbuffers.Table} obj
+ * @returns {?flatbuffers.Table}
+ */
+sisyfox.sisycol.response.GetSetting.prototype.value = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.__union(obj, this.bb_pos + offset) : null;
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.response.GetSetting.startGetSetting = function(builder) {
-  builder.startObject(1);
+  builder.startObject(2);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {number} value
+ * @param {sisyfox.sisycol.SettingValue} valueType
  */
-sisyfox.sisycol.response.GetSetting.addValue = function(builder, value) {
-  builder.addFieldInt32(0, value, 0);
+sisyfox.sisycol.response.GetSetting.addValueType = function(builder, valueType) {
+  builder.addFieldInt8(0, valueType, sisyfox.sisycol.SettingValue.NONE);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} valueOffset
+ */
+sisyfox.sisycol.response.GetSetting.addValue = function(builder, valueOffset) {
+  builder.addFieldOffset(1, valueOffset, 0);
 };
 
 /**
@@ -6804,7 +7072,7 @@ sisyfox.sisycol.response.GetSettings.getRootAsGetSettings = function(bb, obj) {
  */
 sisyfox.sisycol.response.GetSettings.prototype.settings = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.Setting).__init(this.bb.__vector(this.bb_pos + offset) + index * 8, this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.Setting).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
 };
 
 /**
@@ -6832,10 +7100,23 @@ sisyfox.sisycol.response.GetSettings.addSettings = function(builder, settingsOff
 
 /**
  * @param {flatbuffers.Builder} builder
+ * @param {Array.<flatbuffers.Offset>} data
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.GetSettings.createSettingsVector = function(builder, data) {
+  builder.startVector(4, data.length, 4);
+  for (var i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]);
+  }
+  return builder.endVector();
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
  * @param {number} numElems
  */
 sisyfox.sisycol.response.GetSettings.startSettingsVector = function(builder, numElems) {
-  builder.startVector(8, numElems, 4);
+  builder.startVector(4, numElems, 4);
 };
 
 /**

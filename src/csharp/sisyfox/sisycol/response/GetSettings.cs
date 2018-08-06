@@ -17,7 +17,7 @@ public struct GetSettings : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public GetSettings __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sisyfox.sisycol.Setting? Settings(int j) { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Setting?)(new sisyfox.sisycol.Setting()).__assign(__p.__vector(o) + j * 8, __p.bb) : null; }
+  public sisyfox.sisycol.Setting? Settings(int j) { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Setting?)(new sisyfox.sisycol.Setting()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
   public int SettingsLength { get { int o = __p.__offset(4); return o != 0 ? __p.__vector_len(o) : 0; } }
 
   public static Offset<GetSettings> CreateGetSettings(FlatBufferBuilder builder,
@@ -29,7 +29,8 @@ public struct GetSettings : IFlatbufferObject
 
   public static void StartGetSettings(FlatBufferBuilder builder) { builder.StartObject(1); }
   public static void AddSettings(FlatBufferBuilder builder, VectorOffset settingsOffset) { builder.AddOffset(0, settingsOffset.Value, 0); }
-  public static void StartSettingsVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(8, numElems, 4); }
+  public static VectorOffset CreateSettingsVector(FlatBufferBuilder builder, Offset<sisyfox.sisycol.Setting>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
+  public static void StartSettingsVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(4, numElems, 4); }
   public static Offset<GetSettings> EndGetSettings(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetSettings>(o);

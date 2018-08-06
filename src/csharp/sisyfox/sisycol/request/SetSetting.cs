@@ -18,20 +18,24 @@ public struct SetSetting : IFlatbufferObject
   public SetSetting __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public sisyfox.sisycol.SettingType Type { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.SettingType)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.SettingType.GAME_LANGUAGE; } }
-  public uint Value { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public sisyfox.sisycol.SettingValue ValueType { get { int o = __p.__offset(6); return o != 0 ? (sisyfox.sisycol.SettingValue)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.SettingValue.NONE; } }
+  public TTable? Value<TTable>() where TTable : struct, IFlatbufferObject { int o = __p.__offset(8); return o != 0 ? (TTable?)__p.__union<TTable>(o) : null; }
 
   public static Offset<SetSetting> CreateSetSetting(FlatBufferBuilder builder,
       sisyfox.sisycol.SettingType type = sisyfox.sisycol.SettingType.GAME_LANGUAGE,
-      uint value = 0) {
-    builder.StartObject(2);
-    SetSetting.AddValue(builder, value);
+      sisyfox.sisycol.SettingValue value_type = sisyfox.sisycol.SettingValue.NONE,
+      int valueOffset = 0) {
+    builder.StartObject(3);
+    SetSetting.AddValue(builder, valueOffset);
+    SetSetting.AddValueType(builder, value_type);
     SetSetting.AddType(builder, type);
     return SetSetting.EndSetSetting(builder);
   }
 
-  public static void StartSetSetting(FlatBufferBuilder builder) { builder.StartObject(2); }
+  public static void StartSetSetting(FlatBufferBuilder builder) { builder.StartObject(3); }
   public static void AddType(FlatBufferBuilder builder, sisyfox.sisycol.SettingType type) { builder.AddByte(0, (byte)type, 0); }
-  public static void AddValue(FlatBufferBuilder builder, uint value) { builder.AddUint(1, value, 0); }
+  public static void AddValueType(FlatBufferBuilder builder, sisyfox.sisycol.SettingValue valueType) { builder.AddByte(1, (byte)valueType, 0); }
+  public static void AddValue(FlatBufferBuilder builder, int valueOffset) { builder.AddOffset(2, valueOffset, 0); }
   public static Offset<SetSetting> EndSetSetting(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<SetSetting>(o);

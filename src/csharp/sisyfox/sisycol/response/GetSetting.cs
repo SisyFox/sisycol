@@ -17,17 +17,21 @@ public struct GetSetting : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public GetSetting __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public uint Value { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public sisyfox.sisycol.SettingValue ValueType { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.SettingValue)__p.bb.Get(o + __p.bb_pos) : sisyfox.sisycol.SettingValue.NONE; } }
+  public TTable? Value<TTable>() where TTable : struct, IFlatbufferObject { int o = __p.__offset(6); return o != 0 ? (TTable?)__p.__union<TTable>(o) : null; }
 
   public static Offset<GetSetting> CreateGetSetting(FlatBufferBuilder builder,
-      uint value = 0) {
-    builder.StartObject(1);
-    GetSetting.AddValue(builder, value);
+      sisyfox.sisycol.SettingValue value_type = sisyfox.sisycol.SettingValue.NONE,
+      int valueOffset = 0) {
+    builder.StartObject(2);
+    GetSetting.AddValue(builder, valueOffset);
+    GetSetting.AddValueType(builder, value_type);
     return GetSetting.EndGetSetting(builder);
   }
 
-  public static void StartGetSetting(FlatBufferBuilder builder) { builder.StartObject(1); }
-  public static void AddValue(FlatBufferBuilder builder, uint value) { builder.AddUint(0, value, 0); }
+  public static void StartGetSetting(FlatBufferBuilder builder) { builder.StartObject(2); }
+  public static void AddValueType(FlatBufferBuilder builder, sisyfox.sisycol.SettingValue valueType) { builder.AddByte(0, (byte)valueType, 0); }
+  public static void AddValue(FlatBufferBuilder builder, int valueOffset) { builder.AddOffset(1, valueOffset, 0); }
   public static Offset<GetSetting> EndGetSetting(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetSetting>(o);

@@ -17,10 +17,17 @@ public struct SetSetting : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public SetSetting __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sisyfox.sisycol.Setting? Setting { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Setting?)(new sisyfox.sisycol.Setting()).__assign(o + __p.bb_pos, __p.bb) : null; } }
+  public sisyfox.sisycol.Setting? Setting { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Setting?)(new sisyfox.sisycol.Setting()).__assign(__p.__indirect(o + __p.bb_pos), __p.bb) : null; } }
+
+  public static Offset<SetSetting> CreateSetSetting(FlatBufferBuilder builder,
+      Offset<sisyfox.sisycol.Setting> settingOffset = default(Offset<sisyfox.sisycol.Setting>)) {
+    builder.StartObject(1);
+    SetSetting.AddSetting(builder, settingOffset);
+    return SetSetting.EndSetSetting(builder);
+  }
 
   public static void StartSetSetting(FlatBufferBuilder builder) { builder.StartObject(1); }
-  public static void AddSetting(FlatBufferBuilder builder, Offset<sisyfox.sisycol.Setting> settingOffset) { builder.AddStruct(0, settingOffset.Value, 0); }
+  public static void AddSetting(FlatBufferBuilder builder, Offset<sisyfox.sisycol.Setting> settingOffset) { builder.AddOffset(0, settingOffset.Value, 0); }
   public static Offset<SetSetting> EndSetSetting(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<SetSetting>(o);
