@@ -14,7 +14,7 @@ cmake ../flatbuffers && make flatc -j${CORE_COUNT}
 cd ../../src
 mkdir -p cpp && cd cpp
 
-../../thirdParty/cache_flatbuffers/flatc --cpp --no-prefix ../../sisycol.fbs
+../../thirdParty/cache_flatbuffers/flatc --cpp ../../sisycol.fbs
 
 cd .. && mkdir -p js && cd js
 
