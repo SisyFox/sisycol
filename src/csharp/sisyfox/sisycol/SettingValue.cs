@@ -8,8 +8,10 @@ namespace sisyfox.sisycol
 public enum SettingValue : byte
 {
  NONE = 0,
- SimpleValue = 1,
- Hash = 2,
+ BoolSetting = 1,
+ ByteSetting = 2,
+ IntSetting = 3,
+ Hash = 4,
 };
 
 

@@ -49,8 +49,6 @@ enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          TIME_ATTACK, ENDLESS, HASH, GAME,
                          GAME_ACTIVE = 128, GAME_ENABLED }
 
-enum SettingVariableType:ubyte { BOOL, UBYTE, UINT }
-
 enum Language:ubyte    { ENGLISH, GERMAN, CHINESE, CRUMMY_GERMAN = 0xff }
 
 enum GameMode:ubyte    { CLIMB, COLLECT, EXPLORE }
@@ -106,7 +104,15 @@ table Score {
     hash:[ubyte];
 }
 
-table SimpleValue {
+table BoolSetting {
+    value:bool;
+}
+
+table ByteSetting {
+    value:ubyte;
+}
+
+table IntSetting {
     value:uint;
 }
 
@@ -114,11 +120,10 @@ table Hash {
     value:[ubyte];
 }
 
-union SettingValue { SimpleValue, Hash }
+union SettingValue { BoolSetting, ByteSetting, IntSetting, Hash }
 
 table Setting {
     type:SettingType;
-    variableType:SettingVariableType;
     value:SettingValue;
 }
 
