@@ -1109,121 +1109,6 @@ MANUALLY_ALIGNED_STRUCT(4) Coordinates FLATBUFFERS_FINAL_CLASS {
 };
 STRUCT_END(Coordinates, 12);
 
-MANUALLY_ALIGNED_STRUCT(8) Score FLATBUFFERS_FINAL_CLASS {
- private:
-  uint32_t id_;
-  int32_t goal_;
-  int32_t maxGoal_;
-  int32_t time_;
-  uint32_t rank_;
-  int32_t padding0__;
-  int64_t timestamp_;
-  uint8_t level_;
-  uint8_t world_;
-  uint8_t gameMode_;
-  uint8_t difficulty_;
-  uint8_t reason_;
-  int8_t padding1__;  int16_t padding2__;
-  int32_t goalScore_;
-  int32_t timeScore_;
-  int32_t endScore_;
-  int32_t rating_;
-  int32_t modeSpecifcValue_;
-  Coordinates endPosition_;
-  uint32_t hash_;
-  int32_t padding3__;
-
- public:
-  Score() {
-    memset(this, 0, sizeof(Score));
-  }
-  Score(const Score &_o) {
-    memcpy(this, &_o, sizeof(Score));
-  }
-  Score(uint32_t _id, int32_t _goal, int32_t _maxGoal, int32_t _time, uint32_t _rank, int64_t _timestamp, uint8_t _level, uint8_t _world, GameMode _gameMode, Difficulty _difficulty, EndReason _reason, int32_t _goalScore, int32_t _timeScore, int32_t _endScore, int32_t _rating, int32_t _modeSpecifcValue, const Coordinates &_endPosition, uint32_t _hash)
-      : id_(flatbuffers::EndianScalar(_id)),
-        goal_(flatbuffers::EndianScalar(_goal)),
-        maxGoal_(flatbuffers::EndianScalar(_maxGoal)),
-        time_(flatbuffers::EndianScalar(_time)),
-        rank_(flatbuffers::EndianScalar(_rank)),
-        padding0__(0),
-        timestamp_(flatbuffers::EndianScalar(_timestamp)),
-        level_(flatbuffers::EndianScalar(_level)),
-        world_(flatbuffers::EndianScalar(_world)),
-        gameMode_(flatbuffers::EndianScalar(static_cast<uint8_t>(_gameMode))),
-        difficulty_(flatbuffers::EndianScalar(static_cast<uint8_t>(_difficulty))),
-        reason_(flatbuffers::EndianScalar(static_cast<uint8_t>(_reason))),
-        padding1__(0),
-        padding2__(0),
-        goalScore_(flatbuffers::EndianScalar(_goalScore)),
-        timeScore_(flatbuffers::EndianScalar(_timeScore)),
-        endScore_(flatbuffers::EndianScalar(_endScore)),
-        rating_(flatbuffers::EndianScalar(_rating)),
-        modeSpecifcValue_(flatbuffers::EndianScalar(_modeSpecifcValue)),
-        endPosition_(_endPosition),
-        hash_(flatbuffers::EndianScalar(_hash)),
-        padding3__(0) {
-    (void)padding0__;
-    (void)padding1__;    (void)padding2__;
-    (void)padding3__;
-  }
-  uint32_t id() const {
-    return flatbuffers::EndianScalar(id_);
-  }
-  int32_t goal() const {
-    return flatbuffers::EndianScalar(goal_);
-  }
-  int32_t maxGoal() const {
-    return flatbuffers::EndianScalar(maxGoal_);
-  }
-  int32_t time() const {
-    return flatbuffers::EndianScalar(time_);
-  }
-  uint32_t rank() const {
-    return flatbuffers::EndianScalar(rank_);
-  }
-  int64_t timestamp() const {
-    return flatbuffers::EndianScalar(timestamp_);
-  }
-  uint8_t level() const {
-    return flatbuffers::EndianScalar(level_);
-  }
-  uint8_t world() const {
-    return flatbuffers::EndianScalar(world_);
-  }
-  GameMode gameMode() const {
-    return static_cast<GameMode>(flatbuffers::EndianScalar(gameMode_));
-  }
-  Difficulty difficulty() const {
-    return static_cast<Difficulty>(flatbuffers::EndianScalar(difficulty_));
-  }
-  EndReason reason() const {
-    return static_cast<EndReason>(flatbuffers::EndianScalar(reason_));
-  }
-  int32_t goalScore() const {
-    return flatbuffers::EndianScalar(goalScore_);
-  }
-  int32_t timeScore() const {
-    return flatbuffers::EndianScalar(timeScore_);
-  }
-  int32_t endScore() const {
-    return flatbuffers::EndianScalar(endScore_);
-  }
-  int32_t rating() const {
-    return flatbuffers::EndianScalar(rating_);
-  }
-  int32_t modeSpecifcValue() const {
-    return flatbuffers::EndianScalar(modeSpecifcValue_);
-  }
-  const Coordinates &endPosition() const {
-    return endPosition_;
-  }
-  uint32_t hash() const {
-    return flatbuffers::EndianScalar(hash_);
-  }
-};
-STRUCT_END(Score, 80);
-
 MANUALLY_ALIGNED_STRUCT(4) Setting FLATBUFFERS_FINAL_CLASS {
  private:
   uint8_t type_;
@@ -1898,6 +1783,259 @@ inline flatbuffers::Offset<Root> CreateRoot(
   return builder_.Finish();
 }
 
+struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_ID = 4,
+    VT_GOAL = 6,
+    VT_MAXGOAL = 8,
+    VT_TIME = 10,
+    VT_RANK = 12,
+    VT_TIMESTAMP = 14,
+    VT_LEVEL = 16,
+    VT_WORLD = 18,
+    VT_GAMEMODE = 20,
+    VT_DIFFICULTY = 22,
+    VT_REASON = 24,
+    VT_GOALSCORE = 26,
+    VT_TIMESCORE = 28,
+    VT_ENDSCORE = 30,
+    VT_RATING = 32,
+    VT_MODESPECIFCVALUE = 34,
+    VT_ENDPOSITION = 36,
+    VT_HASH = 38
+  };
+  uint32_t id() const {
+    return GetField<uint32_t>(VT_ID, 0);
+  }
+  int32_t goal() const {
+    return GetField<int32_t>(VT_GOAL, 0);
+  }
+  int32_t maxGoal() const {
+    return GetField<int32_t>(VT_MAXGOAL, 0);
+  }
+  int32_t time() const {
+    return GetField<int32_t>(VT_TIME, 0);
+  }
+  uint32_t rank() const {
+    return GetField<uint32_t>(VT_RANK, 0);
+  }
+  int64_t timestamp() const {
+    return GetField<int64_t>(VT_TIMESTAMP, 0);
+  }
+  uint8_t level() const {
+    return GetField<uint8_t>(VT_LEVEL, 0);
+  }
+  uint8_t world() const {
+    return GetField<uint8_t>(VT_WORLD, 0);
+  }
+  GameMode gameMode() const {
+    return static_cast<GameMode>(GetField<uint8_t>(VT_GAMEMODE, 0));
+  }
+  Difficulty difficulty() const {
+    return static_cast<Difficulty>(GetField<uint8_t>(VT_DIFFICULTY, 0));
+  }
+  EndReason reason() const {
+    return static_cast<EndReason>(GetField<uint8_t>(VT_REASON, 0));
+  }
+  int32_t goalScore() const {
+    return GetField<int32_t>(VT_GOALSCORE, 0);
+  }
+  int32_t timeScore() const {
+    return GetField<int32_t>(VT_TIMESCORE, 0);
+  }
+  int32_t endScore() const {
+    return GetField<int32_t>(VT_ENDSCORE, 0);
+  }
+  int32_t rating() const {
+    return GetField<int32_t>(VT_RATING, 0);
+  }
+  int32_t modeSpecifcValue() const {
+    return GetField<int32_t>(VT_MODESPECIFCVALUE, 0);
+  }
+  const Coordinates *endPosition() const {
+    return GetStruct<const Coordinates *>(VT_ENDPOSITION);
+  }
+  const flatbuffers::Vector<uint8_t> *hash() const {
+    return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_HASH);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_ID) &&
+           VerifyField<int32_t>(verifier, VT_GOAL) &&
+           VerifyField<int32_t>(verifier, VT_MAXGOAL) &&
+           VerifyField<int32_t>(verifier, VT_TIME) &&
+           VerifyField<uint32_t>(verifier, VT_RANK) &&
+           VerifyField<int64_t>(verifier, VT_TIMESTAMP) &&
+           VerifyField<uint8_t>(verifier, VT_LEVEL) &&
+           VerifyField<uint8_t>(verifier, VT_WORLD) &&
+           VerifyField<uint8_t>(verifier, VT_GAMEMODE) &&
+           VerifyField<uint8_t>(verifier, VT_DIFFICULTY) &&
+           VerifyField<uint8_t>(verifier, VT_REASON) &&
+           VerifyField<int32_t>(verifier, VT_GOALSCORE) &&
+           VerifyField<int32_t>(verifier, VT_TIMESCORE) &&
+           VerifyField<int32_t>(verifier, VT_ENDSCORE) &&
+           VerifyField<int32_t>(verifier, VT_RATING) &&
+           VerifyField<int32_t>(verifier, VT_MODESPECIFCVALUE) &&
+           VerifyField<Coordinates>(verifier, VT_ENDPOSITION) &&
+           VerifyOffset(verifier, VT_HASH) &&
+           verifier.Verify(hash()) &&
+           verifier.EndTable();
+  }
+};
+
+struct ScoreBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_id(uint32_t id) {
+    fbb_.AddElement<uint32_t>(Score::VT_ID, id, 0);
+  }
+  void add_goal(int32_t goal) {
+    fbb_.AddElement<int32_t>(Score::VT_GOAL, goal, 0);
+  }
+  void add_maxGoal(int32_t maxGoal) {
+    fbb_.AddElement<int32_t>(Score::VT_MAXGOAL, maxGoal, 0);
+  }
+  void add_time(int32_t time) {
+    fbb_.AddElement<int32_t>(Score::VT_TIME, time, 0);
+  }
+  void add_rank(uint32_t rank) {
+    fbb_.AddElement<uint32_t>(Score::VT_RANK, rank, 0);
+  }
+  void add_timestamp(int64_t timestamp) {
+    fbb_.AddElement<int64_t>(Score::VT_TIMESTAMP, timestamp, 0);
+  }
+  void add_level(uint8_t level) {
+    fbb_.AddElement<uint8_t>(Score::VT_LEVEL, level, 0);
+  }
+  void add_world(uint8_t world) {
+    fbb_.AddElement<uint8_t>(Score::VT_WORLD, world, 0);
+  }
+  void add_gameMode(GameMode gameMode) {
+    fbb_.AddElement<uint8_t>(Score::VT_GAMEMODE, static_cast<uint8_t>(gameMode), 0);
+  }
+  void add_difficulty(Difficulty difficulty) {
+    fbb_.AddElement<uint8_t>(Score::VT_DIFFICULTY, static_cast<uint8_t>(difficulty), 0);
+  }
+  void add_reason(EndReason reason) {
+    fbb_.AddElement<uint8_t>(Score::VT_REASON, static_cast<uint8_t>(reason), 0);
+  }
+  void add_goalScore(int32_t goalScore) {
+    fbb_.AddElement<int32_t>(Score::VT_GOALSCORE, goalScore, 0);
+  }
+  void add_timeScore(int32_t timeScore) {
+    fbb_.AddElement<int32_t>(Score::VT_TIMESCORE, timeScore, 0);
+  }
+  void add_endScore(int32_t endScore) {
+    fbb_.AddElement<int32_t>(Score::VT_ENDSCORE, endScore, 0);
+  }
+  void add_rating(int32_t rating) {
+    fbb_.AddElement<int32_t>(Score::VT_RATING, rating, 0);
+  }
+  void add_modeSpecifcValue(int32_t modeSpecifcValue) {
+    fbb_.AddElement<int32_t>(Score::VT_MODESPECIFCVALUE, modeSpecifcValue, 0);
+  }
+  void add_endPosition(const Coordinates *endPosition) {
+    fbb_.AddStruct(Score::VT_ENDPOSITION, endPosition);
+  }
+  void add_hash(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash) {
+    fbb_.AddOffset(Score::VT_HASH, hash);
+  }
+  explicit ScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ScoreBuilder &operator=(const ScoreBuilder &);
+  flatbuffers::Offset<Score> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<Score>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<Score> CreateScore(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t id = 0,
+    int32_t goal = 0,
+    int32_t maxGoal = 0,
+    int32_t time = 0,
+    uint32_t rank = 0,
+    int64_t timestamp = 0,
+    uint8_t level = 0,
+    uint8_t world = 0,
+    GameMode gameMode = CLIMB,
+    Difficulty difficulty = VERY_EASY,
+    EndReason reason = WIN,
+    int32_t goalScore = 0,
+    int32_t timeScore = 0,
+    int32_t endScore = 0,
+    int32_t rating = 0,
+    int32_t modeSpecifcValue = 0,
+    const Coordinates *endPosition = 0,
+    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0) {
+  ScoreBuilder builder_(_fbb);
+  builder_.add_timestamp(timestamp);
+  builder_.add_hash(hash);
+  builder_.add_endPosition(endPosition);
+  builder_.add_modeSpecifcValue(modeSpecifcValue);
+  builder_.add_rating(rating);
+  builder_.add_endScore(endScore);
+  builder_.add_timeScore(timeScore);
+  builder_.add_goalScore(goalScore);
+  builder_.add_rank(rank);
+  builder_.add_time(time);
+  builder_.add_maxGoal(maxGoal);
+  builder_.add_goal(goal);
+  builder_.add_id(id);
+  builder_.add_reason(reason);
+  builder_.add_difficulty(difficulty);
+  builder_.add_gameMode(gameMode);
+  builder_.add_world(world);
+  builder_.add_level(level);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<Score> CreateScoreDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t id = 0,
+    int32_t goal = 0,
+    int32_t maxGoal = 0,
+    int32_t time = 0,
+    uint32_t rank = 0,
+    int64_t timestamp = 0,
+    uint8_t level = 0,
+    uint8_t world = 0,
+    GameMode gameMode = CLIMB,
+    Difficulty difficulty = VERY_EASY,
+    EndReason reason = WIN,
+    int32_t goalScore = 0,
+    int32_t timeScore = 0,
+    int32_t endScore = 0,
+    int32_t rating = 0,
+    int32_t modeSpecifcValue = 0,
+    const Coordinates *endPosition = 0,
+    const std::vector<uint8_t> *hash = nullptr) {
+  return sisyfox::sisycol::CreateScore(
+      _fbb,
+      id,
+      goal,
+      maxGoal,
+      time,
+      rank,
+      timestamp,
+      level,
+      world,
+      gameMode,
+      difficulty,
+      reason,
+      goalScore,
+      timeScore,
+      endScore,
+      rating,
+      modeSpecifcValue,
+      endPosition,
+      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0);
+}
+
 struct User FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_UID = 4,
@@ -2045,8 +2183,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::Coordinates *endPosition() const {
     return GetStruct<const sisyfox::sisycol::Coordinates *>(VT_ENDPOSITION);
   }
-  uint32_t hash() const {
-    return GetField<uint32_t>(VT_HASH, 0);
+  const flatbuffers::Vector<uint8_t> *hash() const {
+    return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_HASH);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -2060,7 +2198,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_DIFFICULTY) &&
            VerifyField<int32_t>(verifier, VT_MODESPECIFICVALUE) &&
            VerifyField<sisyfox::sisycol::Coordinates>(verifier, VT_ENDPOSITION) &&
-           VerifyField<uint32_t>(verifier, VT_HASH) &&
+           VerifyOffset(verifier, VT_HASH) &&
+           verifier.Verify(hash()) &&
            verifier.EndTable();
   }
 };
@@ -2098,8 +2237,8 @@ struct AddScoreBuilder {
   void add_endPosition(const sisyfox::sisycol::Coordinates *endPosition) {
     fbb_.AddStruct(AddScore::VT_ENDPOSITION, endPosition);
   }
-  void add_hash(uint32_t hash) {
-    fbb_.AddElement<uint32_t>(AddScore::VT_HASH, hash, 0);
+  void add_hash(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash) {
+    fbb_.AddOffset(AddScore::VT_HASH, hash);
   }
   explicit AddScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -2125,7 +2264,7 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::VERY_EASY,
     int32_t modeSpecificValue = 0,
     const sisyfox::sisycol::Coordinates *endPosition = 0,
-    uint32_t hash = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0) {
   AddScoreBuilder builder_(_fbb);
   builder_.add_hash(hash);
   builder_.add_endPosition(endPosition);
@@ -2139,6 +2278,34 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
   builder_.add_level(level);
   builder_.add_reason(reason);
   return builder_.Finish();
+}
+
+inline flatbuffers::Offset<AddScore> CreateAddScoreDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    int32_t goal = 0,
+    int32_t maxGoal = 0,
+    int32_t time = 0,
+    sisyfox::sisycol::EndReason reason = sisyfox::sisycol::WIN,
+    uint8_t level = 0,
+    uint8_t world = 0,
+    sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::CLIMB,
+    sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::VERY_EASY,
+    int32_t modeSpecificValue = 0,
+    const sisyfox::sisycol::Coordinates *endPosition = 0,
+    const std::vector<uint8_t> *hash = nullptr) {
+  return sisyfox::sisycol::request::CreateAddScore(
+      _fbb,
+      goal,
+      maxGoal,
+      time,
+      reason,
+      level,
+      world,
+      gameMode,
+      difficulty,
+      modeSpecificValue,
+      endPosition,
+      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0);
 }
 
 struct GetScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -4522,11 +4689,12 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_DATA = 4
   };
   const sisyfox::sisycol::Score *data() const {
-    return GetStruct<const sisyfox::sisycol::Score *>(VT_DATA);
+    return GetPointer<const sisyfox::sisycol::Score *>(VT_DATA);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<sisyfox::sisycol::Score>(verifier, VT_DATA) &&
+           VerifyOffset(verifier, VT_DATA) &&
+           verifier.VerifyTable(data()) &&
            verifier.EndTable();
   }
 };
@@ -4534,8 +4702,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct AddScoreBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_data(const sisyfox::sisycol::Score *data) {
-    fbb_.AddStruct(AddScore::VT_DATA, data);
+  void add_data(flatbuffers::Offset<sisyfox::sisycol::Score> data) {
+    fbb_.AddOffset(AddScore::VT_DATA, data);
   }
   explicit AddScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -4551,7 +4719,7 @@ struct AddScoreBuilder {
 
 inline flatbuffers::Offset<AddScore> CreateAddScore(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const sisyfox::sisycol::Score *data = 0) {
+    flatbuffers::Offset<sisyfox::sisycol::Score> data = 0) {
   AddScoreBuilder builder_(_fbb);
   builder_.add_data(data);
   return builder_.Finish();
@@ -4562,11 +4730,12 @@ struct GetScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_DATA = 4
   };
   const sisyfox::sisycol::Score *data() const {
-    return GetStruct<const sisyfox::sisycol::Score *>(VT_DATA);
+    return GetPointer<const sisyfox::sisycol::Score *>(VT_DATA);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<sisyfox::sisycol::Score>(verifier, VT_DATA) &&
+           VerifyOffset(verifier, VT_DATA) &&
+           verifier.VerifyTable(data()) &&
            verifier.EndTable();
   }
 };
@@ -4574,8 +4743,8 @@ struct GetScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetScoreBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_data(const sisyfox::sisycol::Score *data) {
-    fbb_.AddStruct(GetScore::VT_DATA, data);
+  void add_data(flatbuffers::Offset<sisyfox::sisycol::Score> data) {
+    fbb_.AddOffset(GetScore::VT_DATA, data);
   }
   explicit GetScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -4591,7 +4760,7 @@ struct GetScoreBuilder {
 
 inline flatbuffers::Offset<GetScore> CreateGetScore(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const sisyfox::sisycol::Score *data = 0) {
+    flatbuffers::Offset<sisyfox::sisycol::Score> data = 0) {
   GetScoreBuilder builder_(_fbb);
   builder_.add_data(data);
   return builder_.Finish();
@@ -4601,13 +4770,14 @@ struct GetScoreRange FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_DATA = 4
   };
-  const flatbuffers::Vector<const sisyfox::sisycol::Score *> *data() const {
-    return GetPointer<const flatbuffers::Vector<const sisyfox::sisycol::Score *> *>(VT_DATA);
+  const flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Score>> *data() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Score>> *>(VT_DATA);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_DATA) &&
            verifier.Verify(data()) &&
+           verifier.VerifyVectorOfTables(data()) &&
            verifier.EndTable();
   }
 };
@@ -4615,7 +4785,7 @@ struct GetScoreRange FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetScoreRangeBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_data(flatbuffers::Offset<flatbuffers::Vector<const sisyfox::sisycol::Score *>> data) {
+  void add_data(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Score>>> data) {
     fbb_.AddOffset(GetScoreRange::VT_DATA, data);
   }
   explicit GetScoreRangeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -4632,7 +4802,7 @@ struct GetScoreRangeBuilder {
 
 inline flatbuffers::Offset<GetScoreRange> CreateGetScoreRange(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<const sisyfox::sisycol::Score *>> data = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Score>>> data = 0) {
   GetScoreRangeBuilder builder_(_fbb);
   builder_.add_data(data);
   return builder_.Finish();
@@ -4640,10 +4810,10 @@ inline flatbuffers::Offset<GetScoreRange> CreateGetScoreRange(
 
 inline flatbuffers::Offset<GetScoreRange> CreateGetScoreRangeDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<const sisyfox::sisycol::Score *> *data = nullptr) {
+    const std::vector<flatbuffers::Offset<sisyfox::sisycol::Score>> *data = nullptr) {
   return sisyfox::sisycol::response::CreateGetScoreRange(
       _fbb,
-      data ? _fbb.CreateVector<const sisyfox::sisycol::Score *>(*data) : 0);
+      data ? _fbb.CreateVector<flatbuffers::Offset<sisyfox::sisycol::Score>>(*data) : 0);
 }
 
 struct GetLocation FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {

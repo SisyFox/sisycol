@@ -10,57 +10,58 @@ using global::FlatBuffers;
 
 public struct Score : IFlatbufferObject
 {
-  private Struct __p;
+  private Table __p;
   public ByteBuffer ByteBuffer { get { return __p.bb; } }
+  public static Score GetRootAsScore(ByteBuffer _bb) { return GetRootAsScore(_bb, new Score()); }
+  public static Score GetRootAsScore(ByteBuffer _bb, Score obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public Score __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public uint Id { get { return __p.bb.GetUint(__p.bb_pos + 0); } }
-  public int Goal { get { return __p.bb.GetInt(__p.bb_pos + 4); } }
-  public int MaxGoal { get { return __p.bb.GetInt(__p.bb_pos + 8); } }
-  public int Time { get { return __p.bb.GetInt(__p.bb_pos + 12); } }
-  public uint Rank { get { return __p.bb.GetUint(__p.bb_pos + 16); } }
-  public long Timestamp { get { return __p.bb.GetLong(__p.bb_pos + 24); } }
-  public byte Level { get { return __p.bb.Get(__p.bb_pos + 32); } }
-  public byte World { get { return __p.bb.Get(__p.bb_pos + 33); } }
-  public GameMode GameMode { get { return (GameMode)__p.bb.Get(__p.bb_pos + 34); } }
-  public Difficulty Difficulty { get { return (Difficulty)__p.bb.Get(__p.bb_pos + 35); } }
-  public EndReason Reason { get { return (EndReason)__p.bb.Get(__p.bb_pos + 36); } }
-  public int GoalScore { get { return __p.bb.GetInt(__p.bb_pos + 40); } }
-  public int TimeScore { get { return __p.bb.GetInt(__p.bb_pos + 44); } }
-  public int EndScore { get { return __p.bb.GetInt(__p.bb_pos + 48); } }
-  public int Rating { get { return __p.bb.GetInt(__p.bb_pos + 52); } }
-  public int ModeSpecifcValue { get { return __p.bb.GetInt(__p.bb_pos + 56); } }
-  public Coordinates EndPosition { get { return (new Coordinates()).__assign(__p.bb_pos + 60, __p.bb); } }
-  public uint Hash { get { return __p.bb.GetUint(__p.bb_pos + 72); } }
+  public uint Id { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public int Goal { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int MaxGoal { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int Time { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public uint Rank { get { int o = __p.__offset(12); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public long Timestamp { get { int o = __p.__offset(14); return o != 0 ? __p.bb.GetLong(o + __p.bb_pos) : (long)0; } }
+  public byte Level { get { int o = __p.__offset(16); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public byte World { get { int o = __p.__offset(18); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public GameMode GameMode { get { int o = __p.__offset(20); return o != 0 ? (GameMode)__p.bb.Get(o + __p.bb_pos) : GameMode.CLIMB; } }
+  public Difficulty Difficulty { get { int o = __p.__offset(22); return o != 0 ? (Difficulty)__p.bb.Get(o + __p.bb_pos) : Difficulty.VERY_EASY; } }
+  public EndReason Reason { get { int o = __p.__offset(24); return o != 0 ? (EndReason)__p.bb.Get(o + __p.bb_pos) : EndReason.WIN; } }
+  public int GoalScore { get { int o = __p.__offset(26); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int TimeScore { get { int o = __p.__offset(28); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int EndScore { get { int o = __p.__offset(30); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int Rating { get { int o = __p.__offset(32); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int ModeSpecifcValue { get { int o = __p.__offset(34); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public Coordinates? EndPosition { get { int o = __p.__offset(36); return o != 0 ? (Coordinates?)(new Coordinates()).__assign(o + __p.bb_pos, __p.bb) : null; } }
+  public byte Hash(int j) { int o = __p.__offset(38); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
+  public int HashLength { get { int o = __p.__offset(38); return o != 0 ? __p.__vector_len(o) : 0; } }
+  public ArraySegment<byte>? GetHashBytes() { return __p.__vector_as_arraysegment(38); }
 
-  public static Offset<Score> CreateScore(FlatBufferBuilder builder, uint Id, int Goal, int MaxGoal, int Time, uint Rank, long Timestamp, byte Level, byte World, GameMode GameMode, Difficulty Difficulty, EndReason Reason, int GoalScore, int TimeScore, int EndScore, int Rating, int ModeSpecifcValue, int endPosition_X, int endPosition_Y, int endPosition_Z, uint Hash) {
-    builder.Prep(8, 80);
-    builder.Pad(4);
-    builder.PutUint(Hash);
-    builder.Prep(4, 12);
-    builder.PutInt(endPosition_Z);
-    builder.PutInt(endPosition_Y);
-    builder.PutInt(endPosition_X);
-    builder.PutInt(ModeSpecifcValue);
-    builder.PutInt(Rating);
-    builder.PutInt(EndScore);
-    builder.PutInt(TimeScore);
-    builder.PutInt(GoalScore);
-    builder.Pad(3);
-    builder.PutByte((byte)Reason);
-    builder.PutByte((byte)Difficulty);
-    builder.PutByte((byte)GameMode);
-    builder.PutByte(World);
-    builder.PutByte(Level);
-    builder.PutLong(Timestamp);
-    builder.Pad(4);
-    builder.PutUint(Rank);
-    builder.PutInt(Time);
-    builder.PutInt(MaxGoal);
-    builder.PutInt(Goal);
-    builder.PutUint(Id);
-    return new Offset<Score>(builder.Offset);
+  public static void StartScore(FlatBufferBuilder builder) { builder.StartObject(18); }
+  public static void AddId(FlatBufferBuilder builder, uint id) { builder.AddUint(0, id, 0); }
+  public static void AddGoal(FlatBufferBuilder builder, int goal) { builder.AddInt(1, goal, 0); }
+  public static void AddMaxGoal(FlatBufferBuilder builder, int maxGoal) { builder.AddInt(2, maxGoal, 0); }
+  public static void AddTime(FlatBufferBuilder builder, int time) { builder.AddInt(3, time, 0); }
+  public static void AddRank(FlatBufferBuilder builder, uint rank) { builder.AddUint(4, rank, 0); }
+  public static void AddTimestamp(FlatBufferBuilder builder, long timestamp) { builder.AddLong(5, timestamp, 0); }
+  public static void AddLevel(FlatBufferBuilder builder, byte level) { builder.AddByte(6, level, 0); }
+  public static void AddWorld(FlatBufferBuilder builder, byte world) { builder.AddByte(7, world, 0); }
+  public static void AddGameMode(FlatBufferBuilder builder, GameMode gameMode) { builder.AddByte(8, (byte)gameMode, 0); }
+  public static void AddDifficulty(FlatBufferBuilder builder, Difficulty difficulty) { builder.AddByte(9, (byte)difficulty, 0); }
+  public static void AddReason(FlatBufferBuilder builder, EndReason reason) { builder.AddByte(10, (byte)reason, 0); }
+  public static void AddGoalScore(FlatBufferBuilder builder, int goalScore) { builder.AddInt(11, goalScore, 0); }
+  public static void AddTimeScore(FlatBufferBuilder builder, int timeScore) { builder.AddInt(12, timeScore, 0); }
+  public static void AddEndScore(FlatBufferBuilder builder, int endScore) { builder.AddInt(13, endScore, 0); }
+  public static void AddRating(FlatBufferBuilder builder, int rating) { builder.AddInt(14, rating, 0); }
+  public static void AddModeSpecifcValue(FlatBufferBuilder builder, int modeSpecifcValue) { builder.AddInt(15, modeSpecifcValue, 0); }
+  public static void AddEndPosition(FlatBufferBuilder builder, Offset<Coordinates> endPositionOffset) { builder.AddStruct(16, endPositionOffset.Value, 0); }
+  public static void AddHash(FlatBufferBuilder builder, VectorOffset hashOffset) { builder.AddOffset(17, hashOffset.Value, 0); }
+  public static VectorOffset CreateHashVector(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); for (int i = data.Length - 1; i >= 0; i--) builder.AddByte(data[i]); return builder.EndVector(); }
+  public static void StartHashVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(1, numElems, 1); }
+  public static Offset<Score> EndScore(FlatBufferBuilder builder) {
+    int o = builder.EndObject();
+    return new Offset<Score>(o);
   }
 };
 

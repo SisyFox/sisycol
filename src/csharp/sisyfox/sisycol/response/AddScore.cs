@@ -17,10 +17,17 @@ public struct AddScore : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public AddScore __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sisyfox.sisycol.Score? Data { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Score?)(new sisyfox.sisycol.Score()).__assign(o + __p.bb_pos, __p.bb) : null; } }
+  public sisyfox.sisycol.Score? Data { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Score?)(new sisyfox.sisycol.Score()).__assign(__p.__indirect(o + __p.bb_pos), __p.bb) : null; } }
+
+  public static Offset<AddScore> CreateAddScore(FlatBufferBuilder builder,
+      Offset<sisyfox.sisycol.Score> dataOffset = default(Offset<sisyfox.sisycol.Score>)) {
+    builder.StartObject(1);
+    AddScore.AddData(builder, dataOffset);
+    return AddScore.EndAddScore(builder);
+  }
 
   public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(1); }
-  public static void AddData(FlatBufferBuilder builder, Offset<sisyfox.sisycol.Score> dataOffset) { builder.AddStruct(0, dataOffset.Value, 0); }
+  public static void AddData(FlatBufferBuilder builder, Offset<sisyfox.sisycol.Score> dataOffset) { builder.AddOffset(0, dataOffset.Value, 0); }
   public static Offset<AddScore> EndAddScore(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<AddScore>(o);

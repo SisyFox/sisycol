@@ -85,7 +85,7 @@ struct Coordinates {
   z:int;
 }
 
-struct Score {
+table Score {
     id:uint;
     goal:int;
     maxGoal:int;
@@ -103,7 +103,7 @@ struct Score {
     rating:int;
     modeSpecifcValue:int;
     endPosition:Coordinates;
-    hash:uint;
+    hash:[ubyte];
 }
 
 struct Setting {
@@ -177,7 +177,7 @@ table AddScore {
   difficulty:Difficulty;
   modeSpecificValue:int;
   endPosition:Coordinates;
-  hash:uint;
+  hash:[ubyte];
 }
 
 table GetScore {
