@@ -703,11 +703,19 @@ sisyfox.sisycol.Score.prototype.endPosition = function(obj) {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.Score.prototype.game = function() {
+  var offset = this.bb.__offset(this.bb_pos, 38);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
  * @param {number} index
  * @returns {number}
  */
 sisyfox.sisycol.Score.prototype.hash = function(index) {
-  var offset = this.bb.__offset(this.bb_pos, 38);
+  var offset = this.bb.__offset(this.bb_pos, 40);
   return offset ? this.bb.readUint8(this.bb.__vector(this.bb_pos + offset) + index) : 0;
 };
 
@@ -715,7 +723,7 @@ sisyfox.sisycol.Score.prototype.hash = function(index) {
  * @returns {number}
  */
 sisyfox.sisycol.Score.prototype.hashLength = function() {
-  var offset = this.bb.__offset(this.bb_pos, 38);
+  var offset = this.bb.__offset(this.bb_pos, 40);
   return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
 };
 
@@ -723,7 +731,7 @@ sisyfox.sisycol.Score.prototype.hashLength = function() {
  * @returns {Uint8Array}
  */
 sisyfox.sisycol.Score.prototype.hashArray = function() {
-  var offset = this.bb.__offset(this.bb_pos, 38);
+  var offset = this.bb.__offset(this.bb_pos, 40);
   return offset ? new Uint8Array(this.bb.bytes().buffer, this.bb.bytes().byteOffset + this.bb.__vector(this.bb_pos + offset), this.bb.__vector_len(this.bb_pos + offset)) : null;
 };
 
@@ -731,7 +739,7 @@ sisyfox.sisycol.Score.prototype.hashArray = function() {
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.Score.startScore = function(builder) {
-  builder.startObject(18);
+  builder.startObject(19);
 };
 
 /**
@@ -872,10 +880,18 @@ sisyfox.sisycol.Score.addEndPosition = function(builder, endPositionOffset) {
 
 /**
  * @param {flatbuffers.Builder} builder
+ * @param {number} game
+ */
+sisyfox.sisycol.Score.addGame = function(builder, game) {
+  builder.addFieldInt8(17, game, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} hashOffset
  */
 sisyfox.sisycol.Score.addHash = function(builder, hashOffset) {
-  builder.addFieldOffset(17, hashOffset, 0);
+  builder.addFieldOffset(18, hashOffset, 0);
 };
 
 /**

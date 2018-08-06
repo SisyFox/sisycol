@@ -34,11 +34,12 @@ public struct Score : IFlatbufferObject
   public int Rating { get { int o = __p.__offset(32); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public int ModeSpecifcValue { get { int o = __p.__offset(34); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public Coordinates? EndPosition { get { int o = __p.__offset(36); return o != 0 ? (Coordinates?)(new Coordinates()).__assign(o + __p.bb_pos, __p.bb) : null; } }
-  public byte Hash(int j) { int o = __p.__offset(38); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
-  public int HashLength { get { int o = __p.__offset(38); return o != 0 ? __p.__vector_len(o) : 0; } }
-  public ArraySegment<byte>? GetHashBytes() { return __p.__vector_as_arraysegment(38); }
+  public byte Game { get { int o = __p.__offset(38); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public byte Hash(int j) { int o = __p.__offset(40); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
+  public int HashLength { get { int o = __p.__offset(40); return o != 0 ? __p.__vector_len(o) : 0; } }
+  public ArraySegment<byte>? GetHashBytes() { return __p.__vector_as_arraysegment(40); }
 
-  public static void StartScore(FlatBufferBuilder builder) { builder.StartObject(18); }
+  public static void StartScore(FlatBufferBuilder builder) { builder.StartObject(19); }
   public static void AddId(FlatBufferBuilder builder, uint id) { builder.AddUint(0, id, 0); }
   public static void AddGoal(FlatBufferBuilder builder, int goal) { builder.AddInt(1, goal, 0); }
   public static void AddMaxGoal(FlatBufferBuilder builder, int maxGoal) { builder.AddInt(2, maxGoal, 0); }
@@ -56,7 +57,8 @@ public struct Score : IFlatbufferObject
   public static void AddRating(FlatBufferBuilder builder, int rating) { builder.AddInt(14, rating, 0); }
   public static void AddModeSpecifcValue(FlatBufferBuilder builder, int modeSpecifcValue) { builder.AddInt(15, modeSpecifcValue, 0); }
   public static void AddEndPosition(FlatBufferBuilder builder, Offset<Coordinates> endPositionOffset) { builder.AddStruct(16, endPositionOffset.Value, 0); }
-  public static void AddHash(FlatBufferBuilder builder, VectorOffset hashOffset) { builder.AddOffset(17, hashOffset.Value, 0); }
+  public static void AddGame(FlatBufferBuilder builder, byte game) { builder.AddByte(17, game, 0); }
+  public static void AddHash(FlatBufferBuilder builder, VectorOffset hashOffset) { builder.AddOffset(18, hashOffset.Value, 0); }
   public static VectorOffset CreateHashVector(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); for (int i = data.Length - 1; i >= 0; i--) builder.AddByte(data[i]); return builder.EndVector(); }
   public static void StartHashVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(1, numElems, 1); }
   public static Offset<Score> EndScore(FlatBufferBuilder builder) {

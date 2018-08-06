@@ -101,6 +101,7 @@ table Score {
     rating:int;
     modeSpecifcValue:int;
     endPosition:Coordinates;
+    game:ubyte;
     hash:[ubyte];
 }
 

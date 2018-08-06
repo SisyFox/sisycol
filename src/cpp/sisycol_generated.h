@@ -1834,7 +1834,8 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_RATING = 32,
     VT_MODESPECIFCVALUE = 34,
     VT_ENDPOSITION = 36,
-    VT_HASH = 38
+    VT_GAME = 38,
+    VT_HASH = 40
   };
   uint32_t id() const {
     return GetField<uint32_t>(VT_ID, 0);
@@ -1887,6 +1888,9 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const Coordinates *endPosition() const {
     return GetStruct<const Coordinates *>(VT_ENDPOSITION);
   }
+  uint8_t game() const {
+    return GetField<uint8_t>(VT_GAME, 0);
+  }
   const flatbuffers::Vector<uint8_t> *hash() const {
     return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_HASH);
   }
@@ -1909,6 +1913,7 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<int32_t>(verifier, VT_RATING) &&
            VerifyField<int32_t>(verifier, VT_MODESPECIFCVALUE) &&
            VerifyField<Coordinates>(verifier, VT_ENDPOSITION) &&
+           VerifyField<uint8_t>(verifier, VT_GAME) &&
            VerifyOffset(verifier, VT_HASH) &&
            verifier.Verify(hash()) &&
            verifier.EndTable();
@@ -1969,6 +1974,9 @@ struct ScoreBuilder {
   void add_endPosition(const Coordinates *endPosition) {
     fbb_.AddStruct(Score::VT_ENDPOSITION, endPosition);
   }
+  void add_game(uint8_t game) {
+    fbb_.AddElement<uint8_t>(Score::VT_GAME, game, 0);
+  }
   void add_hash(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash) {
     fbb_.AddOffset(Score::VT_HASH, hash);
   }
@@ -2003,6 +2011,7 @@ inline flatbuffers::Offset<Score> CreateScore(
     int32_t rating = 0,
     int32_t modeSpecifcValue = 0,
     const Coordinates *endPosition = 0,
+    uint8_t game = 0,
     flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0) {
   ScoreBuilder builder_(_fbb);
   builder_.add_timestamp(timestamp);
@@ -2018,6 +2027,7 @@ inline flatbuffers::Offset<Score> CreateScore(
   builder_.add_maxGoal(maxGoal);
   builder_.add_goal(goal);
   builder_.add_id(id);
+  builder_.add_game(game);
   builder_.add_reason(reason);
   builder_.add_difficulty(difficulty);
   builder_.add_gameMode(gameMode);
@@ -2045,6 +2055,7 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
     int32_t rating = 0,
     int32_t modeSpecifcValue = 0,
     const Coordinates *endPosition = 0,
+    uint8_t game = 0,
     const std::vector<uint8_t> *hash = nullptr) {
   return sisyfox::sisycol::CreateScore(
       _fbb,
@@ -2065,6 +2076,7 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
       rating,
       modeSpecifcValue,
       endPosition,
+      game,
       hash ? _fbb.CreateVector<uint8_t>(*hash) : 0);
 }
 
