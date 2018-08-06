@@ -2005,7 +2005,7 @@ sisyfox.sisycol.request.AddScore.prototype.endPosition = function(obj) {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.request.AddScore.prototype.mode = function() {
+sisyfox.sisycol.request.AddScore.prototype.game = function() {
   var offset = this.bb.__offset(this.bb_pos, 24);
   return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
 };
@@ -2124,10 +2124,10 @@ sisyfox.sisycol.request.AddScore.addEndPosition = function(builder, endPositionO
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {number} mode
+ * @param {number} game
  */
-sisyfox.sisycol.request.AddScore.addMode = function(builder, mode) {
-  builder.addFieldInt8(10, mode, 0);
+sisyfox.sisycol.request.AddScore.addGame = function(builder, game) {
+  builder.addFieldInt8(10, game, 0);
 };
 
 /**

@@ -193,7 +193,7 @@ table AddScore {
   difficulty:Difficulty;
   modeSpecificValue:int;
   endPosition:Coordinates;
-  mode:ubyte;
+  game:ubyte;
   hash:[ubyte];
 }
 
