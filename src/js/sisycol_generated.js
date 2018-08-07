@@ -672,7 +672,7 @@ sisyfox.sisycol.Score.prototype.timeScore = function() {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.Score.prototype.endScore = function() {
+sisyfox.sisycol.Score.prototype.totalScore = function() {
   var offset = this.bb.__offset(this.bb_pos, 30);
   return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
 };
@@ -848,10 +848,10 @@ sisyfox.sisycol.Score.addTimeScore = function(builder, timeScore) {
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {number} endScore
+ * @param {number} totalScore
  */
-sisyfox.sisycol.Score.addEndScore = function(builder, endScore) {
-  builder.addFieldInt32(13, endScore, 0);
+sisyfox.sisycol.Score.addTotalScore = function(builder, totalScore) {
+  builder.addFieldInt32(13, totalScore, 0);
 };
 
 /**

@@ -30,7 +30,7 @@ public struct Score : IFlatbufferObject
   public EndReason Reason { get { int o = __p.__offset(24); return o != 0 ? (EndReason)__p.bb.Get(o + __p.bb_pos) : EndReason.WIN; } }
   public int GoalScore { get { int o = __p.__offset(26); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public int TimeScore { get { int o = __p.__offset(28); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
-  public int EndScore { get { int o = __p.__offset(30); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public int TotalScore { get { int o = __p.__offset(30); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public int Rating { get { int o = __p.__offset(32); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public int ModeSpecifcValue { get { int o = __p.__offset(34); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public Coordinates? EndPosition { get { int o = __p.__offset(36); return o != 0 ? (Coordinates?)(new Coordinates()).__assign(o + __p.bb_pos, __p.bb) : null; } }
@@ -53,7 +53,7 @@ public struct Score : IFlatbufferObject
   public static void AddReason(FlatBufferBuilder builder, EndReason reason) { builder.AddByte(10, (byte)reason, 0); }
   public static void AddGoalScore(FlatBufferBuilder builder, int goalScore) { builder.AddInt(11, goalScore, 0); }
   public static void AddTimeScore(FlatBufferBuilder builder, int timeScore) { builder.AddInt(12, timeScore, 0); }
-  public static void AddEndScore(FlatBufferBuilder builder, int endScore) { builder.AddInt(13, endScore, 0); }
+  public static void AddTotalScore(FlatBufferBuilder builder, int totalScore) { builder.AddInt(13, totalScore, 0); }
   public static void AddRating(FlatBufferBuilder builder, int rating) { builder.AddInt(14, rating, 0); }
   public static void AddModeSpecifcValue(FlatBufferBuilder builder, int modeSpecifcValue) { builder.AddInt(15, modeSpecifcValue, 0); }
   public static void AddEndPosition(FlatBufferBuilder builder, Offset<Coordinates> endPositionOffset) { builder.AddStruct(16, endPositionOffset.Value, 0); }

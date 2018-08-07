@@ -1830,7 +1830,7 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_REASON = 24,
     VT_GOALSCORE = 26,
     VT_TIMESCORE = 28,
-    VT_ENDSCORE = 30,
+    VT_TOTALSCORE = 30,
     VT_RATING = 32,
     VT_MODESPECIFCVALUE = 34,
     VT_ENDPOSITION = 36,
@@ -1876,8 +1876,8 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   int32_t timeScore() const {
     return GetField<int32_t>(VT_TIMESCORE, 0);
   }
-  int32_t endScore() const {
-    return GetField<int32_t>(VT_ENDSCORE, 0);
+  int32_t totalScore() const {
+    return GetField<int32_t>(VT_TOTALSCORE, 0);
   }
   int32_t rating() const {
     return GetField<int32_t>(VT_RATING, 0);
@@ -1909,7 +1909,7 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_REASON) &&
            VerifyField<int32_t>(verifier, VT_GOALSCORE) &&
            VerifyField<int32_t>(verifier, VT_TIMESCORE) &&
-           VerifyField<int32_t>(verifier, VT_ENDSCORE) &&
+           VerifyField<int32_t>(verifier, VT_TOTALSCORE) &&
            VerifyField<int32_t>(verifier, VT_RATING) &&
            VerifyField<int32_t>(verifier, VT_MODESPECIFCVALUE) &&
            VerifyField<Coordinates>(verifier, VT_ENDPOSITION) &&
@@ -1962,8 +1962,8 @@ struct ScoreBuilder {
   void add_timeScore(int32_t timeScore) {
     fbb_.AddElement<int32_t>(Score::VT_TIMESCORE, timeScore, 0);
   }
-  void add_endScore(int32_t endScore) {
-    fbb_.AddElement<int32_t>(Score::VT_ENDSCORE, endScore, 0);
+  void add_totalScore(int32_t totalScore) {
+    fbb_.AddElement<int32_t>(Score::VT_TOTALSCORE, totalScore, 0);
   }
   void add_rating(int32_t rating) {
     fbb_.AddElement<int32_t>(Score::VT_RATING, rating, 0);
@@ -2007,7 +2007,7 @@ inline flatbuffers::Offset<Score> CreateScore(
     EndReason reason = EndReason_WIN,
     int32_t goalScore = 0,
     int32_t timeScore = 0,
-    int32_t endScore = 0,
+    int32_t totalScore = 0,
     int32_t rating = 0,
     int32_t modeSpecifcValue = 0,
     const Coordinates *endPosition = 0,
@@ -2019,7 +2019,7 @@ inline flatbuffers::Offset<Score> CreateScore(
   builder_.add_endPosition(endPosition);
   builder_.add_modeSpecifcValue(modeSpecifcValue);
   builder_.add_rating(rating);
-  builder_.add_endScore(endScore);
+  builder_.add_totalScore(totalScore);
   builder_.add_timeScore(timeScore);
   builder_.add_goalScore(goalScore);
   builder_.add_rank(rank);
@@ -2051,7 +2051,7 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
     EndReason reason = EndReason_WIN,
     int32_t goalScore = 0,
     int32_t timeScore = 0,
-    int32_t endScore = 0,
+    int32_t totalScore = 0,
     int32_t rating = 0,
     int32_t modeSpecifcValue = 0,
     const Coordinates *endPosition = 0,
@@ -2072,7 +2072,7 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
       reason,
       goalScore,
       timeScore,
-      endScore,
+      totalScore,
       rating,
       modeSpecifcValue,
       endPosition,

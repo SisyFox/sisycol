@@ -97,7 +97,7 @@ table Score {
     reason:EndReason;
     goalScore:int;
     timeScore:int;
-    endScore:int;
+    totalScore:int;
     rating:int;
     modeSpecifcValue:int;
     endPosition:Coordinates;
