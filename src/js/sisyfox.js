@@ -262,9 +262,16 @@ class Sisyfox {
 
     requestSetSetting(setting, value) {
         const builder = new flatbuffers.Builder();
+
+        console.log(value);
+        sisyfox.sisycol.IntSetting.startIntSetting(builder);
+        sisyfox.sisycol.IntSetting.addValue(builder, value);
+        const intSettingOffset = sisyfox.sisycol.IntSetting.endIntSetting(builder);
+
         sisyfox.sisycol.request.SetSetting.startSetSetting(builder);
         sisyfox.sisycol.request.SetSetting.addType(builder, setting);
-        sisyfox.sisycol.request.SetSetting.addValue(builder, value);
+        sisyfox.sisycol.request.SetSetting.addValueType(builder, sisyfox.sisycol.SettingValue.IntSetting);
+        sisyfox.sisycol.request.SetSetting.addValue(builder, intSettingOffset);
         const offset = sisyfox.sisycol.request.SetSetting.endSetSetting(builder);
         this.prepareSend(sisyfox.sisycol.Payload.SetSetting, offset, builder);
     }
