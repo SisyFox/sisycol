@@ -499,6 +499,13 @@ class Sisyfox {
         const offset = sisyfox.sisycol.request.ResetDmxConfig.endResetDmxConfig(builder);
         this.prepareSend(sisyfox.sisycol.Payload.ResetDmxConfig, offset, builder);
     }
+
+    requestSuspendSystem() {
+        const builder = new flatbuffers.Builder();
+        sisyfox.sisycol.request.SuspendSystem.startSuspendSystem(builder);
+        const offset = sisyfox.sisycol.request.SuspendSystem.endSuspendSystem(builder);
+        this.prepareSend(sisyfox.sisycol.Payload.SuspendSystem, offset, builder);
+    }
 }
 
 this.sisyfox = Sisyfox;
