@@ -78,7 +78,8 @@ sisyfox.sisycol.Payload = {
   GetDmxRuleBoolSettingRange: 47,
   SetDmxDeviceMode: 48,
   ResetDmxConfig: 49,
-  GetIdealTime: 50
+  GetIdealTime: 50,
+  SuspendSystem: 51
 };
 
 /**
@@ -5855,6 +5856,57 @@ sisyfox.sisycol.request.GetIdealTime.endGetIdealTime = function(builder) {
 /**
  * @constructor
  */
+sisyfox.sisycol.request.SuspendSystem = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.SuspendSystem}
+ */
+sisyfox.sisycol.request.SuspendSystem.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.SuspendSystem=} obj
+ * @returns {sisyfox.sisycol.request.SuspendSystem}
+ */
+sisyfox.sisycol.request.SuspendSystem.getRootAsSuspendSystem = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.SuspendSystem).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.SuspendSystem.startSuspendSystem = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.SuspendSystem.endSuspendSystem = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -10184,6 +10236,57 @@ sisyfox.sisycol.response.GetIdealTime.addTime = function(builder, time) {
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.GetIdealTime.endGetIdealTime = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.SuspendSystem = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.SuspendSystem}
+ */
+sisyfox.sisycol.response.SuspendSystem.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.SuspendSystem=} obj
+ * @returns {sisyfox.sisycol.response.SuspendSystem}
+ */
+sisyfox.sisycol.response.SuspendSystem.getRootAsSuspendSystem = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.SuspendSystem).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.SuspendSystem.startSuspendSystem = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.SuspendSystem.endSuspendSystem = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

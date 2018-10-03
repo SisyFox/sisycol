@@ -20,7 +20,7 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxRuleSettingRange, GetDmxRuleRangeSetting,
              GetDmxRuleRangeSettingRange, GetDmxRuleBoolSetting,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
-             GetIdealTime }
+             GetIdealTime, SuspendSystem }
 
 table Root {
   version:Version;
@@ -413,6 +413,8 @@ table ResetDmxConfig {}
 
 table GetIdealTime {}
 
+table SuspendSystem {}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -661,3 +663,5 @@ table ResetDmxConfig {}
 table GetIdealTime {
     time:float;
 }
+
+table SuspendSystem {}

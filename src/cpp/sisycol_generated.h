@@ -129,6 +129,8 @@ struct ResetDmxConfig;
 
 struct GetIdealTime;
 
+struct SuspendSystem;
+
 }  // namespace request
 
 namespace response {
@@ -227,6 +229,8 @@ struct ResetDmxConfig;
 
 struct GetIdealTime;
 
+struct SuspendSystem;
+
 }  // namespace response
 
 enum Payload {
@@ -281,11 +285,12 @@ enum Payload {
   Payload_SetDmxDeviceMode = 48,
   Payload_ResetDmxConfig = 49,
   Payload_GetIdealTime = 50,
+  Payload_SuspendSystem = 51,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_GetIdealTime
+  Payload_MAX = Payload_SuspendSystem
 };
 
-inline Payload (&EnumValuesPayload())[51] {
+inline Payload (&EnumValuesPayload())[52] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -337,7 +342,8 @@ inline Payload (&EnumValuesPayload())[51] {
     Payload_GetDmxRuleBoolSettingRange,
     Payload_SetDmxDeviceMode,
     Payload_ResetDmxConfig,
-    Payload_GetIdealTime
+    Payload_GetIdealTime,
+    Payload_SuspendSystem
   };
   return values;
 }
@@ -395,6 +401,7 @@ inline const char **EnumNamesPayload() {
     "SetDmxDeviceMode",
     "ResetDmxConfig",
     "GetIdealTime",
+    "SuspendSystem",
     nullptr
   };
   return names;
@@ -607,6 +614,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::ResetDmxConfig> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetIdealTime> {
   static const Payload enum_value = Payload_GetIdealTime;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::SuspendSystem> {
+  static const Payload enum_value = Payload_SuspendSystem;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1563,6 +1574,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::GetIdealTime *payload_as_GetIdealTime() const {
     return payload_type() == Payload_GetIdealTime ? static_cast<const sisyfox::sisycol::request::GetIdealTime *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::SuspendSystem *payload_as_SuspendSystem() const {
+    return payload_type() == Payload_SuspendSystem ? static_cast<const sisyfox::sisycol::request::SuspendSystem *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -1772,6 +1786,10 @@ template<> inline const sisyfox::sisycol::request::ResetDmxConfig *Root::payload
 
 template<> inline const sisyfox::sisycol::request::GetIdealTime *Root::payload_as<sisyfox::sisycol::request::GetIdealTime>() const {
   return payload_as_GetIdealTime();
+}
+
+template<> inline const sisyfox::sisycol::request::SuspendSystem *Root::payload_as<sisyfox::sisycol::request::SuspendSystem>() const {
+  return payload_as_SuspendSystem();
 }
 
 struct RootBuilder {
@@ -4905,6 +4923,34 @@ inline flatbuffers::Offset<GetIdealTime> CreateGetIdealTime(
   return builder_.Finish();
 }
 
+struct SuspendSystem FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct SuspendSystemBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit SuspendSystemBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  SuspendSystemBuilder &operator=(const SuspendSystemBuilder &);
+  flatbuffers::Offset<SuspendSystem> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<SuspendSystem>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<SuspendSystem> CreateSuspendSystem(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  SuspendSystemBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
 }  // namespace request
 
 namespace response {
@@ -7583,6 +7629,34 @@ inline flatbuffers::Offset<GetIdealTime> CreateGetIdealTime(
   return builder_.Finish();
 }
 
+struct SuspendSystem FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct SuspendSystemBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit SuspendSystemBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  SuspendSystemBuilder &operator=(const SuspendSystemBuilder &);
+  flatbuffers::Offset<SuspendSystem> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<SuspendSystem>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<SuspendSystem> CreateSuspendSystem(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  SuspendSystemBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
 }  // namespace response
 
 namespace request {
@@ -7796,6 +7870,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_GetIdealTime: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetIdealTime *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_SuspendSystem: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::SuspendSystem *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

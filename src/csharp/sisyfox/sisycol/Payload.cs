@@ -58,6 +58,7 @@ public enum Payload : byte
  SetDmxDeviceMode = 48,
  ResetDmxConfig = 49,
  GetIdealTime = 50,
+ SuspendSystem = 51,
 };
 
 
