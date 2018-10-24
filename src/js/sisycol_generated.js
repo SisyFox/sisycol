@@ -138,7 +138,7 @@ sisyfox.sisycol.SettingType = {
   MAX_COLLECT_LEVEL: 69,
   GEM_SCORE: 70,
   TIME_ATTACK: 71,
-  ENDLESS: 72,
+  RESERVED_FOR_FUTURE_USE_1: 72,
   HASH: 73,
   GAME: 74,
   GAME_ACTIVE: 128,

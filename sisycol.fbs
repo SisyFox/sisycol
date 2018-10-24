@@ -46,7 +46,7 @@ enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          SFX_VOLUME, VOICES, IDLE_TIME, WIN_TRANSITIONS_TO_LOSS,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
-                         TIME_ATTACK, ENDLESS, HASH, GAME,
+                         TIME_ATTACK, RESERVED_FOR_FUTURE_USE_1, HASH, GAME,
                          GAME_ACTIVE = 128, GAME_ENABLED }
 
 enum Language:ubyte    { ENGLISH, GERMAN, CHINESE, CRUMMY_GERMAN = 0xff }
