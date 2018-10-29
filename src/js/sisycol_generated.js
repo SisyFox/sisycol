@@ -6903,10 +6903,19 @@ sisyfox.sisycol.response.GetCurrentUser.prototype.name = function(optionalEncodi
 };
 
 /**
+ * @param {flatbuffers.Encoding=} optionalEncoding
+ * @returns {string|Uint8Array|null}
+ */
+sisyfox.sisycol.response.GetCurrentUser.prototype.info = function(optionalEncoding) {
+  var offset = this.bb.__offset(this.bb_pos, 10);
+  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.response.GetCurrentUser.startGetCurrentUser = function(builder) {
-  builder.startObject(3);
+  builder.startObject(4);
 };
 
 /**
@@ -6931,6 +6940,14 @@ sisyfox.sisycol.response.GetCurrentUser.addTimestamp = function(builder, timesta
  */
 sisyfox.sisycol.response.GetCurrentUser.addName = function(builder, nameOffset) {
   builder.addFieldOffset(2, nameOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} infoOffset
+ */
+sisyfox.sisycol.response.GetCurrentUser.addInfo = function(builder, infoOffset) {
+  builder.addFieldOffset(3, infoOffset, 0);
 };
 
 /**

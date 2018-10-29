@@ -477,6 +477,7 @@ table GetCurrentUser {
     uId:uint;
     timestamp:ulong;
     name:string;
+    info:string;
 }
 
 table GetUserRange {
