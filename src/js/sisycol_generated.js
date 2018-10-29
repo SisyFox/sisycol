@@ -1797,10 +1797,19 @@ sisyfox.sisycol.User.prototype.name = function(optionalEncoding) {
 };
 
 /**
+ * @param {flatbuffers.Encoding=} optionalEncoding
+ * @returns {string|Uint8Array|null}
+ */
+sisyfox.sisycol.User.prototype.info = function(optionalEncoding) {
+  var offset = this.bb.__offset(this.bb_pos, 10);
+  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.User.startUser = function(builder) {
-  builder.startObject(3);
+  builder.startObject(4);
 };
 
 /**
@@ -1825,6 +1834,14 @@ sisyfox.sisycol.User.addTimestamp = function(builder, timestamp) {
  */
 sisyfox.sisycol.User.addName = function(builder, nameOffset) {
   builder.addFieldOffset(2, nameOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} infoOffset
+ */
+sisyfox.sisycol.User.addInfo = function(builder, infoOffset) {
+  builder.addFieldOffset(3, infoOffset, 0);
 };
 
 /**
@@ -2634,10 +2651,19 @@ sisyfox.sisycol.request.AddUser.prototype.name = function(optionalEncoding) {
 };
 
 /**
+ * @param {flatbuffers.Encoding=} optionalEncoding
+ * @returns {string|Uint8Array|null}
+ */
+sisyfox.sisycol.request.AddUser.prototype.info = function(optionalEncoding) {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.AddUser.startAddUser = function(builder) {
-  builder.startObject(1);
+  builder.startObject(2);
 };
 
 /**
@@ -2646,6 +2672,14 @@ sisyfox.sisycol.request.AddUser.startAddUser = function(builder) {
  */
 sisyfox.sisycol.request.AddUser.addName = function(builder, nameOffset) {
   builder.addFieldOffset(0, nameOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} infoOffset
+ */
+sisyfox.sisycol.request.AddUser.addInfo = function(builder, infoOffset) {
+  builder.addFieldOffset(1, infoOffset, 0);
 };
 
 /**

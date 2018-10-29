@@ -2361,7 +2361,8 @@ struct User FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_UID = 4,
     VT_TIMESTAMP = 6,
-    VT_NAME = 8
+    VT_NAME = 8,
+    VT_INFO = 10
   };
   uint32_t uId() const {
     return GetField<uint32_t>(VT_UID, 0);
@@ -2372,12 +2373,17 @@ struct User FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::String *name() const {
     return GetPointer<const flatbuffers::String *>(VT_NAME);
   }
+  const flatbuffers::String *info() const {
+    return GetPointer<const flatbuffers::String *>(VT_INFO);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint32_t>(verifier, VT_UID) &&
            VerifyField<uint64_t>(verifier, VT_TIMESTAMP) &&
            VerifyOffset(verifier, VT_NAME) &&
            verifier.Verify(name()) &&
+           VerifyOffset(verifier, VT_INFO) &&
+           verifier.Verify(info()) &&
            verifier.EndTable();
   }
 };
@@ -2393,6 +2399,9 @@ struct UserBuilder {
   }
   void add_name(flatbuffers::Offset<flatbuffers::String> name) {
     fbb_.AddOffset(User::VT_NAME, name);
+  }
+  void add_info(flatbuffers::Offset<flatbuffers::String> info) {
+    fbb_.AddOffset(User::VT_INFO, info);
   }
   explicit UserBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -2410,9 +2419,11 @@ inline flatbuffers::Offset<User> CreateUser(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint32_t uId = 0,
     uint64_t timestamp = 0,
-    flatbuffers::Offset<flatbuffers::String> name = 0) {
+    flatbuffers::Offset<flatbuffers::String> name = 0,
+    flatbuffers::Offset<flatbuffers::String> info = 0) {
   UserBuilder builder_(_fbb);
   builder_.add_timestamp(timestamp);
+  builder_.add_info(info);
   builder_.add_name(name);
   builder_.add_uId(uId);
   return builder_.Finish();
@@ -2422,12 +2433,14 @@ inline flatbuffers::Offset<User> CreateUserDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint32_t uId = 0,
     uint64_t timestamp = 0,
-    const char *name = nullptr) {
+    const char *name = nullptr,
+    const char *info = nullptr) {
   return sisyfox::sisycol::CreateUser(
       _fbb,
       uId,
       timestamp,
-      name ? _fbb.CreateString(name) : 0);
+      name ? _fbb.CreateString(name) : 0,
+      info ? _fbb.CreateString(info) : 0);
 }
 
 namespace request {
@@ -2902,15 +2915,21 @@ inline flatbuffers::Offset<GetLiveData> CreateGetLiveData(
 
 struct AddUser FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_NAME = 4
+    VT_NAME = 4,
+    VT_INFO = 6
   };
   const flatbuffers::String *name() const {
     return GetPointer<const flatbuffers::String *>(VT_NAME);
+  }
+  const flatbuffers::String *info() const {
+    return GetPointer<const flatbuffers::String *>(VT_INFO);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_NAME) &&
            verifier.Verify(name()) &&
+           VerifyOffset(verifier, VT_INFO) &&
+           verifier.Verify(info()) &&
            verifier.EndTable();
   }
 };
@@ -2920,6 +2939,9 @@ struct AddUserBuilder {
   flatbuffers::uoffset_t start_;
   void add_name(flatbuffers::Offset<flatbuffers::String> name) {
     fbb_.AddOffset(AddUser::VT_NAME, name);
+  }
+  void add_info(flatbuffers::Offset<flatbuffers::String> info) {
+    fbb_.AddOffset(AddUser::VT_INFO, info);
   }
   explicit AddUserBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -2935,18 +2957,22 @@ struct AddUserBuilder {
 
 inline flatbuffers::Offset<AddUser> CreateAddUser(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::String> name = 0) {
+    flatbuffers::Offset<flatbuffers::String> name = 0,
+    flatbuffers::Offset<flatbuffers::String> info = 0) {
   AddUserBuilder builder_(_fbb);
+  builder_.add_info(info);
   builder_.add_name(name);
   return builder_.Finish();
 }
 
 inline flatbuffers::Offset<AddUser> CreateAddUserDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const char *name = nullptr) {
+    const char *name = nullptr,
+    const char *info = nullptr) {
   return sisyfox::sisycol::request::CreateAddUser(
       _fbb,
-      name ? _fbb.CreateString(name) : 0);
+      name ? _fbb.CreateString(name) : 0,
+      info ? _fbb.CreateString(info) : 0);
 }
 
 struct GetUser FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
