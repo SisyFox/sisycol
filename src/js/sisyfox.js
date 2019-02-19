@@ -221,11 +221,13 @@ class Sisyfox {
         this.prepareSend(sisyfox.sisycol.Payload.GetUser, offset, builder);
     }
 
-    requestAddUser(name) {
+    requestAddUser(name, info) {
         const builder = new flatbuffers.Builder();
         const nameString = builder.createString(name);
+        const infoString = builder.createString(info);
         sisyfox.sisycol.request.AddUser.startAddUser(builder);
         sisyfox.sisycol.request.AddUser.addName(builder, nameString);
+        sisyfox.sisycol.request.AddUser.addInfo(builder, infoString);
         const offset = sisyfox.sisycol.request.AddUser.endAddUser(builder);
         this.prepareSend(sisyfox.sisycol.Payload.AddUser, offset, builder);
     }

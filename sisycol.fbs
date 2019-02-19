@@ -176,6 +176,7 @@ table User {
     uId:uint;
     timestamp:ulong;
     name:string;
+    info:string;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -226,6 +227,7 @@ table GetLiveData {}
 
 table AddUser {
   name:string;
+  info:string;
 }
 
 table GetUser {
@@ -478,6 +480,7 @@ table GetCurrentUser {
     uId:uint;
     timestamp:ulong;
     name:string;
+    info:string;
 }
 
 table GetUserRange {

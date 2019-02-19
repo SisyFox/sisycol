@@ -19,16 +19,21 @@ public struct AddUser : IFlatbufferObject
 
   public string Name { get { int o = __p.__offset(4); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
   public ArraySegment<byte>? GetNameBytes() { return __p.__vector_as_arraysegment(4); }
+  public string Info { get { int o = __p.__offset(6); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
+  public ArraySegment<byte>? GetInfoBytes() { return __p.__vector_as_arraysegment(6); }
 
   public static Offset<AddUser> CreateAddUser(FlatBufferBuilder builder,
-      StringOffset nameOffset = default(StringOffset)) {
-    builder.StartObject(1);
+      StringOffset nameOffset = default(StringOffset),
+      StringOffset infoOffset = default(StringOffset)) {
+    builder.StartObject(2);
+    AddUser.AddInfo(builder, infoOffset);
     AddUser.AddName(builder, nameOffset);
     return AddUser.EndAddUser(builder);
   }
 
-  public static void StartAddUser(FlatBufferBuilder builder) { builder.StartObject(1); }
+  public static void StartAddUser(FlatBufferBuilder builder) { builder.StartObject(2); }
   public static void AddName(FlatBufferBuilder builder, StringOffset nameOffset) { builder.AddOffset(0, nameOffset.Value, 0); }
+  public static void AddInfo(FlatBufferBuilder builder, StringOffset infoOffset) { builder.AddOffset(1, infoOffset.Value, 0); }
   public static Offset<AddUser> EndAddUser(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<AddUser>(o);

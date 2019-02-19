@@ -21,22 +21,27 @@ public struct GetCurrentUser : IFlatbufferObject
   public ulong Timestamp { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
   public string Name { get { int o = __p.__offset(8); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
   public ArraySegment<byte>? GetNameBytes() { return __p.__vector_as_arraysegment(8); }
+  public string Info { get { int o = __p.__offset(10); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
+  public ArraySegment<byte>? GetInfoBytes() { return __p.__vector_as_arraysegment(10); }
 
   public static Offset<GetCurrentUser> CreateGetCurrentUser(FlatBufferBuilder builder,
       uint uId = 0,
       ulong timestamp = 0,
-      StringOffset nameOffset = default(StringOffset)) {
-    builder.StartObject(3);
+      StringOffset nameOffset = default(StringOffset),
+      StringOffset infoOffset = default(StringOffset)) {
+    builder.StartObject(4);
     GetCurrentUser.AddTimestamp(builder, timestamp);
+    GetCurrentUser.AddInfo(builder, infoOffset);
     GetCurrentUser.AddName(builder, nameOffset);
     GetCurrentUser.AddUId(builder, uId);
     return GetCurrentUser.EndGetCurrentUser(builder);
   }
 
-  public static void StartGetCurrentUser(FlatBufferBuilder builder) { builder.StartObject(3); }
+  public static void StartGetCurrentUser(FlatBufferBuilder builder) { builder.StartObject(4); }
   public static void AddUId(FlatBufferBuilder builder, uint uId) { builder.AddUint(0, uId, 0); }
   public static void AddTimestamp(FlatBufferBuilder builder, ulong timestamp) { builder.AddUlong(1, timestamp, 0); }
   public static void AddName(FlatBufferBuilder builder, StringOffset nameOffset) { builder.AddOffset(2, nameOffset.Value, 0); }
+  public static void AddInfo(FlatBufferBuilder builder, StringOffset infoOffset) { builder.AddOffset(3, infoOffset.Value, 0); }
   public static Offset<GetCurrentUser> EndGetCurrentUser(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetCurrentUser>(o);
