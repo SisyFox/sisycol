@@ -18,6 +18,7 @@ public enum SettingType : byte
  VOICES = 8,
  IDLE_TIME = 9,
  WIN_TRANSITIONS_TO_LOSS = 10,
+ BALL_SETTING = 11,
  WORLD = 64,
  LEVEL = 65,
  DIFFICULTY = 66,

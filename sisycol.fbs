@@ -44,6 +44,7 @@ enum TriggerType:ubyte { NEW_ROUND }
 enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          COMPETITION_MODE, DEBUG_MODE, TIMEFRAME, MUSIC_VOLUME,
                          SFX_VOLUME, VOICES, IDLE_TIME, WIN_TRANSITIONS_TO_LOSS,
+                         BALL_SETTING,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
                          TIME_ATTACK, RESERVED_FOR_FUTURE_USE_1, HASH, GAME,
@@ -58,6 +59,8 @@ enum Difficulty:ubyte  { VERY_EASY, EASY, NORMAL, HARD, VERY_HARD }
 enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON, SECRET_ISLAND }
 
 enum Game:ubyte        { CLASSIC, DOWNHILL }
+
+enum BallSetting:ubyte { BIG_BALL, SMALL_BALL }
 
 enum DmxChannelRuleType:byte   { GOAL, TIME, PITCH }
 

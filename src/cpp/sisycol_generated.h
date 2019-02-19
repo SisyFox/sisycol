@@ -749,6 +749,7 @@ enum SettingType {
   SettingType_VOICES = 8,
   SettingType_IDLE_TIME = 9,
   SettingType_WIN_TRANSITIONS_TO_LOSS = 10,
+  SettingType_BALL_SETTING = 11,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
   SettingType_DIFFICULTY = 66,
@@ -766,7 +767,7 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED
 };
 
-inline SettingType (&EnumValuesSettingType())[24] {
+inline SettingType (&EnumValuesSettingType())[25] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -779,6 +780,7 @@ inline SettingType (&EnumValuesSettingType())[24] {
     SettingType_VOICES,
     SettingType_IDLE_TIME,
     SettingType_WIN_TRANSITIONS_TO_LOSS,
+    SettingType_BALL_SETTING,
     SettingType_WORLD,
     SettingType_LEVEL,
     SettingType_DIFFICULTY,
@@ -947,6 +949,35 @@ inline const char **EnumNamesGame() {
 inline const char *EnumNameGame(Game e) {
   const size_t index = static_cast<int>(e);
   return EnumNamesGame()[index];
+}
+
+enum BallSetting {
+  BallSetting_BIG_BALL = 0,
+  BallSetting_SMALL_BALL = 1,
+  BallSetting_MIN = BallSetting_BIG_BALL,
+  BallSetting_MAX = BallSetting_SMALL_BALL
+};
+
+inline BallSetting (&EnumValuesBallSetting())[2] {
+  static BallSetting values[] = {
+    BallSetting_BIG_BALL,
+    BallSetting_SMALL_BALL
+  };
+  return values;
+}
+
+inline const char **EnumNamesBallSetting() {
+  static const char *names[] = {
+    "BIG_BALL",
+    "SMALL_BALL",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameBallSetting(BallSetting e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesBallSetting()[index];
 }
 
 enum DmxChannelRuleType {

@@ -130,6 +130,7 @@ sisyfox.sisycol.SettingType = {
   VOICES: 8,
   IDLE_TIME: 9,
   WIN_TRANSITIONS_TO_LOSS: 10,
+  BALL_SETTING: 11,
   WORLD: 64,
   LEVEL: 65,
   DIFFICULTY: 66,
@@ -191,6 +192,14 @@ sisyfox.sisycol.World = {
 sisyfox.sisycol.Game = {
   CLASSIC: 0,
   DOWNHILL: 1
+};
+
+/**
+ * @enum
+ */
+sisyfox.sisycol.BallSetting = {
+  BIG_BALL: 0,
+  SMALL_BALL: 1
 };
 
 /**
