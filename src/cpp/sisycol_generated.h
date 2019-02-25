@@ -802,16 +802,20 @@ enum Language {
   Language_ENGLISH = 0,
   Language_GERMAN = 1,
   Language_CHINESE = 2,
+  Language_FRENCH = 3,
+  Language_JAPANESE = 4,
   Language_CRUMMY_GERMAN = 255,
   Language_MIN = Language_ENGLISH,
   Language_MAX = Language_CRUMMY_GERMAN
 };
 
-inline Language (&EnumValuesLanguage())[4] {
+inline Language (&EnumValuesLanguage())[6] {
   static Language values[] = {
     Language_ENGLISH,
     Language_GERMAN,
     Language_CHINESE,
+    Language_FRENCH,
+    Language_JAPANESE,
     Language_CRUMMY_GERMAN
   };
   return values;

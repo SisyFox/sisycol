@@ -153,6 +153,8 @@ sisyfox.sisycol.Language = {
   ENGLISH: 0,
   GERMAN: 1,
   CHINESE: 2,
+  FRENCH: 3,
+  JAPANESE: 4,
   CRUMMY_GERMAN: 255
 };
 
