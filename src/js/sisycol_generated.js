@@ -185,7 +185,8 @@ sisyfox.sisycol.World = {
   ORIGIN_MOUNTAIN: 0,
   BLOCKSBERG: 1,
   RED_CANYON: 2,
-  SECRET_ISLAND: 3
+  SECRET_ISLAND: 3,
+  TUTORIAL: 4
 };
 
 /**

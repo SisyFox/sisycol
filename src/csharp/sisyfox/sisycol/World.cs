@@ -11,6 +11,7 @@ public enum World : byte
  BLOCKSBERG = 1,
  RED_CANYON = 2,
  SECRET_ISLAND = 3,
+ TUTORIAL = 4,
 };
 
 

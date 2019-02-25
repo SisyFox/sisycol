@@ -56,7 +56,7 @@ enum GameMode:ubyte    { CLIMB, COLLECT, EXPLORE }
 
 enum Difficulty:ubyte  { VERY_EASY, EASY, NORMAL, HARD, VERY_HARD }
 
-enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON, SECRET_ISLAND }
+enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON, SECRET_ISLAND, TUTORIAL }
 
 enum Game:ubyte        { CLASSIC, DOWNHILL }
 

@@ -896,16 +896,18 @@ enum World {
   World_BLOCKSBERG = 1,
   World_RED_CANYON = 2,
   World_SECRET_ISLAND = 3,
+  World_TUTORIAL = 4,
   World_MIN = World_ORIGIN_MOUNTAIN,
-  World_MAX = World_SECRET_ISLAND
+  World_MAX = World_TUTORIAL
 };
 
-inline World (&EnumValuesWorld())[4] {
+inline World (&EnumValuesWorld())[5] {
   static World values[] = {
     World_ORIGIN_MOUNTAIN,
     World_BLOCKSBERG,
     World_RED_CANYON,
-    World_SECRET_ISLAND
+    World_SECRET_ISLAND,
+    World_TUTORIAL
   };
   return values;
 }
@@ -916,6 +918,7 @@ inline const char **EnumNamesWorld() {
     "BLOCKSBERG",
     "RED_CANYON",
     "SECRET_ISLAND",
+    "TUTORIAL",
     nullptr
   };
   return names;
