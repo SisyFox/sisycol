@@ -59,6 +59,7 @@ public enum Payload : byte
  ResetDmxConfig = 49,
  GetIdealTime = 50,
  SuspendSystem = 51,
+ GetScoreFiltered = 52,
 };
 
 

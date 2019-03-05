@@ -49,6 +49,8 @@ struct GetScore;
 
 struct GetScoreRange;
 
+struct GetScoreFiltered;
+
 struct AddLocation;
 
 struct GetLocation;
@@ -144,6 +146,8 @@ struct AddScore;
 struct GetScore;
 
 struct GetScoreRange;
+
+struct GetScoreFiltered;
 
 struct GetLocation;
 
@@ -286,11 +290,12 @@ enum Payload {
   Payload_ResetDmxConfig = 49,
   Payload_GetIdealTime = 50,
   Payload_SuspendSystem = 51,
+  Payload_GetScoreFiltered = 52,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_SuspendSystem
+  Payload_MAX = Payload_GetScoreFiltered
 };
 
-inline Payload (&EnumValuesPayload())[52] {
+inline Payload (&EnumValuesPayload())[53] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -343,7 +348,8 @@ inline Payload (&EnumValuesPayload())[52] {
     Payload_SetDmxDeviceMode,
     Payload_ResetDmxConfig,
     Payload_GetIdealTime,
-    Payload_SuspendSystem
+    Payload_SuspendSystem,
+    Payload_GetScoreFiltered
   };
   return values;
 }
@@ -402,6 +408,7 @@ inline const char **EnumNamesPayload() {
     "ResetDmxConfig",
     "GetIdealTime",
     "SuspendSystem",
+    "GetScoreFiltered",
     nullptr
   };
   return names;
@@ -618,6 +625,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::GetIdealTime> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::SuspendSystem> {
   static const Payload enum_value = Payload_SuspendSystem;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::GetScoreFiltered> {
+  static const Payload enum_value = Payload_GetScoreFiltered;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1615,6 +1626,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::SuspendSystem *payload_as_SuspendSystem() const {
     return payload_type() == Payload_SuspendSystem ? static_cast<const sisyfox::sisycol::request::SuspendSystem *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::GetScoreFiltered *payload_as_GetScoreFiltered() const {
+    return payload_type() == Payload_GetScoreFiltered ? static_cast<const sisyfox::sisycol::request::GetScoreFiltered *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -1828,6 +1842,10 @@ template<> inline const sisyfox::sisycol::request::GetIdealTime *Root::payload_a
 
 template<> inline const sisyfox::sisycol::request::SuspendSystem *Root::payload_as<sisyfox::sisycol::request::SuspendSystem>() const {
   return payload_as_SuspendSystem();
+}
+
+template<> inline const sisyfox::sisycol::request::GetScoreFiltered *Root::payload_as<sisyfox::sisycol::request::GetScoreFiltered>() const {
+  return payload_as_GetScoreFiltered();
 }
 
 struct RootBuilder {
@@ -2779,6 +2797,56 @@ inline flatbuffers::Offset<GetScoreRange> CreateGetScoreRange(
   GetScoreRangeBuilder builder_(_fbb);
   builder_.add_startId(startId);
   builder_.add_range(range);
+  return builder_.Finish();
+}
+
+struct GetScoreFiltered FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_TIMESTAMP_BEGIN = 4,
+    VT_TIMESTAMP_END = 6
+  };
+  uint64_t timestamp_begin() const {
+    return GetField<uint64_t>(VT_TIMESTAMP_BEGIN, 0);
+  }
+  uint64_t timestamp_end() const {
+    return GetField<uint64_t>(VT_TIMESTAMP_END, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint64_t>(verifier, VT_TIMESTAMP_BEGIN) &&
+           VerifyField<uint64_t>(verifier, VT_TIMESTAMP_END) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetScoreFilteredBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_timestamp_begin(uint64_t timestamp_begin) {
+    fbb_.AddElement<uint64_t>(GetScoreFiltered::VT_TIMESTAMP_BEGIN, timestamp_begin, 0);
+  }
+  void add_timestamp_end(uint64_t timestamp_end) {
+    fbb_.AddElement<uint64_t>(GetScoreFiltered::VT_TIMESTAMP_END, timestamp_end, 0);
+  }
+  explicit GetScoreFilteredBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetScoreFilteredBuilder &operator=(const GetScoreFilteredBuilder &);
+  flatbuffers::Offset<GetScoreFiltered> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetScoreFiltered>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetScoreFiltered> CreateGetScoreFiltered(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint64_t timestamp_begin = 0,
+    uint64_t timestamp_end = 0) {
+  GetScoreFilteredBuilder builder_(_fbb);
+  builder_.add_timestamp_end(timestamp_end);
+  builder_.add_timestamp_begin(timestamp_begin);
   return builder_.Finish();
 }
 
@@ -5277,6 +5345,56 @@ inline flatbuffers::Offset<GetScoreRange> CreateGetScoreRangeDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const std::vector<flatbuffers::Offset<sisyfox::sisycol::Score>> *data = nullptr) {
   return sisyfox::sisycol::response::CreateGetScoreRange(
+      _fbb,
+      data ? _fbb.CreateVector<flatbuffers::Offset<sisyfox::sisycol::Score>>(*data) : 0);
+}
+
+struct GetScoreFiltered FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_DATA = 4
+  };
+  const flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Score>> *data() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Score>> *>(VT_DATA);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_DATA) &&
+           verifier.Verify(data()) &&
+           verifier.VerifyVectorOfTables(data()) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetScoreFilteredBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_data(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Score>>> data) {
+    fbb_.AddOffset(GetScoreFiltered::VT_DATA, data);
+  }
+  explicit GetScoreFilteredBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetScoreFilteredBuilder &operator=(const GetScoreFilteredBuilder &);
+  flatbuffers::Offset<GetScoreFiltered> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetScoreFiltered>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetScoreFiltered> CreateGetScoreFiltered(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<sisyfox::sisycol::Score>>> data = 0) {
+  GetScoreFilteredBuilder builder_(_fbb);
+  builder_.add_data(data);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<GetScoreFiltered> CreateGetScoreFilteredDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    const std::vector<flatbuffers::Offset<sisyfox::sisycol::Score>> *data = nullptr) {
+  return sisyfox::sisycol::response::CreateGetScoreFiltered(
       _fbb,
       data ? _fbb.CreateVector<flatbuffers::Offset<sisyfox::sisycol::Score>>(*data) : 0);
 }
@@ -7951,6 +8069,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_SuspendSystem: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::SuspendSystem *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_GetScoreFiltered: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetScoreFiltered *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;
