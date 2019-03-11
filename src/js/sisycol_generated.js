@@ -134,6 +134,8 @@ sisyfox.sisycol.SettingType = {
   BALL_SETTING: 11,
   PLAY_VIDEO: 12,
   VIDEO_DELAY: 13,
+  USER_SELECTION: 14,
+  INGAME_MENU: 15,
   WORLD: 64,
   LEVEL: 65,
   DIFFICULTY: 66,
