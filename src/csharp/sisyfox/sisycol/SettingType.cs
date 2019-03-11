@@ -19,6 +19,8 @@ public enum SettingType : byte
  IDLE_TIME = 9,
  WIN_TRANSITIONS_TO_LOSS = 10,
  BALL_SETTING = 11,
+ PLAY_VIDEO = 12,
+ VIDEO_DELAY = 13,
  WORLD = 64,
  LEVEL = 65,
  DIFFICULTY = 66,
