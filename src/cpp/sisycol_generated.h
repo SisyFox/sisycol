@@ -763,8 +763,9 @@ enum SettingType {
   SettingType_BALL_SETTING = 11,
   SettingType_PLAY_VIDEO = 12,
   SettingType_VIDEO_DELAY = 13,
-  SettingType_USER_SELECTION = 14,
+  SettingType_RESERVED = 14,
   SettingType_INGAME_MENU = 15,
+  SettingType_SF_CONTROL_INTERNAL = 63,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
   SettingType_DIFFICULTY = 66,
@@ -782,7 +783,7 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED
 };
 
-inline SettingType (&EnumValuesSettingType())[29] {
+inline SettingType (&EnumValuesSettingType())[30] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -798,8 +799,9 @@ inline SettingType (&EnumValuesSettingType())[29] {
     SettingType_BALL_SETTING,
     SettingType_PLAY_VIDEO,
     SettingType_VIDEO_DELAY,
-    SettingType_USER_SELECTION,
+    SettingType_RESERVED,
     SettingType_INGAME_MENU,
+    SettingType_SF_CONTROL_INTERNAL,
     SettingType_WORLD,
     SettingType_LEVEL,
     SettingType_DIFFICULTY,
@@ -833,7 +835,7 @@ inline const char **EnumNamesSettingType() {
     "BALL_SETTING",
     "PLAY_VIDEO",
     "VIDEO_DELAY",
-    "USER_SELECTION",
+    "RESERVED",
     "INGAME_MENU",
     "",
     "",
@@ -882,7 +884,7 @@ inline const char **EnumNamesSettingType() {
     "",
     "",
     "",
-    "",
+    "SF_CONTROL_INTERNAL",
     "WORLD",
     "LEVEL",
     "DIFFICULTY",
