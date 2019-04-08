@@ -214,6 +214,8 @@ table GetScoreRange {
 table GetScoreFiltered {
   timestamp_begin:ulong;
   timestamp_end:ulong;
+  range:ubyte;
+  startId:uint;
 }
 
 table AddLocation {

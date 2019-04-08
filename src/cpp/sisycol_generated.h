@@ -2955,7 +2955,9 @@ inline flatbuffers::Offset<GetScoreRange> CreateGetScoreRange(
 struct GetScoreFiltered FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_TIMESTAMP_BEGIN = 4,
-    VT_TIMESTAMP_END = 6
+    VT_TIMESTAMP_END = 6,
+    VT_RANGE = 8,
+    VT_STARTID = 10
   };
   uint64_t timestamp_begin() const {
     return GetField<uint64_t>(VT_TIMESTAMP_BEGIN, 0);
@@ -2963,10 +2965,18 @@ struct GetScoreFiltered FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   uint64_t timestamp_end() const {
     return GetField<uint64_t>(VT_TIMESTAMP_END, 0);
   }
+  uint8_t range() const {
+    return GetField<uint8_t>(VT_RANGE, 0);
+  }
+  uint32_t startId() const {
+    return GetField<uint32_t>(VT_STARTID, 0);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint64_t>(verifier, VT_TIMESTAMP_BEGIN) &&
            VerifyField<uint64_t>(verifier, VT_TIMESTAMP_END) &&
+           VerifyField<uint8_t>(verifier, VT_RANGE) &&
+           VerifyField<uint32_t>(verifier, VT_STARTID) &&
            verifier.EndTable();
   }
 };
@@ -2979,6 +2989,12 @@ struct GetScoreFilteredBuilder {
   }
   void add_timestamp_end(uint64_t timestamp_end) {
     fbb_.AddElement<uint64_t>(GetScoreFiltered::VT_TIMESTAMP_END, timestamp_end, 0);
+  }
+  void add_range(uint8_t range) {
+    fbb_.AddElement<uint8_t>(GetScoreFiltered::VT_RANGE, range, 0);
+  }
+  void add_startId(uint32_t startId) {
+    fbb_.AddElement<uint32_t>(GetScoreFiltered::VT_STARTID, startId, 0);
   }
   explicit GetScoreFilteredBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -2995,10 +3011,14 @@ struct GetScoreFilteredBuilder {
 inline flatbuffers::Offset<GetScoreFiltered> CreateGetScoreFiltered(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint64_t timestamp_begin = 0,
-    uint64_t timestamp_end = 0) {
+    uint64_t timestamp_end = 0,
+    uint8_t range = 0,
+    uint32_t startId = 0) {
   GetScoreFilteredBuilder builder_(_fbb);
   builder_.add_timestamp_end(timestamp_end);
   builder_.add_timestamp_begin(timestamp_begin);
+  builder_.add_startId(startId);
+  builder_.add_range(range);
   return builder_.Finish();
 }
 

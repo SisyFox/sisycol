@@ -19,19 +19,27 @@ public struct GetScoreFiltered : IFlatbufferObject
 
   public ulong TimestampBegin { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
   public ulong TimestampEnd { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
+  public byte Range { get { int o = __p.__offset(8); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public uint StartId { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
 
   public static Offset<GetScoreFiltered> CreateGetScoreFiltered(FlatBufferBuilder builder,
       ulong timestamp_begin = 0,
-      ulong timestamp_end = 0) {
-    builder.StartObject(2);
+      ulong timestamp_end = 0,
+      byte range = 0,
+      uint startId = 0) {
+    builder.StartObject(4);
     GetScoreFiltered.AddTimestampEnd(builder, timestamp_end);
     GetScoreFiltered.AddTimestampBegin(builder, timestamp_begin);
+    GetScoreFiltered.AddStartId(builder, startId);
+    GetScoreFiltered.AddRange(builder, range);
     return GetScoreFiltered.EndGetScoreFiltered(builder);
   }
 
-  public static void StartGetScoreFiltered(FlatBufferBuilder builder) { builder.StartObject(2); }
+  public static void StartGetScoreFiltered(FlatBufferBuilder builder) { builder.StartObject(4); }
   public static void AddTimestampBegin(FlatBufferBuilder builder, ulong timestampBegin) { builder.AddUlong(0, timestampBegin, 0); }
   public static void AddTimestampEnd(FlatBufferBuilder builder, ulong timestampEnd) { builder.AddUlong(1, timestampEnd, 0); }
+  public static void AddRange(FlatBufferBuilder builder, byte range) { builder.AddByte(2, range, 0); }
+  public static void AddStartId(FlatBufferBuilder builder, uint startId) { builder.AddUint(3, startId, 0); }
   public static Offset<GetScoreFiltered> EndGetScoreFiltered(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetScoreFiltered>(o);

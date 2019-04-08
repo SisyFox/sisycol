@@ -2406,10 +2406,26 @@ sisyfox.sisycol.request.GetScoreFiltered.prototype.timestampEnd = function() {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetScoreFiltered.prototype.range = function() {
+  var offset = this.bb.__offset(this.bb_pos, 8);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetScoreFiltered.prototype.startId = function() {
+  var offset = this.bb.__offset(this.bb_pos, 10);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.GetScoreFiltered.startGetScoreFiltered = function(builder) {
-  builder.startObject(2);
+  builder.startObject(4);
 };
 
 /**
@@ -2426,6 +2442,22 @@ sisyfox.sisycol.request.GetScoreFiltered.addTimestampBegin = function(builder, t
  */
 sisyfox.sisycol.request.GetScoreFiltered.addTimestampEnd = function(builder, timestampEnd) {
   builder.addFieldInt64(1, timestampEnd, builder.createLong(0, 0));
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} range
+ */
+sisyfox.sisycol.request.GetScoreFiltered.addRange = function(builder, range) {
+  builder.addFieldInt8(2, range, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} startId
+ */
+sisyfox.sisycol.request.GetScoreFiltered.addStartId = function(builder, startId) {
+  builder.addFieldInt32(3, startId, 0);
 };
 
 /**
