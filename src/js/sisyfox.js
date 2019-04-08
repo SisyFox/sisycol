@@ -204,6 +204,18 @@ class Sisyfox {
         this.prepareSend(sisyfox.sisycol.Payload.GetScoreRange, offset, builder);
     }
 
+    requestGetScoreFiltered(timestampBegin, timestampEnd, startId, range) {
+        const builder = new flatbuffers.Builder();
+        sisyfox.sisycol.request.GetScoreFiltered.startGetScoreFiltered(builder);
+        sisyfox.sisycol.request.GetScoreFiltered.addTimestampBegin(builder, new flatbuffers.Long(timestampBegin, 0));
+        sisyfox.sisycol.request.GetScoreFiltered.addTimestampEnd(builder, new flatbuffers.Long(timestampEnd, 0));
+        sisyfox.sisycol.request.GetScoreFiltered.addStartId(builder, startId);
+        sisyfox.sisycol.request.GetScoreFiltered.addRange(builder, range);
+        const offset = sisyfox.sisycol.request.GetScoreFiltered.endGetScoreFiltered(builder);
+        this.prepareSend(sisyfox.sisycol.Payload.GetScoreFiltered, offset, builder);
+    }
+
+
     requestGetUserRange(startId, range) {
         const builder = new flatbuffers.Builder();
         sisyfox.sisycol.request.GetUserRange.startGetUserRange(builder);
