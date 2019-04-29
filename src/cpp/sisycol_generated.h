@@ -133,6 +133,8 @@ struct GetIdealTime;
 
 struct SuspendSystem;
 
+struct GetRemoteDevices;
+
 }  // namespace request
 
 namespace response {
@@ -234,6 +236,10 @@ struct ResetDmxConfig;
 struct GetIdealTime;
 
 struct SuspendSystem;
+
+struct Device;
+
+struct GetRemoteDevices;
 
 }  // namespace response
 
@@ -763,8 +769,9 @@ enum SettingType {
   SettingType_BALL_SETTING = 11,
   SettingType_PLAY_VIDEO = 12,
   SettingType_VIDEO_DELAY = 13,
-  SettingType_RESERVED = 14,
+  SettingType_VIDEO_SELECTION = 14,
   SettingType_INGAME_MENU = 15,
+  SettingType_SENSOR = 16,
   SettingType_SF_CONTROL_INTERNAL = 63,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
@@ -783,7 +790,7 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED
 };
 
-inline SettingType (&EnumValuesSettingType())[30] {
+inline SettingType (&EnumValuesSettingType())[31] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -799,8 +806,9 @@ inline SettingType (&EnumValuesSettingType())[30] {
     SettingType_BALL_SETTING,
     SettingType_PLAY_VIDEO,
     SettingType_VIDEO_DELAY,
-    SettingType_RESERVED,
+    SettingType_VIDEO_SELECTION,
     SettingType_INGAME_MENU,
+    SettingType_SENSOR,
     SettingType_SF_CONTROL_INTERNAL,
     SettingType_WORLD,
     SettingType_LEVEL,
@@ -835,9 +843,9 @@ inline const char **EnumNamesSettingType() {
     "BALL_SETTING",
     "PLAY_VIDEO",
     "VIDEO_DELAY",
-    "RESERVED",
+    "VIDEO_SELECTION",
     "INGAME_MENU",
-    "",
+    "SENSOR",
     "",
     "",
     "",
@@ -1148,6 +1156,70 @@ inline const char **EnumNamesBallSetting() {
 inline const char *EnumNameBallSetting(BallSetting e) {
   const size_t index = static_cast<int>(e);
   return EnumNamesBallSetting()[index];
+}
+
+enum VideoSelection {
+  VideoSelection_DEFAULT = 0,
+  VideoSelection_PRODUCT = 1,
+  VideoSelection_CUSTOMER = 2,
+  VideoSelection_MIN = VideoSelection_DEFAULT,
+  VideoSelection_MAX = VideoSelection_CUSTOMER
+};
+
+inline VideoSelection (&EnumValuesVideoSelection())[3] {
+  static VideoSelection values[] = {
+    VideoSelection_DEFAULT,
+    VideoSelection_PRODUCT,
+    VideoSelection_CUSTOMER
+  };
+  return values;
+}
+
+inline const char **EnumNamesVideoSelection() {
+  static const char *names[] = {
+    "DEFAULT",
+    "PRODUCT",
+    "CUSTOMER",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameVideoSelection(VideoSelection e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesVideoSelection()[index];
+}
+
+enum Sensor {
+  Sensor_V1_0 = 0,
+  Sensor_V1_1 = 1,
+  Sensor_V2_0 = 2,
+  Sensor_MIN = Sensor_V1_0,
+  Sensor_MAX = Sensor_V2_0
+};
+
+inline Sensor (&EnumValuesSensor())[3] {
+  static Sensor values[] = {
+    Sensor_V1_0,
+    Sensor_V1_1,
+    Sensor_V2_0
+  };
+  return values;
+}
+
+inline const char **EnumNamesSensor() {
+  static const char *names[] = {
+    "V1_0",
+    "V1_1",
+    "V2_0",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameSensor(Sensor e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesSensor()[index];
 }
 
 enum DmxChannelRuleType {
@@ -5255,6 +5327,34 @@ inline flatbuffers::Offset<SuspendSystem> CreateSuspendSystem(
   return builder_.Finish();
 }
 
+struct GetRemoteDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetRemoteDevicesBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit GetRemoteDevicesBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetRemoteDevicesBuilder &operator=(const GetRemoteDevicesBuilder &);
+  flatbuffers::Offset<GetRemoteDevices> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetRemoteDevices>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetRemoteDevices> CreateGetRemoteDevices(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  GetRemoteDevicesBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
 }  // namespace request
 
 namespace response {
@@ -8022,6 +8122,126 @@ inline flatbuffers::Offset<SuspendSystem> CreateSuspendSystem(
     flatbuffers::FlatBufferBuilder &_fbb) {
   SuspendSystemBuilder builder_(_fbb);
   return builder_.Finish();
+}
+
+struct Device FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_IP = 4,
+    VT_ENABLEDMULTIPLAYER = 6,
+    VT_ISHOST = 8,
+    VT_ISSELF = 10
+  };
+  uint32_t ip() const {
+    return GetField<uint32_t>(VT_IP, 0);
+  }
+  bool enabledMultiplayer() const {
+    return GetField<uint8_t>(VT_ENABLEDMULTIPLAYER, 0) != 0;
+  }
+  bool isHost() const {
+    return GetField<uint8_t>(VT_ISHOST, 0) != 0;
+  }
+  bool isSelf() const {
+    return GetField<uint8_t>(VT_ISSELF, 0) != 0;
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_IP) &&
+           VerifyField<uint8_t>(verifier, VT_ENABLEDMULTIPLAYER) &&
+           VerifyField<uint8_t>(verifier, VT_ISHOST) &&
+           VerifyField<uint8_t>(verifier, VT_ISSELF) &&
+           verifier.EndTable();
+  }
+};
+
+struct DeviceBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_ip(uint32_t ip) {
+    fbb_.AddElement<uint32_t>(Device::VT_IP, ip, 0);
+  }
+  void add_enabledMultiplayer(bool enabledMultiplayer) {
+    fbb_.AddElement<uint8_t>(Device::VT_ENABLEDMULTIPLAYER, static_cast<uint8_t>(enabledMultiplayer), 0);
+  }
+  void add_isHost(bool isHost) {
+    fbb_.AddElement<uint8_t>(Device::VT_ISHOST, static_cast<uint8_t>(isHost), 0);
+  }
+  void add_isSelf(bool isSelf) {
+    fbb_.AddElement<uint8_t>(Device::VT_ISSELF, static_cast<uint8_t>(isSelf), 0);
+  }
+  explicit DeviceBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  DeviceBuilder &operator=(const DeviceBuilder &);
+  flatbuffers::Offset<Device> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<Device>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<Device> CreateDevice(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t ip = 0,
+    bool enabledMultiplayer = false,
+    bool isHost = false,
+    bool isSelf = false) {
+  DeviceBuilder builder_(_fbb);
+  builder_.add_ip(ip);
+  builder_.add_isSelf(isSelf);
+  builder_.add_isHost(isHost);
+  builder_.add_enabledMultiplayer(enabledMultiplayer);
+  return builder_.Finish();
+}
+
+struct GetRemoteDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_DEVICES = 4
+  };
+  const flatbuffers::Vector<flatbuffers::Offset<Device>> *devices() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<Device>> *>(VT_DEVICES);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_DEVICES) &&
+           verifier.Verify(devices()) &&
+           verifier.VerifyVectorOfTables(devices()) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetRemoteDevicesBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_devices(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Device>>> devices) {
+    fbb_.AddOffset(GetRemoteDevices::VT_DEVICES, devices);
+  }
+  explicit GetRemoteDevicesBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetRemoteDevicesBuilder &operator=(const GetRemoteDevicesBuilder &);
+  flatbuffers::Offset<GetRemoteDevices> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetRemoteDevices>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetRemoteDevices> CreateGetRemoteDevices(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Device>>> devices = 0) {
+  GetRemoteDevicesBuilder builder_(_fbb);
+  builder_.add_devices(devices);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<GetRemoteDevices> CreateGetRemoteDevicesDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    const std::vector<flatbuffers::Offset<Device>> *devices = nullptr) {
+  return sisyfox::sisycol::response::CreateGetRemoteDevices(
+      _fbb,
+      devices ? _fbb.CreateVector<flatbuffers::Offset<Device>>(*devices) : 0);
 }
 
 }  // namespace response

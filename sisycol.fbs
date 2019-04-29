@@ -44,8 +44,9 @@ enum TriggerType:ubyte { NEW_ROUND }
 enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          COMPETITION_MODE, DEBUG_MODE, TIMEFRAME, MUSIC_VOLUME,
                          SFX_VOLUME, VOICES, IDLE_TIME, WIN_TRANSITIONS_TO_LOSS,
-                         BALL_SETTING, PLAY_VIDEO, VIDEO_DELAY, RESERVED,
-                         INGAME_MENU, SF_CONTROL_INTERNAL=0x3f,
+                         BALL_SETTING, PLAY_VIDEO, VIDEO_DELAY, VIDEO_SELECTION,
+                         INGAME_MENU, SENSOR,
+                         SF_CONTROL_INTERNAL=0x3f,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
                          TIME_ATTACK, RESERVED_FOR_FUTURE_USE_1, HASH, GAME,
@@ -62,6 +63,10 @@ enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON, SECRET_ISLAND,
 enum Game:ubyte        { CLASSIC, DOWNHILL }
 
 enum BallSetting:ubyte { BIG_BALL, SMALL_BALL }
+
+enum VideoSelection:ubyte      { DEFAULT, PRODUCT, CUSTOMER }
+
+enum Sensor:ubyte              { V1_0, V1_1, V2_0 }
 
 enum DmxChannelRuleType:byte   { GOAL, TIME, PITCH }
 
@@ -428,6 +433,8 @@ table GetIdealTime {}
 
 table SuspendSystem {}
 
+table GetRemoteDevices {}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -683,3 +690,14 @@ table GetIdealTime {
 }
 
 table SuspendSystem {}
+
+table Device {
+    ip:uint;
+    enabledMultiplayer:bool;
+    isHost:bool;
+    isSelf:bool;
+}
+
+table GetRemoteDevices {
+    devices:[Device];
+}
