@@ -60,6 +60,7 @@ public enum Payload : byte
  GetIdealTime = 50,
  SuspendSystem = 51,
  GetScoreFiltered = 52,
+ GetDetectedDevices = 53,
 };
 
 
