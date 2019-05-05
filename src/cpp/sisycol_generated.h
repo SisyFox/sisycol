@@ -640,7 +640,7 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::GetScoreFiltered> {
   static const Payload enum_value = Payload_GetScoreFiltered;
 };
 
-template<> struct PayloadTraits<sisyfox::sisycol::response::GetDetectedDevices> {
+template<> struct PayloadTraits<sisyfox::sisycol::request::GetDetectedDevices> {
   static const Payload enum_value = Payload_GetDetectedDevices;
 };
 
@@ -1860,8 +1860,8 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::GetScoreFiltered *payload_as_GetScoreFiltered() const {
     return payload_type() == Payload_GetScoreFiltered ? static_cast<const sisyfox::sisycol::request::GetScoreFiltered *>(payload()) : nullptr;
   }
-  const sisyfox::sisycol::response::GetDetectedDevices *payload_as_GetDetectedDevices() const {
-    return payload_type() == Payload_GetDetectedDevices ? static_cast<const sisyfox::sisycol::response::GetDetectedDevices *>(payload()) : nullptr;
+  const sisyfox::sisycol::request::GetDetectedDevices *payload_as_GetDetectedDevices() const {
+    return payload_type() == Payload_GetDetectedDevices ? static_cast<const sisyfox::sisycol::request::GetDetectedDevices *>(payload()) : nullptr;
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -2082,7 +2082,7 @@ template<> inline const sisyfox::sisycol::request::GetScoreFiltered *Root::paylo
   return payload_as_GetScoreFiltered();
 }
 
-template<> inline const sisyfox::sisycol::response::GetDetectedDevices *Root::payload_as<sisyfox::sisycol::response::GetDetectedDevices>() const {
+template<> inline const sisyfox::sisycol::request::GetDetectedDevices *Root::payload_as<sisyfox::sisycol::request::GetDetectedDevices>() const {
   return payload_as_GetDetectedDevices();
 }
 
@@ -8482,7 +8482,7 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
       return verifier.VerifyTable(ptr);
     }
     case Payload_GetDetectedDevices: {
-      auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GetDetectedDevices *>(obj);
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDetectedDevices *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;
