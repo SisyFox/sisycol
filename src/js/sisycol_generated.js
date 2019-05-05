@@ -6093,7 +6093,7 @@ sisyfox.sisycol.request.SuspendSystem.endSuspendSystem = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.request.GetRemoteDevices = function() {
+sisyfox.sisycol.request.GetDetectedDevices = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -6108,9 +6108,9 @@ sisyfox.sisycol.request.GetRemoteDevices = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.request.GetRemoteDevices}
+ * @returns {sisyfox.sisycol.request.GetDetectedDevices}
  */
-sisyfox.sisycol.request.GetRemoteDevices.prototype.__init = function(i, bb) {
+sisyfox.sisycol.request.GetDetectedDevices.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -6118,17 +6118,17 @@ sisyfox.sisycol.request.GetRemoteDevices.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.request.GetRemoteDevices=} obj
- * @returns {sisyfox.sisycol.request.GetRemoteDevices}
+ * @param {sisyfox.sisycol.request.GetDetectedDevices=} obj
+ * @returns {sisyfox.sisycol.request.GetDetectedDevices}
  */
-sisyfox.sisycol.request.GetRemoteDevices.getRootAsGetRemoteDevices = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.request.GetRemoteDevices).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+sisyfox.sisycol.request.GetDetectedDevices.getRootAsGetDetectedDevices = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.GetDetectedDevices).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
-sisyfox.sisycol.request.GetRemoteDevices.startGetRemoteDevices = function(builder) {
+sisyfox.sisycol.request.GetDetectedDevices.startGetDetectedDevices = function(builder) {
   builder.startObject(0);
 };
 
@@ -6136,7 +6136,7 @@ sisyfox.sisycol.request.GetRemoteDevices.startGetRemoteDevices = function(builde
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.request.GetRemoteDevices.endGetRemoteDevices = function(builder) {
+sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

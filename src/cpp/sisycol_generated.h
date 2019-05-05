@@ -133,7 +133,7 @@ struct GetIdealTime;
 
 struct SuspendSystem;
 
-struct GetRemoteDevices;
+struct GetDetectedDevices;
 
 }  // namespace request
 
@@ -5327,31 +5327,31 @@ inline flatbuffers::Offset<SuspendSystem> CreateSuspendSystem(
   return builder_.Finish();
 }
 
-struct GetRemoteDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct GetDetectedDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            verifier.EndTable();
   }
 };
 
-struct GetRemoteDevicesBuilder {
+struct GetDetectedDevicesBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  explicit GetRemoteDevicesBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit GetDetectedDevicesBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  GetRemoteDevicesBuilder &operator=(const GetRemoteDevicesBuilder &);
-  flatbuffers::Offset<GetRemoteDevices> Finish() {
+  GetDetectedDevicesBuilder &operator=(const GetDetectedDevicesBuilder &);
+  flatbuffers::Offset<GetDetectedDevices> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<GetRemoteDevices>(end);
+    auto o = flatbuffers::Offset<GetDetectedDevices>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<GetRemoteDevices> CreateGetRemoteDevices(
+inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevices(
     flatbuffers::FlatBufferBuilder &_fbb) {
-  GetRemoteDevicesBuilder builder_(_fbb);
+  GetDetectedDevicesBuilder builder_(_fbb);
   return builder_.Finish();
 }
 

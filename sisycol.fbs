@@ -433,7 +433,7 @@ table GetIdealTime {}
 
 table SuspendSystem {}
 
-table GetRemoteDevices {}
+table GetDetectedDevices {}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
