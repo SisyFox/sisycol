@@ -239,7 +239,7 @@ struct SuspendSystem;
 
 struct Device;
 
-struct GetRemoteDevices;
+struct GetDetectedDevices;
 
 }  // namespace response
 
@@ -297,11 +297,12 @@ enum Payload {
   Payload_GetIdealTime = 50,
   Payload_SuspendSystem = 51,
   Payload_GetScoreFiltered = 52,
+  Payload_GetDetectedDevices = 53,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_GetScoreFiltered
+  Payload_MAX = Payload_GetDetectedDevices
 };
 
-inline Payload (&EnumValuesPayload())[53] {
+inline Payload (&EnumValuesPayload())[54] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -355,7 +356,8 @@ inline Payload (&EnumValuesPayload())[53] {
     Payload_ResetDmxConfig,
     Payload_GetIdealTime,
     Payload_SuspendSystem,
-    Payload_GetScoreFiltered
+    Payload_GetScoreFiltered,
+    Payload_GetDetectedDevices
   };
   return values;
 }
@@ -415,6 +417,7 @@ inline const char **EnumNamesPayload() {
     "GetIdealTime",
     "SuspendSystem",
     "GetScoreFiltered",
+    "GetDetectedDevices",
     nullptr
   };
   return names;
@@ -635,6 +638,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::SuspendSystem> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetScoreFiltered> {
   static const Payload enum_value = Payload_GetScoreFiltered;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::response::GetDetectedDevices> {
+  static const Payload enum_value = Payload_GetDetectedDevices;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1853,6 +1860,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::GetScoreFiltered *payload_as_GetScoreFiltered() const {
     return payload_type() == Payload_GetScoreFiltered ? static_cast<const sisyfox::sisycol::request::GetScoreFiltered *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::response::GetDetectedDevices *payload_as_GetDetectedDevices() const {
+    return payload_type() == Payload_GetDetectedDevices ? static_cast<const sisyfox::sisycol::response::GetDetectedDevices *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2070,6 +2080,10 @@ template<> inline const sisyfox::sisycol::request::SuspendSystem *Root::payload_
 
 template<> inline const sisyfox::sisycol::request::GetScoreFiltered *Root::payload_as<sisyfox::sisycol::request::GetScoreFiltered>() const {
   return payload_as_GetScoreFiltered();
+}
+
+template<> inline const sisyfox::sisycol::response::GetDetectedDevices *Root::payload_as<sisyfox::sisycol::response::GetDetectedDevices>() const {
+  return payload_as_GetDetectedDevices();
 }
 
 struct RootBuilder {
@@ -8194,7 +8208,7 @@ inline flatbuffers::Offset<Device> CreateDevice(
   return builder_.Finish();
 }
 
-struct GetRemoteDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct GetDetectedDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_DEVICES = 4
   };
@@ -8210,36 +8224,36 @@ struct GetRemoteDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
 };
 
-struct GetRemoteDevicesBuilder {
+struct GetDetectedDevicesBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_devices(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Device>>> devices) {
-    fbb_.AddOffset(GetRemoteDevices::VT_DEVICES, devices);
+    fbb_.AddOffset(GetDetectedDevices::VT_DEVICES, devices);
   }
-  explicit GetRemoteDevicesBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit GetDetectedDevicesBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  GetRemoteDevicesBuilder &operator=(const GetRemoteDevicesBuilder &);
-  flatbuffers::Offset<GetRemoteDevices> Finish() {
+  GetDetectedDevicesBuilder &operator=(const GetDetectedDevicesBuilder &);
+  flatbuffers::Offset<GetDetectedDevices> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<GetRemoteDevices>(end);
+    auto o = flatbuffers::Offset<GetDetectedDevices>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<GetRemoteDevices> CreateGetRemoteDevices(
+inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevices(
     flatbuffers::FlatBufferBuilder &_fbb,
     flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Device>>> devices = 0) {
-  GetRemoteDevicesBuilder builder_(_fbb);
+  GetDetectedDevicesBuilder builder_(_fbb);
   builder_.add_devices(devices);
   return builder_.Finish();
 }
 
-inline flatbuffers::Offset<GetRemoteDevices> CreateGetRemoteDevicesDirect(
+inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevicesDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const std::vector<flatbuffers::Offset<Device>> *devices = nullptr) {
-  return sisyfox::sisycol::response::CreateGetRemoteDevices(
+  return sisyfox::sisycol::response::CreateGetDetectedDevices(
       _fbb,
       devices ? _fbb.CreateVector<flatbuffers::Offset<Device>>(*devices) : 0);
 }
@@ -8465,6 +8479,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_GetScoreFiltered: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetScoreFiltered *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_GetDetectedDevices: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GetDetectedDevices *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

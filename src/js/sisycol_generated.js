@@ -80,7 +80,8 @@ sisyfox.sisycol.Payload = {
   ResetDmxConfig: 49,
   GetIdealTime: 50,
   SuspendSystem: 51,
-  GetScoreFiltered: 52
+  GetScoreFiltered: 52,
+  GetDetectedDevices: 53
 };
 
 /**
@@ -10761,7 +10762,7 @@ sisyfox.sisycol.response.Device.endDevice = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.response.GetRemoteDevices = function() {
+sisyfox.sisycol.response.GetDetectedDevices = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -10776,9 +10777,9 @@ sisyfox.sisycol.response.GetRemoteDevices = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.response.GetRemoteDevices}
+ * @returns {sisyfox.sisycol.response.GetDetectedDevices}
  */
-sisyfox.sisycol.response.GetRemoteDevices.prototype.__init = function(i, bb) {
+sisyfox.sisycol.response.GetDetectedDevices.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -10786,11 +10787,11 @@ sisyfox.sisycol.response.GetRemoteDevices.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.response.GetRemoteDevices=} obj
- * @returns {sisyfox.sisycol.response.GetRemoteDevices}
+ * @param {sisyfox.sisycol.response.GetDetectedDevices=} obj
+ * @returns {sisyfox.sisycol.response.GetDetectedDevices}
  */
-sisyfox.sisycol.response.GetRemoteDevices.getRootAsGetRemoteDevices = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.response.GetRemoteDevices).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+sisyfox.sisycol.response.GetDetectedDevices.getRootAsGetDetectedDevices = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.GetDetectedDevices).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
@@ -10798,7 +10799,7 @@ sisyfox.sisycol.response.GetRemoteDevices.getRootAsGetRemoteDevices = function(b
  * @param {sisyfox.sisycol.response.Device=} obj
  * @returns {sisyfox.sisycol.response.Device}
  */
-sisyfox.sisycol.response.GetRemoteDevices.prototype.devices = function(index, obj) {
+sisyfox.sisycol.response.GetDetectedDevices.prototype.devices = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? (obj || new sisyfox.sisycol.response.Device).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
 };
@@ -10806,7 +10807,7 @@ sisyfox.sisycol.response.GetRemoteDevices.prototype.devices = function(index, ob
 /**
  * @returns {number}
  */
-sisyfox.sisycol.response.GetRemoteDevices.prototype.devicesLength = function() {
+sisyfox.sisycol.response.GetDetectedDevices.prototype.devicesLength = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
 };
@@ -10814,7 +10815,7 @@ sisyfox.sisycol.response.GetRemoteDevices.prototype.devicesLength = function() {
 /**
  * @param {flatbuffers.Builder} builder
  */
-sisyfox.sisycol.response.GetRemoteDevices.startGetRemoteDevices = function(builder) {
+sisyfox.sisycol.response.GetDetectedDevices.startGetDetectedDevices = function(builder) {
   builder.startObject(1);
 };
 
@@ -10822,7 +10823,7 @@ sisyfox.sisycol.response.GetRemoteDevices.startGetRemoteDevices = function(build
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} devicesOffset
  */
-sisyfox.sisycol.response.GetRemoteDevices.addDevices = function(builder, devicesOffset) {
+sisyfox.sisycol.response.GetDetectedDevices.addDevices = function(builder, devicesOffset) {
   builder.addFieldOffset(0, devicesOffset, 0);
 };
 
@@ -10831,7 +10832,7 @@ sisyfox.sisycol.response.GetRemoteDevices.addDevices = function(builder, devices
  * @param {Array.<flatbuffers.Offset>} data
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.response.GetRemoteDevices.createDevicesVector = function(builder, data) {
+sisyfox.sisycol.response.GetDetectedDevices.createDevicesVector = function(builder, data) {
   builder.startVector(4, data.length, 4);
   for (var i = data.length - 1; i >= 0; i--) {
     builder.addOffset(data[i]);
@@ -10843,7 +10844,7 @@ sisyfox.sisycol.response.GetRemoteDevices.createDevicesVector = function(builder
  * @param {flatbuffers.Builder} builder
  * @param {number} numElems
  */
-sisyfox.sisycol.response.GetRemoteDevices.startDevicesVector = function(builder, numElems) {
+sisyfox.sisycol.response.GetDetectedDevices.startDevicesVector = function(builder, numElems) {
   builder.startVector(4, numElems, 4);
 };
 
@@ -10851,7 +10852,7 @@ sisyfox.sisycol.response.GetRemoteDevices.startDevicesVector = function(builder,
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.response.GetRemoteDevices.endGetRemoteDevices = function(builder) {
+sisyfox.sisycol.response.GetDetectedDevices.endGetDetectedDevices = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

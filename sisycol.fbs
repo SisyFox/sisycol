@@ -20,7 +20,7 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxRuleSettingRange, GetDmxRuleRangeSetting,
              GetDmxRuleRangeSettingRange, GetDmxRuleBoolSetting,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
-             GetIdealTime, SuspendSystem, GetScoreFiltered }
+             GetIdealTime, SuspendSystem, GetScoreFiltered, GetDetectedDevices }
 
 table Root {
   version:Version;
@@ -698,6 +698,6 @@ table Device {
     isSelf:bool;
 }
 
-table GetRemoteDevices {
+table GetDetectedDevices {
     devices:[Device];
 }
