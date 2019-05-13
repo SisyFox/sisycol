@@ -139,6 +139,7 @@ sisyfox.sisycol.SettingType = {
   INGAME_MENU: 15,
   SENSOR: 16,
   MULTIPLAYER_ENABLED: 17,
+  VIDEO_VOLUME: 18,
   SF_CONTROL_INTERNAL: 63,
   WORLD: 64,
   LEVEL: 65,
