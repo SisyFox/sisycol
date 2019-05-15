@@ -520,6 +520,14 @@ class Sisyfox {
         const offset = sisyfox.sisycol.request.SuspendSystem.endSuspendSystem(builder);
         this.prepareSend(sisyfox.sisycol.Payload.SuspendSystem, offset, builder);
     }
+
+    requestGetDetectedDevices() {
+        const builder = new flatbuffers.Builder();
+        sisyfox.sisycol.request.GetDetectedDevices.startGetDetectedDevices(builder);
+        const offset = sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices(builder);
+        this.prepareSend(sisyfox.sisycol.Payload.GetDetectedDevices, offset, builder);
+    }
+
 }
 
 this.sisyfox = Sisyfox;
