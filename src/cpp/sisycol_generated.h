@@ -779,6 +779,8 @@ enum SettingType {
   SettingType_VIDEO_SELECTION = 14,
   SettingType_INGAME_MENU = 15,
   SettingType_SENSOR = 16,
+  SettingType_MULTIPLAYER_ENABLED = 17,
+  SettingType_VIDEO_VOLUME = 18,
   SettingType_SF_CONTROL_INTERNAL = 63,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
@@ -797,7 +799,7 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED
 };
 
-inline SettingType (&EnumValuesSettingType())[31] {
+inline SettingType (&EnumValuesSettingType())[33] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -816,6 +818,8 @@ inline SettingType (&EnumValuesSettingType())[31] {
     SettingType_VIDEO_SELECTION,
     SettingType_INGAME_MENU,
     SettingType_SENSOR,
+    SettingType_MULTIPLAYER_ENABLED,
+    SettingType_VIDEO_VOLUME,
     SettingType_SF_CONTROL_INTERNAL,
     SettingType_WORLD,
     SettingType_LEVEL,
@@ -853,8 +857,8 @@ inline const char **EnumNamesSettingType() {
     "VIDEO_SELECTION",
     "INGAME_MENU",
     "SENSOR",
-    "",
-    "",
+    "MULTIPLAYER_ENABLED",
+    "VIDEO_VOLUME",
     "",
     "",
     "",

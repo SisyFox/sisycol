@@ -176,6 +176,13 @@ class Sisyfox {
         this.prepareSend(sisyfox.sisycol.Payload.Info, offset, builder);
     }
 
+    requestGetDetectedDevices() {
+        const builder = new flatbuffers.Builder();
+        sisyfox.sisycol.request.GetDetectedDevices.startGetDetectedDevices(builder);
+        const offset = sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices(builder);
+        this.prepareSend(sisyfox.sisycol.Payload.GetDetectedDevices, offset, builder);
+    }
+
     requestAddScore(height, maxGoal, time, reason) {
         const builder = new flatbuffers.Builder();
         sisyfox.sisycol.request.AddScore.startAddScore(builder);
