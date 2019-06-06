@@ -775,10 +775,18 @@ sisyfox.sisycol.Score.prototype.hashArray = function() {
 };
 
 /**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.Score.prototype.multiplayer = function() {
+  var offset = this.bb.__offset(this.bb_pos, 42);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.Score.startScore = function(builder) {
-  builder.startObject(19);
+  builder.startObject(20);
 };
 
 /**
@@ -952,6 +960,14 @@ sisyfox.sisycol.Score.createHashVector = function(builder, data) {
  */
 sisyfox.sisycol.Score.startHashVector = function(builder, numElems) {
   builder.startVector(1, numElems, 1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} multiplayer
+ */
+sisyfox.sisycol.Score.addMultiplayer = function(builder, multiplayer) {
+  builder.addFieldInt8(19, +multiplayer, +false);
 };
 
 /**
@@ -2092,10 +2108,18 @@ sisyfox.sisycol.request.AddScore.prototype.hashArray = function() {
 };
 
 /**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.request.AddScore.prototype.multiplayer = function() {
+  var offset = this.bb.__offset(this.bb_pos, 28);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.AddScore.startAddScore = function(builder) {
-  builder.startObject(12);
+  builder.startObject(13);
 };
 
 /**
@@ -2213,6 +2237,14 @@ sisyfox.sisycol.request.AddScore.createHashVector = function(builder, data) {
  */
 sisyfox.sisycol.request.AddScore.startHashVector = function(builder, numElems) {
   builder.startVector(1, numElems, 1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} multiplayer
+ */
+sisyfox.sisycol.request.AddScore.addMultiplayer = function(builder, multiplayer) {
+  builder.addFieldInt8(12, +multiplayer, +false);
 };
 
 /**

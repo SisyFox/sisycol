@@ -2147,7 +2147,8 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_MODESPECIFCVALUE = 34,
     VT_ENDPOSITION = 36,
     VT_GAME = 38,
-    VT_HASH = 40
+    VT_HASH = 40,
+    VT_MULTIPLAYER = 42
   };
   uint32_t id() const {
     return GetField<uint32_t>(VT_ID, 0);
@@ -2206,6 +2207,9 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::Vector<uint8_t> *hash() const {
     return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_HASH);
   }
+  bool multiplayer() const {
+    return GetField<uint8_t>(VT_MULTIPLAYER, 0) != 0;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint32_t>(verifier, VT_ID) &&
@@ -2228,6 +2232,7 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_GAME) &&
            VerifyOffset(verifier, VT_HASH) &&
            verifier.Verify(hash()) &&
+           VerifyField<uint8_t>(verifier, VT_MULTIPLAYER) &&
            verifier.EndTable();
   }
 };
@@ -2292,6 +2297,9 @@ struct ScoreBuilder {
   void add_hash(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash) {
     fbb_.AddOffset(Score::VT_HASH, hash);
   }
+  void add_multiplayer(bool multiplayer) {
+    fbb_.AddElement<uint8_t>(Score::VT_MULTIPLAYER, static_cast<uint8_t>(multiplayer), 0);
+  }
   explicit ScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2324,7 +2332,8 @@ inline flatbuffers::Offset<Score> CreateScore(
     int32_t modeSpecifcValue = 0,
     const Coordinates *endPosition = 0,
     uint8_t game = 0,
-    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0,
+    bool multiplayer = false) {
   ScoreBuilder builder_(_fbb);
   builder_.add_timestamp(timestamp);
   builder_.add_hash(hash);
@@ -2339,6 +2348,7 @@ inline flatbuffers::Offset<Score> CreateScore(
   builder_.add_maxGoal(maxGoal);
   builder_.add_goal(goal);
   builder_.add_id(id);
+  builder_.add_multiplayer(multiplayer);
   builder_.add_game(game);
   builder_.add_reason(reason);
   builder_.add_difficulty(difficulty);
@@ -2368,7 +2378,8 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
     int32_t modeSpecifcValue = 0,
     const Coordinates *endPosition = 0,
     uint8_t game = 0,
-    const std::vector<uint8_t> *hash = nullptr) {
+    const std::vector<uint8_t> *hash = nullptr,
+    bool multiplayer = false) {
   return sisyfox::sisycol::CreateScore(
       _fbb,
       id,
@@ -2389,7 +2400,8 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
       modeSpecifcValue,
       endPosition,
       game,
-      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0);
+      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0,
+      multiplayer);
 }
 
 struct BoolSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -2780,7 +2792,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_MODESPECIFICVALUE = 20,
     VT_ENDPOSITION = 22,
     VT_GAME = 24,
-    VT_HASH = 26
+    VT_HASH = 26,
+    VT_MULTIPLAYER = 28
   };
   int32_t goal() const {
     return GetField<int32_t>(VT_GOAL, 0);
@@ -2818,6 +2831,9 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::Vector<uint8_t> *hash() const {
     return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_HASH);
   }
+  bool multiplayer() const {
+    return GetField<uint8_t>(VT_MULTIPLAYER, 0) != 0;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_GOAL) &&
@@ -2833,6 +2849,7 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_GAME) &&
            VerifyOffset(verifier, VT_HASH) &&
            verifier.Verify(hash()) &&
+           VerifyField<uint8_t>(verifier, VT_MULTIPLAYER) &&
            verifier.EndTable();
   }
 };
@@ -2876,6 +2893,9 @@ struct AddScoreBuilder {
   void add_hash(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash) {
     fbb_.AddOffset(AddScore::VT_HASH, hash);
   }
+  void add_multiplayer(bool multiplayer) {
+    fbb_.AddElement<uint8_t>(AddScore::VT_MULTIPLAYER, static_cast<uint8_t>(multiplayer), 0);
+  }
   explicit AddScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2901,7 +2921,8 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     int32_t modeSpecificValue = 0,
     const sisyfox::sisycol::Coordinates *endPosition = 0,
     uint8_t game = 0,
-    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0,
+    bool multiplayer = false) {
   AddScoreBuilder builder_(_fbb);
   builder_.add_hash(hash);
   builder_.add_endPosition(endPosition);
@@ -2909,6 +2930,7 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
   builder_.add_time(time);
   builder_.add_maxGoal(maxGoal);
   builder_.add_goal(goal);
+  builder_.add_multiplayer(multiplayer);
   builder_.add_game(game);
   builder_.add_difficulty(difficulty);
   builder_.add_gameMode(gameMode);
@@ -2931,7 +2953,8 @@ inline flatbuffers::Offset<AddScore> CreateAddScoreDirect(
     int32_t modeSpecificValue = 0,
     const sisyfox::sisycol::Coordinates *endPosition = 0,
     uint8_t game = 0,
-    const std::vector<uint8_t> *hash = nullptr) {
+    const std::vector<uint8_t> *hash = nullptr,
+    bool multiplayer = false) {
   return sisyfox::sisycol::request::CreateAddScore(
       _fbb,
       goal,
@@ -2945,7 +2968,8 @@ inline flatbuffers::Offset<AddScore> CreateAddScoreDirect(
       modeSpecificValue,
       endPosition,
       game,
-      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0);
+      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0,
+      multiplayer);
 }
 
 struct GetScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {

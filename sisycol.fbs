@@ -112,6 +112,7 @@ table Score {
     endPosition:Coordinates;
     game:ubyte;
     hash:[ubyte];
+    multiplayer:bool;
 }
 
 table BoolSetting {
@@ -205,6 +206,7 @@ table AddScore {
   endPosition:Coordinates;
   game:ubyte;
   hash:[ubyte];
+  multiplayer:bool;
 }
 
 table GetScore {
