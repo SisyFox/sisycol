@@ -61,6 +61,7 @@ public enum Payload : byte
  SuspendSystem = 51,
  GetScoreFiltered = 52,
  GetDetectedDevices = 53,
+ ChangeRemoteMultiplayerSetting = 54,
 };
 
 

@@ -81,7 +81,8 @@ sisyfox.sisycol.Payload = {
   GetIdealTime: 50,
   SuspendSystem: 51,
   GetScoreFiltered: 52,
-  GetDetectedDevices: 53
+  GetDetectedDevices: 53,
+  ChangeRemoteMultiplayerSetting: 54
 };
 
 /**
@@ -6179,6 +6180,89 @@ sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices = function(buil
 /**
  * @constructor
  */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting=} obj
+ * @returns {sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.getRootAsChangeRemoteMultiplayerSetting = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.prototype.ip = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.prototype.value = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.startChangeRemoteMultiplayerSetting = function(builder) {
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} ip
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.addIp = function(builder, ip) {
+  builder.addFieldInt32(0, ip, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} value
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.addValue = function(builder, value) {
+  builder.addFieldInt8(1, +value, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.endChangeRemoteMultiplayerSetting = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -10887,6 +10971,57 @@ sisyfox.sisycol.response.GetDetectedDevices.startDevicesVector = function(builde
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.GetDetectedDevices.endGetDetectedDevices = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting}
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting=} obj
+ * @returns {sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting}
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.getRootAsChangeRemoteMultiplayerSetting = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.startChangeRemoteMultiplayerSetting = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.endChangeRemoteMultiplayerSetting = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

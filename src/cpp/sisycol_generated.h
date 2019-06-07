@@ -135,6 +135,8 @@ struct SuspendSystem;
 
 struct GetDetectedDevices;
 
+struct ChangeRemoteMultiplayerSetting;
+
 }  // namespace request
 
 namespace response {
@@ -241,6 +243,8 @@ struct Device;
 
 struct GetDetectedDevices;
 
+struct ChangeRemoteMultiplayerSetting;
+
 }  // namespace response
 
 enum Payload {
@@ -298,11 +302,12 @@ enum Payload {
   Payload_SuspendSystem = 51,
   Payload_GetScoreFiltered = 52,
   Payload_GetDetectedDevices = 53,
+  Payload_ChangeRemoteMultiplayerSetting = 54,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_GetDetectedDevices
+  Payload_MAX = Payload_ChangeRemoteMultiplayerSetting
 };
 
-inline Payload (&EnumValuesPayload())[54] {
+inline Payload (&EnumValuesPayload())[55] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -357,7 +362,8 @@ inline Payload (&EnumValuesPayload())[54] {
     Payload_GetIdealTime,
     Payload_SuspendSystem,
     Payload_GetScoreFiltered,
-    Payload_GetDetectedDevices
+    Payload_GetDetectedDevices,
+    Payload_ChangeRemoteMultiplayerSetting
   };
   return values;
 }
@@ -418,6 +424,7 @@ inline const char **EnumNamesPayload() {
     "SuspendSystem",
     "GetScoreFiltered",
     "GetDetectedDevices",
+    "ChangeRemoteMultiplayerSetting",
     nullptr
   };
   return names;
@@ -642,6 +649,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::GetScoreFiltered> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDetectedDevices> {
   static const Payload enum_value = Payload_GetDetectedDevices;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting> {
+  static const Payload enum_value = Payload_ChangeRemoteMultiplayerSetting;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1867,6 +1878,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::GetDetectedDevices *payload_as_GetDetectedDevices() const {
     return payload_type() == Payload_GetDetectedDevices ? static_cast<const sisyfox::sisycol::request::GetDetectedDevices *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *payload_as_ChangeRemoteMultiplayerSetting() const {
+    return payload_type() == Payload_ChangeRemoteMultiplayerSetting ? static_cast<const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2088,6 +2102,10 @@ template<> inline const sisyfox::sisycol::request::GetScoreFiltered *Root::paylo
 
 template<> inline const sisyfox::sisycol::request::GetDetectedDevices *Root::payload_as<sisyfox::sisycol::request::GetDetectedDevices>() const {
   return payload_as_GetDetectedDevices();
+}
+
+template<> inline const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *Root::payload_as<sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting>() const {
+  return payload_as_ChangeRemoteMultiplayerSetting();
 }
 
 struct RootBuilder {
@@ -5397,6 +5415,56 @@ inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevices(
   return builder_.Finish();
 }
 
+struct ChangeRemoteMultiplayerSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_IP = 4,
+    VT_VALUE = 6
+  };
+  uint32_t ip() const {
+    return GetField<uint32_t>(VT_IP, 0);
+  }
+  bool value() const {
+    return GetField<uint8_t>(VT_VALUE, 0) != 0;
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_IP) &&
+           VerifyField<uint8_t>(verifier, VT_VALUE) &&
+           verifier.EndTable();
+  }
+};
+
+struct ChangeRemoteMultiplayerSettingBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_ip(uint32_t ip) {
+    fbb_.AddElement<uint32_t>(ChangeRemoteMultiplayerSetting::VT_IP, ip, 0);
+  }
+  void add_value(bool value) {
+    fbb_.AddElement<uint8_t>(ChangeRemoteMultiplayerSetting::VT_VALUE, static_cast<uint8_t>(value), 0);
+  }
+  explicit ChangeRemoteMultiplayerSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ChangeRemoteMultiplayerSettingBuilder &operator=(const ChangeRemoteMultiplayerSettingBuilder &);
+  flatbuffers::Offset<ChangeRemoteMultiplayerSetting> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<ChangeRemoteMultiplayerSetting>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<ChangeRemoteMultiplayerSetting> CreateChangeRemoteMultiplayerSetting(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t ip = 0,
+    bool value = false) {
+  ChangeRemoteMultiplayerSettingBuilder builder_(_fbb);
+  builder_.add_ip(ip);
+  builder_.add_value(value);
+  return builder_.Finish();
+}
+
 }  // namespace request
 
 namespace response {
@@ -8286,6 +8354,34 @@ inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevicesDirect(
       devices ? _fbb.CreateVector<flatbuffers::Offset<Device>>(*devices) : 0);
 }
 
+struct ChangeRemoteMultiplayerSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct ChangeRemoteMultiplayerSettingBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit ChangeRemoteMultiplayerSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ChangeRemoteMultiplayerSettingBuilder &operator=(const ChangeRemoteMultiplayerSettingBuilder &);
+  flatbuffers::Offset<ChangeRemoteMultiplayerSetting> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<ChangeRemoteMultiplayerSetting>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<ChangeRemoteMultiplayerSetting> CreateChangeRemoteMultiplayerSetting(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  ChangeRemoteMultiplayerSettingBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
 }  // namespace response
 
 namespace request {
@@ -8511,6 +8607,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_GetDetectedDevices: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDetectedDevices *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_ChangeRemoteMultiplayerSetting: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;
