@@ -137,6 +137,8 @@ struct GetDetectedDevices;
 
 struct ChangeRemoteMultiplayerSetting;
 
+struct CoinUpdate;
+
 }  // namespace request
 
 namespace response {
@@ -244,6 +246,8 @@ struct Device;
 struct GetDetectedDevices;
 
 struct ChangeRemoteMultiplayerSetting;
+
+struct CoinUpdate;
 
 }  // namespace response
 
@@ -5465,6 +5469,34 @@ inline flatbuffers::Offset<ChangeRemoteMultiplayerSetting> CreateChangeRemoteMul
   return builder_.Finish();
 }
 
+struct CoinUpdate FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct CoinUpdateBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit CoinUpdateBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  CoinUpdateBuilder &operator=(const CoinUpdateBuilder &);
+  flatbuffers::Offset<CoinUpdate> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<CoinUpdate>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<CoinUpdate> CreateCoinUpdate(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  CoinUpdateBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
 }  // namespace request
 
 namespace response {
@@ -8379,6 +8411,56 @@ struct ChangeRemoteMultiplayerSettingBuilder {
 inline flatbuffers::Offset<ChangeRemoteMultiplayerSetting> CreateChangeRemoteMultiplayerSetting(
     flatbuffers::FlatBufferBuilder &_fbb) {
   ChangeRemoteMultiplayerSettingBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+struct CoinUpdate FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_BALANCE = 4,
+    VT_REQUIREDBALANCE = 6
+  };
+  uint32_t balance() const {
+    return GetField<uint32_t>(VT_BALANCE, 0);
+  }
+  uint32_t requiredBalance() const {
+    return GetField<uint32_t>(VT_REQUIREDBALANCE, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_BALANCE) &&
+           VerifyField<uint32_t>(verifier, VT_REQUIREDBALANCE) &&
+           verifier.EndTable();
+  }
+};
+
+struct CoinUpdateBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_balance(uint32_t balance) {
+    fbb_.AddElement<uint32_t>(CoinUpdate::VT_BALANCE, balance, 0);
+  }
+  void add_requiredBalance(uint32_t requiredBalance) {
+    fbb_.AddElement<uint32_t>(CoinUpdate::VT_REQUIREDBALANCE, requiredBalance, 0);
+  }
+  explicit CoinUpdateBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  CoinUpdateBuilder &operator=(const CoinUpdateBuilder &);
+  flatbuffers::Offset<CoinUpdate> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<CoinUpdate>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<CoinUpdate> CreateCoinUpdate(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t balance = 0,
+    uint32_t requiredBalance = 0) {
+  CoinUpdateBuilder builder_(_fbb);
+  builder_.add_requiredBalance(requiredBalance);
+  builder_.add_balance(balance);
   return builder_.Finish();
 }
 

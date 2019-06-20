@@ -6263,6 +6263,57 @@ sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.endChangeRemoteMultiplaye
 /**
  * @constructor
  */
+sisyfox.sisycol.request.CoinUpdate = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.CoinUpdate}
+ */
+sisyfox.sisycol.request.CoinUpdate.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.CoinUpdate=} obj
+ * @returns {sisyfox.sisycol.request.CoinUpdate}
+ */
+sisyfox.sisycol.request.CoinUpdate.getRootAsCoinUpdate = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.CoinUpdate).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.CoinUpdate.startCoinUpdate = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.CoinUpdate.endCoinUpdate = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -11022,6 +11073,89 @@ sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.startChangeRemoteMultipl
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.endChangeRemoteMultiplayerSetting = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.CoinUpdate = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.CoinUpdate}
+ */
+sisyfox.sisycol.response.CoinUpdate.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.CoinUpdate=} obj
+ * @returns {sisyfox.sisycol.response.CoinUpdate}
+ */
+sisyfox.sisycol.response.CoinUpdate.getRootAsCoinUpdate = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.CoinUpdate).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.CoinUpdate.prototype.balance = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.CoinUpdate.prototype.requiredBalance = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.CoinUpdate.startCoinUpdate = function(builder) {
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} balance
+ */
+sisyfox.sisycol.response.CoinUpdate.addBalance = function(builder, balance) {
+  builder.addFieldInt32(0, balance, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} requiredBalance
+ */
+sisyfox.sisycol.response.CoinUpdate.addRequiredBalance = function(builder, requiredBalance) {
+  builder.addFieldInt32(1, requiredBalance, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.CoinUpdate.endCoinUpdate = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

@@ -443,6 +443,8 @@ table ChangeRemoteMultiplayerSetting {
     value:bool;
 }
 
+table CoinUpdate {}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -711,3 +713,8 @@ table GetDetectedDevices {
 }
 
 table ChangeRemoteMultiplayerSetting {}
+
+table CoinUpdate {
+    balance:uint;
+    requiredBalance:uint;
+}
