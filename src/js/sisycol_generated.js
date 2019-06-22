@@ -6315,6 +6315,175 @@ sisyfox.sisycol.request.CoinUpdate.endCoinUpdate = function(builder) {
 /**
  * @constructor
  */
+sisyfox.sisycol.request.AccountPreCharge = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.AccountPreCharge}
+ */
+sisyfox.sisycol.request.AccountPreCharge.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.AccountPreCharge=} obj
+ * @returns {sisyfox.sisycol.request.AccountPreCharge}
+ */
+sisyfox.sisycol.request.AccountPreCharge.getRootAsAccountPreCharge = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.AccountPreCharge).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.AccountPreCharge.startAccountPreCharge = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.AccountPreCharge.endAccountPreCharge = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.request.AccountCharge = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.AccountCharge}
+ */
+sisyfox.sisycol.request.AccountCharge.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.AccountCharge=} obj
+ * @returns {sisyfox.sisycol.request.AccountCharge}
+ */
+sisyfox.sisycol.request.AccountCharge.getRootAsAccountCharge = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.AccountCharge).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.AccountCharge.prototype.preChargeId = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : -1;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.AccountCharge.startAccountCharge = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} preChargeId
+ */
+sisyfox.sisycol.request.AccountCharge.addPreChargeId = function(builder, preChargeId) {
+  builder.addFieldInt32(0, preChargeId, -1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.AccountCharge.endAccountCharge = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.request.AccountStatus = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.AccountStatus}
+ */
+sisyfox.sisycol.request.AccountStatus.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.AccountStatus=} obj
+ * @returns {sisyfox.sisycol.request.AccountStatus}
+ */
+sisyfox.sisycol.request.AccountStatus.getRootAsAccountStatus = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.AccountStatus).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.AccountStatus.startAccountStatus = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.AccountStatus.endAccountStatus = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -11157,6 +11326,239 @@ sisyfox.sisycol.response.CoinUpdate.addRequiredBalance = function(builder, requi
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.CoinUpdate.endCoinUpdate = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.AccountPreCharge = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.AccountPreCharge}
+ */
+sisyfox.sisycol.response.AccountPreCharge.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.AccountPreCharge=} obj
+ * @returns {sisyfox.sisycol.response.AccountPreCharge}
+ */
+sisyfox.sisycol.response.AccountPreCharge.getRootAsAccountPreCharge = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.AccountPreCharge).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.response.AccountPreCharge.prototype.valid = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.AccountPreCharge.prototype.chargeId = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.AccountPreCharge.startAccountPreCharge = function(builder) {
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} valid
+ */
+sisyfox.sisycol.response.AccountPreCharge.addValid = function(builder, valid) {
+  builder.addFieldInt8(0, +valid, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} chargeId
+ */
+sisyfox.sisycol.response.AccountPreCharge.addChargeId = function(builder, chargeId) {
+  builder.addFieldInt32(1, chargeId, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.AccountPreCharge.endAccountPreCharge = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.AccountCharge = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.AccountCharge}
+ */
+sisyfox.sisycol.response.AccountCharge.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.AccountCharge=} obj
+ * @returns {sisyfox.sisycol.response.AccountCharge}
+ */
+sisyfox.sisycol.response.AccountCharge.getRootAsAccountCharge = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.AccountCharge).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.response.AccountCharge.prototype.success = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.AccountCharge.startAccountCharge = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} success
+ */
+sisyfox.sisycol.response.AccountCharge.addSuccess = function(builder, success) {
+  builder.addFieldInt8(0, +success, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.AccountCharge.endAccountCharge = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.AccountStatus = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.AccountStatus}
+ */
+sisyfox.sisycol.response.AccountStatus.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.AccountStatus=} obj
+ * @returns {sisyfox.sisycol.response.AccountStatus}
+ */
+sisyfox.sisycol.response.AccountStatus.getRootAsAccountStatus = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.AccountStatus).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.AccountStatus.prototype.balance = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.AccountStatus.prototype.preChargeBalance = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.AccountStatus.startAccountStatus = function(builder) {
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} balance
+ */
+sisyfox.sisycol.response.AccountStatus.addBalance = function(builder, balance) {
+  builder.addFieldInt32(0, balance, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} preChargeBalance
+ */
+sisyfox.sisycol.response.AccountStatus.addPreChargeBalance = function(builder, preChargeBalance) {
+  builder.addFieldInt32(1, preChargeBalance, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.AccountStatus.endAccountStatus = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

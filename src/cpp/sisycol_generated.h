@@ -139,6 +139,12 @@ struct ChangeRemoteMultiplayerSetting;
 
 struct CoinUpdate;
 
+struct AccountPreCharge;
+
+struct AccountCharge;
+
+struct AccountStatus;
+
 }  // namespace request
 
 namespace response {
@@ -248,6 +254,12 @@ struct GetDetectedDevices;
 struct ChangeRemoteMultiplayerSetting;
 
 struct CoinUpdate;
+
+struct AccountPreCharge;
+
+struct AccountCharge;
+
+struct AccountStatus;
 
 }  // namespace response
 
@@ -5511,6 +5523,102 @@ inline flatbuffers::Offset<CoinUpdate> CreateCoinUpdate(
   return builder_.Finish();
 }
 
+struct AccountPreCharge FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct AccountPreChargeBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit AccountPreChargeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  AccountPreChargeBuilder &operator=(const AccountPreChargeBuilder &);
+  flatbuffers::Offset<AccountPreCharge> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<AccountPreCharge>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<AccountPreCharge> CreateAccountPreCharge(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  AccountPreChargeBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+struct AccountCharge FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_PRECHARGEID = 4
+  };
+  int32_t preChargeId() const {
+    return GetField<int32_t>(VT_PRECHARGEID, -1);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<int32_t>(verifier, VT_PRECHARGEID) &&
+           verifier.EndTable();
+  }
+};
+
+struct AccountChargeBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_preChargeId(int32_t preChargeId) {
+    fbb_.AddElement<int32_t>(AccountCharge::VT_PRECHARGEID, preChargeId, -1);
+  }
+  explicit AccountChargeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  AccountChargeBuilder &operator=(const AccountChargeBuilder &);
+  flatbuffers::Offset<AccountCharge> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<AccountCharge>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<AccountCharge> CreateAccountCharge(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    int32_t preChargeId = -1) {
+  AccountChargeBuilder builder_(_fbb);
+  builder_.add_preChargeId(preChargeId);
+  return builder_.Finish();
+}
+
+struct AccountStatus FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct AccountStatusBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit AccountStatusBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  AccountStatusBuilder &operator=(const AccountStatusBuilder &);
+  flatbuffers::Offset<AccountStatus> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<AccountStatus>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<AccountStatus> CreateAccountStatus(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  AccountStatusBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
 }  // namespace request
 
 namespace response {
@@ -8474,6 +8582,146 @@ inline flatbuffers::Offset<CoinUpdate> CreateCoinUpdate(
     uint32_t requiredBalance = 0) {
   CoinUpdateBuilder builder_(_fbb);
   builder_.add_requiredBalance(requiredBalance);
+  builder_.add_balance(balance);
+  return builder_.Finish();
+}
+
+struct AccountPreCharge FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_VALID = 4,
+    VT_CHARGEID = 6
+  };
+  bool valid() const {
+    return GetField<uint8_t>(VT_VALID, 0) != 0;
+  }
+  int32_t chargeId() const {
+    return GetField<int32_t>(VT_CHARGEID, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, VT_VALID) &&
+           VerifyField<int32_t>(verifier, VT_CHARGEID) &&
+           verifier.EndTable();
+  }
+};
+
+struct AccountPreChargeBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_valid(bool valid) {
+    fbb_.AddElement<uint8_t>(AccountPreCharge::VT_VALID, static_cast<uint8_t>(valid), 0);
+  }
+  void add_chargeId(int32_t chargeId) {
+    fbb_.AddElement<int32_t>(AccountPreCharge::VT_CHARGEID, chargeId, 0);
+  }
+  explicit AccountPreChargeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  AccountPreChargeBuilder &operator=(const AccountPreChargeBuilder &);
+  flatbuffers::Offset<AccountPreCharge> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<AccountPreCharge>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<AccountPreCharge> CreateAccountPreCharge(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    bool valid = false,
+    int32_t chargeId = 0) {
+  AccountPreChargeBuilder builder_(_fbb);
+  builder_.add_chargeId(chargeId);
+  builder_.add_valid(valid);
+  return builder_.Finish();
+}
+
+struct AccountCharge FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_SUCCESS = 4
+  };
+  bool success() const {
+    return GetField<uint8_t>(VT_SUCCESS, 0) != 0;
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, VT_SUCCESS) &&
+           verifier.EndTable();
+  }
+};
+
+struct AccountChargeBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_success(bool success) {
+    fbb_.AddElement<uint8_t>(AccountCharge::VT_SUCCESS, static_cast<uint8_t>(success), 0);
+  }
+  explicit AccountChargeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  AccountChargeBuilder &operator=(const AccountChargeBuilder &);
+  flatbuffers::Offset<AccountCharge> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<AccountCharge>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<AccountCharge> CreateAccountCharge(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    bool success = false) {
+  AccountChargeBuilder builder_(_fbb);
+  builder_.add_success(success);
+  return builder_.Finish();
+}
+
+struct AccountStatus FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_BALANCE = 4,
+    VT_PRECHARGEBALANCE = 6
+  };
+  int32_t balance() const {
+    return GetField<int32_t>(VT_BALANCE, 0);
+  }
+  int32_t preChargeBalance() const {
+    return GetField<int32_t>(VT_PRECHARGEBALANCE, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<int32_t>(verifier, VT_BALANCE) &&
+           VerifyField<int32_t>(verifier, VT_PRECHARGEBALANCE) &&
+           verifier.EndTable();
+  }
+};
+
+struct AccountStatusBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_balance(int32_t balance) {
+    fbb_.AddElement<int32_t>(AccountStatus::VT_BALANCE, balance, 0);
+  }
+  void add_preChargeBalance(int32_t preChargeBalance) {
+    fbb_.AddElement<int32_t>(AccountStatus::VT_PRECHARGEBALANCE, preChargeBalance, 0);
+  }
+  explicit AccountStatusBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  AccountStatusBuilder &operator=(const AccountStatusBuilder &);
+  flatbuffers::Offset<AccountStatus> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<AccountStatus>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<AccountStatus> CreateAccountStatus(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    int32_t balance = 0,
+    int32_t preChargeBalance = 0) {
+  AccountStatusBuilder builder_(_fbb);
+  builder_.add_preChargeBalance(preChargeBalance);
   builder_.add_balance(balance);
   return builder_.Finish();
 }

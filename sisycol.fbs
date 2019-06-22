@@ -445,6 +445,14 @@ table ChangeRemoteMultiplayerSetting {
 
 table CoinUpdate {}
 
+table AccountPreCharge {}
+
+table AccountCharge {
+    preChargeId:int = -1;
+}
+
+table AccountStatus {}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -717,4 +725,18 @@ table ChangeRemoteMultiplayerSetting {}
 table CoinUpdate {
     balance:uint;
     requiredBalance:uint;
+}
+
+table AccountPreCharge {
+    valid:bool;
+    chargeId:int;
+}
+
+table AccountCharge {
+    success:bool;
+}
+
+table AccountStatus {
+    balance:int;
+    preChargeBalance:int;
 }
