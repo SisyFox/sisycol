@@ -307,11 +307,12 @@ enum Payload {
   Payload_GetScoreFiltered = 52,
   Payload_GetDetectedDevices = 53,
   Payload_ChangeRemoteMultiplayerSetting = 54,
+  Payload_CoinUpdate = 55,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_ChangeRemoteMultiplayerSetting
+  Payload_MAX = Payload_CoinUpdate
 };
 
-inline Payload (&EnumValuesPayload())[55] {
+inline Payload (&EnumValuesPayload())[56] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -367,7 +368,8 @@ inline Payload (&EnumValuesPayload())[55] {
     Payload_SuspendSystem,
     Payload_GetScoreFiltered,
     Payload_GetDetectedDevices,
-    Payload_ChangeRemoteMultiplayerSetting
+    Payload_ChangeRemoteMultiplayerSetting,
+    Payload_CoinUpdate
   };
   return values;
 }
@@ -429,6 +431,7 @@ inline const char **EnumNamesPayload() {
     "GetScoreFiltered",
     "GetDetectedDevices",
     "ChangeRemoteMultiplayerSetting",
+    "CoinUpdate",
     nullptr
   };
   return names;
@@ -657,6 +660,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::GetDetectedDevices> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting> {
   static const Payload enum_value = Payload_ChangeRemoteMultiplayerSetting;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::CoinUpdate> {
+  static const Payload enum_value = Payload_CoinUpdate;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1885,6 +1892,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *payload_as_ChangeRemoteMultiplayerSetting() const {
     return payload_type() == Payload_ChangeRemoteMultiplayerSetting ? static_cast<const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::CoinUpdate *payload_as_CoinUpdate() const {
+    return payload_type() == Payload_CoinUpdate ? static_cast<const sisyfox::sisycol::request::CoinUpdate *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2110,6 +2120,10 @@ template<> inline const sisyfox::sisycol::request::GetDetectedDevices *Root::pay
 
 template<> inline const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *Root::payload_as<sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting>() const {
   return payload_as_ChangeRemoteMultiplayerSetting();
+}
+
+template<> inline const sisyfox::sisycol::request::CoinUpdate *Root::payload_as<sisyfox::sisycol::request::CoinUpdate>() const {
+  return payload_as_CoinUpdate();
 }
 
 struct RootBuilder {
@@ -8693,6 +8707,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_ChangeRemoteMultiplayerSetting: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_CoinUpdate: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::CoinUpdate *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

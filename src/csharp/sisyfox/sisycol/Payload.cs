@@ -62,6 +62,7 @@ public enum Payload : byte
  GetScoreFiltered = 52,
  GetDetectedDevices = 53,
  ChangeRemoteMultiplayerSetting = 54,
+ CoinUpdate = 55,
 };
 
 

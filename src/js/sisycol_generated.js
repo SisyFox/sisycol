@@ -82,7 +82,8 @@ sisyfox.sisycol.Payload = {
   SuspendSystem: 51,
   GetScoreFiltered: 52,
   GetDetectedDevices: 53,
-  ChangeRemoteMultiplayerSetting: 54
+  ChangeRemoteMultiplayerSetting: 54,
+  CoinUpdate: 55
 };
 
 /**
