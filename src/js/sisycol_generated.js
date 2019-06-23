@@ -83,7 +83,8 @@ sisyfox.sisycol.Payload = {
   GetScoreFiltered: 52,
   GetDetectedDevices: 53,
   ChangeRemoteMultiplayerSetting: 54,
-  CoinUpdate: 55
+  CoinUpdate: 55,
+  GameUnlock: 56
 };
 
 /**
@@ -263,12 +264,36 @@ sisyfox.sisycol.DmxDeviceMode = {
 /**
  * @enum
  */
+sisyfox.sisycol.Currency = {
+  EURO: 0
+};
+
+/**
+ * @enum
+ */
+sisyfox.sisycol.GameBlockReason = {
+  UNKNOWN: 0,
+  COIN_ACCEPTOR: 1
+};
+
+/**
+ * @enum
+ */
 sisyfox.sisycol.SettingValue = {
   NONE: 0,
   BoolSetting: 1,
   ByteSetting: 2,
   IntSetting: 3,
   Hash: 4
+};
+
+/**
+ * @enum
+ */
+sisyfox.sisycol.response.GameUnlockResult = {
+  NONE: 0,
+  GameUnlockComplete: 1,
+  GameUnlockWait: 2
 };
 
 /**
@@ -6264,7 +6289,7 @@ sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.endChangeRemoteMultiplaye
 /**
  * @constructor
  */
-sisyfox.sisycol.request.CoinUpdate = function() {
+sisyfox.sisycol.request.UnlockGame = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -6279,9 +6304,9 @@ sisyfox.sisycol.request.CoinUpdate = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.request.CoinUpdate}
+ * @returns {sisyfox.sisycol.request.UnlockGame}
  */
-sisyfox.sisycol.request.CoinUpdate.prototype.__init = function(i, bb) {
+sisyfox.sisycol.request.UnlockGame.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -6289,17 +6314,17 @@ sisyfox.sisycol.request.CoinUpdate.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.request.CoinUpdate=} obj
- * @returns {sisyfox.sisycol.request.CoinUpdate}
+ * @param {sisyfox.sisycol.request.UnlockGame=} obj
+ * @returns {sisyfox.sisycol.request.UnlockGame}
  */
-sisyfox.sisycol.request.CoinUpdate.getRootAsCoinUpdate = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.request.CoinUpdate).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+sisyfox.sisycol.request.UnlockGame.getRootAsUnlockGame = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.UnlockGame).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
-sisyfox.sisycol.request.CoinUpdate.startCoinUpdate = function(builder) {
+sisyfox.sisycol.request.UnlockGame.startUnlockGame = function(builder) {
   builder.startObject(0);
 };
 
@@ -6307,176 +6332,7 @@ sisyfox.sisycol.request.CoinUpdate.startCoinUpdate = function(builder) {
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.request.CoinUpdate.endCoinUpdate = function(builder) {
-  var offset = builder.endObject();
-  return offset;
-};
-
-/**
- * @constructor
- */
-sisyfox.sisycol.request.AccountPreCharge = function() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-};
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.request.AccountPreCharge}
- */
-sisyfox.sisycol.request.AccountPreCharge.prototype.__init = function(i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.request.AccountPreCharge=} obj
- * @returns {sisyfox.sisycol.request.AccountPreCharge}
- */
-sisyfox.sisycol.request.AccountPreCharge.getRootAsAccountPreCharge = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.request.AccountPreCharge).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- */
-sisyfox.sisycol.request.AccountPreCharge.startAccountPreCharge = function(builder) {
-  builder.startObject(0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @returns {flatbuffers.Offset}
- */
-sisyfox.sisycol.request.AccountPreCharge.endAccountPreCharge = function(builder) {
-  var offset = builder.endObject();
-  return offset;
-};
-
-/**
- * @constructor
- */
-sisyfox.sisycol.request.AccountCharge = function() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-};
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.request.AccountCharge}
- */
-sisyfox.sisycol.request.AccountCharge.prototype.__init = function(i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.request.AccountCharge=} obj
- * @returns {sisyfox.sisycol.request.AccountCharge}
- */
-sisyfox.sisycol.request.AccountCharge.getRootAsAccountCharge = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.request.AccountCharge).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.request.AccountCharge.prototype.preChargeId = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.readInt32(this.bb_pos + offset) : -1;
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- */
-sisyfox.sisycol.request.AccountCharge.startAccountCharge = function(builder) {
-  builder.startObject(1);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} preChargeId
- */
-sisyfox.sisycol.request.AccountCharge.addPreChargeId = function(builder, preChargeId) {
-  builder.addFieldInt32(0, preChargeId, -1);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @returns {flatbuffers.Offset}
- */
-sisyfox.sisycol.request.AccountCharge.endAccountCharge = function(builder) {
-  var offset = builder.endObject();
-  return offset;
-};
-
-/**
- * @constructor
- */
-sisyfox.sisycol.request.AccountStatus = function() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-};
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.request.AccountStatus}
- */
-sisyfox.sisycol.request.AccountStatus.prototype.__init = function(i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.request.AccountStatus=} obj
- * @returns {sisyfox.sisycol.request.AccountStatus}
- */
-sisyfox.sisycol.request.AccountStatus.getRootAsAccountStatus = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.request.AccountStatus).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- */
-sisyfox.sisycol.request.AccountStatus.startAccountStatus = function(builder) {
-  builder.startObject(0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @returns {flatbuffers.Offset}
- */
-sisyfox.sisycol.request.AccountStatus.endAccountStatus = function(builder) {
+sisyfox.sisycol.request.UnlockGame.endUnlockGame = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
@@ -11283,10 +11139,18 @@ sisyfox.sisycol.response.CoinUpdate.getRootAsCoinUpdate = function(bb, obj) {
 };
 
 /**
+ * @returns {sisyfox.sisycol.Currency}
+ */
+sisyfox.sisycol.response.CoinUpdate.prototype.currency = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? /** @type {sisyfox.sisycol.Currency} */ (this.bb.readInt8(this.bb_pos + offset)) : sisyfox.sisycol.Currency.EURO;
+};
+
+/**
  * @returns {number}
  */
 sisyfox.sisycol.response.CoinUpdate.prototype.balance = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
+  var offset = this.bb.__offset(this.bb_pos, 6);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
 
@@ -11294,7 +11158,7 @@ sisyfox.sisycol.response.CoinUpdate.prototype.balance = function() {
  * @returns {number}
  */
 sisyfox.sisycol.response.CoinUpdate.prototype.requiredBalance = function() {
-  var offset = this.bb.__offset(this.bb_pos, 6);
+  var offset = this.bb.__offset(this.bb_pos, 8);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
 
@@ -11302,7 +11166,15 @@ sisyfox.sisycol.response.CoinUpdate.prototype.requiredBalance = function() {
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.response.CoinUpdate.startCoinUpdate = function(builder) {
-  builder.startObject(2);
+  builder.startObject(3);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.Currency} currency
+ */
+sisyfox.sisycol.response.CoinUpdate.addCurrency = function(builder, currency) {
+  builder.addFieldInt8(0, currency, sisyfox.sisycol.Currency.EURO);
 };
 
 /**
@@ -11310,7 +11182,7 @@ sisyfox.sisycol.response.CoinUpdate.startCoinUpdate = function(builder) {
  * @param {number} balance
  */
 sisyfox.sisycol.response.CoinUpdate.addBalance = function(builder, balance) {
-  builder.addFieldInt32(0, balance, 0);
+  builder.addFieldInt32(1, balance, 0);
 };
 
 /**
@@ -11318,7 +11190,7 @@ sisyfox.sisycol.response.CoinUpdate.addBalance = function(builder, balance) {
  * @param {number} requiredBalance
  */
 sisyfox.sisycol.response.CoinUpdate.addRequiredBalance = function(builder, requiredBalance) {
-  builder.addFieldInt32(1, requiredBalance, 0);
+  builder.addFieldInt32(2, requiredBalance, 0);
 };
 
 /**
@@ -11333,7 +11205,7 @@ sisyfox.sisycol.response.CoinUpdate.endCoinUpdate = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.response.AccountPreCharge = function() {
+sisyfox.sisycol.response.GameUnlockComplete = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -11348,9 +11220,9 @@ sisyfox.sisycol.response.AccountPreCharge = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.response.AccountPreCharge}
+ * @returns {sisyfox.sisycol.response.GameUnlockComplete}
  */
-sisyfox.sisycol.response.AccountPreCharge.prototype.__init = function(i, bb) {
+sisyfox.sisycol.response.GameUnlockComplete.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -11358,100 +11230,17 @@ sisyfox.sisycol.response.AccountPreCharge.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.response.AccountPreCharge=} obj
- * @returns {sisyfox.sisycol.response.AccountPreCharge}
+ * @param {sisyfox.sisycol.response.GameUnlockComplete=} obj
+ * @returns {sisyfox.sisycol.response.GameUnlockComplete}
  */
-sisyfox.sisycol.response.AccountPreCharge.getRootAsAccountPreCharge = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.response.AccountPreCharge).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+sisyfox.sisycol.response.GameUnlockComplete.getRootAsGameUnlockComplete = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.GameUnlockComplete).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
  * @returns {boolean}
  */
-sisyfox.sisycol.response.AccountPreCharge.prototype.valid = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.response.AccountPreCharge.prototype.chargeId = function() {
-  var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- */
-sisyfox.sisycol.response.AccountPreCharge.startAccountPreCharge = function(builder) {
-  builder.startObject(2);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {boolean} valid
- */
-sisyfox.sisycol.response.AccountPreCharge.addValid = function(builder, valid) {
-  builder.addFieldInt8(0, +valid, +false);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} chargeId
- */
-sisyfox.sisycol.response.AccountPreCharge.addChargeId = function(builder, chargeId) {
-  builder.addFieldInt32(1, chargeId, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @returns {flatbuffers.Offset}
- */
-sisyfox.sisycol.response.AccountPreCharge.endAccountPreCharge = function(builder) {
-  var offset = builder.endObject();
-  return offset;
-};
-
-/**
- * @constructor
- */
-sisyfox.sisycol.response.AccountCharge = function() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-};
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.response.AccountCharge}
- */
-sisyfox.sisycol.response.AccountCharge.prototype.__init = function(i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.response.AccountCharge=} obj
- * @returns {sisyfox.sisycol.response.AccountCharge}
- */
-sisyfox.sisycol.response.AccountCharge.getRootAsAccountCharge = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.response.AccountCharge).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @returns {boolean}
- */
-sisyfox.sisycol.response.AccountCharge.prototype.success = function() {
+sisyfox.sisycol.response.GameUnlockComplete.prototype.success = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
 };
@@ -11459,7 +11248,7 @@ sisyfox.sisycol.response.AccountCharge.prototype.success = function() {
 /**
  * @param {flatbuffers.Builder} builder
  */
-sisyfox.sisycol.response.AccountCharge.startAccountCharge = function(builder) {
+sisyfox.sisycol.response.GameUnlockComplete.startGameUnlockComplete = function(builder) {
   builder.startObject(1);
 };
 
@@ -11467,7 +11256,7 @@ sisyfox.sisycol.response.AccountCharge.startAccountCharge = function(builder) {
  * @param {flatbuffers.Builder} builder
  * @param {boolean} success
  */
-sisyfox.sisycol.response.AccountCharge.addSuccess = function(builder, success) {
+sisyfox.sisycol.response.GameUnlockComplete.addSuccess = function(builder, success) {
   builder.addFieldInt8(0, +success, +false);
 };
 
@@ -11475,7 +11264,7 @@ sisyfox.sisycol.response.AccountCharge.addSuccess = function(builder, success) {
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.response.AccountCharge.endAccountCharge = function(builder) {
+sisyfox.sisycol.response.GameUnlockComplete.endGameUnlockComplete = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
@@ -11483,7 +11272,7 @@ sisyfox.sisycol.response.AccountCharge.endAccountCharge = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.response.AccountStatus = function() {
+sisyfox.sisycol.response.GameUnlockWait = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -11498,9 +11287,9 @@ sisyfox.sisycol.response.AccountStatus = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.response.AccountStatus}
+ * @returns {sisyfox.sisycol.response.GameUnlockWait}
  */
-sisyfox.sisycol.response.AccountStatus.prototype.__init = function(i, bb) {
+sisyfox.sisycol.response.GameUnlockWait.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -11508,57 +11297,125 @@ sisyfox.sisycol.response.AccountStatus.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.response.AccountStatus=} obj
- * @returns {sisyfox.sisycol.response.AccountStatus}
+ * @param {sisyfox.sisycol.response.GameUnlockWait=} obj
+ * @returns {sisyfox.sisycol.response.GameUnlockWait}
  */
-sisyfox.sisycol.response.AccountStatus.getRootAsAccountStatus = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.response.AccountStatus).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+sisyfox.sisycol.response.GameUnlockWait.getRootAsGameUnlockWait = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.GameUnlockWait).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
- * @returns {number}
+ * @returns {sisyfox.sisycol.GameBlockReason}
  */
-sisyfox.sisycol.response.AccountStatus.prototype.balance = function() {
+sisyfox.sisycol.response.GameUnlockWait.prototype.reason = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
-};
-
-/**
- * @returns {number}
- */
-sisyfox.sisycol.response.AccountStatus.prototype.preChargeBalance = function() {
-  var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+  return offset ? /** @type {sisyfox.sisycol.GameBlockReason} */ (this.bb.readInt8(this.bb_pos + offset)) : sisyfox.sisycol.GameBlockReason.UNKNOWN;
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
-sisyfox.sisycol.response.AccountStatus.startAccountStatus = function(builder) {
-  builder.startObject(2);
+sisyfox.sisycol.response.GameUnlockWait.startGameUnlockWait = function(builder) {
+  builder.startObject(1);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {number} balance
+ * @param {sisyfox.sisycol.GameBlockReason} reason
  */
-sisyfox.sisycol.response.AccountStatus.addBalance = function(builder, balance) {
-  builder.addFieldInt32(0, balance, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} preChargeBalance
- */
-sisyfox.sisycol.response.AccountStatus.addPreChargeBalance = function(builder, preChargeBalance) {
-  builder.addFieldInt32(1, preChargeBalance, 0);
+sisyfox.sisycol.response.GameUnlockWait.addReason = function(builder, reason) {
+  builder.addFieldInt8(0, reason, sisyfox.sisycol.GameBlockReason.UNKNOWN);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.response.AccountStatus.endAccountStatus = function(builder) {
+sisyfox.sisycol.response.GameUnlockWait.endGameUnlockWait = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.GameUnlock = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.GameUnlock}
+ */
+sisyfox.sisycol.response.GameUnlock.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.GameUnlock=} obj
+ * @returns {sisyfox.sisycol.response.GameUnlock}
+ */
+sisyfox.sisycol.response.GameUnlock.getRootAsGameUnlock = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.GameUnlock).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {sisyfox.sisycol.response.GameUnlockResult}
+ */
+sisyfox.sisycol.response.GameUnlock.prototype.resultType = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? /** @type {sisyfox.sisycol.response.GameUnlockResult} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.response.GameUnlockResult.NONE;
+};
+
+/**
+ * @param {flatbuffers.Table} obj
+ * @returns {?flatbuffers.Table}
+ */
+sisyfox.sisycol.response.GameUnlock.prototype.result = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.__union(obj, this.bb_pos + offset) : null;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.GameUnlock.startGameUnlock = function(builder) {
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.response.GameUnlockResult} resultType
+ */
+sisyfox.sisycol.response.GameUnlock.addResultType = function(builder, resultType) {
+  builder.addFieldInt8(0, resultType, sisyfox.sisycol.response.GameUnlockResult.NONE);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} resultOffset
+ */
+sisyfox.sisycol.response.GameUnlock.addResult = function(builder, resultOffset) {
+  builder.addFieldOffset(1, resultOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.GameUnlock.endGameUnlock = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

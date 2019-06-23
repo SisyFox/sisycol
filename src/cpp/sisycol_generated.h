@@ -137,13 +137,7 @@ struct GetDetectedDevices;
 
 struct ChangeRemoteMultiplayerSetting;
 
-struct CoinUpdate;
-
-struct AccountPreCharge;
-
-struct AccountCharge;
-
-struct AccountStatus;
+struct UnlockGame;
 
 }  // namespace request
 
@@ -255,11 +249,11 @@ struct ChangeRemoteMultiplayerSetting;
 
 struct CoinUpdate;
 
-struct AccountPreCharge;
+struct GameUnlockComplete;
 
-struct AccountCharge;
+struct GameUnlockWait;
 
-struct AccountStatus;
+struct GameUnlock;
 
 }  // namespace response
 
@@ -320,11 +314,12 @@ enum Payload {
   Payload_GetDetectedDevices = 53,
   Payload_ChangeRemoteMultiplayerSetting = 54,
   Payload_CoinUpdate = 55,
+  Payload_GameUnlock = 56,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_CoinUpdate
+  Payload_MAX = Payload_GameUnlock
 };
 
-inline Payload (&EnumValuesPayload())[56] {
+inline Payload (&EnumValuesPayload())[57] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -381,7 +376,8 @@ inline Payload (&EnumValuesPayload())[56] {
     Payload_GetScoreFiltered,
     Payload_GetDetectedDevices,
     Payload_ChangeRemoteMultiplayerSetting,
-    Payload_CoinUpdate
+    Payload_CoinUpdate,
+    Payload_GameUnlock
   };
   return values;
 }
@@ -444,6 +440,7 @@ inline const char **EnumNamesPayload() {
     "GetDetectedDevices",
     "ChangeRemoteMultiplayerSetting",
     "CoinUpdate",
+    "GameUnlock",
     nullptr
   };
   return names;
@@ -674,8 +671,12 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::ChangeRemoteMultiplay
   static const Payload enum_value = Payload_ChangeRemoteMultiplayerSetting;
 };
 
-template<> struct PayloadTraits<sisyfox::sisycol::request::CoinUpdate> {
+template<> struct PayloadTraits<sisyfox::sisycol::response::CoinUpdate> {
   static const Payload enum_value = Payload_CoinUpdate;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::response::GameUnlock> {
+  static const Payload enum_value = Payload_GameUnlock;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1357,6 +1358,61 @@ inline const char *EnumNameDmxDeviceMode(DmxDeviceMode e) {
   return EnumNamesDmxDeviceMode()[index];
 }
 
+enum Currency {
+  Currency_EURO = 0,
+  Currency_MIN = Currency_EURO,
+  Currency_MAX = Currency_EURO
+};
+
+inline Currency (&EnumValuesCurrency())[1] {
+  static Currency values[] = {
+    Currency_EURO
+  };
+  return values;
+}
+
+inline const char **EnumNamesCurrency() {
+  static const char *names[] = {
+    "EURO",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameCurrency(Currency e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesCurrency()[index];
+}
+
+enum GameBlockReason {
+  GameBlockReason_UNKNOWN = 0,
+  GameBlockReason_COIN_ACCEPTOR = 1,
+  GameBlockReason_MIN = GameBlockReason_UNKNOWN,
+  GameBlockReason_MAX = GameBlockReason_COIN_ACCEPTOR
+};
+
+inline GameBlockReason (&EnumValuesGameBlockReason())[2] {
+  static GameBlockReason values[] = {
+    GameBlockReason_UNKNOWN,
+    GameBlockReason_COIN_ACCEPTOR
+  };
+  return values;
+}
+
+inline const char **EnumNamesGameBlockReason() {
+  static const char *names[] = {
+    "UNKNOWN",
+    "COIN_ACCEPTOR",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameGameBlockReason(GameBlockReason e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesGameBlockReason()[index];
+}
+
 enum SettingValue {
   SettingValue_NONE = 0,
   SettingValue_BoolSetting = 1,
@@ -1417,6 +1473,57 @@ template<> struct SettingValueTraits<Hash> {
 
 bool VerifySettingValue(flatbuffers::Verifier &verifier, const void *obj, SettingValue type);
 bool VerifySettingValueVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<uint8_t> *types);
+
+namespace response {
+
+enum GameUnlockResult {
+  GameUnlockResult_NONE = 0,
+  GameUnlockResult_GameUnlockComplete = 1,
+  GameUnlockResult_GameUnlockWait = 2,
+  GameUnlockResult_MIN = GameUnlockResult_NONE,
+  GameUnlockResult_MAX = GameUnlockResult_GameUnlockWait
+};
+
+inline GameUnlockResult (&EnumValuesGameUnlockResult())[3] {
+  static GameUnlockResult values[] = {
+    GameUnlockResult_NONE,
+    GameUnlockResult_GameUnlockComplete,
+    GameUnlockResult_GameUnlockWait
+  };
+  return values;
+}
+
+inline const char **EnumNamesGameUnlockResult() {
+  static const char *names[] = {
+    "NONE",
+    "GameUnlockComplete",
+    "GameUnlockWait",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameGameUnlockResult(GameUnlockResult e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesGameUnlockResult()[index];
+}
+
+template<typename T> struct GameUnlockResultTraits {
+  static const GameUnlockResult enum_value = GameUnlockResult_NONE;
+};
+
+template<> struct GameUnlockResultTraits<GameUnlockComplete> {
+  static const GameUnlockResult enum_value = GameUnlockResult_GameUnlockComplete;
+};
+
+template<> struct GameUnlockResultTraits<GameUnlockWait> {
+  static const GameUnlockResult enum_value = GameUnlockResult_GameUnlockWait;
+};
+
+bool VerifyGameUnlockResult(flatbuffers::Verifier &verifier, const void *obj, GameUnlockResult type);
+bool VerifyGameUnlockResultVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<uint8_t> *types);
+
+}  // namespace response
 
 MANUALLY_ALIGNED_STRUCT(1) Version FLATBUFFERS_FINAL_CLASS {
  private:
@@ -1904,8 +2011,11 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *payload_as_ChangeRemoteMultiplayerSetting() const {
     return payload_type() == Payload_ChangeRemoteMultiplayerSetting ? static_cast<const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *>(payload()) : nullptr;
   }
-  const sisyfox::sisycol::request::CoinUpdate *payload_as_CoinUpdate() const {
-    return payload_type() == Payload_CoinUpdate ? static_cast<const sisyfox::sisycol::request::CoinUpdate *>(payload()) : nullptr;
+  const sisyfox::sisycol::response::CoinUpdate *payload_as_CoinUpdate() const {
+    return payload_type() == Payload_CoinUpdate ? static_cast<const sisyfox::sisycol::response::CoinUpdate *>(payload()) : nullptr;
+  }
+  const sisyfox::sisycol::response::GameUnlock *payload_as_GameUnlock() const {
+    return payload_type() == Payload_GameUnlock ? static_cast<const sisyfox::sisycol::response::GameUnlock *>(payload()) : nullptr;
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -2134,8 +2244,12 @@ template<> inline const sisyfox::sisycol::request::ChangeRemoteMultiplayerSettin
   return payload_as_ChangeRemoteMultiplayerSetting();
 }
 
-template<> inline const sisyfox::sisycol::request::CoinUpdate *Root::payload_as<sisyfox::sisycol::request::CoinUpdate>() const {
+template<> inline const sisyfox::sisycol::response::CoinUpdate *Root::payload_as<sisyfox::sisycol::response::CoinUpdate>() const {
   return payload_as_CoinUpdate();
+}
+
+template<> inline const sisyfox::sisycol::response::GameUnlock *Root::payload_as<sisyfox::sisycol::response::GameUnlock>() const {
+  return payload_as_GameUnlock();
 }
 
 struct RootBuilder {
@@ -5495,127 +5609,31 @@ inline flatbuffers::Offset<ChangeRemoteMultiplayerSetting> CreateChangeRemoteMul
   return builder_.Finish();
 }
 
-struct CoinUpdate FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct UnlockGame FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            verifier.EndTable();
   }
 };
 
-struct CoinUpdateBuilder {
+struct UnlockGameBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  explicit CoinUpdateBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit UnlockGameBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  CoinUpdateBuilder &operator=(const CoinUpdateBuilder &);
-  flatbuffers::Offset<CoinUpdate> Finish() {
+  UnlockGameBuilder &operator=(const UnlockGameBuilder &);
+  flatbuffers::Offset<UnlockGame> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<CoinUpdate>(end);
+    auto o = flatbuffers::Offset<UnlockGame>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<CoinUpdate> CreateCoinUpdate(
+inline flatbuffers::Offset<UnlockGame> CreateUnlockGame(
     flatbuffers::FlatBufferBuilder &_fbb) {
-  CoinUpdateBuilder builder_(_fbb);
-  return builder_.Finish();
-}
-
-struct AccountPreCharge FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           verifier.EndTable();
-  }
-};
-
-struct AccountPreChargeBuilder {
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  explicit AccountPreChargeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  AccountPreChargeBuilder &operator=(const AccountPreChargeBuilder &);
-  flatbuffers::Offset<AccountPreCharge> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<AccountPreCharge>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<AccountPreCharge> CreateAccountPreCharge(
-    flatbuffers::FlatBufferBuilder &_fbb) {
-  AccountPreChargeBuilder builder_(_fbb);
-  return builder_.Finish();
-}
-
-struct AccountCharge FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  enum {
-    VT_PRECHARGEID = 4
-  };
-  int32_t preChargeId() const {
-    return GetField<int32_t>(VT_PRECHARGEID, -1);
-  }
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           VerifyField<int32_t>(verifier, VT_PRECHARGEID) &&
-           verifier.EndTable();
-  }
-};
-
-struct AccountChargeBuilder {
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  void add_preChargeId(int32_t preChargeId) {
-    fbb_.AddElement<int32_t>(AccountCharge::VT_PRECHARGEID, preChargeId, -1);
-  }
-  explicit AccountChargeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  AccountChargeBuilder &operator=(const AccountChargeBuilder &);
-  flatbuffers::Offset<AccountCharge> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<AccountCharge>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<AccountCharge> CreateAccountCharge(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    int32_t preChargeId = -1) {
-  AccountChargeBuilder builder_(_fbb);
-  builder_.add_preChargeId(preChargeId);
-  return builder_.Finish();
-}
-
-struct AccountStatus FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           verifier.EndTable();
-  }
-};
-
-struct AccountStatusBuilder {
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  explicit AccountStatusBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  AccountStatusBuilder &operator=(const AccountStatusBuilder &);
-  flatbuffers::Offset<AccountStatus> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<AccountStatus>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<AccountStatus> CreateAccountStatus(
-    flatbuffers::FlatBufferBuilder &_fbb) {
-  AccountStatusBuilder builder_(_fbb);
+  UnlockGameBuilder builder_(_fbb);
   return builder_.Finish();
 }
 
@@ -8538,9 +8556,13 @@ inline flatbuffers::Offset<ChangeRemoteMultiplayerSetting> CreateChangeRemoteMul
 
 struct CoinUpdate FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_BALANCE = 4,
-    VT_REQUIREDBALANCE = 6
+    VT_CURRENCY = 4,
+    VT_BALANCE = 6,
+    VT_REQUIREDBALANCE = 8
   };
+  sisyfox::sisycol::Currency currency() const {
+    return static_cast<sisyfox::sisycol::Currency>(GetField<int8_t>(VT_CURRENCY, 0));
+  }
   uint32_t balance() const {
     return GetField<uint32_t>(VT_BALANCE, 0);
   }
@@ -8549,6 +8571,7 @@ struct CoinUpdate FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
+           VerifyField<int8_t>(verifier, VT_CURRENCY) &&
            VerifyField<uint32_t>(verifier, VT_BALANCE) &&
            VerifyField<uint32_t>(verifier, VT_REQUIREDBALANCE) &&
            verifier.EndTable();
@@ -8558,6 +8581,9 @@ struct CoinUpdate FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct CoinUpdateBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
+  void add_currency(sisyfox::sisycol::Currency currency) {
+    fbb_.AddElement<int8_t>(CoinUpdate::VT_CURRENCY, static_cast<int8_t>(currency), 0);
+  }
   void add_balance(uint32_t balance) {
     fbb_.AddElement<uint32_t>(CoinUpdate::VT_BALANCE, balance, 0);
   }
@@ -8578,65 +8604,17 @@ struct CoinUpdateBuilder {
 
 inline flatbuffers::Offset<CoinUpdate> CreateCoinUpdate(
     flatbuffers::FlatBufferBuilder &_fbb,
+    sisyfox::sisycol::Currency currency = sisyfox::sisycol::Currency_EURO,
     uint32_t balance = 0,
     uint32_t requiredBalance = 0) {
   CoinUpdateBuilder builder_(_fbb);
   builder_.add_requiredBalance(requiredBalance);
   builder_.add_balance(balance);
+  builder_.add_currency(currency);
   return builder_.Finish();
 }
 
-struct AccountPreCharge FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  enum {
-    VT_VALID = 4,
-    VT_CHARGEID = 6
-  };
-  bool valid() const {
-    return GetField<uint8_t>(VT_VALID, 0) != 0;
-  }
-  int32_t chargeId() const {
-    return GetField<int32_t>(VT_CHARGEID, 0);
-  }
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_VALID) &&
-           VerifyField<int32_t>(verifier, VT_CHARGEID) &&
-           verifier.EndTable();
-  }
-};
-
-struct AccountPreChargeBuilder {
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  void add_valid(bool valid) {
-    fbb_.AddElement<uint8_t>(AccountPreCharge::VT_VALID, static_cast<uint8_t>(valid), 0);
-  }
-  void add_chargeId(int32_t chargeId) {
-    fbb_.AddElement<int32_t>(AccountPreCharge::VT_CHARGEID, chargeId, 0);
-  }
-  explicit AccountPreChargeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  AccountPreChargeBuilder &operator=(const AccountPreChargeBuilder &);
-  flatbuffers::Offset<AccountPreCharge> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<AccountPreCharge>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<AccountPreCharge> CreateAccountPreCharge(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    bool valid = false,
-    int32_t chargeId = 0) {
-  AccountPreChargeBuilder builder_(_fbb);
-  builder_.add_chargeId(chargeId);
-  builder_.add_valid(valid);
-  return builder_.Finish();
-}
-
-struct AccountCharge FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct GameUnlockComplete FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_SUCCESS = 4
   };
@@ -8650,79 +8628,135 @@ struct AccountCharge FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
 };
 
-struct AccountChargeBuilder {
+struct GameUnlockCompleteBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_success(bool success) {
-    fbb_.AddElement<uint8_t>(AccountCharge::VT_SUCCESS, static_cast<uint8_t>(success), 0);
+    fbb_.AddElement<uint8_t>(GameUnlockComplete::VT_SUCCESS, static_cast<uint8_t>(success), 0);
   }
-  explicit AccountChargeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit GameUnlockCompleteBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  AccountChargeBuilder &operator=(const AccountChargeBuilder &);
-  flatbuffers::Offset<AccountCharge> Finish() {
+  GameUnlockCompleteBuilder &operator=(const GameUnlockCompleteBuilder &);
+  flatbuffers::Offset<GameUnlockComplete> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<AccountCharge>(end);
+    auto o = flatbuffers::Offset<GameUnlockComplete>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<AccountCharge> CreateAccountCharge(
+inline flatbuffers::Offset<GameUnlockComplete> CreateGameUnlockComplete(
     flatbuffers::FlatBufferBuilder &_fbb,
     bool success = false) {
-  AccountChargeBuilder builder_(_fbb);
+  GameUnlockCompleteBuilder builder_(_fbb);
   builder_.add_success(success);
   return builder_.Finish();
 }
 
-struct AccountStatus FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct GameUnlockWait FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_BALANCE = 4,
-    VT_PRECHARGEBALANCE = 6
+    VT_REASON = 4
   };
-  int32_t balance() const {
-    return GetField<int32_t>(VT_BALANCE, 0);
-  }
-  int32_t preChargeBalance() const {
-    return GetField<int32_t>(VT_PRECHARGEBALANCE, 0);
+  sisyfox::sisycol::GameBlockReason reason() const {
+    return static_cast<sisyfox::sisycol::GameBlockReason>(GetField<int8_t>(VT_REASON, 0));
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<int32_t>(verifier, VT_BALANCE) &&
-           VerifyField<int32_t>(verifier, VT_PRECHARGEBALANCE) &&
+           VerifyField<int8_t>(verifier, VT_REASON) &&
            verifier.EndTable();
   }
 };
 
-struct AccountStatusBuilder {
+struct GameUnlockWaitBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_balance(int32_t balance) {
-    fbb_.AddElement<int32_t>(AccountStatus::VT_BALANCE, balance, 0);
+  void add_reason(sisyfox::sisycol::GameBlockReason reason) {
+    fbb_.AddElement<int8_t>(GameUnlockWait::VT_REASON, static_cast<int8_t>(reason), 0);
   }
-  void add_preChargeBalance(int32_t preChargeBalance) {
-    fbb_.AddElement<int32_t>(AccountStatus::VT_PRECHARGEBALANCE, preChargeBalance, 0);
-  }
-  explicit AccountStatusBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit GameUnlockWaitBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  AccountStatusBuilder &operator=(const AccountStatusBuilder &);
-  flatbuffers::Offset<AccountStatus> Finish() {
+  GameUnlockWaitBuilder &operator=(const GameUnlockWaitBuilder &);
+  flatbuffers::Offset<GameUnlockWait> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<AccountStatus>(end);
+    auto o = flatbuffers::Offset<GameUnlockWait>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<AccountStatus> CreateAccountStatus(
+inline flatbuffers::Offset<GameUnlockWait> CreateGameUnlockWait(
     flatbuffers::FlatBufferBuilder &_fbb,
-    int32_t balance = 0,
-    int32_t preChargeBalance = 0) {
-  AccountStatusBuilder builder_(_fbb);
-  builder_.add_preChargeBalance(preChargeBalance);
-  builder_.add_balance(balance);
+    sisyfox::sisycol::GameBlockReason reason = sisyfox::sisycol::GameBlockReason_UNKNOWN) {
+  GameUnlockWaitBuilder builder_(_fbb);
+  builder_.add_reason(reason);
+  return builder_.Finish();
+}
+
+struct GameUnlock FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_RESULT_TYPE = 4,
+    VT_RESULT = 6
+  };
+  GameUnlockResult result_type() const {
+    return static_cast<GameUnlockResult>(GetField<uint8_t>(VT_RESULT_TYPE, 0));
+  }
+  const void *result() const {
+    return GetPointer<const void *>(VT_RESULT);
+  }
+  template<typename T> const T *result_as() const;
+  const GameUnlockComplete *result_as_GameUnlockComplete() const {
+    return result_type() == GameUnlockResult_GameUnlockComplete ? static_cast<const GameUnlockComplete *>(result()) : nullptr;
+  }
+  const GameUnlockWait *result_as_GameUnlockWait() const {
+    return result_type() == GameUnlockResult_GameUnlockWait ? static_cast<const GameUnlockWait *>(result()) : nullptr;
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, VT_RESULT_TYPE) &&
+           VerifyOffset(verifier, VT_RESULT) &&
+           VerifyGameUnlockResult(verifier, result(), result_type()) &&
+           verifier.EndTable();
+  }
+};
+
+template<> inline const GameUnlockComplete *GameUnlock::result_as<GameUnlockComplete>() const {
+  return result_as_GameUnlockComplete();
+}
+
+template<> inline const GameUnlockWait *GameUnlock::result_as<GameUnlockWait>() const {
+  return result_as_GameUnlockWait();
+}
+
+struct GameUnlockBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_result_type(GameUnlockResult result_type) {
+    fbb_.AddElement<uint8_t>(GameUnlock::VT_RESULT_TYPE, static_cast<uint8_t>(result_type), 0);
+  }
+  void add_result(flatbuffers::Offset<void> result) {
+    fbb_.AddOffset(GameUnlock::VT_RESULT, result);
+  }
+  explicit GameUnlockBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GameUnlockBuilder &operator=(const GameUnlockBuilder &);
+  flatbuffers::Offset<GameUnlock> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GameUnlock>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GameUnlock> CreateGameUnlock(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    GameUnlockResult result_type = GameUnlockResult_NONE,
+    flatbuffers::Offset<void> result = 0) {
+  GameUnlockBuilder builder_(_fbb);
+  builder_.add_result(result);
+  builder_.add_result_type(result_type);
   return builder_.Finish();
 }
 
@@ -8958,7 +8992,11 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
       return verifier.VerifyTable(ptr);
     }
     case Payload_CoinUpdate: {
-      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::CoinUpdate *>(obj);
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::response::CoinUpdate *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_GameUnlock: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GameUnlock *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;
@@ -9011,6 +9049,38 @@ inline bool VerifySettingValueVector(flatbuffers::Verifier &verifier, const flat
   }
   return true;
 }
+
+namespace response {
+
+inline bool VerifyGameUnlockResult(flatbuffers::Verifier &verifier, const void *obj, GameUnlockResult type) {
+  switch (type) {
+    case GameUnlockResult_NONE: {
+      return true;
+    }
+    case GameUnlockResult_GameUnlockComplete: {
+      auto ptr = reinterpret_cast<const GameUnlockComplete *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case GameUnlockResult_GameUnlockWait: {
+      auto ptr = reinterpret_cast<const GameUnlockWait *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    default: return false;
+  }
+}
+
+inline bool VerifyGameUnlockResultVector(flatbuffers::Verifier &verifier, const flatbuffers::Vector<flatbuffers::Offset<void>> *values, const flatbuffers::Vector<uint8_t> *types) {
+  if (values->size() != types->size()) return false;
+  for (flatbuffers::uoffset_t i = 0; i < values->size(); ++i) {
+    if (!VerifyGameUnlockResult(
+        verifier,  values->Get(i), types->GetEnum<GameUnlockResult>(i))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+}  // namespace response
 
 inline const sisyfox::sisycol::Root *GetRoot(const void *buf) {
   return flatbuffers::GetRoot<sisyfox::sisycol::Root>(buf);

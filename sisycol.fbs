@@ -21,7 +21,7 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxRuleRangeSettingRange, GetDmxRuleBoolSetting,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
              GetIdealTime, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
-             ChangeRemoteMultiplayerSetting, CoinUpdate }
+             ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock }
 
 table Root {
   version:Version;
@@ -75,6 +75,9 @@ enum DmxDeviceSettingType:byte { RANGE, CHECKBOX }
 
 enum DmxDeviceMode:byte        { TEST, DISABLED }
 
+enum Currency:byte             { EURO }
+
+enum GameBlockReason:byte      { UNKNOWN, COIN_ACCEPTOR }
 
 struct Version {
   high:ubyte = 2;
@@ -443,15 +446,7 @@ table ChangeRemoteMultiplayerSetting {
     value:bool;
 }
 
-table CoinUpdate {}
-
-table AccountPreCharge {}
-
-table AccountCharge {
-    preChargeId:int = -1;
-}
-
-table AccountStatus {}
+table UnlockGame {}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
@@ -723,20 +718,21 @@ table GetDetectedDevices {
 table ChangeRemoteMultiplayerSetting {}
 
 table CoinUpdate {
+    currency:Currency;
     balance:uint;
     requiredBalance:uint;
 }
 
-table AccountPreCharge {
-    valid:bool;
-    chargeId:int;
-}
+union GameUnlockResult { GameUnlockComplete, GameUnlockWait }
 
-table AccountCharge {
+table GameUnlockComplete {
     success:bool;
 }
 
-table AccountStatus {
-    balance:int;
-    preChargeBalance:int;
+table GameUnlockWait {
+    reason:GameBlockReason;
+}
+
+table GameUnlock {
+    result:GameUnlockResult;
 }

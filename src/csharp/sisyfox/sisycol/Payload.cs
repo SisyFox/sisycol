@@ -63,6 +63,7 @@ public enum Payload : byte
  GetDetectedDevices = 53,
  ChangeRemoteMultiplayerSetting = 54,
  CoinUpdate = 55,
+ GameUnlock = 56,
 };
 
 

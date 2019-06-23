@@ -17,21 +17,25 @@ public struct CoinUpdate : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public CoinUpdate __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public uint Balance { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
-  public uint RequiredBalance { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public sisyfox.sisycol.Currency Currency { get { int o = __p.__offset(4); return o != 0 ? (sisyfox.sisycol.Currency)__p.bb.GetSbyte(o + __p.bb_pos) : sisyfox.sisycol.Currency.EURO; } }
+  public uint Balance { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public uint RequiredBalance { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
 
   public static Offset<CoinUpdate> CreateCoinUpdate(FlatBufferBuilder builder,
+      sisyfox.sisycol.Currency currency = sisyfox.sisycol.Currency.EURO,
       uint balance = 0,
       uint requiredBalance = 0) {
-    builder.StartObject(2);
+    builder.StartObject(3);
     CoinUpdate.AddRequiredBalance(builder, requiredBalance);
     CoinUpdate.AddBalance(builder, balance);
+    CoinUpdate.AddCurrency(builder, currency);
     return CoinUpdate.EndCoinUpdate(builder);
   }
 
-  public static void StartCoinUpdate(FlatBufferBuilder builder) { builder.StartObject(2); }
-  public static void AddBalance(FlatBufferBuilder builder, uint balance) { builder.AddUint(0, balance, 0); }
-  public static void AddRequiredBalance(FlatBufferBuilder builder, uint requiredBalance) { builder.AddUint(1, requiredBalance, 0); }
+  public static void StartCoinUpdate(FlatBufferBuilder builder) { builder.StartObject(3); }
+  public static void AddCurrency(FlatBufferBuilder builder, sisyfox.sisycol.Currency currency) { builder.AddSbyte(0, (sbyte)currency, 0); }
+  public static void AddBalance(FlatBufferBuilder builder, uint balance) { builder.AddUint(1, balance, 0); }
+  public static void AddRequiredBalance(FlatBufferBuilder builder, uint requiredBalance) { builder.AddUint(2, requiredBalance, 0); }
   public static Offset<CoinUpdate> EndCoinUpdate(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<CoinUpdate>(o);

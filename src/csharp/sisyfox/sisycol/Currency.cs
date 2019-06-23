@@ -5,11 +5,9 @@
 namespace sisyfox.sisycol
 {
 
-public enum SettingVariableType : byte
+public enum Currency : sbyte
 {
- BOOL = 0,
- UBYTE = 1,
- UINT = 2,
+ EURO = 0,
 };
 
 
