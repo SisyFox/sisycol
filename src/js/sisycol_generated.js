@@ -6374,26 +6374,10 @@ sisyfox.sisycol.request.CreditStatus.getRootAsCreditStatus = function(bb, obj) {
 };
 
 /**
- * @returns {number}
- */
-sisyfox.sisycol.request.CreditStatus.prototype.availableCredits = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.readInt32(this.bb_pos + offset) : -1;
-};
-
-/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.CreditStatus.startCreditStatus = function(builder) {
-  builder.startObject(1);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} availableCredits
- */
-sisyfox.sisycol.request.CreditStatus.addAvailableCredits = function(builder, availableCredits) {
-  builder.addFieldInt32(0, availableCredits, -1);
+  builder.startObject(0);
 };
 
 /**
@@ -11484,6 +11468,73 @@ sisyfox.sisycol.response.GameUnlock.addResult = function(builder, resultOffset) 
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.GameUnlock.endGameUnlock = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.CreditStatus = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.CreditStatus}
+ */
+sisyfox.sisycol.response.CreditStatus.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.CreditStatus=} obj
+ * @returns {sisyfox.sisycol.response.CreditStatus}
+ */
+sisyfox.sisycol.response.CreditStatus.getRootAsCreditStatus = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.CreditStatus).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.CreditStatus.prototype.availableCredits = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : -1;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.CreditStatus.startCreditStatus = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} availableCredits
+ */
+sisyfox.sisycol.response.CreditStatus.addAvailableCredits = function(builder, availableCredits) {
+  builder.addFieldInt32(0, availableCredits, -1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.CreditStatus.endCreditStatus = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

@@ -449,10 +449,7 @@ table ChangeRemoteMultiplayerSetting {
 
 table UnlockGame {}
 
-table CreditStatus {
-    // -1 means infinite amount of credits
-    availableCredits:int = -1;
-}
+table CreditStatus {}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
@@ -741,4 +738,9 @@ table GameUnlockWait {
 
 table GameUnlock {
     result:GameUnlockResult;
+}
+
+table CreditStatus {
+    // -1 means infinite amount of credits
+    availableCredits:int = -1;
 }
