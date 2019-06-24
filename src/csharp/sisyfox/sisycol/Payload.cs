@@ -64,6 +64,7 @@ public enum Payload : byte
  ChangeRemoteMultiplayerSetting = 54,
  CoinUpdate = 55,
  GameUnlock = 56,
+ CreditStatus = 57,
 };
 
 

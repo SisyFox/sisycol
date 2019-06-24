@@ -319,11 +319,12 @@ enum Payload {
   Payload_ChangeRemoteMultiplayerSetting = 54,
   Payload_CoinUpdate = 55,
   Payload_GameUnlock = 56,
+  Payload_CreditStatus = 57,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_GameUnlock
+  Payload_MAX = Payload_CreditStatus
 };
 
-inline Payload (&EnumValuesPayload())[57] {
+inline Payload (&EnumValuesPayload())[58] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -381,7 +382,8 @@ inline Payload (&EnumValuesPayload())[57] {
     Payload_GetDetectedDevices,
     Payload_ChangeRemoteMultiplayerSetting,
     Payload_CoinUpdate,
-    Payload_GameUnlock
+    Payload_GameUnlock,
+    Payload_CreditStatus
   };
   return values;
 }
@@ -445,6 +447,7 @@ inline const char **EnumNamesPayload() {
     "ChangeRemoteMultiplayerSetting",
     "CoinUpdate",
     "GameUnlock",
+    "CreditStatus",
     nullptr
   };
   return names;
@@ -681,6 +684,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::response::CoinUpdate> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::response::GameUnlock> {
   static const Payload enum_value = Payload_GameUnlock;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::CreditStatus> {
+  static const Payload enum_value = Payload_CreditStatus;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -2023,6 +2030,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::response::GameUnlock *payload_as_GameUnlock() const {
     return payload_type() == Payload_GameUnlock ? static_cast<const sisyfox::sisycol::response::GameUnlock *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::CreditStatus *payload_as_CreditStatus() const {
+    return payload_type() == Payload_CreditStatus ? static_cast<const sisyfox::sisycol::request::CreditStatus *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2256,6 +2266,10 @@ template<> inline const sisyfox::sisycol::response::CoinUpdate *Root::payload_as
 
 template<> inline const sisyfox::sisycol::response::GameUnlock *Root::payload_as<sisyfox::sisycol::response::GameUnlock>() const {
   return payload_as_GameUnlock();
+}
+
+template<> inline const sisyfox::sisycol::request::CreditStatus *Root::payload_as<sisyfox::sisycol::request::CreditStatus>() const {
+  return payload_as_CreditStatus();
 }
 
 struct RootBuilder {
@@ -9071,6 +9085,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_GameUnlock: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::response::GameUnlock *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_CreditStatus: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::CreditStatus *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

@@ -84,7 +84,8 @@ sisyfox.sisycol.Payload = {
   GetDetectedDevices: 53,
   ChangeRemoteMultiplayerSetting: 54,
   CoinUpdate: 55,
-  GameUnlock: 56
+  GameUnlock: 56,
+  CreditStatus: 57
 };
 
 /**
