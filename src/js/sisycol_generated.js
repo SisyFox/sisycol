@@ -6341,6 +6341,73 @@ sisyfox.sisycol.request.UnlockGame.endUnlockGame = function(builder) {
 /**
  * @constructor
  */
+sisyfox.sisycol.request.CreditStatus = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.CreditStatus}
+ */
+sisyfox.sisycol.request.CreditStatus.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.CreditStatus=} obj
+ * @returns {sisyfox.sisycol.request.CreditStatus}
+ */
+sisyfox.sisycol.request.CreditStatus.getRootAsCreditStatus = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.CreditStatus).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CreditStatus.prototype.availableCredits = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : -1;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.CreditStatus.startCreditStatus = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} availableCredits
+ */
+sisyfox.sisycol.request.CreditStatus.addAvailableCredits = function(builder, availableCredits) {
+  builder.addFieldInt32(0, availableCredits, -1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.CreditStatus.endCreditStatus = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}

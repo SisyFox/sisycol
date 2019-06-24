@@ -139,6 +139,8 @@ struct ChangeRemoteMultiplayerSetting;
 
 struct UnlockGame;
 
+struct CreditStatus;
+
 }  // namespace request
 
 namespace response {
@@ -5636,6 +5638,46 @@ struct UnlockGameBuilder {
 inline flatbuffers::Offset<UnlockGame> CreateUnlockGame(
     flatbuffers::FlatBufferBuilder &_fbb) {
   UnlockGameBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+struct CreditStatus FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_AVAILABLECREDITS = 4
+  };
+  int32_t availableCredits() const {
+    return GetField<int32_t>(VT_AVAILABLECREDITS, -1);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<int32_t>(verifier, VT_AVAILABLECREDITS) &&
+           verifier.EndTable();
+  }
+};
+
+struct CreditStatusBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_availableCredits(int32_t availableCredits) {
+    fbb_.AddElement<int32_t>(CreditStatus::VT_AVAILABLECREDITS, availableCredits, -1);
+  }
+  explicit CreditStatusBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  CreditStatusBuilder &operator=(const CreditStatusBuilder &);
+  flatbuffers::Offset<CreditStatus> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<CreditStatus>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<CreditStatus> CreateCreditStatus(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    int32_t availableCredits = -1) {
+  CreditStatusBuilder builder_(_fbb);
+  builder_.add_availableCredits(availableCredits);
   return builder_.Finish();
 }
 
