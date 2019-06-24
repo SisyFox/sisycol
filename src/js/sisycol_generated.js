@@ -158,7 +158,7 @@ sisyfox.sisycol.SettingType = {
   HASH: 73,
   GAME: 74,
   GAME_ACTIVE: 128,
-  RESERVED_FOR_FUTURE_USE_2: 129
+  GAME_ENABLED_DEPRECATED: 129
 };
 
 /**
