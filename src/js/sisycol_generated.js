@@ -86,7 +86,8 @@ sisyfox.sisycol.Payload = {
   CoinUpdate: 55,
   GameUnlock: 56,
   CreditStatus: 57,
-  AddCredits: 58
+  AddCredits: 58,
+  AddScoreNew: 59
 };
 
 /**
@@ -605,6 +606,68 @@ sisyfox.sisycol.Coordinates.createCoordinates = function(builder, x, y, z) {
 /**
  * @constructor
  */
+sisyfox.sisycol.Initials = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.Initials}
+ */
+sisyfox.sisycol.Initials.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Initials.prototype.first = function() {
+  return this.bb.readInt8(this.bb_pos);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Initials.prototype.second = function() {
+  return this.bb.readInt8(this.bb_pos + 1);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.Initials.prototype.third = function() {
+  return this.bb.readInt8(this.bb_pos + 2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} first
+ * @param {number} second
+ * @param {number} third
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.Initials.createInitials = function(builder, first, second, third) {
+  builder.prep(1, 3);
+  builder.writeInt8(third);
+  builder.writeInt8(second);
+  builder.writeInt8(first);
+  return builder.offset();
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.Score = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -816,10 +879,19 @@ sisyfox.sisycol.Score.prototype.multiplayer = function() {
 };
 
 /**
+ * @param {sisyfox.sisycol.Initials=} obj
+ * @returns {sisyfox.sisycol.Initials|null}
+ */
+sisyfox.sisycol.Score.prototype.initials = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 44);
+  return offset ? (obj || new sisyfox.sisycol.Initials).__init(this.bb_pos + offset, this.bb) : null;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.Score.startScore = function(builder) {
-  builder.startObject(20);
+  builder.startObject(21);
 };
 
 /**
@@ -1001,6 +1073,14 @@ sisyfox.sisycol.Score.startHashVector = function(builder, numElems) {
  */
 sisyfox.sisycol.Score.addMultiplayer = function(builder, multiplayer) {
   builder.addFieldInt8(19, +multiplayer, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} initialsOffset
+ */
+sisyfox.sisycol.Score.addInitials = function(builder, initialsOffset) {
+  builder.addFieldStruct(20, initialsOffset, 0);
 };
 
 /**
@@ -6455,6 +6535,74 @@ sisyfox.sisycol.request.AddCredits.addAmount = function(builder, amount) {
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.request.AddCredits.endAddCredits = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.request.AddScoreNew = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.AddScoreNew}
+ */
+sisyfox.sisycol.request.AddScoreNew.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.AddScoreNew=} obj
+ * @returns {sisyfox.sisycol.request.AddScoreNew}
+ */
+sisyfox.sisycol.request.AddScoreNew.getRootAsAddScoreNew = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.AddScoreNew).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {sisyfox.sisycol.Score=} obj
+ * @returns {sisyfox.sisycol.Score|null}
+ */
+sisyfox.sisycol.request.AddScoreNew.prototype.data = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? (obj || new sisyfox.sisycol.Score).__init(this.bb.__indirect(this.bb_pos + offset), this.bb) : null;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.AddScoreNew.startAddScoreNew = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} dataOffset
+ */
+sisyfox.sisycol.request.AddScoreNew.addData = function(builder, dataOffset) {
+  builder.addFieldOffset(0, dataOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.AddScoreNew.endAddScoreNew = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

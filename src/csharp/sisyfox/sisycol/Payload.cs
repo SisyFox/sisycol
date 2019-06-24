@@ -66,6 +66,7 @@ public enum Payload : byte
  GameUnlock = 56,
  CreditStatus = 57,
  AddCredits = 58,
+ AddScoreNew = 59,
 };
 
 

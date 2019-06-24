@@ -17,6 +17,8 @@ struct LiveData;
 
 struct Coordinates;
 
+struct Initials;
+
 struct Score;
 
 struct BoolSetting;
@@ -142,6 +144,8 @@ struct UnlockGame;
 struct CreditStatus;
 
 struct AddCredits;
+
+struct AddScoreNew;
 
 }  // namespace request
 
@@ -325,11 +329,12 @@ enum Payload {
   Payload_GameUnlock = 56,
   Payload_CreditStatus = 57,
   Payload_AddCredits = 58,
+  Payload_AddScoreNew = 59,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_AddCredits
+  Payload_MAX = Payload_AddScoreNew
 };
 
-inline Payload (&EnumValuesPayload())[59] {
+inline Payload (&EnumValuesPayload())[60] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -389,7 +394,8 @@ inline Payload (&EnumValuesPayload())[59] {
     Payload_CoinUpdate,
     Payload_GameUnlock,
     Payload_CreditStatus,
-    Payload_AddCredits
+    Payload_AddCredits,
+    Payload_AddScoreNew
   };
   return values;
 }
@@ -455,6 +461,7 @@ inline const char **EnumNamesPayload() {
     "GameUnlock",
     "CreditStatus",
     "AddCredits",
+    "AddScoreNew",
     nullptr
   };
   return names;
@@ -699,6 +706,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::CreditStatus> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::AddCredits> {
   static const Payload enum_value = Payload_AddCredits;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::AddScoreNew> {
+  static const Payload enum_value = Payload_AddScoreNew;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1636,6 +1647,36 @@ MANUALLY_ALIGNED_STRUCT(4) Coordinates FLATBUFFERS_FINAL_CLASS {
 };
 STRUCT_END(Coordinates, 12);
 
+MANUALLY_ALIGNED_STRUCT(1) Initials FLATBUFFERS_FINAL_CLASS {
+ private:
+  int8_t first_;
+  int8_t second_;
+  int8_t third_;
+
+ public:
+  Initials() {
+    memset(this, 0, sizeof(Initials));
+  }
+  Initials(const Initials &_o) {
+    memcpy(this, &_o, sizeof(Initials));
+  }
+  Initials(int8_t _first, int8_t _second, int8_t _third)
+      : first_(flatbuffers::EndianScalar(_first)),
+        second_(flatbuffers::EndianScalar(_second)),
+        third_(flatbuffers::EndianScalar(_third)) {
+  }
+  int8_t first() const {
+    return flatbuffers::EndianScalar(first_);
+  }
+  int8_t second() const {
+    return flatbuffers::EndianScalar(second_);
+  }
+  int8_t third() const {
+    return flatbuffers::EndianScalar(third_);
+  }
+};
+STRUCT_END(Initials, 3);
+
 MANUALLY_ALIGNED_STRUCT(4) DmxDeviceChannel FLATBUFFERS_FINAL_CLASS {
  private:
   int32_t storageRef_;
@@ -2049,6 +2090,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::AddCredits *payload_as_AddCredits() const {
     return payload_type() == Payload_AddCredits ? static_cast<const sisyfox::sisycol::request::AddCredits *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::AddScoreNew *payload_as_AddScoreNew() const {
+    return payload_type() == Payload_AddScoreNew ? static_cast<const sisyfox::sisycol::request::AddScoreNew *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2292,6 +2336,10 @@ template<> inline const sisyfox::sisycol::request::AddCredits *Root::payload_as<
   return payload_as_AddCredits();
 }
 
+template<> inline const sisyfox::sisycol::request::AddScoreNew *Root::payload_as<sisyfox::sisycol::request::AddScoreNew>() const {
+  return payload_as_AddScoreNew();
+}
+
 struct RootBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
@@ -2354,7 +2402,8 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_ENDPOSITION = 36,
     VT_GAME = 38,
     VT_HASH = 40,
-    VT_MULTIPLAYER = 42
+    VT_MULTIPLAYER = 42,
+    VT_INITIALS = 44
   };
   uint32_t id() const {
     return GetField<uint32_t>(VT_ID, 0);
@@ -2416,6 +2465,9 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   bool multiplayer() const {
     return GetField<uint8_t>(VT_MULTIPLAYER, 0) != 0;
   }
+  const Initials *initials() const {
+    return GetStruct<const Initials *>(VT_INITIALS);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint32_t>(verifier, VT_ID) &&
@@ -2439,6 +2491,7 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyOffset(verifier, VT_HASH) &&
            verifier.Verify(hash()) &&
            VerifyField<uint8_t>(verifier, VT_MULTIPLAYER) &&
+           VerifyField<Initials>(verifier, VT_INITIALS) &&
            verifier.EndTable();
   }
 };
@@ -2506,6 +2559,9 @@ struct ScoreBuilder {
   void add_multiplayer(bool multiplayer) {
     fbb_.AddElement<uint8_t>(Score::VT_MULTIPLAYER, static_cast<uint8_t>(multiplayer), 0);
   }
+  void add_initials(const Initials *initials) {
+    fbb_.AddStruct(Score::VT_INITIALS, initials);
+  }
   explicit ScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2539,9 +2595,11 @@ inline flatbuffers::Offset<Score> CreateScore(
     const Coordinates *endPosition = 0,
     uint8_t game = 0,
     flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0,
-    bool multiplayer = false) {
+    bool multiplayer = false,
+    const Initials *initials = 0) {
   ScoreBuilder builder_(_fbb);
   builder_.add_timestamp(timestamp);
+  builder_.add_initials(initials);
   builder_.add_hash(hash);
   builder_.add_endPosition(endPosition);
   builder_.add_modeSpecifcValue(modeSpecifcValue);
@@ -2585,7 +2643,8 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
     const Coordinates *endPosition = 0,
     uint8_t game = 0,
     const std::vector<uint8_t> *hash = nullptr,
-    bool multiplayer = false) {
+    bool multiplayer = false,
+    const Initials *initials = 0) {
   return sisyfox::sisycol::CreateScore(
       _fbb,
       id,
@@ -2607,7 +2666,8 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
       endPosition,
       game,
       hash ? _fbb.CreateVector<uint8_t>(*hash) : 0,
-      multiplayer);
+      multiplayer,
+      initials);
 }
 
 struct BoolSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -5742,6 +5802,47 @@ inline flatbuffers::Offset<AddCredits> CreateAddCredits(
     int32_t amount = 0) {
   AddCreditsBuilder builder_(_fbb);
   builder_.add_amount(amount);
+  return builder_.Finish();
+}
+
+struct AddScoreNew FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_DATA = 4
+  };
+  const sisyfox::sisycol::Score *data() const {
+    return GetPointer<const sisyfox::sisycol::Score *>(VT_DATA);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_DATA) &&
+           verifier.VerifyTable(data()) &&
+           verifier.EndTable();
+  }
+};
+
+struct AddScoreNewBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_data(flatbuffers::Offset<sisyfox::sisycol::Score> data) {
+    fbb_.AddOffset(AddScoreNew::VT_DATA, data);
+  }
+  explicit AddScoreNewBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  AddScoreNewBuilder &operator=(const AddScoreNewBuilder &);
+  flatbuffers::Offset<AddScoreNew> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<AddScoreNew>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<AddScoreNew> CreateAddScoreNew(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<sisyfox::sisycol::Score> data = 0) {
+  AddScoreNewBuilder builder_(_fbb);
+  builder_.add_data(data);
   return builder_.Finish();
 }
 
@@ -9181,6 +9282,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_AddCredits: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddCredits *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_AddScoreNew: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::AddScoreNew *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

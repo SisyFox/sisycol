@@ -4,7 +4,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace sisyfox.sisycol;
 
-union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
+union Payload { Error, Info, /* DEPRECATED */ AddScore /* DEPRECATED */,
+             GetScore, GetScoreRange, SetLiveData,
              GetLiveData, AddUser, GetUser, SetUser, GetCurrentUser,
              GetUserRange, RemoveUser,UnsetUser, AddLocation, GetLocation,
              SetSetting, GetSetting, GetSettings, Trigger, AddDmxDevice,
@@ -22,7 +23,7 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
              GetIdealTime, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
              ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus,
-             AddCredits }
+             AddCredits, AddScoreNew }
 
 table Root {
   version:Version;
@@ -98,6 +99,12 @@ struct Coordinates {
   z:int;
 }
 
+struct Initials {
+    first:byte = 83; // S
+    second:byte = 70; // F
+    third:byte = 88; // X
+}
+
 table Score {
     id:uint;
     goal:int;
@@ -119,6 +126,7 @@ table Score {
     game:ubyte;
     hash:[ubyte];
     multiplayer:bool;
+    initials:Initials;
 }
 
 table BoolSetting {
@@ -199,6 +207,7 @@ namespace sisyfox.sisycol.request;
 
 table Info {}
 
+// DEPRECATED
 table AddScore {
   goal:int;
   maxGoal:int;
@@ -454,6 +463,10 @@ table CreditStatus {}
 
 table AddCredits {
     amount:int;
+}
+
+table AddScoreNew { // Deprecates AddScore
+    data:Score;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
