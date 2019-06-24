@@ -841,9 +841,9 @@ enum SettingType {
   SettingType_HASH = 73,
   SettingType_GAME = 74,
   SettingType_GAME_ACTIVE = 128,
-  SettingType_GAME_ENABLED = 129,
+  SettingType_RESERVED_FOR_FUTURE_USE_2 = 129,
   SettingType_MIN = SettingType_GAME_LANGUAGE,
-  SettingType_MAX = SettingType_GAME_ENABLED
+  SettingType_MAX = SettingType_RESERVED_FOR_FUTURE_USE_2
 };
 
 inline SettingType (&EnumValuesSettingType())[34] {
@@ -881,7 +881,7 @@ inline SettingType (&EnumValuesSettingType())[34] {
     SettingType_HASH,
     SettingType_GAME,
     SettingType_GAME_ACTIVE,
-    SettingType_GAME_ENABLED
+    SettingType_RESERVED_FOR_FUTURE_USE_2
   };
   return values;
 }
@@ -1017,7 +1017,7 @@ inline const char **EnumNamesSettingType() {
     "",
     "",
     "GAME_ACTIVE",
-    "GAME_ENABLED",
+    "RESERVED_FOR_FUTURE_USE_2",
     nullptr
   };
   return names;
