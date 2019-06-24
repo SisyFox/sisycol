@@ -21,7 +21,8 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxRuleRangeSettingRange, GetDmxRuleBoolSetting,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
              GetIdealTime, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
-             ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus }
+             ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus,
+             AddCredits }
 
 table Root {
   version:Version;

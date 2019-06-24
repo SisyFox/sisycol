@@ -85,7 +85,8 @@ sisyfox.sisycol.Payload = {
   ChangeRemoteMultiplayerSetting: 54,
   CoinUpdate: 55,
   GameUnlock: 56,
-  CreditStatus: 57
+  CreditStatus: 57,
+  AddCredits: 58
 };
 
 /**
