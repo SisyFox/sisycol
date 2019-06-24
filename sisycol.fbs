@@ -47,7 +47,7 @@ enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          SFX_VOLUME, VOICES, IDLE_TIME, WIN_TRANSITIONS_TO_LOSS,
                          BALL_SETTING, PLAY_VIDEO, VIDEO_DELAY, VIDEO_SELECTION,
                          INGAME_MENU, SENSOR, MULTIPLAYER_ENABLED, VIDEO_VOLUME,
-                         PAY_PER_PLAY_ENABLED,
+                         PAY_PER_PLAY_ENABLED, BONUS_CREDITS_ENABLED,
                          SF_CONTROL_INTERNAL=0x3f,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
@@ -451,6 +451,10 @@ table UnlockGame {}
 
 table CreditStatus {}
 
+table AddCredits {
+    amount:int;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -744,3 +748,5 @@ table CreditStatus {
     // -1 means infinite amount of credits
     availableCredits:int = -1;
 }
+
+table AddCredits {}

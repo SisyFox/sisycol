@@ -141,6 +141,8 @@ struct UnlockGame;
 
 struct CreditStatus;
 
+struct AddCredits;
+
 }  // namespace request
 
 namespace response {
@@ -258,6 +260,8 @@ struct GameUnlockWait;
 struct GameUnlock;
 
 struct CreditStatus;
+
+struct AddCredits;
 
 }  // namespace response
 
@@ -828,6 +832,7 @@ enum SettingType {
   SettingType_MULTIPLAYER_ENABLED = 17,
   SettingType_VIDEO_VOLUME = 18,
   SettingType_PAY_PER_PLAY_ENABLED = 19,
+  SettingType_BONUS_CREDITS_ENABLED = 20,
   SettingType_SF_CONTROL_INTERNAL = 63,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
@@ -846,7 +851,7 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED_DEPRECATED
 };
 
-inline SettingType (&EnumValuesSettingType())[34] {
+inline SettingType (&EnumValuesSettingType())[35] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -868,6 +873,7 @@ inline SettingType (&EnumValuesSettingType())[34] {
     SettingType_MULTIPLAYER_ENABLED,
     SettingType_VIDEO_VOLUME,
     SettingType_PAY_PER_PLAY_ENABLED,
+    SettingType_BONUS_CREDITS_ENABLED,
     SettingType_SF_CONTROL_INTERNAL,
     SettingType_WORLD,
     SettingType_LEVEL,
@@ -908,7 +914,7 @@ inline const char **EnumNamesSettingType() {
     "MULTIPLAYER_ENABLED",
     "VIDEO_VOLUME",
     "PAY_PER_PLAY_ENABLED",
-    "",
+    "BONUS_CREDITS_ENABLED",
     "",
     "",
     "",
@@ -5685,6 +5691,46 @@ inline flatbuffers::Offset<CreditStatus> CreateCreditStatus(
   return builder_.Finish();
 }
 
+struct AddCredits FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_AMOUNT = 4
+  };
+  int32_t amount() const {
+    return GetField<int32_t>(VT_AMOUNT, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<int32_t>(verifier, VT_AMOUNT) &&
+           verifier.EndTable();
+  }
+};
+
+struct AddCreditsBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_amount(int32_t amount) {
+    fbb_.AddElement<int32_t>(AddCredits::VT_AMOUNT, amount, 0);
+  }
+  explicit AddCreditsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  AddCreditsBuilder &operator=(const AddCreditsBuilder &);
+  flatbuffers::Offset<AddCredits> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<AddCredits>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<AddCredits> CreateAddCredits(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    int32_t amount = 0) {
+  AddCreditsBuilder builder_(_fbb);
+  builder_.add_amount(amount);
+  return builder_.Finish();
+}
+
 }  // namespace request
 
 namespace response {
@@ -8845,6 +8891,34 @@ inline flatbuffers::Offset<CreditStatus> CreateCreditStatus(
     int32_t availableCredits = -1) {
   CreditStatusBuilder builder_(_fbb);
   builder_.add_availableCredits(availableCredits);
+  return builder_.Finish();
+}
+
+struct AddCredits FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct AddCreditsBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit AddCreditsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  AddCreditsBuilder &operator=(const AddCreditsBuilder &);
+  flatbuffers::Offset<AddCredits> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<AddCredits>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<AddCredits> CreateAddCredits(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  AddCreditsBuilder builder_(_fbb);
   return builder_.Finish();
 }
 

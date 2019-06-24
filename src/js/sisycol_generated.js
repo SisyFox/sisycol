@@ -145,6 +145,7 @@ sisyfox.sisycol.SettingType = {
   MULTIPLAYER_ENABLED: 17,
   VIDEO_VOLUME: 18,
   PAY_PER_PLAY_ENABLED: 19,
+  BONUS_CREDITS_ENABLED: 20,
   SF_CONTROL_INTERNAL: 63,
   WORLD: 64,
   LEVEL: 65,
@@ -6393,6 +6394,73 @@ sisyfox.sisycol.request.CreditStatus.endCreditStatus = function(builder) {
 /**
  * @constructor
  */
+sisyfox.sisycol.request.AddCredits = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.AddCredits}
+ */
+sisyfox.sisycol.request.AddCredits.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.AddCredits=} obj
+ * @returns {sisyfox.sisycol.request.AddCredits}
+ */
+sisyfox.sisycol.request.AddCredits.getRootAsAddCredits = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.AddCredits).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.AddCredits.prototype.amount = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.AddCredits.startAddCredits = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} amount
+ */
+sisyfox.sisycol.request.AddCredits.addAmount = function(builder, amount) {
+  builder.addFieldInt32(0, amount, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.AddCredits.endAddCredits = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -11536,6 +11604,57 @@ sisyfox.sisycol.response.CreditStatus.addAvailableCredits = function(builder, av
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.CreditStatus.endCreditStatus = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.AddCredits = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.AddCredits}
+ */
+sisyfox.sisycol.response.AddCredits.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.AddCredits=} obj
+ * @returns {sisyfox.sisycol.response.AddCredits}
+ */
+sisyfox.sisycol.response.AddCredits.getRootAsAddCredits = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.AddCredits).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.AddCredits.startAddCredits = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.AddCredits.endAddCredits = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
