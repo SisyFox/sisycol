@@ -23,7 +23,7 @@ union Payload { Error, Info, /* DEPRECATED */ AddScore /* DEPRECATED */,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
              GetIdealTime, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
              ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus,
-             AddCredits, AddScoreNew }
+             AddCredits, AddScoreNew, CalculateScore, SetCoinAcceptorMode }
 
 table Root {
   version:Version;
@@ -485,6 +485,10 @@ table CalculateScore {
     multiplayer:bool;
 }
 
+table SetCoinAcceptorMode {
+    enableInput:bool;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -783,4 +787,8 @@ table AddCredits {}
 
 table CalculateScore {
     data:Score;
+}
+
+table SetCoinAcceptorMode {
+    success:bool;
 }
