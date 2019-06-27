@@ -469,6 +469,7 @@ table AddScoreNew { // Deprecates AddScore
     data:Score;
 }
 
+// NOTE: rank is not calculated
 table CalculateScore {
     goal:int;
     maxGoal:int;
