@@ -6610,6 +6610,304 @@ sisyfox.sisycol.request.AddScoreNew.endAddScoreNew = function(builder) {
 /**
  * @constructor
  */
+sisyfox.sisycol.request.CalculateScore = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.CalculateScore}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.CalculateScore=} obj
+ * @returns {sisyfox.sisycol.request.CalculateScore}
+ */
+sisyfox.sisycol.request.CalculateScore.getRootAsCalculateScore = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.CalculateScore).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.goal = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.maxGoal = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.time = function() {
+  var offset = this.bb.__offset(this.bb_pos, 8);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {sisyfox.sisycol.EndReason}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.reason = function() {
+  var offset = this.bb.__offset(this.bb_pos, 10);
+  return offset ? /** @type {sisyfox.sisycol.EndReason} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.EndReason.WIN;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.level = function() {
+  var offset = this.bb.__offset(this.bb_pos, 12);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.world = function() {
+  var offset = this.bb.__offset(this.bb_pos, 14);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {sisyfox.sisycol.GameMode}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.gameMode = function() {
+  var offset = this.bb.__offset(this.bb_pos, 16);
+  return offset ? /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.GameMode.CLIMB;
+};
+
+/**
+ * @returns {sisyfox.sisycol.Difficulty}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.difficulty = function() {
+  var offset = this.bb.__offset(this.bb_pos, 18);
+  return offset ? /** @type {sisyfox.sisycol.Difficulty} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.Difficulty.VERY_EASY;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.modeSpecificValue = function() {
+  var offset = this.bb.__offset(this.bb_pos, 20);
+  return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {sisyfox.sisycol.Coordinates=} obj
+ * @returns {sisyfox.sisycol.Coordinates|null}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.endPosition = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 22);
+  return offset ? (obj || new sisyfox.sisycol.Coordinates).__init(this.bb_pos + offset, this.bb) : null;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.game = function() {
+  var offset = this.bb.__offset(this.bb_pos, 24);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {number} index
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.hash = function(index) {
+  var offset = this.bb.__offset(this.bb_pos, 26);
+  return offset ? this.bb.readUint8(this.bb.__vector(this.bb_pos + offset) + index) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.hashLength = function() {
+  var offset = this.bb.__offset(this.bb_pos, 26);
+  return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {Uint8Array}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.hashArray = function() {
+  var offset = this.bb.__offset(this.bb_pos, 26);
+  return offset ? new Uint8Array(this.bb.bytes().buffer, this.bb.bytes().byteOffset + this.bb.__vector(this.bb_pos + offset), this.bb.__vector_len(this.bb_pos + offset)) : null;
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.request.CalculateScore.prototype.multiplayer = function() {
+  var offset = this.bb.__offset(this.bb_pos, 28);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.CalculateScore.startCalculateScore = function(builder) {
+  builder.startObject(13);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} goal
+ */
+sisyfox.sisycol.request.CalculateScore.addGoal = function(builder, goal) {
+  builder.addFieldInt32(0, goal, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} maxGoal
+ */
+sisyfox.sisycol.request.CalculateScore.addMaxGoal = function(builder, maxGoal) {
+  builder.addFieldInt32(1, maxGoal, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} time
+ */
+sisyfox.sisycol.request.CalculateScore.addTime = function(builder, time) {
+  builder.addFieldInt32(2, time, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.EndReason} reason
+ */
+sisyfox.sisycol.request.CalculateScore.addReason = function(builder, reason) {
+  builder.addFieldInt8(3, reason, sisyfox.sisycol.EndReason.WIN);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} level
+ */
+sisyfox.sisycol.request.CalculateScore.addLevel = function(builder, level) {
+  builder.addFieldInt8(4, level, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} world
+ */
+sisyfox.sisycol.request.CalculateScore.addWorld = function(builder, world) {
+  builder.addFieldInt8(5, world, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.GameMode} gameMode
+ */
+sisyfox.sisycol.request.CalculateScore.addGameMode = function(builder, gameMode) {
+  builder.addFieldInt8(6, gameMode, sisyfox.sisycol.GameMode.CLIMB);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.Difficulty} difficulty
+ */
+sisyfox.sisycol.request.CalculateScore.addDifficulty = function(builder, difficulty) {
+  builder.addFieldInt8(7, difficulty, sisyfox.sisycol.Difficulty.VERY_EASY);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} modeSpecificValue
+ */
+sisyfox.sisycol.request.CalculateScore.addModeSpecificValue = function(builder, modeSpecificValue) {
+  builder.addFieldInt32(8, modeSpecificValue, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} endPositionOffset
+ */
+sisyfox.sisycol.request.CalculateScore.addEndPosition = function(builder, endPositionOffset) {
+  builder.addFieldStruct(9, endPositionOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} game
+ */
+sisyfox.sisycol.request.CalculateScore.addGame = function(builder, game) {
+  builder.addFieldInt8(10, game, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} hashOffset
+ */
+sisyfox.sisycol.request.CalculateScore.addHash = function(builder, hashOffset) {
+  builder.addFieldOffset(11, hashOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {Array.<number>} data
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.CalculateScore.createHashVector = function(builder, data) {
+  builder.startVector(1, data.length, 1);
+  for (var i = data.length - 1; i >= 0; i--) {
+    builder.addInt8(data[i]);
+  }
+  return builder.endVector();
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} numElems
+ */
+sisyfox.sisycol.request.CalculateScore.startHashVector = function(builder, numElems) {
+  builder.startVector(1, numElems, 1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} multiplayer
+ */
+sisyfox.sisycol.request.CalculateScore.addMultiplayer = function(builder, multiplayer) {
+  builder.addFieldInt8(12, +multiplayer, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.CalculateScore.endCalculateScore = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -11804,6 +12102,74 @@ sisyfox.sisycol.response.AddCredits.startAddCredits = function(builder) {
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.AddCredits.endAddCredits = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.CalculateScore = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.CalculateScore}
+ */
+sisyfox.sisycol.response.CalculateScore.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.CalculateScore=} obj
+ * @returns {sisyfox.sisycol.response.CalculateScore}
+ */
+sisyfox.sisycol.response.CalculateScore.getRootAsCalculateScore = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.CalculateScore).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {sisyfox.sisycol.Score=} obj
+ * @returns {sisyfox.sisycol.Score|null}
+ */
+sisyfox.sisycol.response.CalculateScore.prototype.data = function(obj) {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? (obj || new sisyfox.sisycol.Score).__init(this.bb.__indirect(this.bb_pos + offset), this.bb) : null;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.CalculateScore.startCalculateScore = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} dataOffset
+ */
+sisyfox.sisycol.response.CalculateScore.addData = function(builder, dataOffset) {
+  builder.addFieldOffset(0, dataOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.CalculateScore.endCalculateScore = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

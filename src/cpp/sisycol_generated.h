@@ -147,6 +147,8 @@ struct AddCredits;
 
 struct AddScoreNew;
 
+struct CalculateScore;
+
 }  // namespace request
 
 namespace response {
@@ -266,6 +268,8 @@ struct GameUnlock;
 struct CreditStatus;
 
 struct AddCredits;
+
+struct CalculateScore;
 
 }  // namespace response
 
@@ -5846,6 +5850,199 @@ inline flatbuffers::Offset<AddScoreNew> CreateAddScoreNew(
   return builder_.Finish();
 }
 
+struct CalculateScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_GOAL = 4,
+    VT_MAXGOAL = 6,
+    VT_TIME = 8,
+    VT_REASON = 10,
+    VT_LEVEL = 12,
+    VT_WORLD = 14,
+    VT_GAMEMODE = 16,
+    VT_DIFFICULTY = 18,
+    VT_MODESPECIFICVALUE = 20,
+    VT_ENDPOSITION = 22,
+    VT_GAME = 24,
+    VT_HASH = 26,
+    VT_MULTIPLAYER = 28
+  };
+  int32_t goal() const {
+    return GetField<int32_t>(VT_GOAL, 0);
+  }
+  int32_t maxGoal() const {
+    return GetField<int32_t>(VT_MAXGOAL, 0);
+  }
+  int32_t time() const {
+    return GetField<int32_t>(VT_TIME, 0);
+  }
+  sisyfox::sisycol::EndReason reason() const {
+    return static_cast<sisyfox::sisycol::EndReason>(GetField<uint8_t>(VT_REASON, 0));
+  }
+  uint8_t level() const {
+    return GetField<uint8_t>(VT_LEVEL, 0);
+  }
+  uint8_t world() const {
+    return GetField<uint8_t>(VT_WORLD, 0);
+  }
+  sisyfox::sisycol::GameMode gameMode() const {
+    return static_cast<sisyfox::sisycol::GameMode>(GetField<uint8_t>(VT_GAMEMODE, 0));
+  }
+  sisyfox::sisycol::Difficulty difficulty() const {
+    return static_cast<sisyfox::sisycol::Difficulty>(GetField<uint8_t>(VT_DIFFICULTY, 0));
+  }
+  int32_t modeSpecificValue() const {
+    return GetField<int32_t>(VT_MODESPECIFICVALUE, 0);
+  }
+  const sisyfox::sisycol::Coordinates *endPosition() const {
+    return GetStruct<const sisyfox::sisycol::Coordinates *>(VT_ENDPOSITION);
+  }
+  uint8_t game() const {
+    return GetField<uint8_t>(VT_GAME, 0);
+  }
+  const flatbuffers::Vector<uint8_t> *hash() const {
+    return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_HASH);
+  }
+  bool multiplayer() const {
+    return GetField<uint8_t>(VT_MULTIPLAYER, 0) != 0;
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<int32_t>(verifier, VT_GOAL) &&
+           VerifyField<int32_t>(verifier, VT_MAXGOAL) &&
+           VerifyField<int32_t>(verifier, VT_TIME) &&
+           VerifyField<uint8_t>(verifier, VT_REASON) &&
+           VerifyField<uint8_t>(verifier, VT_LEVEL) &&
+           VerifyField<uint8_t>(verifier, VT_WORLD) &&
+           VerifyField<uint8_t>(verifier, VT_GAMEMODE) &&
+           VerifyField<uint8_t>(verifier, VT_DIFFICULTY) &&
+           VerifyField<int32_t>(verifier, VT_MODESPECIFICVALUE) &&
+           VerifyField<sisyfox::sisycol::Coordinates>(verifier, VT_ENDPOSITION) &&
+           VerifyField<uint8_t>(verifier, VT_GAME) &&
+           VerifyOffset(verifier, VT_HASH) &&
+           verifier.Verify(hash()) &&
+           VerifyField<uint8_t>(verifier, VT_MULTIPLAYER) &&
+           verifier.EndTable();
+  }
+};
+
+struct CalculateScoreBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_goal(int32_t goal) {
+    fbb_.AddElement<int32_t>(CalculateScore::VT_GOAL, goal, 0);
+  }
+  void add_maxGoal(int32_t maxGoal) {
+    fbb_.AddElement<int32_t>(CalculateScore::VT_MAXGOAL, maxGoal, 0);
+  }
+  void add_time(int32_t time) {
+    fbb_.AddElement<int32_t>(CalculateScore::VT_TIME, time, 0);
+  }
+  void add_reason(sisyfox::sisycol::EndReason reason) {
+    fbb_.AddElement<uint8_t>(CalculateScore::VT_REASON, static_cast<uint8_t>(reason), 0);
+  }
+  void add_level(uint8_t level) {
+    fbb_.AddElement<uint8_t>(CalculateScore::VT_LEVEL, level, 0);
+  }
+  void add_world(uint8_t world) {
+    fbb_.AddElement<uint8_t>(CalculateScore::VT_WORLD, world, 0);
+  }
+  void add_gameMode(sisyfox::sisycol::GameMode gameMode) {
+    fbb_.AddElement<uint8_t>(CalculateScore::VT_GAMEMODE, static_cast<uint8_t>(gameMode), 0);
+  }
+  void add_difficulty(sisyfox::sisycol::Difficulty difficulty) {
+    fbb_.AddElement<uint8_t>(CalculateScore::VT_DIFFICULTY, static_cast<uint8_t>(difficulty), 0);
+  }
+  void add_modeSpecificValue(int32_t modeSpecificValue) {
+    fbb_.AddElement<int32_t>(CalculateScore::VT_MODESPECIFICVALUE, modeSpecificValue, 0);
+  }
+  void add_endPosition(const sisyfox::sisycol::Coordinates *endPosition) {
+    fbb_.AddStruct(CalculateScore::VT_ENDPOSITION, endPosition);
+  }
+  void add_game(uint8_t game) {
+    fbb_.AddElement<uint8_t>(CalculateScore::VT_GAME, game, 0);
+  }
+  void add_hash(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash) {
+    fbb_.AddOffset(CalculateScore::VT_HASH, hash);
+  }
+  void add_multiplayer(bool multiplayer) {
+    fbb_.AddElement<uint8_t>(CalculateScore::VT_MULTIPLAYER, static_cast<uint8_t>(multiplayer), 0);
+  }
+  explicit CalculateScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  CalculateScoreBuilder &operator=(const CalculateScoreBuilder &);
+  flatbuffers::Offset<CalculateScore> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<CalculateScore>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<CalculateScore> CreateCalculateScore(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    int32_t goal = 0,
+    int32_t maxGoal = 0,
+    int32_t time = 0,
+    sisyfox::sisycol::EndReason reason = sisyfox::sisycol::EndReason_WIN,
+    uint8_t level = 0,
+    uint8_t world = 0,
+    sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::GameMode_CLIMB,
+    sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::Difficulty_VERY_EASY,
+    int32_t modeSpecificValue = 0,
+    const sisyfox::sisycol::Coordinates *endPosition = 0,
+    uint8_t game = 0,
+    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0,
+    bool multiplayer = false) {
+  CalculateScoreBuilder builder_(_fbb);
+  builder_.add_hash(hash);
+  builder_.add_endPosition(endPosition);
+  builder_.add_modeSpecificValue(modeSpecificValue);
+  builder_.add_time(time);
+  builder_.add_maxGoal(maxGoal);
+  builder_.add_goal(goal);
+  builder_.add_multiplayer(multiplayer);
+  builder_.add_game(game);
+  builder_.add_difficulty(difficulty);
+  builder_.add_gameMode(gameMode);
+  builder_.add_world(world);
+  builder_.add_level(level);
+  builder_.add_reason(reason);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<CalculateScore> CreateCalculateScoreDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    int32_t goal = 0,
+    int32_t maxGoal = 0,
+    int32_t time = 0,
+    sisyfox::sisycol::EndReason reason = sisyfox::sisycol::EndReason_WIN,
+    uint8_t level = 0,
+    uint8_t world = 0,
+    sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::GameMode_CLIMB,
+    sisyfox::sisycol::Difficulty difficulty = sisyfox::sisycol::Difficulty_VERY_EASY,
+    int32_t modeSpecificValue = 0,
+    const sisyfox::sisycol::Coordinates *endPosition = 0,
+    uint8_t game = 0,
+    const std::vector<uint8_t> *hash = nullptr,
+    bool multiplayer = false) {
+  return sisyfox::sisycol::request::CreateCalculateScore(
+      _fbb,
+      goal,
+      maxGoal,
+      time,
+      reason,
+      level,
+      world,
+      gameMode,
+      difficulty,
+      modeSpecificValue,
+      endPosition,
+      game,
+      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0,
+      multiplayer);
+}
+
 }  // namespace request
 
 namespace response {
@@ -9034,6 +9231,47 @@ struct AddCreditsBuilder {
 inline flatbuffers::Offset<AddCredits> CreateAddCredits(
     flatbuffers::FlatBufferBuilder &_fbb) {
   AddCreditsBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+struct CalculateScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_DATA = 4
+  };
+  const sisyfox::sisycol::Score *data() const {
+    return GetPointer<const sisyfox::sisycol::Score *>(VT_DATA);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_DATA) &&
+           verifier.VerifyTable(data()) &&
+           verifier.EndTable();
+  }
+};
+
+struct CalculateScoreBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_data(flatbuffers::Offset<sisyfox::sisycol::Score> data) {
+    fbb_.AddOffset(CalculateScore::VT_DATA, data);
+  }
+  explicit CalculateScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  CalculateScoreBuilder &operator=(const CalculateScoreBuilder &);
+  flatbuffers::Offset<CalculateScore> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<CalculateScore>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<CalculateScore> CreateCalculateScore(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<sisyfox::sisycol::Score> data = 0) {
+  CalculateScoreBuilder builder_(_fbb);
+  builder_.add_data(data);
   return builder_.Finish();
 }
 

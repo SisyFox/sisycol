@@ -209,19 +209,19 @@ table Info {}
 
 // DEPRECATED
 table AddScore {
-  goal:int;
-  maxGoal:int;
-  time:int;
-  reason:EndReason;
-  level:ubyte;
-  world:ubyte;
-  gameMode:GameMode;
-  difficulty:Difficulty;
-  modeSpecificValue:int;
-  endPosition:Coordinates;
-  game:ubyte;
-  hash:[ubyte];
-  multiplayer:bool;
+    goal:int;
+    maxGoal:int;
+    time:int;
+    reason:EndReason;
+    level:ubyte;
+    world:ubyte;
+    gameMode:GameMode;
+    difficulty:Difficulty;
+    modeSpecificValue:int;
+    endPosition:Coordinates;
+    game:ubyte;
+    hash:[ubyte];
+    multiplayer:bool;
 }
 
 table GetScore {
@@ -467,6 +467,22 @@ table AddCredits {
 
 table AddScoreNew { // Deprecates AddScore
     data:Score;
+}
+
+table CalculateScore {
+    goal:int;
+    maxGoal:int;
+    time:int;
+    reason:EndReason;
+    level:ubyte;
+    world:ubyte;
+    gameMode:GameMode;
+    difficulty:Difficulty;
+    modeSpecificValue:int;
+    endPosition:Coordinates;
+    game:ubyte;
+    hash:[ubyte];
+    multiplayer:bool;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -764,3 +780,7 @@ table CreditStatus {
 }
 
 table AddCredits {}
+
+table CalculateScore {
+    data:Score;
+}
