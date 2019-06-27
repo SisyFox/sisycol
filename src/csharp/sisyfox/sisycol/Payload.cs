@@ -68,7 +68,6 @@ public enum Payload : byte
  AddCredits = 58,
  AddScoreNew = 59,
  CalculateScore = 60,
- SetCoinAcceptorMode = 61,
 };
 
 

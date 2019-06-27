@@ -149,8 +149,6 @@ struct AddScoreNew;
 
 struct CalculateScore;
 
-struct SetCoinAcceptorMode;
-
 }  // namespace request
 
 namespace response {
@@ -273,8 +271,6 @@ struct AddCredits;
 
 struct CalculateScore;
 
-struct SetCoinAcceptorMode;
-
 }  // namespace response
 
 enum Payload {
@@ -339,12 +335,11 @@ enum Payload {
   Payload_AddCredits = 58,
   Payload_AddScoreNew = 59,
   Payload_CalculateScore = 60,
-  Payload_SetCoinAcceptorMode = 61,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_SetCoinAcceptorMode
+  Payload_MAX = Payload_CalculateScore
 };
 
-inline Payload (&EnumValuesPayload())[62] {
+inline Payload (&EnumValuesPayload())[61] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -406,8 +401,7 @@ inline Payload (&EnumValuesPayload())[62] {
     Payload_CreditStatus,
     Payload_AddCredits,
     Payload_AddScoreNew,
-    Payload_CalculateScore,
-    Payload_SetCoinAcceptorMode
+    Payload_CalculateScore
   };
   return values;
 }
@@ -475,7 +469,6 @@ inline const char **EnumNamesPayload() {
     "AddCredits",
     "AddScoreNew",
     "CalculateScore",
-    "SetCoinAcceptorMode",
     nullptr
   };
   return names;
@@ -728,10 +721,6 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::AddScoreNew> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::CalculateScore> {
   static const Payload enum_value = Payload_CalculateScore;
-};
-
-template<> struct PayloadTraits<sisyfox::sisycol::request::SetCoinAcceptorMode> {
-  static const Payload enum_value = Payload_SetCoinAcceptorMode;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -2118,9 +2107,6 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::CalculateScore *payload_as_CalculateScore() const {
     return payload_type() == Payload_CalculateScore ? static_cast<const sisyfox::sisycol::request::CalculateScore *>(payload()) : nullptr;
   }
-  const sisyfox::sisycol::request::SetCoinAcceptorMode *payload_as_SetCoinAcceptorMode() const {
-    return payload_type() == Payload_SetCoinAcceptorMode ? static_cast<const sisyfox::sisycol::request::SetCoinAcceptorMode *>(payload()) : nullptr;
-  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2370,10 +2356,6 @@ template<> inline const sisyfox::sisycol::request::AddScoreNew *Root::payload_as
 
 template<> inline const sisyfox::sisycol::request::CalculateScore *Root::payload_as<sisyfox::sisycol::request::CalculateScore>() const {
   return payload_as_CalculateScore();
-}
-
-template<> inline const sisyfox::sisycol::request::SetCoinAcceptorMode *Root::payload_as<sisyfox::sisycol::request::SetCoinAcceptorMode>() const {
-  return payload_as_SetCoinAcceptorMode();
 }
 
 struct RootBuilder {
@@ -6075,46 +6057,6 @@ inline flatbuffers::Offset<CalculateScore> CreateCalculateScoreDirect(
       multiplayer);
 }
 
-struct SetCoinAcceptorMode FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  enum {
-    VT_ENABLEINPUT = 4
-  };
-  bool enableInput() const {
-    return GetField<uint8_t>(VT_ENABLEINPUT, 0) != 0;
-  }
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_ENABLEINPUT) &&
-           verifier.EndTable();
-  }
-};
-
-struct SetCoinAcceptorModeBuilder {
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  void add_enableInput(bool enableInput) {
-    fbb_.AddElement<uint8_t>(SetCoinAcceptorMode::VT_ENABLEINPUT, static_cast<uint8_t>(enableInput), 0);
-  }
-  explicit SetCoinAcceptorModeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  SetCoinAcceptorModeBuilder &operator=(const SetCoinAcceptorModeBuilder &);
-  flatbuffers::Offset<SetCoinAcceptorMode> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<SetCoinAcceptorMode>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<SetCoinAcceptorMode> CreateSetCoinAcceptorMode(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    bool enableInput = false) {
-  SetCoinAcceptorModeBuilder builder_(_fbb);
-  builder_.add_enableInput(enableInput);
-  return builder_.Finish();
-}
-
 }  // namespace request
 
 namespace response {
@@ -9347,46 +9289,6 @@ inline flatbuffers::Offset<CalculateScore> CreateCalculateScore(
   return builder_.Finish();
 }
 
-struct SetCoinAcceptorMode FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  enum {
-    VT_SUCCESS = 4
-  };
-  bool success() const {
-    return GetField<uint8_t>(VT_SUCCESS, 0) != 0;
-  }
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_SUCCESS) &&
-           verifier.EndTable();
-  }
-};
-
-struct SetCoinAcceptorModeBuilder {
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  void add_success(bool success) {
-    fbb_.AddElement<uint8_t>(SetCoinAcceptorMode::VT_SUCCESS, static_cast<uint8_t>(success), 0);
-  }
-  explicit SetCoinAcceptorModeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  SetCoinAcceptorModeBuilder &operator=(const SetCoinAcceptorModeBuilder &);
-  flatbuffers::Offset<SetCoinAcceptorMode> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<SetCoinAcceptorMode>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<SetCoinAcceptorMode> CreateSetCoinAcceptorMode(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    bool success = false) {
-  SetCoinAcceptorModeBuilder builder_(_fbb);
-  builder_.add_success(success);
-  return builder_.Finish();
-}
-
 }  // namespace response
 
 namespace request {
@@ -9640,10 +9542,6 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_CalculateScore: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::CalculateScore *>(obj);
-      return verifier.VerifyTable(ptr);
-    }
-    case Payload_SetCoinAcceptorMode: {
-      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::SetCoinAcceptorMode *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

@@ -88,8 +88,7 @@ sisyfox.sisycol.Payload = {
   CreditStatus: 57,
   AddCredits: 58,
   AddScoreNew: 59,
-  CalculateScore: 60,
-  SetCoinAcceptorMode: 61
+  CalculateScore: 60
 };
 
 /**
@@ -6910,73 +6909,6 @@ sisyfox.sisycol.request.CalculateScore.endCalculateScore = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.request.SetCoinAcceptorMode = function() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-};
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.request.SetCoinAcceptorMode}
- */
-sisyfox.sisycol.request.SetCoinAcceptorMode.prototype.__init = function(i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.request.SetCoinAcceptorMode=} obj
- * @returns {sisyfox.sisycol.request.SetCoinAcceptorMode}
- */
-sisyfox.sisycol.request.SetCoinAcceptorMode.getRootAsSetCoinAcceptorMode = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.request.SetCoinAcceptorMode).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @returns {boolean}
- */
-sisyfox.sisycol.request.SetCoinAcceptorMode.prototype.enableInput = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- */
-sisyfox.sisycol.request.SetCoinAcceptorMode.startSetCoinAcceptorMode = function(builder) {
-  builder.startObject(1);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {boolean} enableInput
- */
-sisyfox.sisycol.request.SetCoinAcceptorMode.addEnableInput = function(builder, enableInput) {
-  builder.addFieldInt8(0, +enableInput, +false);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @returns {flatbuffers.Offset}
- */
-sisyfox.sisycol.request.SetCoinAcceptorMode.endSetCoinAcceptorMode = function(builder) {
-  var offset = builder.endObject();
-  return offset;
-};
-
-/**
- * @constructor
- */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -12239,73 +12171,6 @@ sisyfox.sisycol.response.CalculateScore.addData = function(builder, dataOffset) 
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.CalculateScore.endCalculateScore = function(builder) {
-  var offset = builder.endObject();
-  return offset;
-};
-
-/**
- * @constructor
- */
-sisyfox.sisycol.response.SetCoinAcceptorMode = function() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-};
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.response.SetCoinAcceptorMode}
- */
-sisyfox.sisycol.response.SetCoinAcceptorMode.prototype.__init = function(i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.response.SetCoinAcceptorMode=} obj
- * @returns {sisyfox.sisycol.response.SetCoinAcceptorMode}
- */
-sisyfox.sisycol.response.SetCoinAcceptorMode.getRootAsSetCoinAcceptorMode = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.response.SetCoinAcceptorMode).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @returns {boolean}
- */
-sisyfox.sisycol.response.SetCoinAcceptorMode.prototype.success = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- */
-sisyfox.sisycol.response.SetCoinAcceptorMode.startSetCoinAcceptorMode = function(builder) {
-  builder.startObject(1);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {boolean} success
- */
-sisyfox.sisycol.response.SetCoinAcceptorMode.addSuccess = function(builder, success) {
-  builder.addFieldInt8(0, +success, +false);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @returns {flatbuffers.Offset}
- */
-sisyfox.sisycol.response.SetCoinAcceptorMode.endSetCoinAcceptorMode = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
