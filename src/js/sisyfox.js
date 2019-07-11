@@ -528,6 +528,12 @@ class Sisyfox {
         this.prepareSend(sisyfox.sisycol.Payload.SuspendSystem, offset, builder);
     }
 
+    requestGetDetectedDevices() {
+        const builder = new flatbuffers.Builder();
+        sisyfox.sisycol.request.GetDetectedDevices.startGetDetectedDevices(builder);
+        const offset = sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices(builder);
+        this.prepareSend(sisyfox.sisycol.Payload.GetDetectedDevices, offset, builder);
+    }
     requestChangeRemoteMultiplayerSetting(deviceIp, value) {
         const builder = new flatbuffers.Builder();
         sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.startChangeRemoteMultiplayerSetting(builder);
