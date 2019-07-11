@@ -149,6 +149,8 @@ struct AddScoreNew;
 
 struct CalculateScore;
 
+struct GetPayPerPlayStatistics;
+
 }  // namespace request
 
 namespace response {
@@ -271,6 +273,10 @@ struct AddCredits;
 
 struct CalculateScore;
 
+struct PayPerPlayStatistic;
+
+struct GetPayPerPlayStatistics;
+
 }  // namespace response
 
 enum Payload {
@@ -335,11 +341,12 @@ enum Payload {
   Payload_AddCredits = 58,
   Payload_AddScoreNew = 59,
   Payload_CalculateScore = 60,
+  Payload_GetPayPerPlayStatistics = 61,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_CalculateScore
+  Payload_MAX = Payload_GetPayPerPlayStatistics
 };
 
-inline Payload (&EnumValuesPayload())[61] {
+inline Payload (&EnumValuesPayload())[62] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -401,7 +408,8 @@ inline Payload (&EnumValuesPayload())[61] {
     Payload_CreditStatus,
     Payload_AddCredits,
     Payload_AddScoreNew,
-    Payload_CalculateScore
+    Payload_CalculateScore,
+    Payload_GetPayPerPlayStatistics
   };
   return values;
 }
@@ -469,6 +477,7 @@ inline const char **EnumNamesPayload() {
     "AddCredits",
     "AddScoreNew",
     "CalculateScore",
+    "GetPayPerPlayStatistics",
     nullptr
   };
   return names;
@@ -721,6 +730,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::AddScoreNew> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::CalculateScore> {
   static const Payload enum_value = Payload_CalculateScore;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::GetPayPerPlayStatistics> {
+  static const Payload enum_value = Payload_GetPayPerPlayStatistics;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -2111,6 +2124,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::CalculateScore *payload_as_CalculateScore() const {
     return payload_type() == Payload_CalculateScore ? static_cast<const sisyfox::sisycol::request::CalculateScore *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::GetPayPerPlayStatistics *payload_as_GetPayPerPlayStatistics() const {
+    return payload_type() == Payload_GetPayPerPlayStatistics ? static_cast<const sisyfox::sisycol::request::GetPayPerPlayStatistics *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2360,6 +2376,10 @@ template<> inline const sisyfox::sisycol::request::AddScoreNew *Root::payload_as
 
 template<> inline const sisyfox::sisycol::request::CalculateScore *Root::payload_as<sisyfox::sisycol::request::CalculateScore>() const {
   return payload_as_CalculateScore();
+}
+
+template<> inline const sisyfox::sisycol::request::GetPayPerPlayStatistics *Root::payload_as<sisyfox::sisycol::request::GetPayPerPlayStatistics>() const {
+  return payload_as_GetPayPerPlayStatistics();
 }
 
 struct RootBuilder {
@@ -6061,6 +6081,76 @@ inline flatbuffers::Offset<CalculateScore> CreateCalculateScoreDirect(
       multiplayer);
 }
 
+struct GetPayPerPlayStatistics FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_TIMESTAMP_BEGIN = 4,
+    VT_TIMESTAMP_END = 6,
+    VT_RANGE = 8,
+    VT_OFFSET = 10
+  };
+  uint64_t timestamp_begin() const {
+    return GetField<uint64_t>(VT_TIMESTAMP_BEGIN, 0);
+  }
+  uint64_t timestamp_end() const {
+    return GetField<uint64_t>(VT_TIMESTAMP_END, 0);
+  }
+  uint8_t range() const {
+    return GetField<uint8_t>(VT_RANGE, 0);
+  }
+  uint32_t offset() const {
+    return GetField<uint32_t>(VT_OFFSET, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint64_t>(verifier, VT_TIMESTAMP_BEGIN) &&
+           VerifyField<uint64_t>(verifier, VT_TIMESTAMP_END) &&
+           VerifyField<uint8_t>(verifier, VT_RANGE) &&
+           VerifyField<uint32_t>(verifier, VT_OFFSET) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetPayPerPlayStatisticsBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_timestamp_begin(uint64_t timestamp_begin) {
+    fbb_.AddElement<uint64_t>(GetPayPerPlayStatistics::VT_TIMESTAMP_BEGIN, timestamp_begin, 0);
+  }
+  void add_timestamp_end(uint64_t timestamp_end) {
+    fbb_.AddElement<uint64_t>(GetPayPerPlayStatistics::VT_TIMESTAMP_END, timestamp_end, 0);
+  }
+  void add_range(uint8_t range) {
+    fbb_.AddElement<uint8_t>(GetPayPerPlayStatistics::VT_RANGE, range, 0);
+  }
+  void add_offset(uint32_t offset) {
+    fbb_.AddElement<uint32_t>(GetPayPerPlayStatistics::VT_OFFSET, offset, 0);
+  }
+  explicit GetPayPerPlayStatisticsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetPayPerPlayStatisticsBuilder &operator=(const GetPayPerPlayStatisticsBuilder &);
+  flatbuffers::Offset<GetPayPerPlayStatistics> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetPayPerPlayStatistics>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistics(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint64_t timestamp_begin = 0,
+    uint64_t timestamp_end = 0,
+    uint8_t range = 0,
+    uint32_t offset = 0) {
+  GetPayPerPlayStatisticsBuilder builder_(_fbb);
+  builder_.add_timestamp_end(timestamp_end);
+  builder_.add_timestamp_begin(timestamp_begin);
+  builder_.add_offset(offset);
+  builder_.add_range(range);
+  return builder_.Finish();
+}
+
 }  // namespace request
 
 namespace response {
@@ -9293,6 +9383,126 @@ inline flatbuffers::Offset<CalculateScore> CreateCalculateScore(
   return builder_.Finish();
 }
 
+struct PayPerPlayStatistic FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_TIMESTAMP = 4,
+    VT_GENERATED_CREDITS = 6,
+    VT_ACCEPTED_MONEY = 8,
+    VT_CREDITS_WORTH = 10
+  };
+  uint64_t timestamp() const {
+    return GetField<uint64_t>(VT_TIMESTAMP, 0);
+  }
+  uint32_t generated_credits() const {
+    return GetField<uint32_t>(VT_GENERATED_CREDITS, 0);
+  }
+  uint32_t accepted_money() const {
+    return GetField<uint32_t>(VT_ACCEPTED_MONEY, 0);
+  }
+  uint32_t credits_worth() const {
+    return GetField<uint32_t>(VT_CREDITS_WORTH, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint64_t>(verifier, VT_TIMESTAMP) &&
+           VerifyField<uint32_t>(verifier, VT_GENERATED_CREDITS) &&
+           VerifyField<uint32_t>(verifier, VT_ACCEPTED_MONEY) &&
+           VerifyField<uint32_t>(verifier, VT_CREDITS_WORTH) &&
+           verifier.EndTable();
+  }
+};
+
+struct PayPerPlayStatisticBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_timestamp(uint64_t timestamp) {
+    fbb_.AddElement<uint64_t>(PayPerPlayStatistic::VT_TIMESTAMP, timestamp, 0);
+  }
+  void add_generated_credits(uint32_t generated_credits) {
+    fbb_.AddElement<uint32_t>(PayPerPlayStatistic::VT_GENERATED_CREDITS, generated_credits, 0);
+  }
+  void add_accepted_money(uint32_t accepted_money) {
+    fbb_.AddElement<uint32_t>(PayPerPlayStatistic::VT_ACCEPTED_MONEY, accepted_money, 0);
+  }
+  void add_credits_worth(uint32_t credits_worth) {
+    fbb_.AddElement<uint32_t>(PayPerPlayStatistic::VT_CREDITS_WORTH, credits_worth, 0);
+  }
+  explicit PayPerPlayStatisticBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  PayPerPlayStatisticBuilder &operator=(const PayPerPlayStatisticBuilder &);
+  flatbuffers::Offset<PayPerPlayStatistic> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<PayPerPlayStatistic>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<PayPerPlayStatistic> CreatePayPerPlayStatistic(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint64_t timestamp = 0,
+    uint32_t generated_credits = 0,
+    uint32_t accepted_money = 0,
+    uint32_t credits_worth = 0) {
+  PayPerPlayStatisticBuilder builder_(_fbb);
+  builder_.add_timestamp(timestamp);
+  builder_.add_credits_worth(credits_worth);
+  builder_.add_accepted_money(accepted_money);
+  builder_.add_generated_credits(generated_credits);
+  return builder_.Finish();
+}
+
+struct GetPayPerPlayStatistics FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_DATA = 4
+  };
+  const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>> *data() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>> *>(VT_DATA);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_DATA) &&
+           verifier.Verify(data()) &&
+           verifier.VerifyVectorOfTables(data()) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetPayPerPlayStatisticsBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_data(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>>> data) {
+    fbb_.AddOffset(GetPayPerPlayStatistics::VT_DATA, data);
+  }
+  explicit GetPayPerPlayStatisticsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetPayPerPlayStatisticsBuilder &operator=(const GetPayPerPlayStatisticsBuilder &);
+  flatbuffers::Offset<GetPayPerPlayStatistics> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetPayPerPlayStatistics>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistics(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>>> data = 0) {
+  GetPayPerPlayStatisticsBuilder builder_(_fbb);
+  builder_.add_data(data);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatisticsDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    const std::vector<flatbuffers::Offset<PayPerPlayStatistic>> *data = nullptr) {
+  return sisyfox::sisycol::response::CreateGetPayPerPlayStatistics(
+      _fbb,
+      data ? _fbb.CreateVector<flatbuffers::Offset<PayPerPlayStatistic>>(*data) : 0);
+}
+
 }  // namespace response
 
 namespace request {
@@ -9546,6 +9756,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_CalculateScore: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::CalculateScore *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_GetPayPerPlayStatistics: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetPayPerPlayStatistics *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;
