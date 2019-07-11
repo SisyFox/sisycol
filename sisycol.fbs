@@ -20,7 +20,8 @@ union Payload { Error, Info, AddScore, GetScore, GetScoreRange, SetLiveData,
              GetDmxRuleSettingRange, GetDmxRuleRangeSetting,
              GetDmxRuleRangeSettingRange, GetDmxRuleBoolSetting,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
-             GetIdealTime, SuspendSystem, GetScoreFiltered, GetDetectedDevices }
+             GetIdealTime, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
+             ChangeRemoteMultiplayerSetting, CoinUpdate }
 
 table Root {
   version:Version;
@@ -112,6 +113,7 @@ table Score {
     endPosition:Coordinates;
     game:ubyte;
     hash:[ubyte];
+    multiplayer:bool;
 }
 
 table BoolSetting {
@@ -205,6 +207,7 @@ table AddScore {
   endPosition:Coordinates;
   game:ubyte;
   hash:[ubyte];
+  multiplayer:bool;
 }
 
 table GetScore {
@@ -434,6 +437,13 @@ table GetIdealTime {}
 table SuspendSystem {}
 
 table GetDetectedDevices {}
+
+table ChangeRemoteMultiplayerSetting {
+    ip:uint;
+    value:bool;
+}
+
+table CoinUpdate {}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
@@ -700,4 +710,11 @@ table Device {
 
 table GetDetectedDevices {
     devices:[Device];
+}
+
+table ChangeRemoteMultiplayerSetting {}
+
+table CoinUpdate {
+    balance:uint;
+    requiredBalance:uint;
 }

@@ -135,6 +135,10 @@ struct SuspendSystem;
 
 struct GetDetectedDevices;
 
+struct ChangeRemoteMultiplayerSetting;
+
+struct CoinUpdate;
+
 }  // namespace request
 
 namespace response {
@@ -241,6 +245,10 @@ struct Device;
 
 struct GetDetectedDevices;
 
+struct ChangeRemoteMultiplayerSetting;
+
+struct CoinUpdate;
+
 }  // namespace response
 
 enum Payload {
@@ -298,11 +306,13 @@ enum Payload {
   Payload_SuspendSystem = 51,
   Payload_GetScoreFiltered = 52,
   Payload_GetDetectedDevices = 53,
+  Payload_ChangeRemoteMultiplayerSetting = 54,
+  Payload_CoinUpdate = 55,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_GetDetectedDevices
+  Payload_MAX = Payload_CoinUpdate
 };
 
-inline Payload (&EnumValuesPayload())[54] {
+inline Payload (&EnumValuesPayload())[56] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -357,7 +367,9 @@ inline Payload (&EnumValuesPayload())[54] {
     Payload_GetIdealTime,
     Payload_SuspendSystem,
     Payload_GetScoreFiltered,
-    Payload_GetDetectedDevices
+    Payload_GetDetectedDevices,
+    Payload_ChangeRemoteMultiplayerSetting,
+    Payload_CoinUpdate
   };
   return values;
 }
@@ -418,6 +430,8 @@ inline const char **EnumNamesPayload() {
     "SuspendSystem",
     "GetScoreFiltered",
     "GetDetectedDevices",
+    "ChangeRemoteMultiplayerSetting",
+    "CoinUpdate",
     nullptr
   };
   return names;
@@ -642,6 +656,14 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::GetScoreFiltered> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetDetectedDevices> {
   static const Payload enum_value = Payload_GetDetectedDevices;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting> {
+  static const Payload enum_value = Payload_ChangeRemoteMultiplayerSetting;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::CoinUpdate> {
+  static const Payload enum_value = Payload_CoinUpdate;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1867,6 +1889,12 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::GetDetectedDevices *payload_as_GetDetectedDevices() const {
     return payload_type() == Payload_GetDetectedDevices ? static_cast<const sisyfox::sisycol::request::GetDetectedDevices *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *payload_as_ChangeRemoteMultiplayerSetting() const {
+    return payload_type() == Payload_ChangeRemoteMultiplayerSetting ? static_cast<const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *>(payload()) : nullptr;
+  }
+  const sisyfox::sisycol::request::CoinUpdate *payload_as_CoinUpdate() const {
+    return payload_type() == Payload_CoinUpdate ? static_cast<const sisyfox::sisycol::request::CoinUpdate *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2090,6 +2118,14 @@ template<> inline const sisyfox::sisycol::request::GetDetectedDevices *Root::pay
   return payload_as_GetDetectedDevices();
 }
 
+template<> inline const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *Root::payload_as<sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting>() const {
+  return payload_as_ChangeRemoteMultiplayerSetting();
+}
+
+template<> inline const sisyfox::sisycol::request::CoinUpdate *Root::payload_as<sisyfox::sisycol::request::CoinUpdate>() const {
+  return payload_as_CoinUpdate();
+}
+
 struct RootBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
@@ -2151,7 +2187,8 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_MODESPECIFCVALUE = 34,
     VT_ENDPOSITION = 36,
     VT_GAME = 38,
-    VT_HASH = 40
+    VT_HASH = 40,
+    VT_MULTIPLAYER = 42
   };
   uint32_t id() const {
     return GetField<uint32_t>(VT_ID, 0);
@@ -2210,6 +2247,9 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::Vector<uint8_t> *hash() const {
     return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_HASH);
   }
+  bool multiplayer() const {
+    return GetField<uint8_t>(VT_MULTIPLAYER, 0) != 0;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint32_t>(verifier, VT_ID) &&
@@ -2232,6 +2272,7 @@ struct Score FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_GAME) &&
            VerifyOffset(verifier, VT_HASH) &&
            verifier.Verify(hash()) &&
+           VerifyField<uint8_t>(verifier, VT_MULTIPLAYER) &&
            verifier.EndTable();
   }
 };
@@ -2296,6 +2337,9 @@ struct ScoreBuilder {
   void add_hash(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash) {
     fbb_.AddOffset(Score::VT_HASH, hash);
   }
+  void add_multiplayer(bool multiplayer) {
+    fbb_.AddElement<uint8_t>(Score::VT_MULTIPLAYER, static_cast<uint8_t>(multiplayer), 0);
+  }
   explicit ScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2328,7 +2372,8 @@ inline flatbuffers::Offset<Score> CreateScore(
     int32_t modeSpecifcValue = 0,
     const Coordinates *endPosition = 0,
     uint8_t game = 0,
-    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0,
+    bool multiplayer = false) {
   ScoreBuilder builder_(_fbb);
   builder_.add_timestamp(timestamp);
   builder_.add_hash(hash);
@@ -2343,6 +2388,7 @@ inline flatbuffers::Offset<Score> CreateScore(
   builder_.add_maxGoal(maxGoal);
   builder_.add_goal(goal);
   builder_.add_id(id);
+  builder_.add_multiplayer(multiplayer);
   builder_.add_game(game);
   builder_.add_reason(reason);
   builder_.add_difficulty(difficulty);
@@ -2372,7 +2418,8 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
     int32_t modeSpecifcValue = 0,
     const Coordinates *endPosition = 0,
     uint8_t game = 0,
-    const std::vector<uint8_t> *hash = nullptr) {
+    const std::vector<uint8_t> *hash = nullptr,
+    bool multiplayer = false) {
   return sisyfox::sisycol::CreateScore(
       _fbb,
       id,
@@ -2393,7 +2440,8 @@ inline flatbuffers::Offset<Score> CreateScoreDirect(
       modeSpecifcValue,
       endPosition,
       game,
-      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0);
+      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0,
+      multiplayer);
 }
 
 struct BoolSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -2784,7 +2832,8 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_MODESPECIFICVALUE = 20,
     VT_ENDPOSITION = 22,
     VT_GAME = 24,
-    VT_HASH = 26
+    VT_HASH = 26,
+    VT_MULTIPLAYER = 28
   };
   int32_t goal() const {
     return GetField<int32_t>(VT_GOAL, 0);
@@ -2822,6 +2871,9 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::Vector<uint8_t> *hash() const {
     return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_HASH);
   }
+  bool multiplayer() const {
+    return GetField<uint8_t>(VT_MULTIPLAYER, 0) != 0;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_GOAL) &&
@@ -2837,6 +2889,7 @@ struct AddScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_GAME) &&
            VerifyOffset(verifier, VT_HASH) &&
            verifier.Verify(hash()) &&
+           VerifyField<uint8_t>(verifier, VT_MULTIPLAYER) &&
            verifier.EndTable();
   }
 };
@@ -2880,6 +2933,9 @@ struct AddScoreBuilder {
   void add_hash(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash) {
     fbb_.AddOffset(AddScore::VT_HASH, hash);
   }
+  void add_multiplayer(bool multiplayer) {
+    fbb_.AddElement<uint8_t>(AddScore::VT_MULTIPLAYER, static_cast<uint8_t>(multiplayer), 0);
+  }
   explicit AddScoreBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -2905,7 +2961,8 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
     int32_t modeSpecificValue = 0,
     const sisyfox::sisycol::Coordinates *endPosition = 0,
     uint8_t game = 0,
-    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> hash = 0,
+    bool multiplayer = false) {
   AddScoreBuilder builder_(_fbb);
   builder_.add_hash(hash);
   builder_.add_endPosition(endPosition);
@@ -2913,6 +2970,7 @@ inline flatbuffers::Offset<AddScore> CreateAddScore(
   builder_.add_time(time);
   builder_.add_maxGoal(maxGoal);
   builder_.add_goal(goal);
+  builder_.add_multiplayer(multiplayer);
   builder_.add_game(game);
   builder_.add_difficulty(difficulty);
   builder_.add_gameMode(gameMode);
@@ -2935,7 +2993,8 @@ inline flatbuffers::Offset<AddScore> CreateAddScoreDirect(
     int32_t modeSpecificValue = 0,
     const sisyfox::sisycol::Coordinates *endPosition = 0,
     uint8_t game = 0,
-    const std::vector<uint8_t> *hash = nullptr) {
+    const std::vector<uint8_t> *hash = nullptr,
+    bool multiplayer = false) {
   return sisyfox::sisycol::request::CreateAddScore(
       _fbb,
       goal,
@@ -2949,7 +3008,8 @@ inline flatbuffers::Offset<AddScore> CreateAddScoreDirect(
       modeSpecificValue,
       endPosition,
       game,
-      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0);
+      hash ? _fbb.CreateVector<uint8_t>(*hash) : 0,
+      multiplayer);
 }
 
 struct GetScore FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -5370,6 +5430,84 @@ struct GetDetectedDevicesBuilder {
 inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevices(
     flatbuffers::FlatBufferBuilder &_fbb) {
   GetDetectedDevicesBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+struct ChangeRemoteMultiplayerSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_IP = 4,
+    VT_VALUE = 6
+  };
+  uint32_t ip() const {
+    return GetField<uint32_t>(VT_IP, 0);
+  }
+  bool value() const {
+    return GetField<uint8_t>(VT_VALUE, 0) != 0;
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_IP) &&
+           VerifyField<uint8_t>(verifier, VT_VALUE) &&
+           verifier.EndTable();
+  }
+};
+
+struct ChangeRemoteMultiplayerSettingBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_ip(uint32_t ip) {
+    fbb_.AddElement<uint32_t>(ChangeRemoteMultiplayerSetting::VT_IP, ip, 0);
+  }
+  void add_value(bool value) {
+    fbb_.AddElement<uint8_t>(ChangeRemoteMultiplayerSetting::VT_VALUE, static_cast<uint8_t>(value), 0);
+  }
+  explicit ChangeRemoteMultiplayerSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ChangeRemoteMultiplayerSettingBuilder &operator=(const ChangeRemoteMultiplayerSettingBuilder &);
+  flatbuffers::Offset<ChangeRemoteMultiplayerSetting> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<ChangeRemoteMultiplayerSetting>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<ChangeRemoteMultiplayerSetting> CreateChangeRemoteMultiplayerSetting(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t ip = 0,
+    bool value = false) {
+  ChangeRemoteMultiplayerSettingBuilder builder_(_fbb);
+  builder_.add_ip(ip);
+  builder_.add_value(value);
+  return builder_.Finish();
+}
+
+struct CoinUpdate FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct CoinUpdateBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit CoinUpdateBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  CoinUpdateBuilder &operator=(const CoinUpdateBuilder &);
+  flatbuffers::Offset<CoinUpdate> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<CoinUpdate>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<CoinUpdate> CreateCoinUpdate(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  CoinUpdateBuilder builder_(_fbb);
   return builder_.Finish();
 }
 
@@ -8262,6 +8400,84 @@ inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevicesDirect(
       devices ? _fbb.CreateVector<flatbuffers::Offset<Device>>(*devices) : 0);
 }
 
+struct ChangeRemoteMultiplayerSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct ChangeRemoteMultiplayerSettingBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit ChangeRemoteMultiplayerSettingBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ChangeRemoteMultiplayerSettingBuilder &operator=(const ChangeRemoteMultiplayerSettingBuilder &);
+  flatbuffers::Offset<ChangeRemoteMultiplayerSetting> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<ChangeRemoteMultiplayerSetting>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<ChangeRemoteMultiplayerSetting> CreateChangeRemoteMultiplayerSetting(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  ChangeRemoteMultiplayerSettingBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+struct CoinUpdate FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_BALANCE = 4,
+    VT_REQUIREDBALANCE = 6
+  };
+  uint32_t balance() const {
+    return GetField<uint32_t>(VT_BALANCE, 0);
+  }
+  uint32_t requiredBalance() const {
+    return GetField<uint32_t>(VT_REQUIREDBALANCE, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_BALANCE) &&
+           VerifyField<uint32_t>(verifier, VT_REQUIREDBALANCE) &&
+           verifier.EndTable();
+  }
+};
+
+struct CoinUpdateBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_balance(uint32_t balance) {
+    fbb_.AddElement<uint32_t>(CoinUpdate::VT_BALANCE, balance, 0);
+  }
+  void add_requiredBalance(uint32_t requiredBalance) {
+    fbb_.AddElement<uint32_t>(CoinUpdate::VT_REQUIREDBALANCE, requiredBalance, 0);
+  }
+  explicit CoinUpdateBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  CoinUpdateBuilder &operator=(const CoinUpdateBuilder &);
+  flatbuffers::Offset<CoinUpdate> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<CoinUpdate>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<CoinUpdate> CreateCoinUpdate(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t balance = 0,
+    uint32_t requiredBalance = 0) {
+  CoinUpdateBuilder builder_(_fbb);
+  builder_.add_requiredBalance(requiredBalance);
+  builder_.add_balance(balance);
+  return builder_.Finish();
+}
+
 }  // namespace response
 
 namespace request {
@@ -8487,6 +8703,14 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_GetDetectedDevices: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDetectedDevices *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_ChangeRemoteMultiplayerSetting: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_CoinUpdate: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::CoinUpdate *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

@@ -534,7 +534,14 @@ class Sisyfox {
         const offset = sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices(builder);
         this.prepareSend(sisyfox.sisycol.Payload.GetDetectedDevices, offset, builder);
     }
-
+    requestChangeRemoteMultiplayerSetting(deviceIp, value) {
+        const builder = new flatbuffers.Builder();
+        sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.startChangeRemoteMultiplayerSetting(builder);
+        sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.addIp(builder, deviceIp);
+        sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.addValue(builder, value);
+        const offset = sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.endChangeRemoteMultiplayerSetting(builder);
+        this.prepareSend(sisyfox.sisycol.Payload.ChangeRemoteMultiplayerSetting, offset, builder);
+    }
 }
 
 this.sisyfox = Sisyfox;

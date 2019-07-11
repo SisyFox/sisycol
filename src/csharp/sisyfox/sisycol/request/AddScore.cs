@@ -31,8 +31,9 @@ public struct AddScore : IFlatbufferObject
   public byte Hash(int j) { int o = __p.__offset(26); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
   public int HashLength { get { int o = __p.__offset(26); return o != 0 ? __p.__vector_len(o) : 0; } }
   public ArraySegment<byte>? GetHashBytes() { return __p.__vector_as_arraysegment(26); }
+  public bool Multiplayer { get { int o = __p.__offset(28); return o != 0 ? 0!=__p.bb.Get(o + __p.bb_pos) : (bool)false; } }
 
-  public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(12); }
+  public static void StartAddScore(FlatBufferBuilder builder) { builder.StartObject(13); }
   public static void AddGoal(FlatBufferBuilder builder, int goal) { builder.AddInt(0, goal, 0); }
   public static void AddMaxGoal(FlatBufferBuilder builder, int maxGoal) { builder.AddInt(1, maxGoal, 0); }
   public static void AddTime(FlatBufferBuilder builder, int time) { builder.AddInt(2, time, 0); }
@@ -47,6 +48,7 @@ public struct AddScore : IFlatbufferObject
   public static void AddHash(FlatBufferBuilder builder, VectorOffset hashOffset) { builder.AddOffset(11, hashOffset.Value, 0); }
   public static VectorOffset CreateHashVector(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); for (int i = data.Length - 1; i >= 0; i--) builder.AddByte(data[i]); return builder.EndVector(); }
   public static void StartHashVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(1, numElems, 1); }
+  public static void AddMultiplayer(FlatBufferBuilder builder, bool multiplayer) { builder.AddBool(12, multiplayer, false); }
   public static Offset<AddScore> EndAddScore(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<AddScore>(o);

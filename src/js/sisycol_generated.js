@@ -81,7 +81,9 @@ sisyfox.sisycol.Payload = {
   GetIdealTime: 50,
   SuspendSystem: 51,
   GetScoreFiltered: 52,
-  GetDetectedDevices: 53
+  GetDetectedDevices: 53,
+  ChangeRemoteMultiplayerSetting: 54,
+  CoinUpdate: 55
 };
 
 /**
@@ -777,10 +779,18 @@ sisyfox.sisycol.Score.prototype.hashArray = function() {
 };
 
 /**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.Score.prototype.multiplayer = function() {
+  var offset = this.bb.__offset(this.bb_pos, 42);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.Score.startScore = function(builder) {
-  builder.startObject(19);
+  builder.startObject(20);
 };
 
 /**
@@ -954,6 +964,14 @@ sisyfox.sisycol.Score.createHashVector = function(builder, data) {
  */
 sisyfox.sisycol.Score.startHashVector = function(builder, numElems) {
   builder.startVector(1, numElems, 1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} multiplayer
+ */
+sisyfox.sisycol.Score.addMultiplayer = function(builder, multiplayer) {
+  builder.addFieldInt8(19, +multiplayer, +false);
 };
 
 /**
@@ -2094,10 +2112,18 @@ sisyfox.sisycol.request.AddScore.prototype.hashArray = function() {
 };
 
 /**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.request.AddScore.prototype.multiplayer = function() {
+  var offset = this.bb.__offset(this.bb_pos, 28);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.AddScore.startAddScore = function(builder) {
-  builder.startObject(12);
+  builder.startObject(13);
 };
 
 /**
@@ -2215,6 +2241,14 @@ sisyfox.sisycol.request.AddScore.createHashVector = function(builder, data) {
  */
 sisyfox.sisycol.request.AddScore.startHashVector = function(builder, numElems) {
   builder.startVector(1, numElems, 1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} multiplayer
+ */
+sisyfox.sisycol.request.AddScore.addMultiplayer = function(builder, multiplayer) {
+  builder.addFieldInt8(12, +multiplayer, +false);
 };
 
 /**
@@ -6140,6 +6174,140 @@ sisyfox.sisycol.request.GetDetectedDevices.startGetDetectedDevices = function(bu
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting=} obj
+ * @returns {sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.getRootAsChangeRemoteMultiplayerSetting = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.prototype.ip = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.prototype.value = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.startChangeRemoteMultiplayerSetting = function(builder) {
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} ip
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.addIp = function(builder, ip) {
+  builder.addFieldInt32(0, ip, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} value
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.addValue = function(builder, value) {
+  builder.addFieldInt8(1, +value, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.endChangeRemoteMultiplayerSetting = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.request.CoinUpdate = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.CoinUpdate}
+ */
+sisyfox.sisycol.request.CoinUpdate.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.CoinUpdate=} obj
+ * @returns {sisyfox.sisycol.request.CoinUpdate}
+ */
+sisyfox.sisycol.request.CoinUpdate.getRootAsCoinUpdate = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.CoinUpdate).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.CoinUpdate.startCoinUpdate = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.CoinUpdate.endCoinUpdate = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
@@ -10855,6 +11023,140 @@ sisyfox.sisycol.response.GetDetectedDevices.startDevicesVector = function(builde
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.GetDetectedDevices.endGetDetectedDevices = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting}
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting=} obj
+ * @returns {sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting}
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.getRootAsChangeRemoteMultiplayerSetting = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.startChangeRemoteMultiplayerSetting = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.ChangeRemoteMultiplayerSetting.endChangeRemoteMultiplayerSetting = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.CoinUpdate = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.CoinUpdate}
+ */
+sisyfox.sisycol.response.CoinUpdate.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.CoinUpdate=} obj
+ * @returns {sisyfox.sisycol.response.CoinUpdate}
+ */
+sisyfox.sisycol.response.CoinUpdate.getRootAsCoinUpdate = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.CoinUpdate).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.CoinUpdate.prototype.balance = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.CoinUpdate.prototype.requiredBalance = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.CoinUpdate.startCoinUpdate = function(builder) {
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} balance
+ */
+sisyfox.sisycol.response.CoinUpdate.addBalance = function(builder, balance) {
+  builder.addFieldInt32(0, balance, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} requiredBalance
+ */
+sisyfox.sisycol.response.CoinUpdate.addRequiredBalance = function(builder, requiredBalance) {
+  builder.addFieldInt32(1, requiredBalance, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.CoinUpdate.endCoinUpdate = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
