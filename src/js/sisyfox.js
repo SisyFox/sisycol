@@ -534,6 +534,7 @@ class Sisyfox {
         const offset = sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices(builder);
         this.prepareSend(sisyfox.sisycol.Payload.GetDetectedDevices, offset, builder);
     }
+
     requestChangeRemoteMultiplayerSetting(deviceIp, value) {
         const builder = new flatbuffers.Builder();
         sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.startChangeRemoteMultiplayerSetting(builder);
@@ -541,6 +542,17 @@ class Sisyfox {
         sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.addValue(builder, value);
         const offset = sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting.endChangeRemoteMultiplayerSetting(builder);
         this.prepareSend(sisyfox.sisycol.Payload.ChangeRemoteMultiplayerSetting, offset, builder);
+    }
+
+    requestGetPayPerPlayStatistics(startDate, endDate, startId, range) {
+        const builder = new flatbuffers.Builder();
+        sisyfox.sisycol.request.GetPayPerPlayStatistics.startGetPayPerPlayStatistics(builder);
+        sisyfox.sisycol.request.GetPayPerPlayStatistics.addTimestampBegin(builder, new flatbuffers.Long(startDate, 0));
+        sisyfox.sisycol.request.GetPayPerPlayStatistics.addTimestampEnd(builder, new flatbuffers.Long(endDate, 0));
+        sisyfox.sisycol.request.GetPayPerPlayStatistics.addOffset(builder, startId);
+        sisyfox.sisycol.request.GetPayPerPlayStatistics.addRange(builder, range);
+        const offset = sisyfox.sisycol.request.GetPayPerPlayStatistics.endGetPayPerPlayStatistics(builder);
+        this.prepareSend(sisyfox.sisycol.Payload.GetPayPerPlayStatistics, offset, builder);
     }
 }
 
