@@ -877,6 +877,7 @@ enum SettingType {
   SettingType_BONUS_CREDITS_ENABLED = 20,
   SettingType_CREDIT_PRICE = 21,
   SettingType_LIFES_PER_ROUND = 22,
+  SettingType_COIN_CREDIT_MULTIPLICATOR = 23,
   SettingType_SF_CONTROL_INTERNAL = 63,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
@@ -895,7 +896,7 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED_DEPRECATED
 };
 
-inline SettingType (&EnumValuesSettingType())[37] {
+inline SettingType (&EnumValuesSettingType())[38] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -920,6 +921,7 @@ inline SettingType (&EnumValuesSettingType())[37] {
     SettingType_BONUS_CREDITS_ENABLED,
     SettingType_CREDIT_PRICE,
     SettingType_LIFES_PER_ROUND,
+    SettingType_COIN_CREDIT_MULTIPLICATOR,
     SettingType_SF_CONTROL_INTERNAL,
     SettingType_WORLD,
     SettingType_LEVEL,
@@ -963,7 +965,7 @@ inline const char **EnumNamesSettingType() {
     "BONUS_CREDITS_ENABLED",
     "CREDIT_PRICE",
     "LIFES_PER_ROUND",
-    "",
+    "COIN_CREDIT_MULTIPLICATOR",
     "",
     "",
     "",
