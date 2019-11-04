@@ -59,13 +59,13 @@ enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
 
 enum Language:ubyte    { ENGLISH, GERMAN, CHINESE, FRENCH, JAPANESE, CRUMMY_GERMAN = 0xff }
 
-enum GameMode:ubyte    { CLIMB, COLLECT, EXPLORE, PHYSICS_BASH }
+enum GameMode:ubyte    { CLIMB, COLLECT, EXPLORE }
 
 enum Difficulty:ubyte  { VERY_EASY, EASY, NORMAL, HARD, VERY_HARD }
 
 enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON, SECRET_ISLAND, TUTORIAL }
 
-enum Game:ubyte        { CLASSIC, DOWNHILL }
+enum Game:ubyte        { CLASSIC, DOWNHILL, PHYSICS_BASH }
 
 enum BallSetting:ubyte { BIG_BALL, SMALL_BALL }
 

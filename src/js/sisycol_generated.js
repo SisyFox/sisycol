@@ -187,8 +187,7 @@ sisyfox.sisycol.Language = {
 sisyfox.sisycol.GameMode = {
   CLIMB: 0,
   COLLECT: 1,
-  EXPLORE: 2,
-  PHYSICS_BASH: 3
+  EXPLORE: 2
 };
 
 /**
@@ -218,7 +217,8 @@ sisyfox.sisycol.World = {
  */
 sisyfox.sisycol.Game = {
   CLASSIC: 0,
-  DOWNHILL: 1
+  DOWNHILL: 1,
+  PHYSICS_BASH: 2
 };
 
 /**

@@ -10,7 +10,6 @@ public enum GameMode : byte
  CLIMB = 0,
  COLLECT = 1,
  EXPLORE = 2,
- PHYSICS_BASH = 3,
 };
 
 

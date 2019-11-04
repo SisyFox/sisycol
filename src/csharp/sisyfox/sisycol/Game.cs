@@ -9,6 +9,7 @@ public enum Game : byte
 {
  CLASSIC = 0,
  DOWNHILL = 1,
+ PHYSICS_BASH = 2,
 };
 
 
