@@ -1109,15 +1109,17 @@ enum GameMode {
   GameMode_CLIMB = 0,
   GameMode_COLLECT = 1,
   GameMode_EXPLORE = 2,
+  GameMode_PHYSICS_BASH = 3,
   GameMode_MIN = GameMode_CLIMB,
-  GameMode_MAX = GameMode_EXPLORE
+  GameMode_MAX = GameMode_PHYSICS_BASH
 };
 
-inline GameMode (&EnumValuesGameMode())[3] {
+inline GameMode (&EnumValuesGameMode())[4] {
   static GameMode values[] = {
     GameMode_CLIMB,
     GameMode_COLLECT,
-    GameMode_EXPLORE
+    GameMode_EXPLORE,
+    GameMode_PHYSICS_BASH
   };
   return values;
 }
@@ -1127,6 +1129,7 @@ inline const char **EnumNamesGameMode() {
     "CLIMB",
     "COLLECT",
     "EXPLORE",
+    "PHYSICS_BASH",
     nullptr
   };
   return names;
