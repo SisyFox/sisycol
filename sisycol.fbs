@@ -21,9 +21,9 @@ union Payload { Error, Info, /* DEPRECATED */ AddScore /* DEPRECATED */,
              GetDmxRuleSettingRange, GetDmxRuleRangeSetting,
              GetDmxRuleRangeSettingRange, GetDmxRuleBoolSetting,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
-             GetIdealTime, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
+             GetIdealTime_DEPRECATED, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
              ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus,
-             AddCredits, AddScoreNew, CalculateScore, GetPayPerPlayStatistics }
+             AddCredits, AddScoreNew, CalculateScore, GetPayPerPlayStatistics, GetIdealTime }
 
 table Root {
   version:Version;
@@ -447,7 +447,14 @@ table GetDmxRuleSettingRange {
 
 table ResetDmxConfig {}
 
-table GetIdealTime {}
+table GetIdealTime_DEPRECATED {}
+
+table GetIdealTime {
+    world:ubyte;
+    level:ubyte;
+    gameMode:ubyte;
+    difficulty:ubyte;
+}
 
 table SuspendSystem {}
 

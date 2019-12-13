@@ -131,6 +131,8 @@ struct GetDmxRuleSettingRange;
 
 struct ResetDmxConfig;
 
+struct GetIdealTime_DEPRECATED;
+
 struct GetIdealTime;
 
 struct SuspendSystem;
@@ -330,7 +332,7 @@ enum Payload {
   Payload_GetDmxRuleBoolSettingRange = 47,
   Payload_SetDmxDeviceMode = 48,
   Payload_ResetDmxConfig = 49,
-  Payload_GetIdealTime = 50,
+  Payload_GetIdealTime_DEPRECATED = 50,
   Payload_SuspendSystem = 51,
   Payload_GetScoreFiltered = 52,
   Payload_GetDetectedDevices = 53,
@@ -342,11 +344,12 @@ enum Payload {
   Payload_AddScoreNew = 59,
   Payload_CalculateScore = 60,
   Payload_GetPayPerPlayStatistics = 61,
+  Payload_GetIdealTime = 62,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_GetPayPerPlayStatistics
+  Payload_MAX = Payload_GetIdealTime
 };
 
-inline Payload (&EnumValuesPayload())[62] {
+inline Payload (&EnumValuesPayload())[63] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -398,7 +401,7 @@ inline Payload (&EnumValuesPayload())[62] {
     Payload_GetDmxRuleBoolSettingRange,
     Payload_SetDmxDeviceMode,
     Payload_ResetDmxConfig,
-    Payload_GetIdealTime,
+    Payload_GetIdealTime_DEPRECATED,
     Payload_SuspendSystem,
     Payload_GetScoreFiltered,
     Payload_GetDetectedDevices,
@@ -409,7 +412,8 @@ inline Payload (&EnumValuesPayload())[62] {
     Payload_AddCredits,
     Payload_AddScoreNew,
     Payload_CalculateScore,
-    Payload_GetPayPerPlayStatistics
+    Payload_GetPayPerPlayStatistics,
+    Payload_GetIdealTime
   };
   return values;
 }
@@ -466,7 +470,7 @@ inline const char **EnumNamesPayload() {
     "GetDmxRuleBoolSettingRange",
     "SetDmxDeviceMode",
     "ResetDmxConfig",
-    "GetIdealTime",
+    "GetIdealTime_DEPRECATED",
     "SuspendSystem",
     "GetScoreFiltered",
     "GetDetectedDevices",
@@ -478,6 +482,7 @@ inline const char **EnumNamesPayload() {
     "AddScoreNew",
     "CalculateScore",
     "GetPayPerPlayStatistics",
+    "GetIdealTime",
     nullptr
   };
   return names;
@@ -688,8 +693,8 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::ResetDmxConfig> {
   static const Payload enum_value = Payload_ResetDmxConfig;
 };
 
-template<> struct PayloadTraits<sisyfox::sisycol::request::GetIdealTime> {
-  static const Payload enum_value = Payload_GetIdealTime;
+template<> struct PayloadTraits<sisyfox::sisycol::request::GetIdealTime_DEPRECATED> {
+  static const Payload enum_value = Payload_GetIdealTime_DEPRECATED;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::SuspendSystem> {
@@ -734,6 +739,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::CalculateScore> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetPayPerPlayStatistics> {
   static const Payload enum_value = Payload_GetPayPerPlayStatistics;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::GetIdealTime> {
+  static const Payload enum_value = Payload_GetIdealTime;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -2096,8 +2105,8 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::ResetDmxConfig *payload_as_ResetDmxConfig() const {
     return payload_type() == Payload_ResetDmxConfig ? static_cast<const sisyfox::sisycol::request::ResetDmxConfig *>(payload()) : nullptr;
   }
-  const sisyfox::sisycol::request::GetIdealTime *payload_as_GetIdealTime() const {
-    return payload_type() == Payload_GetIdealTime ? static_cast<const sisyfox::sisycol::request::GetIdealTime *>(payload()) : nullptr;
+  const sisyfox::sisycol::request::GetIdealTime_DEPRECATED *payload_as_GetIdealTime_DEPRECATED() const {
+    return payload_type() == Payload_GetIdealTime_DEPRECATED ? static_cast<const sisyfox::sisycol::request::GetIdealTime_DEPRECATED *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::SuspendSystem *payload_as_SuspendSystem() const {
     return payload_type() == Payload_SuspendSystem ? static_cast<const sisyfox::sisycol::request::SuspendSystem *>(payload()) : nullptr;
@@ -2131,6 +2140,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   const sisyfox::sisycol::request::GetPayPerPlayStatistics *payload_as_GetPayPerPlayStatistics() const {
     return payload_type() == Payload_GetPayPerPlayStatistics ? static_cast<const sisyfox::sisycol::request::GetPayPerPlayStatistics *>(payload()) : nullptr;
+  }
+  const sisyfox::sisycol::request::GetIdealTime *payload_as_GetIdealTime() const {
+    return payload_type() == Payload_GetIdealTime ? static_cast<const sisyfox::sisycol::request::GetIdealTime *>(payload()) : nullptr;
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -2339,8 +2351,8 @@ template<> inline const sisyfox::sisycol::request::ResetDmxConfig *Root::payload
   return payload_as_ResetDmxConfig();
 }
 
-template<> inline const sisyfox::sisycol::request::GetIdealTime *Root::payload_as<sisyfox::sisycol::request::GetIdealTime>() const {
-  return payload_as_GetIdealTime();
+template<> inline const sisyfox::sisycol::request::GetIdealTime_DEPRECATED *Root::payload_as<sisyfox::sisycol::request::GetIdealTime_DEPRECATED>() const {
+  return payload_as_GetIdealTime_DEPRECATED();
 }
 
 template<> inline const sisyfox::sisycol::request::SuspendSystem *Root::payload_as<sisyfox::sisycol::request::SuspendSystem>() const {
@@ -2385,6 +2397,10 @@ template<> inline const sisyfox::sisycol::request::CalculateScore *Root::payload
 
 template<> inline const sisyfox::sisycol::request::GetPayPerPlayStatistics *Root::payload_as<sisyfox::sisycol::request::GetPayPerPlayStatistics>() const {
   return payload_as_GetPayPerPlayStatistics();
+}
+
+template<> inline const sisyfox::sisycol::request::GetIdealTime *Root::payload_as<sisyfox::sisycol::request::GetIdealTime>() const {
+  return payload_as_GetIdealTime();
 }
 
 struct RootBuilder {
@@ -5622,9 +5638,59 @@ inline flatbuffers::Offset<ResetDmxConfig> CreateResetDmxConfig(
   return builder_.Finish();
 }
 
-struct GetIdealTime FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct GetIdealTime_DEPRECATED FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetIdealTime_DEPRECATEDBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit GetIdealTime_DEPRECATEDBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetIdealTime_DEPRECATEDBuilder &operator=(const GetIdealTime_DEPRECATEDBuilder &);
+  flatbuffers::Offset<GetIdealTime_DEPRECATED> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetIdealTime_DEPRECATED>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetIdealTime_DEPRECATED> CreateGetIdealTime_DEPRECATED(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  GetIdealTime_DEPRECATEDBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+struct GetIdealTime FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_WORLD = 4,
+    VT_LEVEL = 6,
+    VT_GAMEMODE = 8,
+    VT_DIFFICULTY = 10
+  };
+  uint8_t world() const {
+    return GetField<uint8_t>(VT_WORLD, 0);
+  }
+  uint8_t level() const {
+    return GetField<uint8_t>(VT_LEVEL, 0);
+  }
+  uint8_t gameMode() const {
+    return GetField<uint8_t>(VT_GAMEMODE, 0);
+  }
+  uint8_t difficulty() const {
+    return GetField<uint8_t>(VT_DIFFICULTY, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, VT_WORLD) &&
+           VerifyField<uint8_t>(verifier, VT_LEVEL) &&
+           VerifyField<uint8_t>(verifier, VT_GAMEMODE) &&
+           VerifyField<uint8_t>(verifier, VT_DIFFICULTY) &&
            verifier.EndTable();
   }
 };
@@ -5632,6 +5698,18 @@ struct GetIdealTime FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct GetIdealTimeBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
+  void add_world(uint8_t world) {
+    fbb_.AddElement<uint8_t>(GetIdealTime::VT_WORLD, world, 0);
+  }
+  void add_level(uint8_t level) {
+    fbb_.AddElement<uint8_t>(GetIdealTime::VT_LEVEL, level, 0);
+  }
+  void add_gameMode(uint8_t gameMode) {
+    fbb_.AddElement<uint8_t>(GetIdealTime::VT_GAMEMODE, gameMode, 0);
+  }
+  void add_difficulty(uint8_t difficulty) {
+    fbb_.AddElement<uint8_t>(GetIdealTime::VT_DIFFICULTY, difficulty, 0);
+  }
   explicit GetIdealTimeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -5645,8 +5723,16 @@ struct GetIdealTimeBuilder {
 };
 
 inline flatbuffers::Offset<GetIdealTime> CreateGetIdealTime(
-    flatbuffers::FlatBufferBuilder &_fbb) {
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint8_t world = 0,
+    uint8_t level = 0,
+    uint8_t gameMode = 0,
+    uint8_t difficulty = 0) {
   GetIdealTimeBuilder builder_(_fbb);
+  builder_.add_difficulty(difficulty);
+  builder_.add_gameMode(gameMode);
+  builder_.add_level(level);
+  builder_.add_world(world);
   return builder_.Finish();
 }
 
@@ -9719,8 +9805,8 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::ResetDmxConfig *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetIdealTime: {
-      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetIdealTime *>(obj);
+    case Payload_GetIdealTime_DEPRECATED: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetIdealTime_DEPRECATED *>(obj);
       return verifier.VerifyTable(ptr);
     }
     case Payload_SuspendSystem: {
@@ -9765,6 +9851,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_GetPayPerPlayStatistics: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetPayPerPlayStatistics *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_GetIdealTime: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetIdealTime *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

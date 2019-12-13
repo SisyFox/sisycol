@@ -57,7 +57,7 @@ public enum Payload : byte
  GetDmxRuleBoolSettingRange = 47,
  SetDmxDeviceMode = 48,
  ResetDmxConfig = 49,
- GetIdealTime = 50,
+ GetIdealTime_DEPRECATED = 50,
  SuspendSystem = 51,
  GetScoreFiltered = 52,
  GetDetectedDevices = 53,
@@ -69,6 +69,7 @@ public enum Payload : byte
  AddScoreNew = 59,
  CalculateScore = 60,
  GetPayPerPlayStatistics = 61,
+ GetIdealTime = 62,
 };
 
 

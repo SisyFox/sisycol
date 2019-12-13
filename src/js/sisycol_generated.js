@@ -78,7 +78,7 @@ sisyfox.sisycol.Payload = {
   GetDmxRuleBoolSettingRange: 47,
   SetDmxDeviceMode: 48,
   ResetDmxConfig: 49,
-  GetIdealTime: 50,
+  GetIdealTime_DEPRECATED: 50,
   SuspendSystem: 51,
   GetScoreFiltered: 52,
   GetDetectedDevices: 53,
@@ -89,7 +89,8 @@ sisyfox.sisycol.Payload = {
   AddCredits: 58,
   AddScoreNew: 59,
   CalculateScore: 60,
-  GetPayPerPlayStatistics: 61
+  GetPayPerPlayStatistics: 61,
+  GetIdealTime: 62
 };
 
 /**
@@ -6143,6 +6144,57 @@ sisyfox.sisycol.request.ResetDmxConfig.endResetDmxConfig = function(builder) {
 /**
  * @constructor
  */
+sisyfox.sisycol.request.GetIdealTime_DEPRECATED = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.GetIdealTime_DEPRECATED}
+ */
+sisyfox.sisycol.request.GetIdealTime_DEPRECATED.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.GetIdealTime_DEPRECATED=} obj
+ * @returns {sisyfox.sisycol.request.GetIdealTime_DEPRECATED}
+ */
+sisyfox.sisycol.request.GetIdealTime_DEPRECATED.getRootAsGetIdealTime_DEPRECATED = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.GetIdealTime_DEPRECATED).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.GetIdealTime_DEPRECATED.startGetIdealTime_DEPRECATED = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.GetIdealTime_DEPRECATED.endGetIdealTime_DEPRECATED = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.request.GetIdealTime = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -6176,10 +6228,74 @@ sisyfox.sisycol.request.GetIdealTime.getRootAsGetIdealTime = function(bb, obj) {
 };
 
 /**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetIdealTime.prototype.world = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetIdealTime.prototype.level = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetIdealTime.prototype.gameMode = function() {
+  var offset = this.bb.__offset(this.bb_pos, 8);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetIdealTime.prototype.difficulty = function() {
+  var offset = this.bb.__offset(this.bb_pos, 10);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.GetIdealTime.startGetIdealTime = function(builder) {
-  builder.startObject(0);
+  builder.startObject(4);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} world
+ */
+sisyfox.sisycol.request.GetIdealTime.addWorld = function(builder, world) {
+  builder.addFieldInt8(0, world, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} level
+ */
+sisyfox.sisycol.request.GetIdealTime.addLevel = function(builder, level) {
+  builder.addFieldInt8(1, level, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} gameMode
+ */
+sisyfox.sisycol.request.GetIdealTime.addGameMode = function(builder, gameMode) {
+  builder.addFieldInt8(2, gameMode, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} difficulty
+ */
+sisyfox.sisycol.request.GetIdealTime.addDifficulty = function(builder, difficulty) {
+  builder.addFieldInt8(3, difficulty, 0);
 };
 
 /**
