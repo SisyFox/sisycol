@@ -887,6 +887,7 @@ enum SettingType {
   SettingType_CREDIT_PRICE = 21,
   SettingType_LIFES_PER_ROUND = 22,
   SettingType_COIN_CREDIT_MULTIPLICATOR = 23,
+  SettingType_PAY_PER_PLAY_MODE = 24,
   SettingType_SF_CONTROL_INTERNAL = 63,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
@@ -896,7 +897,7 @@ enum SettingType {
   SettingType_MAX_COLLECT_LEVEL = 69,
   SettingType_GEM_SCORE = 70,
   SettingType_TIME_ATTACK = 71,
-  SettingType_PAY_PER_PLAY_MODE = 72,
+  SettingType_RESERVED_FOR_FUTURE_USE_1 = 72,
   SettingType_HASH = 73,
   SettingType_GAME = 74,
   SettingType_GAME_ACTIVE = 128,
@@ -905,7 +906,7 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED_DEPRECATED
 };
 
-inline SettingType (&EnumValuesSettingType())[38] {
+inline SettingType (&EnumValuesSettingType())[39] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -931,6 +932,7 @@ inline SettingType (&EnumValuesSettingType())[38] {
     SettingType_CREDIT_PRICE,
     SettingType_LIFES_PER_ROUND,
     SettingType_COIN_CREDIT_MULTIPLICATOR,
+    SettingType_PAY_PER_PLAY_MODE,
     SettingType_SF_CONTROL_INTERNAL,
     SettingType_WORLD,
     SettingType_LEVEL,
@@ -940,7 +942,7 @@ inline SettingType (&EnumValuesSettingType())[38] {
     SettingType_MAX_COLLECT_LEVEL,
     SettingType_GEM_SCORE,
     SettingType_TIME_ATTACK,
-    SettingType_PAY_PER_PLAY_MODE,
+    SettingType_RESERVED_FOR_FUTURE_USE_1,
     SettingType_HASH,
     SettingType_GAME,
     SettingType_GAME_ACTIVE,
@@ -975,7 +977,7 @@ inline const char **EnumNamesSettingType() {
     "CREDIT_PRICE",
     "LIFES_PER_ROUND",
     "COIN_CREDIT_MULTIPLICATOR",
-    "",
+    "PAY_PER_PLAY_MODE",
     "",
     "",
     "",
@@ -1023,7 +1025,7 @@ inline const char **EnumNamesSettingType() {
     "MAX_COLLECT_LEVEL",
     "GEM_SCORE",
     "TIME_ATTACK",
-    "PAY_PER_PLAY_MODE",
+    "RESERVED_FOR_FUTURE_USE_1",
     "HASH",
     "GAME",
     "",
