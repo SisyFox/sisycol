@@ -163,7 +163,7 @@ sisyfox.sisycol.SettingType = {
   MAX_COLLECT_LEVEL: 69,
   GEM_SCORE: 70,
   TIME_ATTACK: 71,
-  RESERVED_FOR_FUTURE_USE_1: 72,
+  PAY_PER_PLAY_MODE: 72,
   HASH: 73,
   GAME: 74,
   GAME_ACTIVE: 128,
@@ -286,6 +286,14 @@ sisyfox.sisycol.Currency = {
 sisyfox.sisycol.GameBlockReason = {
   UNKNOWN: 0,
   COIN_ACCEPTOR: 1
+};
+
+/**
+ * @enum
+ */
+sisyfox.sisycol.PayPerPlayMode = {
+  COIN: 0,
+  TOKEN: 1
 };
 
 /**

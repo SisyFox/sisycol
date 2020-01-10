@@ -40,7 +40,6 @@ enum EndReason:ubyte   { WIN, MAP_BORDER, COLLISION, INSTANT_LOSS_ANGLE,
 
 enum TriggerType:ubyte { NEW_ROUND }
 
-
 // Enumerations below 64 are GeneralSettings
 // Enumerations below 128 are UserSettings
 // all other are VirtualSettings
@@ -54,7 +53,7 @@ enum SettingType:ubyte { GAME_LANGUAGE, INTERFACE_LANGUAGE, MASTER_VOLUME,
                          SF_CONTROL_INTERNAL=0x3f,
                          WORLD = 64, LEVEL, DIFFICULTY, GAME_MODE,
                          MAX_COLLECT_WORLD, MAX_COLLECT_LEVEL, GEM_SCORE,
-                         TIME_ATTACK, RESERVED_FOR_FUTURE_USE_1, HASH, GAME,
+                         TIME_ATTACK, PAY_PER_PLAY_MODE, HASH, GAME,
                          GAME_ACTIVE = 128, GAME_ENABLED_DEPRECATED }
 
 enum Language:ubyte    { ENGLISH, GERMAN, CHINESE, FRENCH, JAPANESE, CRUMMY_GERMAN = 0xff }
@@ -82,6 +81,8 @@ enum DmxDeviceMode:byte        { TEST, DISABLED }
 enum Currency:byte             { EURO }
 
 enum GameBlockReason:byte      { UNKNOWN, COIN_ACCEPTOR }
+
+enum PayPerPlayMode:byte       { COIN, TOKEN }
 
 struct Version {
   high:ubyte = 2;

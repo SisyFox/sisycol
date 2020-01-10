@@ -896,7 +896,7 @@ enum SettingType {
   SettingType_MAX_COLLECT_LEVEL = 69,
   SettingType_GEM_SCORE = 70,
   SettingType_TIME_ATTACK = 71,
-  SettingType_RESERVED_FOR_FUTURE_USE_1 = 72,
+  SettingType_PAY_PER_PLAY_MODE = 72,
   SettingType_HASH = 73,
   SettingType_GAME = 74,
   SettingType_GAME_ACTIVE = 128,
@@ -940,7 +940,7 @@ inline SettingType (&EnumValuesSettingType())[38] {
     SettingType_MAX_COLLECT_LEVEL,
     SettingType_GEM_SCORE,
     SettingType_TIME_ATTACK,
-    SettingType_RESERVED_FOR_FUTURE_USE_1,
+    SettingType_PAY_PER_PLAY_MODE,
     SettingType_HASH,
     SettingType_GAME,
     SettingType_GAME_ACTIVE,
@@ -1023,7 +1023,7 @@ inline const char **EnumNamesSettingType() {
     "MAX_COLLECT_LEVEL",
     "GEM_SCORE",
     "TIME_ATTACK",
-    "RESERVED_FOR_FUTURE_USE_1",
+    "PAY_PER_PLAY_MODE",
     "HASH",
     "GAME",
     "",
@@ -1490,6 +1490,35 @@ inline const char **EnumNamesGameBlockReason() {
 inline const char *EnumNameGameBlockReason(GameBlockReason e) {
   const size_t index = static_cast<int>(e);
   return EnumNamesGameBlockReason()[index];
+}
+
+enum PayPerPlayMode {
+  PayPerPlayMode_COIN = 0,
+  PayPerPlayMode_TOKEN = 1,
+  PayPerPlayMode_MIN = PayPerPlayMode_COIN,
+  PayPerPlayMode_MAX = PayPerPlayMode_TOKEN
+};
+
+inline PayPerPlayMode (&EnumValuesPayPerPlayMode())[2] {
+  static PayPerPlayMode values[] = {
+    PayPerPlayMode_COIN,
+    PayPerPlayMode_TOKEN
+  };
+  return values;
+}
+
+inline const char **EnumNamesPayPerPlayMode() {
+  static const char *names[] = {
+    "COIN",
+    "TOKEN",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNamePayPerPlayMode(PayPerPlayMode e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesPayPerPlayMode()[index];
 }
 
 enum SettingValue {
