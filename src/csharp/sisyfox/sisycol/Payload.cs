@@ -70,6 +70,7 @@ public enum Payload : byte
  CalculateScore = 60,
  GetPayPerPlayStatistics = 61,
  GetIdealTime = 62,
+ GetScoreStatistics = 63,
 };
 
 

@@ -90,7 +90,8 @@ sisyfox.sisycol.Payload = {
   AddScoreNew: 59,
   CalculateScore: 60,
   GetPayPerPlayStatistics: 61,
-  GetIdealTime: 62
+  GetIdealTime: 62,
+  GetScoreStatistics: 63
 };
 
 /**
@@ -296,6 +297,16 @@ sisyfox.sisycol.GameBlockReason = {
 sisyfox.sisycol.PayPerPlayMode = {
   COIN: 0,
   TOKEN: 1
+};
+
+/**
+ * @enum
+ */
+sisyfox.sisycol.TimeFrame = {
+  HOURLY: 0,
+  DAILY: 1,
+  WEEKLY: 2,
+  MONTHLY: 3
 };
 
 /**
@@ -7155,6 +7166,137 @@ sisyfox.sisycol.request.GetPayPerPlayStatistics.endGetPayPerPlayStatistics = fun
 /**
  * @constructor
  */
+sisyfox.sisycol.request.GetScoreStatistics = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.GetScoreStatistics}
+ */
+sisyfox.sisycol.request.GetScoreStatistics.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.GetScoreStatistics=} obj
+ * @returns {sisyfox.sisycol.request.GetScoreStatistics}
+ */
+sisyfox.sisycol.request.GetScoreStatistics.getRootAsGetScoreStatistics = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.GetScoreStatistics).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {flatbuffers.Long}
+ */
+sisyfox.sisycol.request.GetScoreStatistics.prototype.timestampBegin = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint64(this.bb_pos + offset) : this.bb.createLong(0, 0);
+};
+
+/**
+ * @returns {flatbuffers.Long}
+ */
+sisyfox.sisycol.request.GetScoreStatistics.prototype.timestampEnd = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readUint64(this.bb_pos + offset) : this.bb.createLong(0, 0);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetScoreStatistics.prototype.range = function() {
+  var offset = this.bb.__offset(this.bb_pos, 8);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.GetScoreStatistics.prototype.offset = function() {
+  var offset = this.bb.__offset(this.bb_pos, 10);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {sisyfox.sisycol.TimeFrame}
+ */
+sisyfox.sisycol.request.GetScoreStatistics.prototype.frame = function() {
+  var offset = this.bb.__offset(this.bb_pos, 12);
+  return offset ? /** @type {sisyfox.sisycol.TimeFrame} */ (this.bb.readInt8(this.bb_pos + offset)) : sisyfox.sisycol.TimeFrame.HOURLY;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.GetScoreStatistics.startGetScoreStatistics = function(builder) {
+  builder.startObject(5);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Long} timestampBegin
+ */
+sisyfox.sisycol.request.GetScoreStatistics.addTimestampBegin = function(builder, timestampBegin) {
+  builder.addFieldInt64(0, timestampBegin, builder.createLong(0, 0));
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Long} timestampEnd
+ */
+sisyfox.sisycol.request.GetScoreStatistics.addTimestampEnd = function(builder, timestampEnd) {
+  builder.addFieldInt64(1, timestampEnd, builder.createLong(0, 0));
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} range
+ */
+sisyfox.sisycol.request.GetScoreStatistics.addRange = function(builder, range) {
+  builder.addFieldInt8(2, range, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} offset
+ */
+sisyfox.sisycol.request.GetScoreStatistics.addOffset = function(builder, offset) {
+  builder.addFieldInt32(3, offset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.TimeFrame} frame
+ */
+sisyfox.sisycol.request.GetScoreStatistics.addFrame = function(builder, frame) {
+  builder.addFieldInt8(4, frame, sisyfox.sisycol.TimeFrame.HOURLY);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.GetScoreStatistics.endGetScoreStatistics = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -12630,6 +12772,235 @@ sisyfox.sisycol.response.GetPayPerPlayStatistics.startDataVector = function(buil
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.GetPayPerPlayStatistics.endGetPayPerPlayStatistics = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.ScoreStatistic = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.ScoreStatistic}
+ */
+sisyfox.sisycol.response.ScoreStatistic.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.ScoreStatistic=} obj
+ * @returns {sisyfox.sisycol.response.ScoreStatistic}
+ */
+sisyfox.sisycol.response.ScoreStatistic.getRootAsScoreStatistic = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.ScoreStatistic).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {flatbuffers.Long}
+ */
+sisyfox.sisycol.response.ScoreStatistic.prototype.timestamp = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint64(this.bb_pos + offset) : this.bb.createLong(0, 0);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.ScoreStatistic.prototype.game = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? this.bb.readUint8(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {sisyfox.sisycol.GameMode}
+ */
+sisyfox.sisycol.response.ScoreStatistic.prototype.gameMode = function() {
+  var offset = this.bb.__offset(this.bb_pos, 8);
+  return offset ? /** @type {sisyfox.sisycol.GameMode} */ (this.bb.readUint8(this.bb_pos + offset)) : sisyfox.sisycol.GameMode.CLIMB;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.ScoreStatistic.prototype.playtime = function() {
+  var offset = this.bb.__offset(this.bb_pos, 10);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.ScoreStatistic.prototype.gamesCount = function() {
+  var offset = this.bb.__offset(this.bb_pos, 12);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.ScoreStatistic.startScoreStatistic = function(builder) {
+  builder.startObject(5);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Long} timestamp
+ */
+sisyfox.sisycol.response.ScoreStatistic.addTimestamp = function(builder, timestamp) {
+  builder.addFieldInt64(0, timestamp, builder.createLong(0, 0));
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} game
+ */
+sisyfox.sisycol.response.ScoreStatistic.addGame = function(builder, game) {
+  builder.addFieldInt8(1, game, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {sisyfox.sisycol.GameMode} gameMode
+ */
+sisyfox.sisycol.response.ScoreStatistic.addGameMode = function(builder, gameMode) {
+  builder.addFieldInt8(2, gameMode, sisyfox.sisycol.GameMode.CLIMB);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} playtime
+ */
+sisyfox.sisycol.response.ScoreStatistic.addPlaytime = function(builder, playtime) {
+  builder.addFieldInt32(3, playtime, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} gamesCount
+ */
+sisyfox.sisycol.response.ScoreStatistic.addGamesCount = function(builder, gamesCount) {
+  builder.addFieldInt32(4, gamesCount, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.ScoreStatistic.endScoreStatistic = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.GetScoreStatistics = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.GetScoreStatistics}
+ */
+sisyfox.sisycol.response.GetScoreStatistics.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.GetScoreStatistics=} obj
+ * @returns {sisyfox.sisycol.response.GetScoreStatistics}
+ */
+sisyfox.sisycol.response.GetScoreStatistics.getRootAsGetScoreStatistics = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.GetScoreStatistics).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {number} index
+ * @param {sisyfox.sisycol.response.ScoreStatistic=} obj
+ * @returns {sisyfox.sisycol.response.ScoreStatistic}
+ */
+sisyfox.sisycol.response.GetScoreStatistics.prototype.data = function(index, obj) {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? (obj || new sisyfox.sisycol.response.ScoreStatistic).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.GetScoreStatistics.prototype.dataLength = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.GetScoreStatistics.startGetScoreStatistics = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} dataOffset
+ */
+sisyfox.sisycol.response.GetScoreStatistics.addData = function(builder, dataOffset) {
+  builder.addFieldOffset(0, dataOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {Array.<flatbuffers.Offset>} data
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.GetScoreStatistics.createDataVector = function(builder, data) {
+  builder.startVector(4, data.length, 4);
+  for (var i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]);
+  }
+  return builder.endVector();
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} numElems
+ */
+sisyfox.sisycol.response.GetScoreStatistics.startDataVector = function(builder, numElems) {
+  builder.startVector(4, numElems, 4);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.GetScoreStatistics.endGetScoreStatistics = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

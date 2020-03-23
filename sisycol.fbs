@@ -23,7 +23,8 @@ union Payload { Error, Info, /* DEPRECATED */ AddScore /* DEPRECATED */,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
              GetIdealTime_DEPRECATED, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
              ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus,
-             AddCredits, AddScoreNew, CalculateScore, GetPayPerPlayStatistics, GetIdealTime }
+             AddCredits, AddScoreNew, CalculateScore, GetPayPerPlayStatistics, GetIdealTime,
+             GetScoreStatistics }
 
 table Root {
   version:Version;
@@ -84,6 +85,8 @@ enum Currency:byte             { EURO }
 enum GameBlockReason:byte      { UNKNOWN, COIN_ACCEPTOR }
 
 enum PayPerPlayMode:byte       { COIN, TOKEN }
+
+enum TimeFrame:byte       { HOURLY, DAILY, WEEKLY, MONTHLY }
 
 struct Version {
   high:ubyte = 2;
@@ -503,6 +506,14 @@ table GetPayPerPlayStatistics {
     offset:uint;
 }
 
+table GetScoreStatistics {
+    timestamp_begin:ulong;
+    timestamp_end:ulong;
+    range:ubyte;
+    offset:uint;
+    frame:TimeFrame;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -812,4 +823,17 @@ table PayPerPlayStatistic {
 
 table GetPayPerPlayStatistics {
     data:[PayPerPlayStatistic];
+}
+
+table ScoreStatistic {
+    timestamp:ulong;
+    game:ubyte;
+    gameMode:GameMode;
+    
+    playtime:uint;
+    gamesCount:uint;
+}
+
+table GetScoreStatistics {
+    data:[ScoreStatistic];
 }

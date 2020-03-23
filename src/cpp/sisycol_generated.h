@@ -153,6 +153,8 @@ struct CalculateScore;
 
 struct GetPayPerPlayStatistics;
 
+struct GetScoreStatistics;
+
 }  // namespace request
 
 namespace response {
@@ -279,6 +281,10 @@ struct PayPerPlayStatistic;
 
 struct GetPayPerPlayStatistics;
 
+struct ScoreStatistic;
+
+struct GetScoreStatistics;
+
 }  // namespace response
 
 enum Payload {
@@ -345,11 +351,12 @@ enum Payload {
   Payload_CalculateScore = 60,
   Payload_GetPayPerPlayStatistics = 61,
   Payload_GetIdealTime = 62,
+  Payload_GetScoreStatistics = 63,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_GetIdealTime
+  Payload_MAX = Payload_GetScoreStatistics
 };
 
-inline Payload (&EnumValuesPayload())[63] {
+inline Payload (&EnumValuesPayload())[64] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -413,7 +420,8 @@ inline Payload (&EnumValuesPayload())[63] {
     Payload_AddScoreNew,
     Payload_CalculateScore,
     Payload_GetPayPerPlayStatistics,
-    Payload_GetIdealTime
+    Payload_GetIdealTime,
+    Payload_GetScoreStatistics
   };
   return values;
 }
@@ -483,6 +491,7 @@ inline const char **EnumNamesPayload() {
     "CalculateScore",
     "GetPayPerPlayStatistics",
     "GetIdealTime",
+    "GetScoreStatistics",
     nullptr
   };
   return names;
@@ -743,6 +752,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::GetPayPerPlayStatisti
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetIdealTime> {
   static const Payload enum_value = Payload_GetIdealTime;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::GetScoreStatistics> {
+  static const Payload enum_value = Payload_GetScoreStatistics;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -1525,6 +1538,41 @@ inline const char *EnumNamePayPerPlayMode(PayPerPlayMode e) {
   return EnumNamesPayPerPlayMode()[index];
 }
 
+enum TimeFrame {
+  TimeFrame_HOURLY = 0,
+  TimeFrame_DAILY = 1,
+  TimeFrame_WEEKLY = 2,
+  TimeFrame_MONTHLY = 3,
+  TimeFrame_MIN = TimeFrame_HOURLY,
+  TimeFrame_MAX = TimeFrame_MONTHLY
+};
+
+inline TimeFrame (&EnumValuesTimeFrame())[4] {
+  static TimeFrame values[] = {
+    TimeFrame_HOURLY,
+    TimeFrame_DAILY,
+    TimeFrame_WEEKLY,
+    TimeFrame_MONTHLY
+  };
+  return values;
+}
+
+inline const char **EnumNamesTimeFrame() {
+  static const char *names[] = {
+    "HOURLY",
+    "DAILY",
+    "WEEKLY",
+    "MONTHLY",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameTimeFrame(TimeFrame e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesTimeFrame()[index];
+}
+
 enum SettingValue {
   SettingValue_NONE = 0,
   SettingValue_BoolSetting = 1,
@@ -2177,6 +2225,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::GetIdealTime *payload_as_GetIdealTime() const {
     return payload_type() == Payload_GetIdealTime ? static_cast<const sisyfox::sisycol::request::GetIdealTime *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::GetScoreStatistics *payload_as_GetScoreStatistics() const {
+    return payload_type() == Payload_GetScoreStatistics ? static_cast<const sisyfox::sisycol::request::GetScoreStatistics *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2434,6 +2485,10 @@ template<> inline const sisyfox::sisycol::request::GetPayPerPlayStatistics *Root
 
 template<> inline const sisyfox::sisycol::request::GetIdealTime *Root::payload_as<sisyfox::sisycol::request::GetIdealTime>() const {
   return payload_as_GetIdealTime();
+}
+
+template<> inline const sisyfox::sisycol::request::GetScoreStatistics *Root::payload_as<sisyfox::sisycol::request::GetScoreStatistics>() const {
+  return payload_as_GetScoreStatistics();
 }
 
 struct RootBuilder {
@@ -6275,6 +6330,86 @@ inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistic
   return builder_.Finish();
 }
 
+struct GetScoreStatistics FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_TIMESTAMP_BEGIN = 4,
+    VT_TIMESTAMP_END = 6,
+    VT_RANGE = 8,
+    VT_OFFSET = 10,
+    VT_FRAME = 12
+  };
+  uint64_t timestamp_begin() const {
+    return GetField<uint64_t>(VT_TIMESTAMP_BEGIN, 0);
+  }
+  uint64_t timestamp_end() const {
+    return GetField<uint64_t>(VT_TIMESTAMP_END, 0);
+  }
+  uint8_t range() const {
+    return GetField<uint8_t>(VT_RANGE, 0);
+  }
+  uint32_t offset() const {
+    return GetField<uint32_t>(VT_OFFSET, 0);
+  }
+  sisyfox::sisycol::TimeFrame frame() const {
+    return static_cast<sisyfox::sisycol::TimeFrame>(GetField<int8_t>(VT_FRAME, 0));
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint64_t>(verifier, VT_TIMESTAMP_BEGIN) &&
+           VerifyField<uint64_t>(verifier, VT_TIMESTAMP_END) &&
+           VerifyField<uint8_t>(verifier, VT_RANGE) &&
+           VerifyField<uint32_t>(verifier, VT_OFFSET) &&
+           VerifyField<int8_t>(verifier, VT_FRAME) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetScoreStatisticsBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_timestamp_begin(uint64_t timestamp_begin) {
+    fbb_.AddElement<uint64_t>(GetScoreStatistics::VT_TIMESTAMP_BEGIN, timestamp_begin, 0);
+  }
+  void add_timestamp_end(uint64_t timestamp_end) {
+    fbb_.AddElement<uint64_t>(GetScoreStatistics::VT_TIMESTAMP_END, timestamp_end, 0);
+  }
+  void add_range(uint8_t range) {
+    fbb_.AddElement<uint8_t>(GetScoreStatistics::VT_RANGE, range, 0);
+  }
+  void add_offset(uint32_t offset) {
+    fbb_.AddElement<uint32_t>(GetScoreStatistics::VT_OFFSET, offset, 0);
+  }
+  void add_frame(sisyfox::sisycol::TimeFrame frame) {
+    fbb_.AddElement<int8_t>(GetScoreStatistics::VT_FRAME, static_cast<int8_t>(frame), 0);
+  }
+  explicit GetScoreStatisticsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetScoreStatisticsBuilder &operator=(const GetScoreStatisticsBuilder &);
+  flatbuffers::Offset<GetScoreStatistics> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetScoreStatistics>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetScoreStatistics> CreateGetScoreStatistics(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint64_t timestamp_begin = 0,
+    uint64_t timestamp_end = 0,
+    uint8_t range = 0,
+    uint32_t offset = 0,
+    sisyfox::sisycol::TimeFrame frame = sisyfox::sisycol::TimeFrame_HOURLY) {
+  GetScoreStatisticsBuilder builder_(_fbb);
+  builder_.add_timestamp_end(timestamp_end);
+  builder_.add_timestamp_begin(timestamp_begin);
+  builder_.add_offset(offset);
+  builder_.add_frame(frame);
+  builder_.add_range(range);
+  return builder_.Finish();
+}
+
 }  // namespace request
 
 namespace response {
@@ -9627,6 +9762,136 @@ inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistic
       data ? _fbb.CreateVector<flatbuffers::Offset<PayPerPlayStatistic>>(*data) : 0);
 }
 
+struct ScoreStatistic FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_TIMESTAMP = 4,
+    VT_GAME = 6,
+    VT_GAMEMODE = 8,
+    VT_PLAYTIME = 10,
+    VT_GAMESCOUNT = 12
+  };
+  uint64_t timestamp() const {
+    return GetField<uint64_t>(VT_TIMESTAMP, 0);
+  }
+  uint8_t game() const {
+    return GetField<uint8_t>(VT_GAME, 0);
+  }
+  sisyfox::sisycol::GameMode gameMode() const {
+    return static_cast<sisyfox::sisycol::GameMode>(GetField<uint8_t>(VT_GAMEMODE, 0));
+  }
+  uint32_t playtime() const {
+    return GetField<uint32_t>(VT_PLAYTIME, 0);
+  }
+  uint32_t gamesCount() const {
+    return GetField<uint32_t>(VT_GAMESCOUNT, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint64_t>(verifier, VT_TIMESTAMP) &&
+           VerifyField<uint8_t>(verifier, VT_GAME) &&
+           VerifyField<uint8_t>(verifier, VT_GAMEMODE) &&
+           VerifyField<uint32_t>(verifier, VT_PLAYTIME) &&
+           VerifyField<uint32_t>(verifier, VT_GAMESCOUNT) &&
+           verifier.EndTable();
+  }
+};
+
+struct ScoreStatisticBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_timestamp(uint64_t timestamp) {
+    fbb_.AddElement<uint64_t>(ScoreStatistic::VT_TIMESTAMP, timestamp, 0);
+  }
+  void add_game(uint8_t game) {
+    fbb_.AddElement<uint8_t>(ScoreStatistic::VT_GAME, game, 0);
+  }
+  void add_gameMode(sisyfox::sisycol::GameMode gameMode) {
+    fbb_.AddElement<uint8_t>(ScoreStatistic::VT_GAMEMODE, static_cast<uint8_t>(gameMode), 0);
+  }
+  void add_playtime(uint32_t playtime) {
+    fbb_.AddElement<uint32_t>(ScoreStatistic::VT_PLAYTIME, playtime, 0);
+  }
+  void add_gamesCount(uint32_t gamesCount) {
+    fbb_.AddElement<uint32_t>(ScoreStatistic::VT_GAMESCOUNT, gamesCount, 0);
+  }
+  explicit ScoreStatisticBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ScoreStatisticBuilder &operator=(const ScoreStatisticBuilder &);
+  flatbuffers::Offset<ScoreStatistic> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<ScoreStatistic>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<ScoreStatistic> CreateScoreStatistic(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint64_t timestamp = 0,
+    uint8_t game = 0,
+    sisyfox::sisycol::GameMode gameMode = sisyfox::sisycol::GameMode_CLIMB,
+    uint32_t playtime = 0,
+    uint32_t gamesCount = 0) {
+  ScoreStatisticBuilder builder_(_fbb);
+  builder_.add_timestamp(timestamp);
+  builder_.add_gamesCount(gamesCount);
+  builder_.add_playtime(playtime);
+  builder_.add_gameMode(gameMode);
+  builder_.add_game(game);
+  return builder_.Finish();
+}
+
+struct GetScoreStatistics FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_DATA = 4
+  };
+  const flatbuffers::Vector<flatbuffers::Offset<ScoreStatistic>> *data() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<ScoreStatistic>> *>(VT_DATA);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_DATA) &&
+           verifier.Verify(data()) &&
+           verifier.VerifyVectorOfTables(data()) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetScoreStatisticsBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_data(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<ScoreStatistic>>> data) {
+    fbb_.AddOffset(GetScoreStatistics::VT_DATA, data);
+  }
+  explicit GetScoreStatisticsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  GetScoreStatisticsBuilder &operator=(const GetScoreStatisticsBuilder &);
+  flatbuffers::Offset<GetScoreStatistics> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetScoreStatistics>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetScoreStatistics> CreateGetScoreStatistics(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<ScoreStatistic>>> data = 0) {
+  GetScoreStatisticsBuilder builder_(_fbb);
+  builder_.add_data(data);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<GetScoreStatistics> CreateGetScoreStatisticsDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    const std::vector<flatbuffers::Offset<ScoreStatistic>> *data = nullptr) {
+  return sisyfox::sisycol::response::CreateGetScoreStatistics(
+      _fbb,
+      data ? _fbb.CreateVector<flatbuffers::Offset<ScoreStatistic>>(*data) : 0);
+}
+
 }  // namespace response
 
 namespace request {
@@ -9888,6 +10153,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_GetIdealTime: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetIdealTime *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_GetScoreStatistics: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetScoreStatistics *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;
