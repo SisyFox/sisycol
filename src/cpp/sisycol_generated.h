@@ -1230,15 +1230,17 @@ enum Game {
   Game_CLASSIC = 0,
   Game_DOWNHILL = 1,
   Game_PHYSICS_BASH = 2,
+  Game_RUMBLE_BALL = 3,
   Game_MIN = Game_CLASSIC,
-  Game_MAX = Game_PHYSICS_BASH
+  Game_MAX = Game_RUMBLE_BALL
 };
 
-inline Game (&EnumValuesGame())[3] {
+inline Game (&EnumValuesGame())[4] {
   static Game values[] = {
     Game_CLASSIC,
     Game_DOWNHILL,
-    Game_PHYSICS_BASH
+    Game_PHYSICS_BASH,
+    Game_RUMBLE_BALL
   };
   return values;
 }
@@ -1248,6 +1250,7 @@ inline const char **EnumNamesGame() {
     "CLASSIC",
     "DOWNHILL",
     "PHYSICS_BASH",
+    "RUMBLE_BALL",
     nullptr
   };
   return names;
