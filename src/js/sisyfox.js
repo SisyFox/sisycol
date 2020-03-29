@@ -554,6 +554,19 @@ class Sisyfox {
         const offset = sisyfox.sisycol.request.GetPayPerPlayStatistics.endGetPayPerPlayStatistics(builder);
         this.prepareSend(sisyfox.sisycol.Payload.GetPayPerPlayStatistics, offset, builder);
     }
+
+    requestGetScoreStatistics(startDate, endDate, startId, range, timeFrame) {
+        const builder = new flatbuffers.Builder();
+        sisyfox.sisycol.request.GetScoreStatistics.startGetScoreStatistics(builder);
+        sisyfox.sisycol.request.GetScoreStatistics.addTimestampBegin(builder, new flatbuffers.Long(startDate, 0));
+        sisyfox.sisycol.request.GetScoreStatistics.addTimestampEnd(builder, new flatbuffers.Long(endDate, 0));
+        sisyfox.sisycol.request.GetScoreStatistics.addOffset(builder, startId);
+        sisyfox.sisycol.request.GetScoreStatistics.addRange(builder, range);
+        sisyfox.sisycol.request.GetScoreStatistics.addFrame(builder, timeFrame);
+        const offset = sisyfox.sisycol.request.GetScoreStatistics.endGetScoreStatistics(builder);
+        this.prepareSend(sisyfox.sisycol.Payload.GetScoreStatistics, offset, builder);
+    }
+
 }
 
 this.sisyfox = Sisyfox;
