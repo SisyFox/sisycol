@@ -114,7 +114,7 @@ table Score {
     maxGoal:int;
     time:int;
     rank:uint;
-    timestamp:long;
+    timestamp:long; // unix timestamp
     level:ubyte;
     world:ubyte;
     gameMode:GameMode;
@@ -497,9 +497,10 @@ table CalculateScore {
     multiplayer:bool;
 }
 
+// selected time interval is half-open: [timestamp_begin, timestamp_end)
 table GetPayPerPlayStatistics {
-    timestamp_begin:ulong;
-    timestamp_end:ulong;
+    timestamp_begin:ulong;  // unix timestamp
+    timestamp_end:ulong; // unix timestamp
     range:ubyte;
     offset:uint;
 }
