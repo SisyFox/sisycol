@@ -476,6 +476,7 @@ table AddCredits {
 }
 
 table AddScoreNew { // Deprecates AddScore
+    // rank and id element is ignored
     data:Score;
 }
 
