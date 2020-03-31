@@ -22,28 +22,33 @@ public struct GetScoreStatistics : IFlatbufferObject
   public byte Range { get { int o = __p.__offset(8); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
   public uint Offset { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
   public sisyfox.sisycol.TimeFrame Frame { get { int o = __p.__offset(12); return o != 0 ? (sisyfox.sisycol.TimeFrame)__p.bb.GetSbyte(o + __p.bb_pos) : sisyfox.sisycol.TimeFrame.HOURLY; } }
+  public string Timezone { get { int o = __p.__offset(14); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
+  public ArraySegment<byte>? GetTimezoneBytes() { return __p.__vector_as_arraysegment(14); }
 
   public static Offset<GetScoreStatistics> CreateGetScoreStatistics(FlatBufferBuilder builder,
       ulong timestamp_begin = 0,
       ulong timestamp_end = 0,
       byte range = 0,
       uint offset = 0,
-      sisyfox.sisycol.TimeFrame frame = sisyfox.sisycol.TimeFrame.HOURLY) {
-    builder.StartObject(5);
+      sisyfox.sisycol.TimeFrame frame = sisyfox.sisycol.TimeFrame.HOURLY,
+      StringOffset timezoneOffset = default(StringOffset)) {
+    builder.StartObject(6);
     GetScoreStatistics.AddTimestampEnd(builder, timestamp_end);
     GetScoreStatistics.AddTimestampBegin(builder, timestamp_begin);
+    GetScoreStatistics.AddTimezone(builder, timezoneOffset);
     GetScoreStatistics.AddOffset(builder, offset);
     GetScoreStatistics.AddFrame(builder, frame);
     GetScoreStatistics.AddRange(builder, range);
     return GetScoreStatistics.EndGetScoreStatistics(builder);
   }
 
-  public static void StartGetScoreStatistics(FlatBufferBuilder builder) { builder.StartObject(5); }
+  public static void StartGetScoreStatistics(FlatBufferBuilder builder) { builder.StartObject(6); }
   public static void AddTimestampBegin(FlatBufferBuilder builder, ulong timestampBegin) { builder.AddUlong(0, timestampBegin, 0); }
   public static void AddTimestampEnd(FlatBufferBuilder builder, ulong timestampEnd) { builder.AddUlong(1, timestampEnd, 0); }
   public static void AddRange(FlatBufferBuilder builder, byte range) { builder.AddByte(2, range, 0); }
   public static void AddOffset(FlatBufferBuilder builder, uint offset) { builder.AddUint(3, offset, 0); }
   public static void AddFrame(FlatBufferBuilder builder, sisyfox.sisycol.TimeFrame frame) { builder.AddSbyte(4, (sbyte)frame, 0); }
+  public static void AddTimezone(FlatBufferBuilder builder, StringOffset timezoneOffset) { builder.AddOffset(5, timezoneOffset.Value, 0); }
   public static Offset<GetScoreStatistics> EndGetScoreStatistics(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<GetScoreStatistics>(o);

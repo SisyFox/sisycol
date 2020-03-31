@@ -6336,7 +6336,8 @@ struct GetScoreStatistics FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_TIMESTAMP_END = 6,
     VT_RANGE = 8,
     VT_OFFSET = 10,
-    VT_FRAME = 12
+    VT_FRAME = 12,
+    VT_TIMEZONE = 14
   };
   uint64_t timestamp_begin() const {
     return GetField<uint64_t>(VT_TIMESTAMP_BEGIN, 0);
@@ -6353,6 +6354,9 @@ struct GetScoreStatistics FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   sisyfox::sisycol::TimeFrame frame() const {
     return static_cast<sisyfox::sisycol::TimeFrame>(GetField<int8_t>(VT_FRAME, 0));
   }
+  const flatbuffers::String *timezone() const {
+    return GetPointer<const flatbuffers::String *>(VT_TIMEZONE);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint64_t>(verifier, VT_TIMESTAMP_BEGIN) &&
@@ -6360,6 +6364,8 @@ struct GetScoreStatistics FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_RANGE) &&
            VerifyField<uint32_t>(verifier, VT_OFFSET) &&
            VerifyField<int8_t>(verifier, VT_FRAME) &&
+           VerifyOffset(verifier, VT_TIMEZONE) &&
+           verifier.Verify(timezone()) &&
            verifier.EndTable();
   }
 };
@@ -6382,6 +6388,9 @@ struct GetScoreStatisticsBuilder {
   void add_frame(sisyfox::sisycol::TimeFrame frame) {
     fbb_.AddElement<int8_t>(GetScoreStatistics::VT_FRAME, static_cast<int8_t>(frame), 0);
   }
+  void add_timezone(flatbuffers::Offset<flatbuffers::String> timezone) {
+    fbb_.AddOffset(GetScoreStatistics::VT_TIMEZONE, timezone);
+  }
   explicit GetScoreStatisticsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -6400,14 +6409,34 @@ inline flatbuffers::Offset<GetScoreStatistics> CreateGetScoreStatistics(
     uint64_t timestamp_end = 0,
     uint8_t range = 0,
     uint32_t offset = 0,
-    sisyfox::sisycol::TimeFrame frame = sisyfox::sisycol::TimeFrame_HOURLY) {
+    sisyfox::sisycol::TimeFrame frame = sisyfox::sisycol::TimeFrame_HOURLY,
+    flatbuffers::Offset<flatbuffers::String> timezone = 0) {
   GetScoreStatisticsBuilder builder_(_fbb);
   builder_.add_timestamp_end(timestamp_end);
   builder_.add_timestamp_begin(timestamp_begin);
+  builder_.add_timezone(timezone);
   builder_.add_offset(offset);
   builder_.add_frame(frame);
   builder_.add_range(range);
   return builder_.Finish();
+}
+
+inline flatbuffers::Offset<GetScoreStatistics> CreateGetScoreStatisticsDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint64_t timestamp_begin = 0,
+    uint64_t timestamp_end = 0,
+    uint8_t range = 0,
+    uint32_t offset = 0,
+    sisyfox::sisycol::TimeFrame frame = sisyfox::sisycol::TimeFrame_HOURLY,
+    const char *timezone = nullptr) {
+  return sisyfox::sisycol::request::CreateGetScoreStatistics(
+      _fbb,
+      timestamp_begin,
+      timestamp_end,
+      range,
+      offset,
+      frame,
+      timezone ? _fbb.CreateString(timezone) : 0);
 }
 
 }  // namespace request

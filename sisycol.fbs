@@ -512,6 +512,7 @@ table GetScoreStatistics {
     range:ubyte;
     offset:uint;
     frame:TimeFrame;
+    timezone:string;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

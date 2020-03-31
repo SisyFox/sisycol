@@ -7239,10 +7239,19 @@ sisyfox.sisycol.request.GetScoreStatistics.prototype.frame = function() {
 };
 
 /**
+ * @param {flatbuffers.Encoding=} optionalEncoding
+ * @returns {string|Uint8Array|null}
+ */
+sisyfox.sisycol.request.GetScoreStatistics.prototype.timezone = function(optionalEncoding) {
+  var offset = this.bb.__offset(this.bb_pos, 14);
+  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+};
+
+/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.GetScoreStatistics.startGetScoreStatistics = function(builder) {
-  builder.startObject(5);
+  builder.startObject(6);
 };
 
 /**
@@ -7283,6 +7292,14 @@ sisyfox.sisycol.request.GetScoreStatistics.addOffset = function(builder, offset)
  */
 sisyfox.sisycol.request.GetScoreStatistics.addFrame = function(builder, frame) {
   builder.addFieldInt8(4, frame, sisyfox.sisycol.TimeFrame.HOURLY);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} timezoneOffset
+ */
+sisyfox.sisycol.request.GetScoreStatistics.addTimezone = function(builder, timezoneOffset) {
+  builder.addFieldOffset(5, timezoneOffset, 0);
 };
 
 /**
