@@ -555,15 +555,16 @@ class Sisyfox {
         this.prepareSend(sisyfox.sisycol.Payload.GetPayPerPlayStatistics, offset, builder);
     }
 
-    requestGetScoreStatistics(startDate, endDate, startId, range, timeFrame, timeZone) {
+    requestGetScoreStatistics(startDate, endDate, startId, range, timeFrame, timezone) {
         const builder = new flatbuffers.Builder();
+        const tz = builder.createString(timezone);
         sisyfox.sisycol.request.GetScoreStatistics.startGetScoreStatistics(builder);
         sisyfox.sisycol.request.GetScoreStatistics.addTimestampBegin(builder, new flatbuffers.Long(startDate, 0));
         sisyfox.sisycol.request.GetScoreStatistics.addTimestampEnd(builder, new flatbuffers.Long(endDate, 0));
         sisyfox.sisycol.request.GetScoreStatistics.addOffset(builder, startId);
         sisyfox.sisycol.request.GetScoreStatistics.addRange(builder, range);
         sisyfox.sisycol.request.GetScoreStatistics.addFrame(builder, timeFrame);
-        sisyfox.sisycol.request.GetScoreStatistics.addTimezone(builder, timeZone);
+        sisyfox.sisycol.request.GetScoreStatistics.addTimezone(builder, tz);
         const offset = sisyfox.sisycol.request.GetScoreStatistics.endGetScoreStatistics(builder);
         this.prepareSend(sisyfox.sisycol.Payload.GetScoreStatistics, offset, builder);
     }
