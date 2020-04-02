@@ -66,7 +66,7 @@ enum Difficulty:ubyte  { VERY_EASY, EASY, NORMAL, HARD, VERY_HARD }
 
 enum World:ubyte       { ORIGIN_MOUNTAIN, BLOCKSBERG, RED_CANYON, SECRET_ISLAND, TUTORIAL }
 
-enum Game:ubyte        { CLASSIC, DOWNHILL, PHYSICS_BASH }
+enum Game:ubyte        { CLASSIC, DOWNHILL, PHYSICS_BASH, RUMBLE_BALL }
 
 enum BallSetting:ubyte { BIG_BALL, SMALL_BALL }
 

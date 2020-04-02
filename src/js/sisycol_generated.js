@@ -222,7 +222,8 @@ sisyfox.sisycol.World = {
 sisyfox.sisycol.Game = {
   CLASSIC: 0,
   DOWNHILL: 1,
-  PHYSICS_BASH: 2
+  PHYSICS_BASH: 2,
+  RUMBLE_BALL: 3
 };
 
 /**
