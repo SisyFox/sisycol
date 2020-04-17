@@ -68,9 +68,10 @@ public enum Payload : byte
  AddCredits = 58,
  AddScoreNew = 59,
  CalculateScore = 60,
- GetPayPerPlayStatistics = 61,
+ GetPayPerPlayStatistics_DEPRECATED = 61,
  GetIdealTime = 62,
  GetScoreStatistics = 63,
+ GetPayPerPlayStatistics = 64,
 };
 
 

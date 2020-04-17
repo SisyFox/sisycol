@@ -23,8 +23,8 @@ union Payload { Error, Info, /* DEPRECATED */ AddScore /* DEPRECATED */,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
              GetIdealTime_DEPRECATED, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
              ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus,
-             AddCredits, AddScoreNew, CalculateScore, GetPayPerPlayStatistics, GetIdealTime,
-             GetScoreStatistics }
+             AddCredits, AddScoreNew, CalculateScore, GetPayPerPlayStatistics_DEPRECATED, GetIdealTime,
+             GetScoreStatistics, GetPayPerPlayStatistics }
 
 table Root {
   version:Version;
@@ -499,7 +499,7 @@ table CalculateScore {
     multiplayer:bool;
 }
 
-table GetPayPerPlayStatistics {
+table GetPayPerPlayStatistics_DEPRECATED {
     timestamp_begin:ulong;
     timestamp_end:ulong;
     range:ubyte;
@@ -507,6 +507,15 @@ table GetPayPerPlayStatistics {
 }
 
 table GetScoreStatistics {
+    timestamp_begin:ulong;
+    timestamp_end:ulong;
+    range:ubyte;
+    offset:uint;
+    frame:TimeFrame;
+    timezone:string;
+}
+
+table GetPayPerPlayStatistics {
     timestamp_begin:ulong;
     timestamp_end:ulong;
     range:ubyte;
@@ -817,12 +826,13 @@ table CalculateScore {
 
 table PayPerPlayStatistic {
     timestamp:ulong;
+    
     generated_credits:uint;
     accepted_money:uint;
     credits_worth:uint;
 }
 
-table GetPayPerPlayStatistics {
+table GetPayPerPlayStatistics_DEPRECATED {
     data:[PayPerPlayStatistic];
 }
 
@@ -837,4 +847,8 @@ table ScoreStatistic {
 
 table GetScoreStatistics {
     data:[ScoreStatistic];
+}
+
+table GetPayPerPlayStatistics {
+    data:[PayPerPlayStatistic];
 }
