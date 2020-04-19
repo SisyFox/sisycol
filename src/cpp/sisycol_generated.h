@@ -279,7 +279,7 @@ struct AddCredits;
 
 struct CalculateScore;
 
-struct PayPerPlayStatistic;
+struct PayPerPlayStatistic_DEPRECATED;
 
 struct GetPayPerPlayStatistics_DEPRECATED;
 
@@ -9801,7 +9801,7 @@ inline flatbuffers::Offset<CalculateScore> CreateCalculateScore(
   return builder_.Finish();
 }
 
-struct PayPerPlayStatistic FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct PayPerPlayStatistic_DEPRECATED FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_TIMESTAMP = 4,
     VT_GENERATED_CREDITS = 6,
@@ -9830,40 +9830,40 @@ struct PayPerPlayStatistic FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table 
   }
 };
 
-struct PayPerPlayStatisticBuilder {
+struct PayPerPlayStatistic_DEPRECATEDBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_timestamp(uint64_t timestamp) {
-    fbb_.AddElement<uint64_t>(PayPerPlayStatistic::VT_TIMESTAMP, timestamp, 0);
+    fbb_.AddElement<uint64_t>(PayPerPlayStatistic_DEPRECATED::VT_TIMESTAMP, timestamp, 0);
   }
   void add_generated_credits(uint32_t generated_credits) {
-    fbb_.AddElement<uint32_t>(PayPerPlayStatistic::VT_GENERATED_CREDITS, generated_credits, 0);
+    fbb_.AddElement<uint32_t>(PayPerPlayStatistic_DEPRECATED::VT_GENERATED_CREDITS, generated_credits, 0);
   }
   void add_accepted_money(uint32_t accepted_money) {
-    fbb_.AddElement<uint32_t>(PayPerPlayStatistic::VT_ACCEPTED_MONEY, accepted_money, 0);
+    fbb_.AddElement<uint32_t>(PayPerPlayStatistic_DEPRECATED::VT_ACCEPTED_MONEY, accepted_money, 0);
   }
   void add_credits_worth(uint32_t credits_worth) {
-    fbb_.AddElement<uint32_t>(PayPerPlayStatistic::VT_CREDITS_WORTH, credits_worth, 0);
+    fbb_.AddElement<uint32_t>(PayPerPlayStatistic_DEPRECATED::VT_CREDITS_WORTH, credits_worth, 0);
   }
-  explicit PayPerPlayStatisticBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit PayPerPlayStatistic_DEPRECATEDBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  PayPerPlayStatisticBuilder &operator=(const PayPerPlayStatisticBuilder &);
-  flatbuffers::Offset<PayPerPlayStatistic> Finish() {
+  PayPerPlayStatistic_DEPRECATEDBuilder &operator=(const PayPerPlayStatistic_DEPRECATEDBuilder &);
+  flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<PayPerPlayStatistic>(end);
+    auto o = flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<PayPerPlayStatistic> CreatePayPerPlayStatistic(
+inline flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED> CreatePayPerPlayStatistic_DEPRECATED(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint64_t timestamp = 0,
     uint32_t generated_credits = 0,
     uint32_t accepted_money = 0,
     uint32_t credits_worth = 0) {
-  PayPerPlayStatisticBuilder builder_(_fbb);
+  PayPerPlayStatistic_DEPRECATEDBuilder builder_(_fbb);
   builder_.add_timestamp(timestamp);
   builder_.add_credits_worth(credits_worth);
   builder_.add_accepted_money(accepted_money);
@@ -9875,8 +9875,8 @@ struct GetPayPerPlayStatistics_DEPRECATED FLATBUFFERS_FINAL_CLASS : private flat
   enum {
     VT_DATA = 4
   };
-  const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>> *data() const {
-    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>> *>(VT_DATA);
+  const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>> *data() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>> *>(VT_DATA);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -9890,7 +9890,7 @@ struct GetPayPerPlayStatistics_DEPRECATED FLATBUFFERS_FINAL_CLASS : private flat
 struct GetPayPerPlayStatistics_DEPRECATEDBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_data(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>>> data) {
+  void add_data(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>>> data) {
     fbb_.AddOffset(GetPayPerPlayStatistics_DEPRECATED::VT_DATA, data);
   }
   explicit GetPayPerPlayStatistics_DEPRECATEDBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -9907,7 +9907,7 @@ struct GetPayPerPlayStatistics_DEPRECATEDBuilder {
 
 inline flatbuffers::Offset<GetPayPerPlayStatistics_DEPRECATED> CreateGetPayPerPlayStatistics_DEPRECATED(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>>> data = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>>> data = 0) {
   GetPayPerPlayStatistics_DEPRECATEDBuilder builder_(_fbb);
   builder_.add_data(data);
   return builder_.Finish();
@@ -9915,10 +9915,10 @@ inline flatbuffers::Offset<GetPayPerPlayStatistics_DEPRECATED> CreateGetPayPerPl
 
 inline flatbuffers::Offset<GetPayPerPlayStatistics_DEPRECATED> CreateGetPayPerPlayStatistics_DEPRECATEDDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<flatbuffers::Offset<PayPerPlayStatistic>> *data = nullptr) {
+    const std::vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>> *data = nullptr) {
   return sisyfox::sisycol::response::CreateGetPayPerPlayStatistics_DEPRECATED(
       _fbb,
-      data ? _fbb.CreateVector<flatbuffers::Offset<PayPerPlayStatistic>>(*data) : 0);
+      data ? _fbb.CreateVector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>>(*data) : 0);
 }
 
 struct ScoreStatistic FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -10055,8 +10055,8 @@ struct GetPayPerPlayStatistics FLATBUFFERS_FINAL_CLASS : private flatbuffers::Ta
   enum {
     VT_DATA = 4
   };
-  const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>> *data() const {
-    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>> *>(VT_DATA);
+  const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>> *data() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>> *>(VT_DATA);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -10070,7 +10070,7 @@ struct GetPayPerPlayStatistics FLATBUFFERS_FINAL_CLASS : private flatbuffers::Ta
 struct GetPayPerPlayStatisticsBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_data(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>>> data) {
+  void add_data(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>>> data) {
     fbb_.AddOffset(GetPayPerPlayStatistics::VT_DATA, data);
   }
   explicit GetPayPerPlayStatisticsBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -10087,7 +10087,7 @@ struct GetPayPerPlayStatisticsBuilder {
 
 inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistics(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic>>> data = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>>> data = 0) {
   GetPayPerPlayStatisticsBuilder builder_(_fbb);
   builder_.add_data(data);
   return builder_.Finish();
@@ -10095,10 +10095,10 @@ inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistic
 
 inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatisticsDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<flatbuffers::Offset<PayPerPlayStatistic>> *data = nullptr) {
+    const std::vector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>> *data = nullptr) {
   return sisyfox::sisycol::response::CreateGetPayPerPlayStatistics(
       _fbb,
-      data ? _fbb.CreateVector<flatbuffers::Offset<PayPerPlayStatistic>>(*data) : 0);
+      data ? _fbb.CreateVector<flatbuffers::Offset<PayPerPlayStatistic_DEPRECATED>>(*data) : 0);
 }
 
 }  // namespace response

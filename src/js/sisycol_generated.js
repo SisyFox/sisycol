@@ -12733,7 +12733,7 @@ sisyfox.sisycol.response.CalculateScore.endCalculateScore = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.response.PayPerPlayStatistic = function() {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -12748,9 +12748,9 @@ sisyfox.sisycol.response.PayPerPlayStatistic = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.response.PayPerPlayStatistic}
+ * @returns {sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED}
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.prototype.__init = function(i, bb) {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -12758,17 +12758,17 @@ sisyfox.sisycol.response.PayPerPlayStatistic.prototype.__init = function(i, bb) 
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.response.PayPerPlayStatistic=} obj
- * @returns {sisyfox.sisycol.response.PayPerPlayStatistic}
+ * @param {sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED=} obj
+ * @returns {sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED}
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.getRootAsPayPerPlayStatistic = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.response.PayPerPlayStatistic).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.getRootAsPayPerPlayStatistic_DEPRECATED = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
  * @returns {flatbuffers.Long}
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.prototype.timestamp = function() {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.prototype.timestamp = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? this.bb.readUint64(this.bb_pos + offset) : this.bb.createLong(0, 0);
 };
@@ -12776,7 +12776,7 @@ sisyfox.sisycol.response.PayPerPlayStatistic.prototype.timestamp = function() {
 /**
  * @returns {number}
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.prototype.generatedCredits = function() {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.prototype.generatedCredits = function() {
   var offset = this.bb.__offset(this.bb_pos, 6);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
@@ -12784,7 +12784,7 @@ sisyfox.sisycol.response.PayPerPlayStatistic.prototype.generatedCredits = functi
 /**
  * @returns {number}
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.prototype.acceptedMoney = function() {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.prototype.acceptedMoney = function() {
   var offset = this.bb.__offset(this.bb_pos, 8);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
@@ -12792,7 +12792,7 @@ sisyfox.sisycol.response.PayPerPlayStatistic.prototype.acceptedMoney = function(
 /**
  * @returns {number}
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.prototype.creditsWorth = function() {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.prototype.creditsWorth = function() {
   var offset = this.bb.__offset(this.bb_pos, 10);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
@@ -12800,7 +12800,7 @@ sisyfox.sisycol.response.PayPerPlayStatistic.prototype.creditsWorth = function()
 /**
  * @param {flatbuffers.Builder} builder
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.startPayPerPlayStatistic = function(builder) {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.startPayPerPlayStatistic_DEPRECATED = function(builder) {
   builder.startObject(4);
 };
 
@@ -12808,7 +12808,7 @@ sisyfox.sisycol.response.PayPerPlayStatistic.startPayPerPlayStatistic = function
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Long} timestamp
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.addTimestamp = function(builder, timestamp) {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.addTimestamp = function(builder, timestamp) {
   builder.addFieldInt64(0, timestamp, builder.createLong(0, 0));
 };
 
@@ -12816,7 +12816,7 @@ sisyfox.sisycol.response.PayPerPlayStatistic.addTimestamp = function(builder, ti
  * @param {flatbuffers.Builder} builder
  * @param {number} generatedCredits
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.addGeneratedCredits = function(builder, generatedCredits) {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.addGeneratedCredits = function(builder, generatedCredits) {
   builder.addFieldInt32(1, generatedCredits, 0);
 };
 
@@ -12824,7 +12824,7 @@ sisyfox.sisycol.response.PayPerPlayStatistic.addGeneratedCredits = function(buil
  * @param {flatbuffers.Builder} builder
  * @param {number} acceptedMoney
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.addAcceptedMoney = function(builder, acceptedMoney) {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.addAcceptedMoney = function(builder, acceptedMoney) {
   builder.addFieldInt32(2, acceptedMoney, 0);
 };
 
@@ -12832,7 +12832,7 @@ sisyfox.sisycol.response.PayPerPlayStatistic.addAcceptedMoney = function(builder
  * @param {flatbuffers.Builder} builder
  * @param {number} creditsWorth
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.addCreditsWorth = function(builder, creditsWorth) {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.addCreditsWorth = function(builder, creditsWorth) {
   builder.addFieldInt32(3, creditsWorth, 0);
 };
 
@@ -12840,7 +12840,7 @@ sisyfox.sisycol.response.PayPerPlayStatistic.addCreditsWorth = function(builder,
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.response.PayPerPlayStatistic.endPayPerPlayStatistic = function(builder) {
+sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED.endPayPerPlayStatistic_DEPRECATED = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
@@ -12882,12 +12882,12 @@ sisyfox.sisycol.response.GetPayPerPlayStatistics_DEPRECATED.getRootAsGetPayPerPl
 
 /**
  * @param {number} index
- * @param {sisyfox.sisycol.response.PayPerPlayStatistic=} obj
- * @returns {sisyfox.sisycol.response.PayPerPlayStatistic}
+ * @param {sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED=} obj
+ * @returns {sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED}
  */
 sisyfox.sisycol.response.GetPayPerPlayStatistics_DEPRECATED.prototype.data = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.response.PayPerPlayStatistic).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
 };
 
 /**
@@ -13209,12 +13209,12 @@ sisyfox.sisycol.response.GetPayPerPlayStatistics.getRootAsGetPayPerPlayStatistic
 
 /**
  * @param {number} index
- * @param {sisyfox.sisycol.response.PayPerPlayStatistic=} obj
- * @returns {sisyfox.sisycol.response.PayPerPlayStatistic}
+ * @param {sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED=} obj
+ * @returns {sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED}
  */
 sisyfox.sisycol.response.GetPayPerPlayStatistics.prototype.data = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.response.PayPerPlayStatistic).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.response.PayPerPlayStatistic_DEPRECATED).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
 };
 
 /**

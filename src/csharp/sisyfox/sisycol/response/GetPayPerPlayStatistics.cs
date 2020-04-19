@@ -17,7 +17,7 @@ public struct GetPayPerPlayStatistics : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public GetPayPerPlayStatistics __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public PayPerPlayStatistic? Data(int j) { int o = __p.__offset(4); return o != 0 ? (PayPerPlayStatistic?)(new PayPerPlayStatistic()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
+  public PayPerPlayStatistic_DEPRECATED? Data(int j) { int o = __p.__offset(4); return o != 0 ? (PayPerPlayStatistic_DEPRECATED?)(new PayPerPlayStatistic_DEPRECATED()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
   public int DataLength { get { int o = __p.__offset(4); return o != 0 ? __p.__vector_len(o) : 0; } }
 
   public static Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistics(FlatBufferBuilder builder,
@@ -29,7 +29,7 @@ public struct GetPayPerPlayStatistics : IFlatbufferObject
 
   public static void StartGetPayPerPlayStatistics(FlatBufferBuilder builder) { builder.StartObject(1); }
   public static void AddData(FlatBufferBuilder builder, VectorOffset dataOffset) { builder.AddOffset(0, dataOffset.Value, 0); }
-  public static VectorOffset CreateDataVector(FlatBufferBuilder builder, Offset<PayPerPlayStatistic>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
+  public static VectorOffset CreateDataVector(FlatBufferBuilder builder, Offset<PayPerPlayStatistic_DEPRECATED>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
   public static void StartDataVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(4, numElems, 4); }
   public static Offset<GetPayPerPlayStatistics> EndGetPayPerPlayStatistics(FlatBufferBuilder builder) {
     int o = builder.EndObject();

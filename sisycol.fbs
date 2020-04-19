@@ -824,7 +824,7 @@ table CalculateScore {
     data:Score;
 }
 
-table PayPerPlayStatistic {
+table PayPerPlayStatistic_DEPRECATED {
     timestamp:ulong;
     
     generated_credits:uint;
@@ -833,7 +833,7 @@ table PayPerPlayStatistic {
 }
 
 table GetPayPerPlayStatistics_DEPRECATED {
-    data:[PayPerPlayStatistic];
+    data:[PayPerPlayStatistic_DEPRECATED];
 }
 
 table ScoreStatistic {
@@ -850,5 +850,5 @@ table GetScoreStatistics {
 }
 
 table GetPayPerPlayStatistics {
-    data:[PayPerPlayStatistic];
+    data:[PayPerPlayStatistic_DEPRECATED];
 }
