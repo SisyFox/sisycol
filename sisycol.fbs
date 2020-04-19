@@ -849,6 +849,15 @@ table GetScoreStatistics {
     data:[ScoreStatistic];
 }
 
+table PayPerPlayStatistic {
+    timestamp:ulong;
+    
+    generated_credits:uint;
+    accepted_money:uint;
+    accepted_tokens:uint;
+    credits_worth:uint;
+}
+
 table GetPayPerPlayStatistics {
-    data:[PayPerPlayStatistic_DEPRECATED];
+    data:[PayPerPlayStatistic];
 }
