@@ -544,13 +544,16 @@ class Sisyfox {
         this.prepareSend(sisyfox.sisycol.Payload.ChangeRemoteMultiplayerSetting, offset, builder);
     }
 
-    requestGetPayPerPlayStatistics(startDate, endDate, startId, range) {
+    requestGetPayPerPlayStatistics(startDate, endDate, startId, range, timeFrame, timezone) {
         const builder = new flatbuffers.Builder();
+        const tz = builder.createString(timezone);
         sisyfox.sisycol.request.GetPayPerPlayStatistics.startGetPayPerPlayStatistics(builder);
         sisyfox.sisycol.request.GetPayPerPlayStatistics.addTimestampBegin(builder, new flatbuffers.Long(startDate, 0));
         sisyfox.sisycol.request.GetPayPerPlayStatistics.addTimestampEnd(builder, new flatbuffers.Long(endDate, 0));
         sisyfox.sisycol.request.GetPayPerPlayStatistics.addOffset(builder, startId);
         sisyfox.sisycol.request.GetPayPerPlayStatistics.addRange(builder, range);
+        sisyfox.sisycol.request.GetScoreStatistics.addFrame(builder, timeFrame);
+        sisyfox.sisycol.request.GetScoreStatistics.addTimezone(builder, tz);
         const offset = sisyfox.sisycol.request.GetPayPerPlayStatistics.endGetPayPerPlayStatistics(builder);
         this.prepareSend(sisyfox.sisycol.Payload.GetPayPerPlayStatistics, offset, builder);
     }
