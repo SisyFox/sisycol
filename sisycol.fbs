@@ -24,7 +24,7 @@ union Payload { Error, Info, /* DEPRECATED */ AddScore /* DEPRECATED */,
              GetIdealTime_DEPRECATED, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
              ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus,
              AddCredits, AddScoreNew, CalculateScore, GetPayPerPlayStatistics_DEPRECATED, GetIdealTime,
-             GetScoreStatistics, GetPayPerPlayStatistics }
+             GetScoreStatistics, GetPayPerPlayStatistics, EjectToken }
 
 table Root {
   version:Version;
@@ -524,6 +524,11 @@ table GetPayPerPlayStatistics {
     timezone:string;
 }
 
+table EjectToken {
+    amount:uint;
+    success:bool;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Sisycol Response Tables
 ////////////////////////////////////////////////////////////////////////////////
@@ -860,4 +865,9 @@ table PayPerPlayStatistic {
 
 table GetPayPerPlayStatistics {
     data:[PayPerPlayStatistic];
+}
+
+
+table EjectToken {
+    amount:uint;
 }

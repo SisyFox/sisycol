@@ -72,6 +72,7 @@ public enum Payload : byte
  GetIdealTime = 62,
  GetScoreStatistics = 63,
  GetPayPerPlayStatistics = 64,
+ EjectToken = 65,
 };
 
 

@@ -157,6 +157,8 @@ struct GetScoreStatistics;
 
 struct GetPayPerPlayStatistics;
 
+struct EjectToken;
+
 }  // namespace request
 
 namespace response {
@@ -291,6 +293,8 @@ struct PayPerPlayStatistic;
 
 struct GetPayPerPlayStatistics;
 
+struct EjectToken;
+
 }  // namespace response
 
 enum Payload {
@@ -359,11 +363,12 @@ enum Payload {
   Payload_GetIdealTime = 62,
   Payload_GetScoreStatistics = 63,
   Payload_GetPayPerPlayStatistics = 64,
+  Payload_EjectToken = 65,
   Payload_MIN = Payload_NONE,
-  Payload_MAX = Payload_GetPayPerPlayStatistics
+  Payload_MAX = Payload_EjectToken
 };
 
-inline Payload (&EnumValuesPayload())[65] {
+inline Payload (&EnumValuesPayload())[66] {
   static Payload values[] = {
     Payload_NONE,
     Payload_Error,
@@ -429,7 +434,8 @@ inline Payload (&EnumValuesPayload())[65] {
     Payload_GetPayPerPlayStatistics_DEPRECATED,
     Payload_GetIdealTime,
     Payload_GetScoreStatistics,
-    Payload_GetPayPerPlayStatistics
+    Payload_GetPayPerPlayStatistics,
+    Payload_EjectToken
   };
   return values;
 }
@@ -501,6 +507,7 @@ inline const char **EnumNamesPayload() {
     "GetIdealTime",
     "GetScoreStatistics",
     "GetPayPerPlayStatistics",
+    "EjectToken",
     nullptr
   };
   return names;
@@ -769,6 +776,10 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::GetScoreStatistics> {
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::GetPayPerPlayStatistics> {
   static const Payload enum_value = Payload_GetPayPerPlayStatistics;
+};
+
+template<> struct PayloadTraits<sisyfox::sisycol::request::EjectToken> {
+  static const Payload enum_value = Payload_EjectToken;
 };
 
 bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payload type);
@@ -2247,6 +2258,9 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::GetPayPerPlayStatistics *payload_as_GetPayPerPlayStatistics() const {
     return payload_type() == Payload_GetPayPerPlayStatistics ? static_cast<const sisyfox::sisycol::request::GetPayPerPlayStatistics *>(payload()) : nullptr;
   }
+  const sisyfox::sisycol::request::EjectToken *payload_as_EjectToken() const {
+    return payload_type() == Payload_EjectToken ? static_cast<const sisyfox::sisycol::request::EjectToken *>(payload()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<Version>(verifier, VT_VERSION) &&
@@ -2512,6 +2526,10 @@ template<> inline const sisyfox::sisycol::request::GetScoreStatistics *Root::pay
 
 template<> inline const sisyfox::sisycol::request::GetPayPerPlayStatistics *Root::payload_as<sisyfox::sisycol::request::GetPayPerPlayStatistics>() const {
   return payload_as_GetPayPerPlayStatistics();
+}
+
+template<> inline const sisyfox::sisycol::request::EjectToken *Root::payload_as<sisyfox::sisycol::request::EjectToken>() const {
+  return payload_as_EjectToken();
 }
 
 struct RootBuilder {
@@ -6571,6 +6589,56 @@ inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistic
       timezone ? _fbb.CreateString(timezone) : 0);
 }
 
+struct EjectToken FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_AMOUNT = 4,
+    VT_SUCCESS = 6
+  };
+  uint32_t amount() const {
+    return GetField<uint32_t>(VT_AMOUNT, 0);
+  }
+  bool success() const {
+    return GetField<uint8_t>(VT_SUCCESS, 0) != 0;
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_AMOUNT) &&
+           VerifyField<uint8_t>(verifier, VT_SUCCESS) &&
+           verifier.EndTable();
+  }
+};
+
+struct EjectTokenBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_amount(uint32_t amount) {
+    fbb_.AddElement<uint32_t>(EjectToken::VT_AMOUNT, amount, 0);
+  }
+  void add_success(bool success) {
+    fbb_.AddElement<uint8_t>(EjectToken::VT_SUCCESS, static_cast<uint8_t>(success), 0);
+  }
+  explicit EjectTokenBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  EjectTokenBuilder &operator=(const EjectTokenBuilder &);
+  flatbuffers::Offset<EjectToken> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<EjectToken>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<EjectToken> CreateEjectToken(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t amount = 0,
+    bool success = false) {
+  EjectTokenBuilder builder_(_fbb);
+  builder_.add_amount(amount);
+  builder_.add_success(success);
+  return builder_.Finish();
+}
+
 }  // namespace request
 
 namespace response {
@@ -10183,6 +10251,46 @@ inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistic
       data ? _fbb.CreateVector<flatbuffers::Offset<PayPerPlayStatistic>>(*data) : 0);
 }
 
+struct EjectToken FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_AMOUNT = 4
+  };
+  uint32_t amount() const {
+    return GetField<uint32_t>(VT_AMOUNT, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint32_t>(verifier, VT_AMOUNT) &&
+           verifier.EndTable();
+  }
+};
+
+struct EjectTokenBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_amount(uint32_t amount) {
+    fbb_.AddElement<uint32_t>(EjectToken::VT_AMOUNT, amount, 0);
+  }
+  explicit EjectTokenBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  EjectTokenBuilder &operator=(const EjectTokenBuilder &);
+  flatbuffers::Offset<EjectToken> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<EjectToken>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<EjectToken> CreateEjectToken(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint32_t amount = 0) {
+  EjectTokenBuilder builder_(_fbb);
+  builder_.add_amount(amount);
+  return builder_.Finish();
+}
+
 }  // namespace response
 
 namespace request {
@@ -10452,6 +10560,10 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
     }
     case Payload_GetPayPerPlayStatistics: {
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetPayPerPlayStatistics *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case Payload_EjectToken: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::EjectToken *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

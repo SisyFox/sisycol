@@ -92,7 +92,8 @@ sisyfox.sisycol.Payload = {
   GetPayPerPlayStatistics_DEPRECATED: 61,
   GetIdealTime: 62,
   GetScoreStatistics: 63,
-  GetPayPerPlayStatistics: 64
+  GetPayPerPlayStatistics: 64,
+  EjectToken: 65
 };
 
 /**
@@ -7464,6 +7465,89 @@ sisyfox.sisycol.request.GetPayPerPlayStatistics.endGetPayPerPlayStatistics = fun
 /**
  * @constructor
  */
+sisyfox.sisycol.request.EjectToken = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.EjectToken}
+ */
+sisyfox.sisycol.request.EjectToken.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.EjectToken=} obj
+ * @returns {sisyfox.sisycol.request.EjectToken}
+ */
+sisyfox.sisycol.request.EjectToken.getRootAsEjectToken = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.EjectToken).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.request.EjectToken.prototype.amount = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.request.EjectToken.prototype.success = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.EjectToken.startEjectToken = function(builder) {
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} amount
+ */
+sisyfox.sisycol.request.EjectToken.addAmount = function(builder, amount) {
+  builder.addFieldInt32(0, amount, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} success
+ */
+sisyfox.sisycol.request.EjectToken.addSuccess = function(builder, success) {
+  builder.addFieldInt8(1, +success, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.EjectToken.endEjectToken = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.Error = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -13397,6 +13481,73 @@ sisyfox.sisycol.response.GetPayPerPlayStatistics.startDataVector = function(buil
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.GetPayPerPlayStatistics.endGetPayPerPlayStatistics = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.EjectToken = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.EjectToken}
+ */
+sisyfox.sisycol.response.EjectToken.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.EjectToken=} obj
+ * @returns {sisyfox.sisycol.response.EjectToken}
+ */
+sisyfox.sisycol.response.EjectToken.getRootAsEjectToken = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.EjectToken).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.EjectToken.prototype.amount = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.EjectToken.startEjectToken = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} amount
+ */
+sisyfox.sisycol.response.EjectToken.addAmount = function(builder, amount) {
+  builder.addFieldInt32(0, amount, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.EjectToken.endEjectToken = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
