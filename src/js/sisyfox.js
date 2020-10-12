@@ -284,7 +284,6 @@ class Sisyfox {
     requestSetSetting(setting, value) {
         const builder = new flatbuffers.Builder();
 
-        console.log(value);
         sisyfox.sisycol.IntSetting.startIntSetting(builder);
         sisyfox.sisycol.IntSetting.addValue(builder, value);
         const intSettingOffset = sisyfox.sisycol.IntSetting.endIntSetting(builder);
@@ -552,8 +551,8 @@ class Sisyfox {
         sisyfox.sisycol.request.GetPayPerPlayStatistics.addTimestampEnd(builder, new flatbuffers.Long(endDate, 0));
         sisyfox.sisycol.request.GetPayPerPlayStatistics.addOffset(builder, startId);
         sisyfox.sisycol.request.GetPayPerPlayStatistics.addRange(builder, range);
-        sisyfox.sisycol.request.GetScoreStatistics.addFrame(builder, timeFrame);
-        sisyfox.sisycol.request.GetScoreStatistics.addTimezone(builder, tz);
+        sisyfox.sisycol.request.GetPayPerPlayStatistics.addFrame(builder, timeFrame);
+        sisyfox.sisycol.request.GetPayPerPlayStatistics.addTimezone(builder, tz);
         const offset = sisyfox.sisycol.request.GetPayPerPlayStatistics.endGetPayPerPlayStatistics(builder);
         this.prepareSend(sisyfox.sisycol.Payload.GetPayPerPlayStatistics, offset, builder);
     }
