@@ -524,6 +524,8 @@ table GetPayPerPlayStatistics {
     timezone:string;
 }
 
+# To test if there is an Ticket Dispenser available and enabled use amount=0
+# and check success in response
 table EjectToken {
     amount:uint;
 }
