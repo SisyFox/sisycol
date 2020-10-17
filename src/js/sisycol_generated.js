@@ -7507,18 +7507,10 @@ sisyfox.sisycol.request.EjectToken.prototype.amount = function() {
 };
 
 /**
- * @returns {boolean}
- */
-sisyfox.sisycol.request.EjectToken.prototype.success = function() {
-  var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
-};
-
-/**
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.request.EjectToken.startEjectToken = function(builder) {
-  builder.startObject(2);
+  builder.startObject(1);
 };
 
 /**
@@ -7527,14 +7519,6 @@ sisyfox.sisycol.request.EjectToken.startEjectToken = function(builder) {
  */
 sisyfox.sisycol.request.EjectToken.addAmount = function(builder, amount) {
   builder.addFieldInt32(0, amount, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {boolean} success
- */
-sisyfox.sisycol.request.EjectToken.addSuccess = function(builder, success) {
-  builder.addFieldInt8(1, +success, +false);
 };
 
 /**
@@ -13522,10 +13506,18 @@ sisyfox.sisycol.response.EjectToken.getRootAsEjectToken = function(bb, obj) {
 };
 
 /**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.response.EjectToken.prototype.success = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
  * @returns {number}
  */
 sisyfox.sisycol.response.EjectToken.prototype.amount = function() {
-  var offset = this.bb.__offset(this.bb_pos, 4);
+  var offset = this.bb.__offset(this.bb_pos, 6);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
 
@@ -13533,7 +13525,15 @@ sisyfox.sisycol.response.EjectToken.prototype.amount = function() {
  * @param {flatbuffers.Builder} builder
  */
 sisyfox.sisycol.response.EjectToken.startEjectToken = function(builder) {
-  builder.startObject(1);
+  builder.startObject(2);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} success
+ */
+sisyfox.sisycol.response.EjectToken.addSuccess = function(builder, success) {
+  builder.addFieldInt8(0, +success, +false);
 };
 
 /**
@@ -13541,7 +13541,7 @@ sisyfox.sisycol.response.EjectToken.startEjectToken = function(builder) {
  * @param {number} amount
  */
 sisyfox.sisycol.response.EjectToken.addAmount = function(builder, amount) {
-  builder.addFieldInt32(0, amount, 0);
+  builder.addFieldInt32(1, amount, 0);
 };
 
 /**

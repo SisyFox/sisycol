@@ -17,17 +17,21 @@ public struct EjectToken : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
   public EjectToken __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public uint Amount { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public bool Success { get { int o = __p.__offset(4); return o != 0 ? 0!=__p.bb.Get(o + __p.bb_pos) : (bool)false; } }
+  public uint Amount { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
 
   public static Offset<EjectToken> CreateEjectToken(FlatBufferBuilder builder,
+      bool success = false,
       uint amount = 0) {
-    builder.StartObject(1);
+    builder.StartObject(2);
     EjectToken.AddAmount(builder, amount);
+    EjectToken.AddSuccess(builder, success);
     return EjectToken.EndEjectToken(builder);
   }
 
-  public static void StartEjectToken(FlatBufferBuilder builder) { builder.StartObject(1); }
-  public static void AddAmount(FlatBufferBuilder builder, uint amount) { builder.AddUint(0, amount, 0); }
+  public static void StartEjectToken(FlatBufferBuilder builder) { builder.StartObject(2); }
+  public static void AddSuccess(FlatBufferBuilder builder, bool success) { builder.AddBool(0, success, false); }
+  public static void AddAmount(FlatBufferBuilder builder, uint amount) { builder.AddUint(1, amount, 0); }
   public static Offset<EjectToken> EndEjectToken(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<EjectToken>(o);

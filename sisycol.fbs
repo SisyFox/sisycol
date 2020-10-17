@@ -526,7 +526,6 @@ table GetPayPerPlayStatistics {
 
 table EjectToken {
     amount:uint;
-    success:bool;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -869,5 +868,6 @@ table GetPayPerPlayStatistics {
 
 
 table EjectToken {
+    success:bool;
     amount:uint;
 }

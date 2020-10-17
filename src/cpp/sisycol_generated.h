@@ -6593,19 +6593,14 @@ inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistic
 
 struct EjectToken FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_AMOUNT = 4,
-    VT_SUCCESS = 6
+    VT_AMOUNT = 4
   };
   uint32_t amount() const {
     return GetField<uint32_t>(VT_AMOUNT, 0);
   }
-  bool success() const {
-    return GetField<uint8_t>(VT_SUCCESS, 0) != 0;
-  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint32_t>(verifier, VT_AMOUNT) &&
-           VerifyField<uint8_t>(verifier, VT_SUCCESS) &&
            verifier.EndTable();
   }
 };
@@ -6615,9 +6610,6 @@ struct EjectTokenBuilder {
   flatbuffers::uoffset_t start_;
   void add_amount(uint32_t amount) {
     fbb_.AddElement<uint32_t>(EjectToken::VT_AMOUNT, amount, 0);
-  }
-  void add_success(bool success) {
-    fbb_.AddElement<uint8_t>(EjectToken::VT_SUCCESS, static_cast<uint8_t>(success), 0);
   }
   explicit EjectTokenBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -6633,11 +6625,9 @@ struct EjectTokenBuilder {
 
 inline flatbuffers::Offset<EjectToken> CreateEjectToken(
     flatbuffers::FlatBufferBuilder &_fbb,
-    uint32_t amount = 0,
-    bool success = false) {
+    uint32_t amount = 0) {
   EjectTokenBuilder builder_(_fbb);
   builder_.add_amount(amount);
-  builder_.add_success(success);
   return builder_.Finish();
 }
 
@@ -10255,13 +10245,18 @@ inline flatbuffers::Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistic
 
 struct EjectToken FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_AMOUNT = 4
+    VT_SUCCESS = 4,
+    VT_AMOUNT = 6
   };
+  bool success() const {
+    return GetField<uint8_t>(VT_SUCCESS, 0) != 0;
+  }
   uint32_t amount() const {
     return GetField<uint32_t>(VT_AMOUNT, 0);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, VT_SUCCESS) &&
            VerifyField<uint32_t>(verifier, VT_AMOUNT) &&
            verifier.EndTable();
   }
@@ -10270,6 +10265,9 @@ struct EjectToken FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct EjectTokenBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
+  void add_success(bool success) {
+    fbb_.AddElement<uint8_t>(EjectToken::VT_SUCCESS, static_cast<uint8_t>(success), 0);
+  }
   void add_amount(uint32_t amount) {
     fbb_.AddElement<uint32_t>(EjectToken::VT_AMOUNT, amount, 0);
   }
@@ -10287,9 +10285,11 @@ struct EjectTokenBuilder {
 
 inline flatbuffers::Offset<EjectToken> CreateEjectToken(
     flatbuffers::FlatBufferBuilder &_fbb,
+    bool success = false,
     uint32_t amount = 0) {
   EjectTokenBuilder builder_(_fbb);
   builder_.add_amount(amount);
+  builder_.add_success(success);
   return builder_.Finish();
 }
 
