@@ -927,6 +927,7 @@ enum SettingType {
   SettingType_PAY_PER_PLAY_MODE = 24,
   SettingType_TOP_TEN_ENABLED = 25,
   SettingType_TICKET_DISPENSER_ENABLED = 26,
+  SettingType_MULTIPLAYER_ACTIVE = 27,
   SettingType_SF_CONTROL_INTERNAL = 63,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
@@ -945,7 +946,7 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED_DEPRECATED
 };
 
-inline SettingType (&EnumValuesSettingType())[41] {
+inline SettingType (&EnumValuesSettingType())[42] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -974,6 +975,7 @@ inline SettingType (&EnumValuesSettingType())[41] {
     SettingType_PAY_PER_PLAY_MODE,
     SettingType_TOP_TEN_ENABLED,
     SettingType_TICKET_DISPENSER_ENABLED,
+    SettingType_MULTIPLAYER_ACTIVE,
     SettingType_SF_CONTROL_INTERNAL,
     SettingType_WORLD,
     SettingType_LEVEL,
@@ -1021,7 +1023,7 @@ inline const char **EnumNamesSettingType() {
     "PAY_PER_PLAY_MODE",
     "TOP_TEN_ENABLED",
     "TICKET_DISPENSER_ENABLED",
-    "",
+    "MULTIPLAYER_ACTIVE",
     "",
     "",
     "",
