@@ -161,6 +161,7 @@ sisyfox.sisycol.SettingType = {
   TOP_TEN_ENABLED: 25,
   TICKET_DISPENSER_ENABLED: 26,
   MULTIPLAYER_ACTIVE: 27,
+  EXTERNAL_FTDI_DEVICE: 28,
   SF_CONTROL_INTERNAL: 63,
   WORLD: 64,
   LEVEL: 65,
@@ -312,6 +313,14 @@ sisyfox.sisycol.TimeFrame = {
   DAILY: 1,
   WEEKLY: 2,
   MONTHLY: 3
+};
+
+/**
+ * @enum
+ */
+sisyfox.sisycol.ExternalFTDIDevice = {
+  CCTALK: 0,
+  WF700TK: 1
 };
 
 /**

@@ -928,6 +928,7 @@ enum SettingType {
   SettingType_TOP_TEN_ENABLED = 25,
   SettingType_TICKET_DISPENSER_ENABLED = 26,
   SettingType_MULTIPLAYER_ACTIVE = 27,
+  SettingType_EXTERNAL_FTDI_DEVICE = 28,
   SettingType_SF_CONTROL_INTERNAL = 63,
   SettingType_WORLD = 64,
   SettingType_LEVEL = 65,
@@ -946,7 +947,7 @@ enum SettingType {
   SettingType_MAX = SettingType_GAME_ENABLED_DEPRECATED
 };
 
-inline SettingType (&EnumValuesSettingType())[42] {
+inline SettingType (&EnumValuesSettingType())[43] {
   static SettingType values[] = {
     SettingType_GAME_LANGUAGE,
     SettingType_INTERFACE_LANGUAGE,
@@ -976,6 +977,7 @@ inline SettingType (&EnumValuesSettingType())[42] {
     SettingType_TOP_TEN_ENABLED,
     SettingType_TICKET_DISPENSER_ENABLED,
     SettingType_MULTIPLAYER_ACTIVE,
+    SettingType_EXTERNAL_FTDI_DEVICE,
     SettingType_SF_CONTROL_INTERNAL,
     SettingType_WORLD,
     SettingType_LEVEL,
@@ -1024,7 +1026,7 @@ inline const char **EnumNamesSettingType() {
     "TOP_TEN_ENABLED",
     "TICKET_DISPENSER_ENABLED",
     "MULTIPLAYER_ACTIVE",
-    "",
+    "EXTERNAL_FTDI_DEVICE",
     "",
     "",
     "",
@@ -1602,6 +1604,35 @@ inline const char **EnumNamesTimeFrame() {
 inline const char *EnumNameTimeFrame(TimeFrame e) {
   const size_t index = static_cast<int>(e);
   return EnumNamesTimeFrame()[index];
+}
+
+enum ExternalFTDIDevice {
+  ExternalFTDIDevice_CCTALK = 0,
+  ExternalFTDIDevice_WF700TK = 1,
+  ExternalFTDIDevice_MIN = ExternalFTDIDevice_CCTALK,
+  ExternalFTDIDevice_MAX = ExternalFTDIDevice_WF700TK
+};
+
+inline ExternalFTDIDevice (&EnumValuesExternalFTDIDevice())[2] {
+  static ExternalFTDIDevice values[] = {
+    ExternalFTDIDevice_CCTALK,
+    ExternalFTDIDevice_WF700TK
+  };
+  return values;
+}
+
+inline const char **EnumNamesExternalFTDIDevice() {
+  static const char *names[] = {
+    "CCTALK",
+    "WF700TK",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameExternalFTDIDevice(ExternalFTDIDevice e) {
+  const size_t index = static_cast<int>(e);
+  return EnumNamesExternalFTDIDevice()[index];
 }
 
 enum SettingValue {
