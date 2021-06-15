@@ -93,7 +93,8 @@ sisyfox.sisycol.Payload = {
   GetIdealTime: 62,
   GetScoreStatistics: 63,
   GetPayPerPlayStatistics: 64,
-  EjectToken: 65
+  EjectToken: 65,
+  GetDetectedDevices: 66
 };
 
 /**
@@ -6447,6 +6448,57 @@ sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED.endGetDetectedDevices_DEPR
 /**
  * @constructor
  */
+sisyfox.sisycol.request.GetDetectedDevices = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.request.GetDetectedDevices}
+ */
+sisyfox.sisycol.request.GetDetectedDevices.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.request.GetDetectedDevices=} obj
+ * @returns {sisyfox.sisycol.request.GetDetectedDevices}
+ */
+sisyfox.sisycol.request.GetDetectedDevices.getRootAsGetDetectedDevices = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.GetDetectedDevices).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.request.GetDetectedDevices.startGetDetectedDevices = function(builder) {
+  builder.startObject(0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.request.ChangeRemoteMultiplayerSetting = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -12160,6 +12212,138 @@ sisyfox.sisycol.response.Device_DEPRECATED.endDevice_DEPRECATED = function(build
 /**
  * @constructor
  */
+sisyfox.sisycol.response.Device = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.Device}
+ */
+sisyfox.sisycol.response.Device.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.Device=} obj
+ * @returns {sisyfox.sisycol.response.Device}
+ */
+sisyfox.sisycol.response.Device.getRootAsDevice = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.Device).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.Device.prototype.ip = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.response.Device.prototype.enabledMultiplayer = function() {
+  var offset = this.bb.__offset(this.bb_pos, 6);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.response.Device.prototype.isHost = function() {
+  var offset = this.bb.__offset(this.bb_pos, 8);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
+ * @returns {boolean}
+ */
+sisyfox.sisycol.response.Device.prototype.isSelf = function() {
+  var offset = this.bb.__offset(this.bb_pos, 10);
+  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
+};
+
+/**
+ * @param {flatbuffers.Encoding=} optionalEncoding
+ * @returns {string|Uint8Array|null}
+ */
+sisyfox.sisycol.response.Device.prototype.usn = function(optionalEncoding) {
+  var offset = this.bb.__offset(this.bb_pos, 12);
+  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.Device.startDevice = function(builder) {
+  builder.startObject(5);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} ip
+ */
+sisyfox.sisycol.response.Device.addIp = function(builder, ip) {
+  builder.addFieldInt32(0, ip, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} enabledMultiplayer
+ */
+sisyfox.sisycol.response.Device.addEnabledMultiplayer = function(builder, enabledMultiplayer) {
+  builder.addFieldInt8(1, +enabledMultiplayer, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} isHost
+ */
+sisyfox.sisycol.response.Device.addIsHost = function(builder, isHost) {
+  builder.addFieldInt8(2, +isHost, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {boolean} isSelf
+ */
+sisyfox.sisycol.response.Device.addIsSelf = function(builder, isSelf) {
+  builder.addFieldInt8(3, +isSelf, +false);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} usnOffset
+ */
+sisyfox.sisycol.response.Device.addUsn = function(builder, usnOffset) {
+  builder.addFieldOffset(4, usnOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.Device.endDevice = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
 sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
@@ -12251,6 +12435,104 @@ sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.startDevicesVector = func
  * @returns {flatbuffers.Offset}
  */
 sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.endGetDetectedDevices_DEPRECATED = function(builder) {
+  var offset = builder.endObject();
+  return offset;
+};
+
+/**
+ * @constructor
+ */
+sisyfox.sisycol.response.GetDetectedDevices = function() {
+  /**
+   * @type {flatbuffers.ByteBuffer}
+   */
+  this.bb = null;
+
+  /**
+   * @type {number}
+   */
+  this.bb_pos = 0;
+};
+
+/**
+ * @param {number} i
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {sisyfox.sisycol.response.GetDetectedDevices}
+ */
+sisyfox.sisycol.response.GetDetectedDevices.prototype.__init = function(i, bb) {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @param {sisyfox.sisycol.response.GetDetectedDevices=} obj
+ * @returns {sisyfox.sisycol.response.GetDetectedDevices}
+ */
+sisyfox.sisycol.response.GetDetectedDevices.getRootAsGetDetectedDevices = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.GetDetectedDevices).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+};
+
+/**
+ * @param {number} index
+ * @param {sisyfox.sisycol.response.Device=} obj
+ * @returns {sisyfox.sisycol.response.Device}
+ */
+sisyfox.sisycol.response.GetDetectedDevices.prototype.devices = function(index, obj) {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? (obj || new sisyfox.sisycol.response.Device).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+};
+
+/**
+ * @returns {number}
+ */
+sisyfox.sisycol.response.GetDetectedDevices.prototype.devicesLength = function() {
+  var offset = this.bb.__offset(this.bb_pos, 4);
+  return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ */
+sisyfox.sisycol.response.GetDetectedDevices.startGetDetectedDevices = function(builder) {
+  builder.startObject(1);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {flatbuffers.Offset} devicesOffset
+ */
+sisyfox.sisycol.response.GetDetectedDevices.addDevices = function(builder, devicesOffset) {
+  builder.addFieldOffset(0, devicesOffset, 0);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {Array.<flatbuffers.Offset>} data
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.GetDetectedDevices.createDevicesVector = function(builder, data) {
+  builder.startVector(4, data.length, 4);
+  for (var i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]);
+  }
+  return builder.endVector();
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @param {number} numElems
+ */
+sisyfox.sisycol.response.GetDetectedDevices.startDevicesVector = function(builder, numElems) {
+  builder.startVector(4, numElems, 4);
+};
+
+/**
+ * @param {flatbuffers.Builder} builder
+ * @returns {flatbuffers.Offset}
+ */
+sisyfox.sisycol.response.GetDetectedDevices.endGetDetectedDevices = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

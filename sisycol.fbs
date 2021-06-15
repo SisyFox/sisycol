@@ -24,7 +24,7 @@ union Payload { Error, Info, /* DEPRECATED */ AddScore /* DEPRECATED */,
              GetIdealTime_DEPRECATED, SuspendSystem, GetScoreFiltered, GetDetectedDevices_DEPRECATED,
              ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus,
              AddCredits, AddScoreNew, CalculateScore, GetPayPerPlayStatistics_DEPRECATED, GetIdealTime,
-             GetScoreStatistics, GetPayPerPlayStatistics, EjectToken }
+             GetScoreStatistics, GetPayPerPlayStatistics, EjectToken, GetDetectedDevices }
 
 table Root {
   version:Version;
@@ -468,6 +468,8 @@ table SuspendSystem {}
 
 table GetDetectedDevices_DEPRECATED {}
 
+table GetDetectedDevices {}
+
 table ChangeRemoteMultiplayerSetting {
     ip:uint;
     value:bool;
@@ -798,8 +800,20 @@ table Device_DEPRECATED {
     isSelf:bool;
 }
 
+table Device {
+    ip:uint;
+    enabledMultiplayer:bool;
+    isHost:bool;
+    isSelf:bool;
+    usn:string;
+}
+
 table GetDetectedDevices_DEPRECATED {
     devices:[Device_DEPRECATED];
+}
+
+table GetDetectedDevices {
+    devices:[Device];
 }
 
 table ChangeRemoteMultiplayerSetting {}

@@ -73,6 +73,7 @@ public enum Payload : byte
  GetScoreStatistics = 63,
  GetPayPerPlayStatistics = 64,
  EjectToken = 65,
+ GetDetectedDevices = 66,
 };
 
 
