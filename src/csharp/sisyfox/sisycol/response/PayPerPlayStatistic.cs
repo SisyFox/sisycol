@@ -20,26 +20,30 @@ public struct PayPerPlayStatistic : IFlatbufferObject
   public ulong Timestamp { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
   public uint GeneratedCredits { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
   public uint AcceptedMoney { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
-  public uint CreditsWorth { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public uint AcceptedTokens { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public uint CreditsWorth { get { int o = __p.__offset(12); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
 
   public static Offset<PayPerPlayStatistic> CreatePayPerPlayStatistic(FlatBufferBuilder builder,
       ulong timestamp = 0,
       uint generated_credits = 0,
       uint accepted_money = 0,
+      uint accepted_tokens = 0,
       uint credits_worth = 0) {
-    builder.StartObject(4);
+    builder.StartObject(5);
     PayPerPlayStatistic.AddTimestamp(builder, timestamp);
     PayPerPlayStatistic.AddCreditsWorth(builder, credits_worth);
+    PayPerPlayStatistic.AddAcceptedTokens(builder, accepted_tokens);
     PayPerPlayStatistic.AddAcceptedMoney(builder, accepted_money);
     PayPerPlayStatistic.AddGeneratedCredits(builder, generated_credits);
     return PayPerPlayStatistic.EndPayPerPlayStatistic(builder);
   }
 
-  public static void StartPayPerPlayStatistic(FlatBufferBuilder builder) { builder.StartObject(4); }
+  public static void StartPayPerPlayStatistic(FlatBufferBuilder builder) { builder.StartObject(5); }
   public static void AddTimestamp(FlatBufferBuilder builder, ulong timestamp) { builder.AddUlong(0, timestamp, 0); }
   public static void AddGeneratedCredits(FlatBufferBuilder builder, uint generatedCredits) { builder.AddUint(1, generatedCredits, 0); }
   public static void AddAcceptedMoney(FlatBufferBuilder builder, uint acceptedMoney) { builder.AddUint(2, acceptedMoney, 0); }
-  public static void AddCreditsWorth(FlatBufferBuilder builder, uint creditsWorth) { builder.AddUint(3, creditsWorth, 0); }
+  public static void AddAcceptedTokens(FlatBufferBuilder builder, uint acceptedTokens) { builder.AddUint(3, acceptedTokens, 0); }
+  public static void AddCreditsWorth(FlatBufferBuilder builder, uint creditsWorth) { builder.AddUint(4, creditsWorth, 0); }
   public static Offset<PayPerPlayStatistic> EndPayPerPlayStatistic(FlatBufferBuilder builder) {
     int o = builder.EndObject();
     return new Offset<PayPerPlayStatistic>(o);

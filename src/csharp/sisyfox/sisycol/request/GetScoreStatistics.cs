@@ -8,14 +8,14 @@ namespace sisyfox.sisycol.request
 using global::System;
 using global::FlatBuffers;
 
-public struct GetPayPerPlayStatistics : IFlatbufferObject
+public struct GetScoreStatistics : IFlatbufferObject
 {
   private Table __p;
   public ByteBuffer ByteBuffer { get { return __p.bb; } }
-  public static GetPayPerPlayStatistics GetRootAsGetPayPerPlayStatistics(ByteBuffer _bb) { return GetRootAsGetPayPerPlayStatistics(_bb, new GetPayPerPlayStatistics()); }
-  public static GetPayPerPlayStatistics GetRootAsGetPayPerPlayStatistics(ByteBuffer _bb, GetPayPerPlayStatistics obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
+  public static GetScoreStatistics GetRootAsGetScoreStatistics(ByteBuffer _bb) { return GetRootAsGetScoreStatistics(_bb, new GetScoreStatistics()); }
+  public static GetScoreStatistics GetRootAsGetScoreStatistics(ByteBuffer _bb, GetScoreStatistics obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
-  public GetPayPerPlayStatistics __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+  public GetScoreStatistics __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public ulong TimestampBegin { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
   public ulong TimestampEnd { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
@@ -25,7 +25,7 @@ public struct GetPayPerPlayStatistics : IFlatbufferObject
   public string Timezone { get { int o = __p.__offset(14); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
   public ArraySegment<byte>? GetTimezoneBytes() { return __p.__vector_as_arraysegment(14); }
 
-  public static Offset<GetPayPerPlayStatistics> CreateGetPayPerPlayStatistics(FlatBufferBuilder builder,
+  public static Offset<GetScoreStatistics> CreateGetScoreStatistics(FlatBufferBuilder builder,
       ulong timestamp_begin = 0,
       ulong timestamp_end = 0,
       byte range = 0,
@@ -33,25 +33,25 @@ public struct GetPayPerPlayStatistics : IFlatbufferObject
       sisyfox.sisycol.TimeFrame frame = sisyfox.sisycol.TimeFrame.HOURLY,
       StringOffset timezoneOffset = default(StringOffset)) {
     builder.StartObject(6);
-    GetPayPerPlayStatistics.AddTimestampEnd(builder, timestamp_end);
-    GetPayPerPlayStatistics.AddTimestampBegin(builder, timestamp_begin);
-    GetPayPerPlayStatistics.AddTimezone(builder, timezoneOffset);
-    GetPayPerPlayStatistics.AddOffset(builder, offset);
-    GetPayPerPlayStatistics.AddFrame(builder, frame);
-    GetPayPerPlayStatistics.AddRange(builder, range);
-    return GetPayPerPlayStatistics.EndGetPayPerPlayStatistics(builder);
+    GetScoreStatistics.AddTimestampEnd(builder, timestamp_end);
+    GetScoreStatistics.AddTimestampBegin(builder, timestamp_begin);
+    GetScoreStatistics.AddTimezone(builder, timezoneOffset);
+    GetScoreStatistics.AddOffset(builder, offset);
+    GetScoreStatistics.AddFrame(builder, frame);
+    GetScoreStatistics.AddRange(builder, range);
+    return GetScoreStatistics.EndGetScoreStatistics(builder);
   }
 
-  public static void StartGetPayPerPlayStatistics(FlatBufferBuilder builder) { builder.StartObject(6); }
+  public static void StartGetScoreStatistics(FlatBufferBuilder builder) { builder.StartObject(6); }
   public static void AddTimestampBegin(FlatBufferBuilder builder, ulong timestampBegin) { builder.AddUlong(0, timestampBegin, 0); }
   public static void AddTimestampEnd(FlatBufferBuilder builder, ulong timestampEnd) { builder.AddUlong(1, timestampEnd, 0); }
   public static void AddRange(FlatBufferBuilder builder, byte range) { builder.AddByte(2, range, 0); }
   public static void AddOffset(FlatBufferBuilder builder, uint offset) { builder.AddUint(3, offset, 0); }
   public static void AddFrame(FlatBufferBuilder builder, sisyfox.sisycol.TimeFrame frame) { builder.AddSbyte(4, (sbyte)frame, 0); }
   public static void AddTimezone(FlatBufferBuilder builder, StringOffset timezoneOffset) { builder.AddOffset(5, timezoneOffset.Value, 0); }
-  public static Offset<GetPayPerPlayStatistics> EndGetPayPerPlayStatistics(FlatBufferBuilder builder) {
+  public static Offset<GetScoreStatistics> EndGetScoreStatistics(FlatBufferBuilder builder) {
     int o = builder.EndObject();
-    return new Offset<GetPayPerPlayStatistics>(o);
+    return new Offset<GetScoreStatistics>(o);
   }
 };
 
