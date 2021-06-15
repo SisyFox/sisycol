@@ -137,7 +137,7 @@ struct GetIdealTime;
 
 struct SuspendSystem;
 
-struct GetDetectedDevices;
+struct GetDetectedDevices_DEPRECATED;
 
 struct ChangeRemoteMultiplayerSetting;
 
@@ -261,9 +261,9 @@ struct GetIdealTime;
 
 struct SuspendSystem;
 
-struct Device;
+struct Device_DEPRECATED;
 
-struct GetDetectedDevices;
+struct GetDetectedDevices_DEPRECATED;
 
 struct ChangeRemoteMultiplayerSetting;
 
@@ -351,7 +351,7 @@ enum Payload {
   Payload_GetIdealTime_DEPRECATED = 50,
   Payload_SuspendSystem = 51,
   Payload_GetScoreFiltered = 52,
-  Payload_GetDetectedDevices = 53,
+  Payload_GetDetectedDevices_DEPRECATED = 53,
   Payload_ChangeRemoteMultiplayerSetting = 54,
   Payload_CoinUpdate = 55,
   Payload_GameUnlock = 56,
@@ -423,7 +423,7 @@ inline Payload (&EnumValuesPayload())[66] {
     Payload_GetIdealTime_DEPRECATED,
     Payload_SuspendSystem,
     Payload_GetScoreFiltered,
-    Payload_GetDetectedDevices,
+    Payload_GetDetectedDevices_DEPRECATED,
     Payload_ChangeRemoteMultiplayerSetting,
     Payload_CoinUpdate,
     Payload_GameUnlock,
@@ -495,7 +495,7 @@ inline const char **EnumNamesPayload() {
     "GetIdealTime_DEPRECATED",
     "SuspendSystem",
     "GetScoreFiltered",
-    "GetDetectedDevices",
+    "GetDetectedDevices_DEPRECATED",
     "ChangeRemoteMultiplayerSetting",
     "CoinUpdate",
     "GameUnlock",
@@ -730,8 +730,8 @@ template<> struct PayloadTraits<sisyfox::sisycol::request::GetScoreFiltered> {
   static const Payload enum_value = Payload_GetScoreFiltered;
 };
 
-template<> struct PayloadTraits<sisyfox::sisycol::request::GetDetectedDevices> {
-  static const Payload enum_value = Payload_GetDetectedDevices;
+template<> struct PayloadTraits<sisyfox::sisycol::request::GetDetectedDevices_DEPRECATED> {
+  static const Payload enum_value = Payload_GetDetectedDevices_DEPRECATED;
 };
 
 template<> struct PayloadTraits<sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting> {
@@ -2257,8 +2257,8 @@ struct Root FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const sisyfox::sisycol::request::GetScoreFiltered *payload_as_GetScoreFiltered() const {
     return payload_type() == Payload_GetScoreFiltered ? static_cast<const sisyfox::sisycol::request::GetScoreFiltered *>(payload()) : nullptr;
   }
-  const sisyfox::sisycol::request::GetDetectedDevices *payload_as_GetDetectedDevices() const {
-    return payload_type() == Payload_GetDetectedDevices ? static_cast<const sisyfox::sisycol::request::GetDetectedDevices *>(payload()) : nullptr;
+  const sisyfox::sisycol::request::GetDetectedDevices_DEPRECATED *payload_as_GetDetectedDevices_DEPRECATED() const {
+    return payload_type() == Payload_GetDetectedDevices_DEPRECATED ? static_cast<const sisyfox::sisycol::request::GetDetectedDevices_DEPRECATED *>(payload()) : nullptr;
   }
   const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *payload_as_ChangeRemoteMultiplayerSetting() const {
     return payload_type() == Payload_ChangeRemoteMultiplayerSetting ? static_cast<const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *>(payload()) : nullptr;
@@ -2515,8 +2515,8 @@ template<> inline const sisyfox::sisycol::request::GetScoreFiltered *Root::paylo
   return payload_as_GetScoreFiltered();
 }
 
-template<> inline const sisyfox::sisycol::request::GetDetectedDevices *Root::payload_as<sisyfox::sisycol::request::GetDetectedDevices>() const {
-  return payload_as_GetDetectedDevices();
+template<> inline const sisyfox::sisycol::request::GetDetectedDevices_DEPRECATED *Root::payload_as<sisyfox::sisycol::request::GetDetectedDevices_DEPRECATED>() const {
+  return payload_as_GetDetectedDevices_DEPRECATED();
 }
 
 template<> inline const sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting *Root::payload_as<sisyfox::sisycol::request::ChangeRemoteMultiplayerSetting>() const {
@@ -5928,31 +5928,31 @@ inline flatbuffers::Offset<SuspendSystem> CreateSuspendSystem(
   return builder_.Finish();
 }
 
-struct GetDetectedDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct GetDetectedDevices_DEPRECATED FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            verifier.EndTable();
   }
 };
 
-struct GetDetectedDevicesBuilder {
+struct GetDetectedDevices_DEPRECATEDBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  explicit GetDetectedDevicesBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit GetDetectedDevices_DEPRECATEDBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  GetDetectedDevicesBuilder &operator=(const GetDetectedDevicesBuilder &);
-  flatbuffers::Offset<GetDetectedDevices> Finish() {
+  GetDetectedDevices_DEPRECATEDBuilder &operator=(const GetDetectedDevices_DEPRECATEDBuilder &);
+  flatbuffers::Offset<GetDetectedDevices_DEPRECATED> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<GetDetectedDevices>(end);
+    auto o = flatbuffers::Offset<GetDetectedDevices_DEPRECATED>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevices(
+inline flatbuffers::Offset<GetDetectedDevices_DEPRECATED> CreateGetDetectedDevices_DEPRECATED(
     flatbuffers::FlatBufferBuilder &_fbb) {
-  GetDetectedDevicesBuilder builder_(_fbb);
+  GetDetectedDevices_DEPRECATEDBuilder builder_(_fbb);
   return builder_.Finish();
 }
 
@@ -9433,7 +9433,7 @@ inline flatbuffers::Offset<SuspendSystem> CreateSuspendSystem(
   return builder_.Finish();
 }
 
-struct Device FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct Device_DEPRECATED FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_IP = 4,
     VT_ENABLEDMULTIPLAYER = 6,
@@ -9462,40 +9462,40 @@ struct Device FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
 };
 
-struct DeviceBuilder {
+struct Device_DEPRECATEDBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_ip(uint32_t ip) {
-    fbb_.AddElement<uint32_t>(Device::VT_IP, ip, 0);
+    fbb_.AddElement<uint32_t>(Device_DEPRECATED::VT_IP, ip, 0);
   }
   void add_enabledMultiplayer(bool enabledMultiplayer) {
-    fbb_.AddElement<uint8_t>(Device::VT_ENABLEDMULTIPLAYER, static_cast<uint8_t>(enabledMultiplayer), 0);
+    fbb_.AddElement<uint8_t>(Device_DEPRECATED::VT_ENABLEDMULTIPLAYER, static_cast<uint8_t>(enabledMultiplayer), 0);
   }
   void add_isHost(bool isHost) {
-    fbb_.AddElement<uint8_t>(Device::VT_ISHOST, static_cast<uint8_t>(isHost), 0);
+    fbb_.AddElement<uint8_t>(Device_DEPRECATED::VT_ISHOST, static_cast<uint8_t>(isHost), 0);
   }
   void add_isSelf(bool isSelf) {
-    fbb_.AddElement<uint8_t>(Device::VT_ISSELF, static_cast<uint8_t>(isSelf), 0);
+    fbb_.AddElement<uint8_t>(Device_DEPRECATED::VT_ISSELF, static_cast<uint8_t>(isSelf), 0);
   }
-  explicit DeviceBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit Device_DEPRECATEDBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  DeviceBuilder &operator=(const DeviceBuilder &);
-  flatbuffers::Offset<Device> Finish() {
+  Device_DEPRECATEDBuilder &operator=(const Device_DEPRECATEDBuilder &);
+  flatbuffers::Offset<Device_DEPRECATED> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<Device>(end);
+    auto o = flatbuffers::Offset<Device_DEPRECATED>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<Device> CreateDevice(
+inline flatbuffers::Offset<Device_DEPRECATED> CreateDevice_DEPRECATED(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint32_t ip = 0,
     bool enabledMultiplayer = false,
     bool isHost = false,
     bool isSelf = false) {
-  DeviceBuilder builder_(_fbb);
+  Device_DEPRECATEDBuilder builder_(_fbb);
   builder_.add_ip(ip);
   builder_.add_isSelf(isSelf);
   builder_.add_isHost(isHost);
@@ -9503,12 +9503,12 @@ inline flatbuffers::Offset<Device> CreateDevice(
   return builder_.Finish();
 }
 
-struct GetDetectedDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct GetDetectedDevices_DEPRECATED FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_DEVICES = 4
   };
-  const flatbuffers::Vector<flatbuffers::Offset<Device>> *devices() const {
-    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<Device>> *>(VT_DEVICES);
+  const flatbuffers::Vector<flatbuffers::Offset<Device_DEPRECATED>> *devices() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<Device_DEPRECATED>> *>(VT_DEVICES);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -9519,38 +9519,38 @@ struct GetDetectedDevices FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
 };
 
-struct GetDetectedDevicesBuilder {
+struct GetDetectedDevices_DEPRECATEDBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_devices(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Device>>> devices) {
-    fbb_.AddOffset(GetDetectedDevices::VT_DEVICES, devices);
+  void add_devices(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Device_DEPRECATED>>> devices) {
+    fbb_.AddOffset(GetDetectedDevices_DEPRECATED::VT_DEVICES, devices);
   }
-  explicit GetDetectedDevicesBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit GetDetectedDevices_DEPRECATEDBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  GetDetectedDevicesBuilder &operator=(const GetDetectedDevicesBuilder &);
-  flatbuffers::Offset<GetDetectedDevices> Finish() {
+  GetDetectedDevices_DEPRECATEDBuilder &operator=(const GetDetectedDevices_DEPRECATEDBuilder &);
+  flatbuffers::Offset<GetDetectedDevices_DEPRECATED> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<GetDetectedDevices>(end);
+    auto o = flatbuffers::Offset<GetDetectedDevices_DEPRECATED>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevices(
+inline flatbuffers::Offset<GetDetectedDevices_DEPRECATED> CreateGetDetectedDevices_DEPRECATED(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Device>>> devices = 0) {
-  GetDetectedDevicesBuilder builder_(_fbb);
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Device_DEPRECATED>>> devices = 0) {
+  GetDetectedDevices_DEPRECATEDBuilder builder_(_fbb);
   builder_.add_devices(devices);
   return builder_.Finish();
 }
 
-inline flatbuffers::Offset<GetDetectedDevices> CreateGetDetectedDevicesDirect(
+inline flatbuffers::Offset<GetDetectedDevices_DEPRECATED> CreateGetDetectedDevices_DEPRECATEDDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<flatbuffers::Offset<Device>> *devices = nullptr) {
-  return sisyfox::sisycol::response::CreateGetDetectedDevices(
+    const std::vector<flatbuffers::Offset<Device_DEPRECATED>> *devices = nullptr) {
+  return sisyfox::sisycol::response::CreateGetDetectedDevices_DEPRECATED(
       _fbb,
-      devices ? _fbb.CreateVector<flatbuffers::Offset<Device>>(*devices) : 0);
+      devices ? _fbb.CreateVector<flatbuffers::Offset<Device_DEPRECATED>>(*devices) : 0);
 }
 
 struct ChangeRemoteMultiplayerSetting FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -10549,8 +10549,8 @@ inline bool VerifyPayload(flatbuffers::Verifier &verifier, const void *obj, Payl
       auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetScoreFiltered *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case Payload_GetDetectedDevices: {
-      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDetectedDevices *>(obj);
+    case Payload_GetDetectedDevices_DEPRECATED: {
+      auto ptr = reinterpret_cast<const sisyfox::sisycol::request::GetDetectedDevices_DEPRECATED *>(obj);
       return verifier.VerifyTable(ptr);
     }
     case Payload_ChangeRemoteMultiplayerSetting: {

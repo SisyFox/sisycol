@@ -60,7 +60,7 @@ public enum Payload : byte
  GetIdealTime_DEPRECATED = 50,
  SuspendSystem = 51,
  GetScoreFiltered = 52,
- GetDetectedDevices = 53,
+ GetDetectedDevices_DEPRECATED = 53,
  ChangeRemoteMultiplayerSetting = 54,
  CoinUpdate = 55,
  GameUnlock = 56,

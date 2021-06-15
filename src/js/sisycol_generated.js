@@ -81,7 +81,7 @@ sisyfox.sisycol.Payload = {
   GetIdealTime_DEPRECATED: 50,
   SuspendSystem: 51,
   GetScoreFiltered: 52,
-  GetDetectedDevices: 53,
+  GetDetectedDevices_DEPRECATED: 53,
   ChangeRemoteMultiplayerSetting: 54,
   CoinUpdate: 55,
   GameUnlock: 56,
@@ -6396,7 +6396,7 @@ sisyfox.sisycol.request.SuspendSystem.endSuspendSystem = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.request.GetDetectedDevices = function() {
+sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -6411,9 +6411,9 @@ sisyfox.sisycol.request.GetDetectedDevices = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.request.GetDetectedDevices}
+ * @returns {sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED}
  */
-sisyfox.sisycol.request.GetDetectedDevices.prototype.__init = function(i, bb) {
+sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -6421,17 +6421,17 @@ sisyfox.sisycol.request.GetDetectedDevices.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.request.GetDetectedDevices=} obj
- * @returns {sisyfox.sisycol.request.GetDetectedDevices}
+ * @param {sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED=} obj
+ * @returns {sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED}
  */
-sisyfox.sisycol.request.GetDetectedDevices.getRootAsGetDetectedDevices = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.request.GetDetectedDevices).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED.getRootAsGetDetectedDevices_DEPRECATED = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
-sisyfox.sisycol.request.GetDetectedDevices.startGetDetectedDevices = function(builder) {
+sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED.startGetDetectedDevices_DEPRECATED = function(builder) {
   builder.startObject(0);
 };
 
@@ -6439,7 +6439,7 @@ sisyfox.sisycol.request.GetDetectedDevices.startGetDetectedDevices = function(bu
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.request.GetDetectedDevices.endGetDetectedDevices = function(builder) {
+sisyfox.sisycol.request.GetDetectedDevices_DEPRECATED.endGetDetectedDevices_DEPRECATED = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
@@ -12045,7 +12045,7 @@ sisyfox.sisycol.response.SuspendSystem.endSuspendSystem = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.response.Device = function() {
+sisyfox.sisycol.response.Device_DEPRECATED = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -12060,9 +12060,9 @@ sisyfox.sisycol.response.Device = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.response.Device}
+ * @returns {sisyfox.sisycol.response.Device_DEPRECATED}
  */
-sisyfox.sisycol.response.Device.prototype.__init = function(i, bb) {
+sisyfox.sisycol.response.Device_DEPRECATED.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -12070,17 +12070,17 @@ sisyfox.sisycol.response.Device.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.response.Device=} obj
- * @returns {sisyfox.sisycol.response.Device}
+ * @param {sisyfox.sisycol.response.Device_DEPRECATED=} obj
+ * @returns {sisyfox.sisycol.response.Device_DEPRECATED}
  */
-sisyfox.sisycol.response.Device.getRootAsDevice = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.response.Device).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+sisyfox.sisycol.response.Device_DEPRECATED.getRootAsDevice_DEPRECATED = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.Device_DEPRECATED).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
  * @returns {number}
  */
-sisyfox.sisycol.response.Device.prototype.ip = function() {
+sisyfox.sisycol.response.Device_DEPRECATED.prototype.ip = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
@@ -12088,7 +12088,7 @@ sisyfox.sisycol.response.Device.prototype.ip = function() {
 /**
  * @returns {boolean}
  */
-sisyfox.sisycol.response.Device.prototype.enabledMultiplayer = function() {
+sisyfox.sisycol.response.Device_DEPRECATED.prototype.enabledMultiplayer = function() {
   var offset = this.bb.__offset(this.bb_pos, 6);
   return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
 };
@@ -12096,7 +12096,7 @@ sisyfox.sisycol.response.Device.prototype.enabledMultiplayer = function() {
 /**
  * @returns {boolean}
  */
-sisyfox.sisycol.response.Device.prototype.isHost = function() {
+sisyfox.sisycol.response.Device_DEPRECATED.prototype.isHost = function() {
   var offset = this.bb.__offset(this.bb_pos, 8);
   return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
 };
@@ -12104,7 +12104,7 @@ sisyfox.sisycol.response.Device.prototype.isHost = function() {
 /**
  * @returns {boolean}
  */
-sisyfox.sisycol.response.Device.prototype.isSelf = function() {
+sisyfox.sisycol.response.Device_DEPRECATED.prototype.isSelf = function() {
   var offset = this.bb.__offset(this.bb_pos, 10);
   return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
 };
@@ -12112,7 +12112,7 @@ sisyfox.sisycol.response.Device.prototype.isSelf = function() {
 /**
  * @param {flatbuffers.Builder} builder
  */
-sisyfox.sisycol.response.Device.startDevice = function(builder) {
+sisyfox.sisycol.response.Device_DEPRECATED.startDevice_DEPRECATED = function(builder) {
   builder.startObject(4);
 };
 
@@ -12120,7 +12120,7 @@ sisyfox.sisycol.response.Device.startDevice = function(builder) {
  * @param {flatbuffers.Builder} builder
  * @param {number} ip
  */
-sisyfox.sisycol.response.Device.addIp = function(builder, ip) {
+sisyfox.sisycol.response.Device_DEPRECATED.addIp = function(builder, ip) {
   builder.addFieldInt32(0, ip, 0);
 };
 
@@ -12128,7 +12128,7 @@ sisyfox.sisycol.response.Device.addIp = function(builder, ip) {
  * @param {flatbuffers.Builder} builder
  * @param {boolean} enabledMultiplayer
  */
-sisyfox.sisycol.response.Device.addEnabledMultiplayer = function(builder, enabledMultiplayer) {
+sisyfox.sisycol.response.Device_DEPRECATED.addEnabledMultiplayer = function(builder, enabledMultiplayer) {
   builder.addFieldInt8(1, +enabledMultiplayer, +false);
 };
 
@@ -12136,7 +12136,7 @@ sisyfox.sisycol.response.Device.addEnabledMultiplayer = function(builder, enable
  * @param {flatbuffers.Builder} builder
  * @param {boolean} isHost
  */
-sisyfox.sisycol.response.Device.addIsHost = function(builder, isHost) {
+sisyfox.sisycol.response.Device_DEPRECATED.addIsHost = function(builder, isHost) {
   builder.addFieldInt8(2, +isHost, +false);
 };
 
@@ -12144,7 +12144,7 @@ sisyfox.sisycol.response.Device.addIsHost = function(builder, isHost) {
  * @param {flatbuffers.Builder} builder
  * @param {boolean} isSelf
  */
-sisyfox.sisycol.response.Device.addIsSelf = function(builder, isSelf) {
+sisyfox.sisycol.response.Device_DEPRECATED.addIsSelf = function(builder, isSelf) {
   builder.addFieldInt8(3, +isSelf, +false);
 };
 
@@ -12152,7 +12152,7 @@ sisyfox.sisycol.response.Device.addIsSelf = function(builder, isSelf) {
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.response.Device.endDevice = function(builder) {
+sisyfox.sisycol.response.Device_DEPRECATED.endDevice_DEPRECATED = function(builder) {
   var offset = builder.endObject();
   return offset;
 };
@@ -12160,7 +12160,7 @@ sisyfox.sisycol.response.Device.endDevice = function(builder) {
 /**
  * @constructor
  */
-sisyfox.sisycol.response.GetDetectedDevices = function() {
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED = function() {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -12175,9 +12175,9 @@ sisyfox.sisycol.response.GetDetectedDevices = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {sisyfox.sisycol.response.GetDetectedDevices}
+ * @returns {sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED}
  */
-sisyfox.sisycol.response.GetDetectedDevices.prototype.__init = function(i, bb) {
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.prototype.__init = function(i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -12185,27 +12185,27 @@ sisyfox.sisycol.response.GetDetectedDevices.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {sisyfox.sisycol.response.GetDetectedDevices=} obj
- * @returns {sisyfox.sisycol.response.GetDetectedDevices}
+ * @param {sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED=} obj
+ * @returns {sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED}
  */
-sisyfox.sisycol.response.GetDetectedDevices.getRootAsGetDetectedDevices = function(bb, obj) {
-  return (obj || new sisyfox.sisycol.response.GetDetectedDevices).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.getRootAsGetDetectedDevices_DEPRECATED = function(bb, obj) {
+  return (obj || new sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
  * @param {number} index
- * @param {sisyfox.sisycol.response.Device=} obj
- * @returns {sisyfox.sisycol.response.Device}
+ * @param {sisyfox.sisycol.response.Device_DEPRECATED=} obj
+ * @returns {sisyfox.sisycol.response.Device_DEPRECATED}
  */
-sisyfox.sisycol.response.GetDetectedDevices.prototype.devices = function(index, obj) {
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.prototype.devices = function(index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new sisyfox.sisycol.response.Device).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+  return offset ? (obj || new sisyfox.sisycol.response.Device_DEPRECATED).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
 };
 
 /**
  * @returns {number}
  */
-sisyfox.sisycol.response.GetDetectedDevices.prototype.devicesLength = function() {
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.prototype.devicesLength = function() {
   var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
 };
@@ -12213,7 +12213,7 @@ sisyfox.sisycol.response.GetDetectedDevices.prototype.devicesLength = function()
 /**
  * @param {flatbuffers.Builder} builder
  */
-sisyfox.sisycol.response.GetDetectedDevices.startGetDetectedDevices = function(builder) {
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.startGetDetectedDevices_DEPRECATED = function(builder) {
   builder.startObject(1);
 };
 
@@ -12221,7 +12221,7 @@ sisyfox.sisycol.response.GetDetectedDevices.startGetDetectedDevices = function(b
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} devicesOffset
  */
-sisyfox.sisycol.response.GetDetectedDevices.addDevices = function(builder, devicesOffset) {
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.addDevices = function(builder, devicesOffset) {
   builder.addFieldOffset(0, devicesOffset, 0);
 };
 
@@ -12230,7 +12230,7 @@ sisyfox.sisycol.response.GetDetectedDevices.addDevices = function(builder, devic
  * @param {Array.<flatbuffers.Offset>} data
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.response.GetDetectedDevices.createDevicesVector = function(builder, data) {
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.createDevicesVector = function(builder, data) {
   builder.startVector(4, data.length, 4);
   for (var i = data.length - 1; i >= 0; i--) {
     builder.addOffset(data[i]);
@@ -12242,7 +12242,7 @@ sisyfox.sisycol.response.GetDetectedDevices.createDevicesVector = function(build
  * @param {flatbuffers.Builder} builder
  * @param {number} numElems
  */
-sisyfox.sisycol.response.GetDetectedDevices.startDevicesVector = function(builder, numElems) {
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.startDevicesVector = function(builder, numElems) {
   builder.startVector(4, numElems, 4);
 };
 
@@ -12250,7 +12250,7 @@ sisyfox.sisycol.response.GetDetectedDevices.startDevicesVector = function(builde
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-sisyfox.sisycol.response.GetDetectedDevices.endGetDetectedDevices = function(builder) {
+sisyfox.sisycol.response.GetDetectedDevices_DEPRECATED.endGetDetectedDevices_DEPRECATED = function(builder) {
   var offset = builder.endObject();
   return offset;
 };

@@ -8,41 +8,41 @@ namespace sisyfox.sisycol.response
 using global::System;
 using global::FlatBuffers;
 
-public struct Device : IFlatbufferObject
+public struct Device_DEPRECATED : IFlatbufferObject
 {
   private Table __p;
   public ByteBuffer ByteBuffer { get { return __p.bb; } }
-  public static Device GetRootAsDevice(ByteBuffer _bb) { return GetRootAsDevice(_bb, new Device()); }
-  public static Device GetRootAsDevice(ByteBuffer _bb, Device obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
+  public static Device_DEPRECATED GetRootAsDevice_DEPRECATED(ByteBuffer _bb) { return GetRootAsDevice_DEPRECATED(_bb, new Device_DEPRECATED()); }
+  public static Device_DEPRECATED GetRootAsDevice_DEPRECATED(ByteBuffer _bb, Device_DEPRECATED obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
   public void __init(int _i, ByteBuffer _bb) { __p.bb_pos = _i; __p.bb = _bb; }
-  public Device __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+  public Device_DEPRECATED __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public uint Ip { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
   public bool EnabledMultiplayer { get { int o = __p.__offset(6); return o != 0 ? 0!=__p.bb.Get(o + __p.bb_pos) : (bool)false; } }
   public bool IsHost { get { int o = __p.__offset(8); return o != 0 ? 0!=__p.bb.Get(o + __p.bb_pos) : (bool)false; } }
   public bool IsSelf { get { int o = __p.__offset(10); return o != 0 ? 0!=__p.bb.Get(o + __p.bb_pos) : (bool)false; } }
 
-  public static Offset<Device> CreateDevice(FlatBufferBuilder builder,
+  public static Offset<Device_DEPRECATED> CreateDevice_DEPRECATED(FlatBufferBuilder builder,
       uint ip = 0,
       bool enabledMultiplayer = false,
       bool isHost = false,
       bool isSelf = false) {
     builder.StartObject(4);
-    Device.AddIp(builder, ip);
-    Device.AddIsSelf(builder, isSelf);
-    Device.AddIsHost(builder, isHost);
-    Device.AddEnabledMultiplayer(builder, enabledMultiplayer);
-    return Device.EndDevice(builder);
+    Device_DEPRECATED.AddIp(builder, ip);
+    Device_DEPRECATED.AddIsSelf(builder, isSelf);
+    Device_DEPRECATED.AddIsHost(builder, isHost);
+    Device_DEPRECATED.AddEnabledMultiplayer(builder, enabledMultiplayer);
+    return Device_DEPRECATED.EndDevice_DEPRECATED(builder);
   }
 
-  public static void StartDevice(FlatBufferBuilder builder) { builder.StartObject(4); }
+  public static void StartDevice_DEPRECATED(FlatBufferBuilder builder) { builder.StartObject(4); }
   public static void AddIp(FlatBufferBuilder builder, uint ip) { builder.AddUint(0, ip, 0); }
   public static void AddEnabledMultiplayer(FlatBufferBuilder builder, bool enabledMultiplayer) { builder.AddBool(1, enabledMultiplayer, false); }
   public static void AddIsHost(FlatBufferBuilder builder, bool isHost) { builder.AddBool(2, isHost, false); }
   public static void AddIsSelf(FlatBufferBuilder builder, bool isSelf) { builder.AddBool(3, isSelf, false); }
-  public static Offset<Device> EndDevice(FlatBufferBuilder builder) {
+  public static Offset<Device_DEPRECATED> EndDevice_DEPRECATED(FlatBufferBuilder builder) {
     int o = builder.EndObject();
-    return new Offset<Device>(o);
+    return new Offset<Device_DEPRECATED>(o);
   }
 };
 

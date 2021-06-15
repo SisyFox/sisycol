@@ -21,7 +21,7 @@ union Payload { Error, Info, /* DEPRECATED */ AddScore /* DEPRECATED */,
              GetDmxRuleSettingRange, GetDmxRuleRangeSetting,
              GetDmxRuleRangeSettingRange, GetDmxRuleBoolSetting,
              GetDmxRuleBoolSettingRange, SetDmxDeviceMode, ResetDmxConfig,
-             GetIdealTime_DEPRECATED, SuspendSystem, GetScoreFiltered, GetDetectedDevices,
+             GetIdealTime_DEPRECATED, SuspendSystem, GetScoreFiltered, GetDetectedDevices_DEPRECATED,
              ChangeRemoteMultiplayerSetting, CoinUpdate, GameUnlock, CreditStatus,
              AddCredits, AddScoreNew, CalculateScore, GetPayPerPlayStatistics_DEPRECATED, GetIdealTime,
              GetScoreStatistics, GetPayPerPlayStatistics, EjectToken }
@@ -466,7 +466,7 @@ table GetIdealTime {
 
 table SuspendSystem {}
 
-table GetDetectedDevices {}
+table GetDetectedDevices_DEPRECATED {}
 
 table ChangeRemoteMultiplayerSetting {
     ip:uint;
@@ -791,15 +791,15 @@ table GetIdealTime {
 
 table SuspendSystem {}
 
-table Device {
+table Device_DEPRECATED {
     ip:uint;
     enabledMultiplayer:bool;
     isHost:bool;
     isSelf:bool;
 }
 
-table GetDetectedDevices {
-    devices:[Device];
+table GetDetectedDevices_DEPRECATED {
+    devices:[Device_DEPRECATED];
 }
 
 table ChangeRemoteMultiplayerSetting {}
@@ -872,7 +872,6 @@ table PayPerPlayStatistic {
 table GetPayPerPlayStatistics {
     data:[PayPerPlayStatistic];
 }
-
 
 table EjectToken {
     success:bool;
